@@ -96,7 +96,7 @@
 \newpage
 \thispagestyle{fancy} %f\UTF{00FC}r Header
 
-\section{Bin\"ares Zahlensystem}
+\section{Daten \& Informationenen}
 
 \subsection{Digitaltechnik}
 \begin{tabular}{l l l}
@@ -118,7 +118,7 @@ Mit einer Bitfolge der L\"ange n k\"onnen $2^n$ verschiedene Zust\"ande codiert 
 	GiByte & $2^{30}$ Byte \\
 \end{tabular}
 
-\section{Daten \& Informationenen}
+\subsection{Daten \& Informationenen}
 Bitfolgen sind lediglich Daten und werden nach der Interpretation zu Informationen. \\ \\
 Interpretationsarten sind Datentypen
 \begin{itemize}
@@ -167,14 +167,38 @@ Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
 	V & Exponent & Mantrisse \\
 	\hline
 \end{tabular}
+
 \subsubsection{Beispiele}
 \begin{description}
 	\item[2.5] $=1.25*2^1$
-	\item[-0.75] $=-1.5*2^{-1}$
-	\item[0.1] $=1.6*2^{-4}$
+	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{-1+127}\underbrace{1000...}_{0.5}=-1.5*2^{-1}$
+	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{11110111}_{-4+127}\underbrace{100\overline{1100}}_{0.6}=1.6*2^{-4}$
 \end{description}
 
+\subsubsection{Spezialfälle}
+\begin{description}
+	\item[E=-127 M=0] $\Rightarrow 0$
+	\item[E=128 M=0 V=+] $\Rightarrow +\infty$
+	\item[E=128 M=0 V=$-$] $\Rightarrow -\infty$
+	\item[E=128 M!=0] $\Rightarrow NaN$
+\end{description}
 
+\subsubsection{Division mit Null}
+\begin{itemize}
+	\item float f = 0.0f/0.0f = $NaN$
+	\item float f = 7.6f/0.0f = $+\infty$
+	\item float f = -3.9f/0.0f = $-\infty$
+\end{itemize}
+
+\newpage
+\section{Operationen \& Ausdrücke}
+TODO
+
+\newpage
+\section{Zeichen \& Strings}
+TODO
+
+\newpage
 \section{Suchen}
 
 \subsection{Zahlensuche}
@@ -251,6 +275,7 @@ Auswertung: $T(n,m) = m(n-m+1)=m*n-m^2+m$
 \subsubsection{KMP}
 TODO
 
+\newpage
 \section{Sortieren}
 Ein Array a ist sortiert, wenn gilt: \\ \\
 $ \forall i \in [0, a.lenght-2] : a[i] relop a[i+1]$ \\
