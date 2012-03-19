@@ -1,0 +1,240 @@
+\documentclass[a4paper,10pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx}
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+\usepackage{fancyhdr} %for header/footer
+
+%My Commands
+\newcommand{\BN}{\mathbb{B}} %BOOL
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}}
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 \UTF{00FC}ber igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas \UTF{00FC}ber etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+
+%Zeichnung
+\usepackage{tikz}
+\usepackage[all]{xy}
+\usepackage{ucs}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+%Metadata
+\title{Diskrete Mathematik 2}
+\author{Jan F\"assler}
+\date{2. Semester (FS 2012)}
+\fancyfoot[C]{Jan F\"assler}
+
+\begin{document}
+\maketitle
+\newpage
+\thispagestyle{fancy} %f\UTF{00FC}r Header
+
+\section{Quantifizierung}
+
+\subsection{Einleitung}
+Bisher wurden Quantifizierungen mathematisch wie folgt geschrieben: \\ \\
+$
+\sum_{i=1}^{n} i^2=1^2+2^2+...+n^2
+\\ \\
+\sum_{i=1}^{0} i^2=0
+\\ \\
+\prod_{i=1}^{n} i^2=1^2*2^2*...*n^2
+\\ \\
+\prod_{i=1}^{0} i^2=1
+\\ \\
+\forall_{i=0}^{n-1} b[i]=b[0]=0 \wedge b[1]=0 \wedge ... \wedge b[n-1]=0
+\\ \\
+\forall_{i=0}^{0-1} b[i]=b[0]=true
+\\ \\
+\exists_{i=0}^{n-1} b[i]=b[0]=0 \vee b[1]=0 \vee ... \vee b[n-1]=0
+\\ \\
+\exists_{i=0}^{0-1} b[i]=b[0]=true
+$ \\ \\
+Die bekannten mathematischen Quantifizierungen haben den Nachteil, dass sie nicht immer 100\% genau sind. Deshalb definieren wir eine neue, genauere Schreibweise: \\ \\
+\begin{tabular}{| c |}
+\hline
+\\  $\sum_{i=1}^{n} i^2=(+i:\ZN | 1 \leq i \leq n:i^2)$ \\ \\
+\hline
+\end{tabular}
+
+\subsection{Definition}
+$(\oplus v_1:T_1, ..., v_n:T_n|R:P)$
+\begin{itemize}
+	\item Anwendung von $\oplus$ auf die Werte von P f\"ur alle Kombinationen von Werten f\"ur $v_1, ..., v_n$ f\"ur die R wahr ist.
+	\item Ist R f\"ur keine Kombination wahr, dann die Identit\"at u von $\oplus$
+	\item Datentyp der gesamten Quantifizierung: T
+\end{itemize}
+\begin{description}
+\item[$\oplus$ - bin\"arer Operator] \hfill
+	\begin{itemize}
+		\item Typ: $T \times T \ra T$
+		\item Eigenschaften: 
+		\begin{itemize} 
+  			\item $a \oplus b = b \oplus a$ (kommutativ)  
+			\item $a \oplus (b \oplus c) = (a \oplus b) \oplus c$ (assoziativ)
+			\item $a \oplus u = a$  
+		\end{itemize}
+	\end{itemize}
+\item[$T_1, ...,T_n$ - Datentypen] 
+\item[$v_1, ...,v_n$ - gebundene Variabeln] \hfill
+	\begin{itemize}
+		\item Englisch: bound variables, dummies
+		\item $n \geq 1$
+		\item alle paarweise verschieden
+		\item $v_i$ hat den Typ $T_i$
+	\end{itemize}
+\item[$R$ - boolescher Ausdruck] \hfill
+	\begin{itemize}
+		\item ist der Bereich (Range)
+		\item kann $v_1, ..., v_n$ enthalten
+	\end{itemize}
+\item[$P$ - beliebiger Ausdruck von Typ T] \hfill
+	\begin{itemize}
+		\item ist der K\"orper (Body)
+		\item kann $v_1, ..., v_n$ enthalten
+		\item \begin{tabular}{ c c c l }
+				  Quantor & Operator & Idendit\"at & Typ \\
+				  \hline 
+				  $\sum$ & $+$ & $0$ & $\ZN \times \ZN \ra \ZN$  \\
+				  $\prod$ & $*$ & $1$ & $\ZN \times \ZN \ra \ZN$  \\
+				  $\forall$ & $\wedge$ & $0$ & $\BN \times \BN \ra \BN$  \\
+				  $\exists$ & $\vee$ & $0$ & $\BN \times \BN \ra \BN$ \\
+			\end{tabular}
+	\end{itemize}
+\end{description}
+
+\subsection{Beispiele}
+\begin{itemize} 
+	\item $(+ i | 0 \leq i < 4:i*8) = 0*8 + 1*8 + 2 *8$
+	\item $(* i | 0 \leq i < 3:i+(i+1)) =(0 + 0 + 1) * (1 + 1 + 1) * (2 + 2 + 1)$
+	\item $(\wedge i | 0 \leq i < 2:i*d \neq 6) = 0*d \neq 6 \wedge 1*d \neq 6 = d \neq 6$  
+	\item $(\vee i| \leq i < 21:b[i]=0) = b[0] = 0 \vee b[1] = 0 \vee ... \vee b[20] = 0$
+	\item $(+k:\NN | k^2=4:k^2)=2^2$
+	\item $(+k:\ZN | k^2=4:k)=2^2 + (-2)^2$
+\end{itemize}
+
+\subsection{Rechenregeln}
+\begin{description}
+	\item[Empty-Range] \hfill \\
+		 $(\oplus v | false : P) = u \oplus$
+	\item[One-Point] \hfill \\
+		$(\oplus v | v=E : P) = P[v \la E]$ wenn: $v  \notin FV(E)$ \\ \\
+		Bsp $(\sum i | i = j + 3 :i^2)=(i^2)[i \la i+3]=(j+3)^2$
+	\item [Split-Off Term] \hfill \\
+		$(\oplus i | 0 \leq i < n+1:P)=(\oplus i | 0 \leq i < n : P) \oplus P[i \la n]$ \\ \\
+		Bsp: $\underbrace{(\sum i | 0 \leq i < n+1:i^2)}_{0^2+1^2+...+(n-1)^2+n^2} = \underbrace{(\sum i | 0 \leq i < n : i^2)}_{0^2+1^2+...+(n-1)^2} + \underbrace{(i^2)[i \la n]}_{n^2}$
+	\item[Trading] \hfill \\
+		$(\oplus | \underbrace{R_1 \wedge R_2}_{Bool}:\underbrace{P}_{irgendein Datentyp}) = (\oplus v | R_1:$if $R_2$ then P else $v_{\oplus}$ endif$)$ \\ \\
+		Bsp: $\underbrace{(\sum i | 0 \leq  i < 10 \wedge odd(i) : i )}_{1+3+5+7+9} = \underbrace{(\sum i | 0 \leq i < 10 :  if \hspace{3pt} odd(i) \hspace{3pt} then \hspace{3pt} i \hspace{3pt} else \hspace{3pt} 0 \hspace{3pt} endfi)}_{0+1+0+3+0+5+0+7+0+9}$
+\end{description}
+
+\newpage
+\section{Pr\"adikate}
+
+\subsection{Definition}
+\begin{itemize}
+	\item $ \oplus =\forall  (\forall x | R:P) \Longrightarrow$ f\"ur alle x im Bereich R gilt P
+	\item $ \oplus =\exists  (\exists x | R:P) \Longrightarrow$ es gibt ein x im Bereich R, das P erf\"ullt
+\end{itemize}
+
+\subsection{Beispiele}
+
+\begin{itemize}
+	\item $ \oplus =\forall  (\forall x | R_1 \wedge R_2:P)=(\forall u | R_1:$ if $R_2$ then P else true endif $)=(\forall u | R_1:R_2\rightarrow P)$ \\
+	\begin{tabular}{| c c | c c |}
+		\hline
+			$R_2$ & P & if & $\rightarrow$ \\
+		\hline
+			0 & 0 & 1 & 1 \\
+			0 & 1 & 1 & 1 \\
+			1 & 0 & 0 & 0 \\
+			1 & 1 & 1 & 1 \\
+		\hline
+	\end{tabular} Sei $R_1 = true \Longleftrightarrow (\forall u | R_2:P)=(\forall u | true: R_2 \ra P)=(\forall u |:R_2\ra P)$ \\
+	\item  $\oplus = \exists (\exists u | R_1 \wedge R_2:P)=(\exists u | R_1:$ if $R_2$ then P else false endif$)=(\exists u | R_1:R_2 \wedge P)$ \\
+	\begin{tabular}{| c c | c c |}
+		\hline
+			$R_2$ & P & if & $\wedge$ \\
+		\hline
+			0 & 0 & 0 & 0 \\
+			0 & 1 & 0 & 0 \\
+			1 & 0 & 0 & 0 \\
+			1 & 1 & 1 & 1 \\
+		\hline
+	\end{tabular}
+\end{itemize}
+
+\subsection{\"Ubungen}
+\begin{description}
+	\item[b enth\"alt eine -1:] \hfill \\ $ (\exists i | 0 \leq i < n: b[i]=-1)$
+	\item[b enth\"alt genau eine -1:] \hfill \\ $(\exists i | 0 \leq i < n: b[i]=-1 \wedge (\forall j | 0\leq j < n \wedge j=i : b[j]\neq-1))$
+	\item[b enth\"alt keine -1:] \hfill \\ $(\forall i:\ZN|0\leq i < n : b[i]\neq-1)$
+\end{description}
+\end{document}
+
+
+
