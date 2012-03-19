@@ -1,0 +1,302 @@
+\documentclass[a4paper,10pt]{article}
+
+
+\usepackage{listings}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx}
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+\usepackage{fancyhdr} %for header/footer
+
+%My Commands
+\newcommand{\BN}{\mathbb{B}} %BOOL
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}}
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 \UTF{00FC}ber igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas \UTF{00FC}ber etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+
+%Zeichnung
+\usepackage{tikz}
+\usepackage[all]{xy}
+\usepackage{ucs}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+%Metadata
+\title{Algorithmen und Datenstrukturen}
+\author{Jan F\"assler}
+\date{2. Semester (FS 2012)}
+\fancyfoot[C]{Jan F\"assler}
+
+\begin{document}
+\maketitle
+\newpage
+\thispagestyle{fancy} %f\UTF{00FC}r Header
+
+\section{Bin\"ares Zahlensystem}
+
+\subsection{Digitaltechnik}
+\begin{tabular}{l l l}
+	1 & low & 0 bis 0.8V \\
+	0 & high & 2.4 bis 5V
+\end{tabular} \\ \\
+Mit einer Bitfolge der L\"ange n k\"onnen $2^n$ verschiedene Zust\"ande codiert werden.
+
+\subsection{Byte}
+\begin{itemize}
+	\item geordnete Bitfolge der L\"ange 8 (256 Zust\"ande)
+	\item Bits werden mit Indizes von 0 bis 7 nummeriert
+	\item LSB (Least Significant Bit)
+	\item MSB (Most Significant Bit)
+\end{itemize}
+\begin{tabular}{l l}
+	KiByte & $2^{10}$ Byte \\
+	MiByte & $2^{20}$ Byte \\
+	GiByte & $2^{30}$ Byte \\
+\end{tabular}
+
+\section{Daten \& Informationenen}
+Bitfolgen sind lediglich Daten und werden nach der Interpretation zu Informationen. \\ \\
+Interpretationsarten sind Datentypen
+\begin{itemize}
+	\item Interpretation als ganze Zahl
+	\item Interpretation als Gleitkommazahl
+	\item Interpretation als alphanumerisches Zeichen
+	\item benutzerdefinierte Interpretation
+\end{itemize}
+
+\subsection{Positive Zahlen}
+\begin{tabular}{c c c c c c c c}
+	MSP & & & & & & & LSB \\
+	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
+\end{tabular}
+In Java nur char (16 Bit) \\ \\ \\
+$1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=128+32+4+2+1=\uuline{167}$
+
+\subsection{Ganze Zahlen (2er - Komplement)}
+\begin{tabular}{c c c c c c c c}
+	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
+\end{tabular} 
+In Java: long (64 Bit), int (32 Bit), short (16 Bit) \& byte (8 Bit) \\ \\ \\
+$-1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=-128+32+4+2+1=\uuline{-89}$
+
+\subsection{Zahlendarstellung mit beliebiger Basis}
+\begin{description}
+	\item[binär (2)] - Zahlen die mit 0b beginnen
+	\item[octal (8)] - Zahlen die mit 0 beginnen
+	\item[dezimal (10)] - Zahlen die nicht mit 0 beginnen
+	\item[hex (16)] - Zahlen die mit 0x beginnen
+\end{description}
+Positive Zahlen: $\sum b_i+B^i mit i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei i. \\ \\
+Ganze Zahlen: $-b_{n-1}*B^{n-1}+\sum b_i*B^i mit i \in [0,n-2]$ und  $b_i$ Ziffer bei i.
+
+\subsection{Gleitkommazahlen}
+Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
+\begin{description}
+	\item[V] - Vorzeichen (float 1Bit / double 1 Bit)
+	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float 23 Bit / double 52Bit)
+	\item[E] - Exponent (E+127) (float 8 Bit / double 11 Bit)
+\end{description} 
+\begin{tabular}{|c|l|l|}
+	\hline
+	V & Exponent & Mantrisse \\
+	\hline
+\end{tabular}
+\subsubsection{Beispiele}
+\begin{description}
+	\item[2.5] $=1.25*2^1$
+	\item[-0.75] $=-1.5*2^{-1}$
+	\item[0.1] $=1.6*2^{-4}$
+\end{description}
+
+
+\section{Suchen}
+
+\subsection{Zahlensuche}
+Generell gilt hier: Ordnung reduziert den Suchaufwand!
+
+\subsubsection{Array einf\"ullen}
+\begin{lstlisting}
+final int n=10000;
+int[] array=new int[n];
+for(int i=0;i<array.length;i++) {
+  array[i] = (int) (Math.random()*Integer.MAX_VALUE);
+}
+\end{lstlisting}
+
+\subsubsection{Lineare Suche}
+\begin{lstlisting}
+int i=0;
+while(i<array.lenght && array[i]!=x) i++;
+boolean gefunden = (i < array.length);
+\end{lstlisting}
+
+\subsubsection{Lineare Suche mit W\"achter (Sentinel)}
+\begin{lstlisting}
+boolean gefunden = false;
+int last = (array.length-1);
+if (array[last]==x) {
+  gefunden=true;
+} else {
+  int tmp = array[last];
+  array[last]=x;
+  int i=0;
+  while(array[i] != x) i++;
+  gefunden = (i < last);
+  array[last] = tmp;
+}
+\end{lstlisting}
+
+\subsubsection{Bin\"are Suche}
+\begin{lstlisting}
+boolean binarySearch(double[] array, double x) {
+  int first=0, last=array.lenght-1, m;
+  while(first <= last) {
+    m = first + (first - last) / 2;  //schneller (m=(first+last)>>>1)
+    if(array[m] == x) return true;
+    else if (array[m] < x) first=m+1;
+    else last=m-1;
+  }
+}
+\end{lstlisting}
+
+\subsubsection{Analyse}
+\begin{tabular}{l | l | c | c | c }
+	Typ & Laufzeit & n & 256 & $2^{20}$ \\
+	\hline
+	Lineare Suche & lineare Laufzeit & n & 256 & $2^{20}$ \\
+	Bin\"are Suche & logarithmisch & $[log_{2}(n)]+1$ & 9 & 21
+\end{tabular}
+
+\subsection{Textsuche}
+\subsubsection{Naive Textsuche}
+\begin{tabular}{l c c c c c c c l}
+	text: & a & e & e & i & e & i & n & (n Zeichen) \\
+	pattern: & e & i & n & & & & & (m Zeichen) \\
+	& \lightning & e & i & n \\
+	& & \checkmark & \lightning \\
+	& & & e & i & n \\
+	& & & \checkmark & \checkmark & \lightning \\
+	& & & & e & i & n \\
+	& & & & \lightning & e & i & n \\
+	& & & & & \checkmark & \checkmark & \checkmark \\
+\end{tabular} \\ \\
+Auswertung: $T(n,m) = m(n-m+1)=m*n-m^2+m$
+
+\subsubsection{KMP}
+TODO
+
+\section{Sortieren}
+Ein Array a ist sortiert, wenn gilt: \\ \\
+$ \forall i \in [0, a.lenght-2] : a[i] relop a[i+1]$ \\
+relop: Relation, Bin\"ares Pr\"adikat (typisch: $\leq,\geq,<,>$)
+
+\subsection{\"Uberpr\"ufen, ob das Array sortiert ist}
+
+\begin{lstlisting}
+i=0;
+while(i<a.lenght-1 && a[i] relop a[i+1] i++;
+boolean sortiert = (i==a.length-1);
+\end{lstlisting}
+Aufwand: linear in der L\"ange des Arrays \\
+
+\subsection{Sortieren durch direktes Ausw\"ahlen (selection sort)}
+Das Array wird durch gegangen und nach dem gr\"ossten Element durchsucht. Einmal gefunden, wird es hinten hingesetzt. Danach wird das zweitgr\"osste Element gesucht und vor das gr\"osste Element gestellt. Wenn man dies weiterf\"uhrt w\"achst der sortierte Teil des Arrays kontinuierlich, w\"ahrend der unsortierte Teil kleiner wird.
+\begin{lstlisting}
+for (int last = a.lenght-1; last > 0; last--) {
+  k=0;
+  max = a[k];
+  for(int i=1; i <= last; i++) {
+    if ( a[i] > max) {
+      k=i;
+      max=a[k];
+    }
+  }
+}	
+\end{lstlisting}
+Aufwand: $T(n)1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\frac{n^2}{2}$
+
+\subsection{Sortierten durch direktes einf\"ugen (insertion sort)}
+Das Array wird durch gegangen und jedes Element an der richtigen Stelle, der bereits durch gegangenen Elemente, eingesetzt.
+\begin{lstlisting}
+for(int first=1; first<a.lenght;first++) {
+  tmp=a[first];
+  k=first-1;
+  while(k>=0 && a[k]>tmp) {
+    a[k+1]=a[k];
+    k--;
+  }
+  a[k+1] = tmp;
+}
+\end{lstlisting}
+
+\end{document}
+
+
+
+	
