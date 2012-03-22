@@ -293,7 +293,7 @@ Aufwand: linear in der L\"ange des Arrays \\
 \subsection{Sortieren durch direktes Ausw\"ahlen (selection sort)}
 Das Array wird durch gegangen und nach dem gr\"ossten Element durchsucht. Einmal gefunden, wird es hinten hingesetzt. Danach wird das zweitgr\"osste Element gesucht und vor das gr\"osste Element gestellt. Wenn man dies weiterf\"uhrt w\"achst der sortierte Teil des Arrays kontinuierlich, w\"ahrend der unsortierte Teil kleiner wird.
 \begin{lstlisting}
-for (int last = a.lenght-1; last > 0; last--) {
+for (int last = a.length-1; last > 0; last--) {
   k=0;
   max = a[k];
   for(int i=1; i <= last; i++) {
@@ -304,12 +304,12 @@ for (int last = a.lenght-1; last > 0; last--) {
   }
 }	
 \end{lstlisting}
-Aufwand: $T(n)1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\frac{n^2}{2}$
+Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 
 \subsection{Sortierten durch direktes einf\"ugen (insertion sort)}
 Das Array wird durch gegangen und jedes Element an der richtigen Stelle, der bereits durch gegangenen Elemente, eingesetzt.
 \begin{lstlisting}
-for(int first=1; first<a.lenght;first++) {
+for(int first=1; first<a.length;first++) {
   tmp=a[first];
   k=first-1;
   while(k>=0 && a[k]>tmp) {
@@ -319,6 +319,8 @@ for(int first=1; first<a.lenght;first++) {
   a[k+1] = tmp;
 }
 \end{lstlisting}
+Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
+Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \frac{(n-1)}{2}  + \frac{n}{2}=\sum^{n-1}_{i=1} \frac{i}{2}=\frac{1}{2}*\sum^{n-1}_{i=1} i = \frac{1}{2}*(\frac{n^2-n}{2})\approx\uuline{\frac{n^2}{4}}$
 
 \end{document}
 
