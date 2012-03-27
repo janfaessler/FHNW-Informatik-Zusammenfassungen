@@ -192,7 +192,214 @@ Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
 
 \newpage
 \section{Operationen \& Ausdrücke}
-TODO
+
+\subsection{Auswertungsreihenfolge}
+\begin{itemize}
+	\item einstellige und mehrstellige Operatoren
+		\begin{itemize}
+			\item[1.] Teilausdrücke in Klammern
+			\item[2.] Ausdrücke mit unären Operatoren (pro Operand von rechts nach links)
+			\item[3.] Teilausdrücke mit mehrstelligen Operatoren gemäss Prioritätstabelle
+		\end{itemize}
+	\item mehrstellige Operatoren gleicher Priorität \\
+		bei gleicher Priorität entscheidet die Assoziativität (von links nach rechts oder von rechts nach links)
+	\item Bewertungsreihenfolge von Operanden \\
+		die Operanden eines Operators werden strikt von links nach rechts ausgewertet
+\end{itemize}
+\includegraphics[width=150mm]{operatoren_prios.png}
+
+\subsection{Bitoperatoren}
+logische oder auch Boolesche Operatore:
+\begin{itemize}
+	\item Operanden sind von einem ganzzahligen Datentyp
+	\item Negation ~a ($\sim 0 \equiv 1$ / $\sim 1\equiv 0$)
+	\item AND a \& b
+	\item OR a | b
+	\item XOR a $\wedge$  b
+\end{itemize}
+\begin{tabular}{|c|c|c|c|}
+	\hline
+	a & b & {a \& b} & a | b \\
+	\hline
+	0 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 1 \\
+	1 & 0 & 0 & 1 \\
+	1 & 1 & 1 & 1 \\
+	\hline
+\end{tabular}
+
+\subsection{Schiebeoperatoren}
+\begin{itemize}
+	\item Rechtsschiebe-Operatoren
+		\begin{itemize}
+			\item vorzeichenbehaftet: $a >> b$
+			\item vorzeichenlos: $a >>> b$
+		\end{itemize}
+	\item Linksschiebe-Operator
+		\begin{itemize}
+			\item kann Vorzeichen verändern:  $a << b$
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{1er-Bits zählen}
+\begin{lstlisting}
+public static int count(int x) {
+	final int intSize = 32;  // Anzahl Bits einer Integer-Zahl
+	int y = 0;               // output
+	for (int i=0; i < intSize; i++) { 
+		if (x%2 == 1) y++;
+		x >>>= 1;
+	}
+	return y;
+}
+
+\end{lstlisting}
+
+\subsubsection{effizienter Zähler der 1er-Bits}
+\begin{lstlisting}
+public static int countEfficiently(int x) {
+	int iEven, iOdd, d = 1;
+	iEven = x & 0x55555555; x >>= d; iOdd = x & 0x55555555; 
+	x = iOdd + iEven; d <<= 1 ;
+	iEven = x & 0x33333333; x >>= d; iOdd = x & 0x33333333; 
+	x = iOdd + iEven; d <<= 1 ;	
+	iEven = x & 0x0F0F0F0F; x >>= d; iOdd = x & 0x0F0F0F0F; 
+	x = iOdd + iEven; d <<= 1;	
+	iEven = x & 0x00FF00FF; x >>= d; iOdd = x & 0x00FF00FF; 
+	x = iOdd + iEven; d <<= 1 ;
+	iEven = x & 0x0000FFFF; x >>= d; iOdd = x & 0x0000FFFF; 
+	x = iOdd + iEven; d <<= 1 ;	
+	return x;
+}
+\end{lstlisting}
+
+\subsubsection{Ganzzahlige Addition}
+\begin{lstlisting}
+public static int add(int a, int b) {
+	int c, r, t; // output r = a + b
+	r = a^b; // Addition entspricht fast einer XOR-Operation 
+	c = a&b; // Carry-Flags bestimmen
+	while (c != 0) { // Carry-Flags hinzuaddieren
+		c <<= 1;
+		t = r; r ^= c; c &= t;
+	}
+	return r;
+}
+\end{lstlisting}
+
+\subsubsection{Ganzzahlige Multiplikation}
+\begin{lstlisting}
+public static long mult(int a, int b) {
+	long y = 0; // output y = a*b
+	while (a != 0) {
+		if (a%2 == 1) y += b; 
+		b <<= 1;
+		a >>= 1;
+	}
+	return y;
+}
+\end{lstlisting}
+
+\subsection{Logische Operatoren}
+
+\begin{itemize}
+	\item logische oder auch Boolesche Operatoren
+		\begin{itemize}
+			\item Operanden sind vom Datentyp boolean
+			\item logische Negation !A
+			\item logisches UND A \&\& B  / A \& B \\
+				(Bei zwei \& Zeichen wird erst A überprüft und B nur, falls A wahr ist.)
+			\item logisches ODER A $||$ B / A $|$ B
+		\end{itemize}
+	\item Bedingungsoperator: A ? B : C \\
+		if (A) then B else C
+\end{itemize}
+
+\subsection{Konvertierung von Datentypen}
+\begin{itemize}
+	\item explizite Typkonvertierung
+		\begin{itemize}
+			\item Konvertierungen sind möglich:
+				\begin{itemize}
+					\item zwischen numerischen Datentypen (erweiternd und einschränkend)
+					\item zwischen Referenztypen
+				\end{itemize}
+			\item funktionieren gleich wie implizite, allerdings bestehen mehr Möglichkeiten
+			\item cast-Operator: (Typname) Ausdruck
+		\end{itemize}
+	\item implizite (automatische) Typkonvertierung
+		\begin{itemize}
+			\item zwischen Operanden von numerischem Typ (nur erweiternd)
+			\item zwischen Operanden von Referenztypen
+			\item bei Verknüpfungen von String-Objekten mit Operanden anderer Typen
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{Typkonvertierungen}
+\begin{itemize}
+	\item erweiternde Umwandlung \\
+		Wert ist immer darstellbar \\
+		möglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
+		\includegraphics[width=75mm]{erweiternde_typumwandlung.png} \\
+		
+	\item einschränkende Umwandlung \\
+		möglicher Informationsverlust in Grösse, Vorzeichen \& Genauigkeit \\ \\
+		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
+\end{itemize}
+
+\subsubsection{Integer-Erweiterung}
+\begin{itemize}
+	\item Datentypen byte, short und char werden in Ausdrücken mit unären und binären Operatoren implizit in int konvertiert
+		\begin{itemize}
+			\item Dimensionsausdruck bei der Erzeugung von Arrays
+			\item Indexausdruck in Arrays
+			\item Operand der unären Operatoren + und –
+			\item Operand des Invertierungsoperators für Bits $\sim$
+			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
+		\end{itemize}
+	\item byte, short und char werden somit fast ausschliesslich als Datenfelder für Klassen benutzt
+\end{itemize}
+
+\subsubsection{Implizite Konvertierung}
+\begin{itemize}
+	\item arithmetische Operatoren
+		\begin{itemize}
+			\item Ziel: gemeinsamer Typ für beide Operanden und somit auch für das Resultat
+			\item Konvertierung in höheren Typ gemäss Hierarchie
+			\item Beispiele: \\ $c = (5.0/9)*(f – 32)$ \\ $x = 2*3L + 1.1$
+		\end{itemize}
+	\item Zuweisungsoperatoren
+		\begin{itemize}
+			\item zulässig sind nur erweiternde Konvertierungen mit der einen Ausnahme, wenn rechts ein konstanter Ausdruck vom Typ int steht, der darstellbar ist
+			\item Rückgabewert von Methoden: wie bei Zuweisung
+			\item Parameterübergabe bei Methoden: wie Zuweisung aber ohne deren Ausnahme mit dem konstanten Ausdruck
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{Konvertierungsvorschriften}
+\begin{itemize}
+	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
+		Wert bleibt unverändert
+	\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen
+		\begin{itemize}
+			\item char ist vorzeichenlos
+			\item bei gleicher Breite: Bitmuster bleibt erhalten
+			\item char ist breiter: von links mit Nullen auffüllen und Vorzeichen propagieren
+			\item char ist schmaler: kein korrektes Resultat, wenn Wert grösser als $2^16$
+		\end{itemize}
+	\item Konvertierung von Integer nach Gleitpunkt \\
+		nächst höherer oder niedriger darstellbarer Wert
+	\item Konvertierung von Gleitpunkt nach Integer
+		\begin{itemize}
+			\item Nachkommastellen werden abgeschnitten
+			\item bei Werten grösser als $2^31 – 1$ ist das Resultat nicht korrekt ($= 2^31 – 1$)
+		\end{itemize}
+	\item Konvertierung zwischen Gleitpunkt-Typen
+		\begin{itemize}
+			\item float nach double: Wert bleibt unverändert
+			\item double nach float: Wert im zulässigen Wertebereich von float, dann nächst höherer oder niedriger darstellbarer Wert
+		\end{itemize}
+\end{itemize}
 
 \newpage
 \section{Zeichen \& Strings}
@@ -281,8 +488,80 @@ boolean binarySearch(double[] array, double x) {
 \end{tabular} \\ \\
 Auswertung: $T(n,m) = m(n-m+1)=m*n-m^2+m$
 
-\subsubsection{KMP}
-TODO
+\subsubsection{Knuth-Morris-Pratt (KMP)}
+Als erstes wird beim KMP das zu suchende Pattern untersucht. Das Pattern wird mit sich selber verglichen. Das Ziel ist zu wissen, bei welchem Buchstaben des Patterns man bei einem Missmatch weitermachen soll. \\
+Es wird für jedes Teilstück des Patterns das Endstück maximaler Länge gesucht, welches einem Anfangsstück entspricht. Dann wird abgespeichert, wo mit dem Vergleichen fortgefahren werden muss, wenn an dieser Stelle ein Fehler auftritt. \\ \\
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+	\hline 
+	0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+	\hline
+	h & a & u & s & h & a & l & t \\
+	\hline
+	-1 & 0 & 0 & 0 & 0 & 1 & 2 & 0 \\
+	\hline
+\end{tabular} \\ \\ \\
+Die Tabelle Zeigt die Verschiebeinformationen für das Beispiel. Wenn beim Vergleich der Position 5 mit dem Text ein Fehler auftritt, dann muss bei Position 1 (also 1 wieder verglichen werden). Nur für den Anfangsbuchstaben ist der Wert -1. Wenn dieser genommen wird, heisst das, dass das Pattern wieder von vorne verglichen werden muss. \\
+Diese Verschiebeinformationen werden zu Beginn der Suche im Text berechnet. Damit muss bei der Suche nie ein Teilstück zweimal durchsucht werden. \\
+
+\Bold{Implementierung:}
+
+\begin{lstlisting}
+public class KPM {
+    String m_text;
+    String m_pattern;
+    int[] m_next;
+
+    public KPM(String text, String pattern) {
+        m_text = text;
+        m_pattern = pattern;
+        m_next = new int[pattern.length()];
+    }
+    
+    public void initnext() {
+        int i = 0; // wird das Pattern einmal durchlaufen
+        int j = -1; // wird zum Vergleich mit dem Anfagsst¸ck verwendet
+
+        m_next[i] = j;
+        while (i < m_pattern.length() - 1) {
+            if (j < 0 || m_pattern.charAt(i) == m_pattern.charAt(j)) {
+                i++;
+                j++;
+                m_next[i] = j;
+
+            } else {
+                j = m_next[j];
+            }
+        }
+    }
+
+    public void search_kmp() {
+        int t = 0;
+        int p = 0;
+
+        while (t < m_text.length()) {
+            // p weiss, mit was im Pattern verglichen werden muss
+            // t geht durch den Text
+            if ((p < 0) || m_text.charAt(t) == m_pattern.charAt(p)) {
+                t++;
+                p++;
+            } else {
+                p = m_next[p];
+            }
+            if (p == m_pattern.length()) {
+                System.out.println("Gefunden, Uebereinstimmung startet bei "
+                        + (t - p + 1) + ". Zeichen");
+                p = 0;
+            }
+        }
+    }   
+    
+    public static void main(String[] args) {
+         KPM kpm = new KPM("baabcabac", "bac");
+         kpm.initnext();
+         kpm.search_kmp();
+    }
+}
+\end{lstlisting}
 
 \newpage
 \section{Sortieren}
@@ -331,6 +610,86 @@ for(int first=1; first<a.length;first++) {
 Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \frac{(n-1)}{2}  + \frac{n}{2}=\sum^{n-1}_{i=1} \frac{i}{2}=\frac{1}{2}*\sum^{n-1}_{i=1} i = \frac{1}{2}*(\frac{n^2-n}{2})\approx\uuline{\frac{n^2}{4}}$
 
+\section{Halbdynamischen Datenstrukturen}
+
+\subsection{Das Array}
+
+\begin{itemize}
+	\item[Vorteile] 
+		\begin{itemize}
+			\item hohe Zeiteffizienz, weil auf alle Elemente des Arrays direkt zugegriffen werden kann
+			\item hohe Speichereffizienz, wenn die Anzahl der Elemente des Arrays konstant bleibt
+		\end{itemize}
+	\item[Nachteile] 
+		\begin{itemize}
+			\item wenn sich die Anzahl Elemente während der Ausführung eines Algorithmus stark ändert, so ist die Speichereffizienz nur bedingt gut
+			\item wenn zu Beginn des Algorithmus unklar ist, wie viele Elemente maximal abgespeichert werden müssen, so ist die Datenstruktur Array in Reinform wenig hilfreich.
+		\end{itemize}
+\end{itemize}
+
+\subsection{Datenstrukturen}
+
+\subsubsection{statische Datenstruktur: Array}
+\begin{itemize}
+	\item fixer Speicherbedarf, unabhängig von der Anzahl genutzter Elemente im Array
+	\item direkter Zugriff auf die Elemente des Arrays
+\end{itemize}
+
+\subsubsection{halbdynamische Datenstruktur}
+\begin{itemize}
+	\item Speicherbedarf passt sich schrittweise der genutzten Anzahl Elemente an und bleibt zwischendrin konstant
+	\item direkter Zugriff auf die Elemente
+	\item Anpassung des Speicherbedarfs ist zeitaufwändig
+\end{itemize}
+
+\subsubsection{dynamische Datenstrukturen: Liste, Stack, Baum usw.}
+\begin{itemize}
+	\item Speicherbedarf hängt direkt von der genutzten Anzahl Elemente ab
+	\item üblich unterstützte Operationen: Suchen, Einfügen, Entfernen
+	\item indirekter Zugriff auf die Elemente
+\end{itemize}
+
+\subsubsection{Datennutzung über die Zeit}
+\includegraphics[width=150mm]{datennutzung_ueber_zeit.png}
+
+\subsection{Das ArrayList}
+\begin{itemize}
+	\item ArrayList verwendet intern ein Array von Objekten
+	\item die Länge des Arrays entspricht der Kapazität
+	\item die verwendete Anzahl Elemente ist in size gespeichert
+	\item Eine ArrayList startet mit der Grösse 10 wenn nicht's anderes angegeben wurde
+	\item Die Kapazität wird erhöht, wenn die ArrayList voll ist und ein neues Element hinzugefügt wird.
+	\item Die neue Kapazität wir bei der Erhöhung wie folgt berechnet: $cap_{new}=cap_{old} * 3 / 2 + 1$
+\end{itemize}
+
+\subsubsection{Interner Aufbau (bis Java 1.4.2)}
+\begin{itemize}
+	\item alle Klassen aus dem Java Collections Framework verwalten intern Referenzen vom Typ Object \\ $\Rightarrow$ maximale Flexibilität
+	\item alle Methodenschnittstellen verwenden den Typ Object
+	\item da alle Referenztypen zur Klasse Object zuweisungskompatibel sind, bieten die Collections keine Typsicherheit
+\end{itemize}
+
+\subsubsection*{Code:}
+\begin{itemize}
+	\item void add(int index, Object element)
+	\item void clear()
+	\item boolean contains(Object o)
+	\item Object get(int index)
+	\item  int indexOf(Object o)
+	\item boolean isEmpty()
+	\item ListIterator listIterator(int index) • Object remove(int index)
+	\item booleanremove(Object o)
+	\item Object set(int index, Object element) • int size()
+	\item ...
+\end{itemize}
+
+\subsubsection{Interner Aufbau (seit Java 5.0)}
+\begin{itemize}
+	\item alle Collections verwalten intern Referenzen vom Typ <E>, wobei E ein beliebiger Platzhalter (Typ-Parameter) für einen konkreten Referenztyp ist
+	\item Collections werden generisch (maximale Flexibilität)
+	\item Collections können für alle möglichen Referenztypen verwendet werden, auch
+für Object (= früherer interner Aufbau)
+\end{itemize}
 \end{document}
 
 
