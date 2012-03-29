@@ -197,7 +197,7 @@ $(\oplus v_1:T_1, ..., v_n:T_n|R:P)$
 
 \subsection{Einführung}
 $E_1:(\sum i : \ZN | 0 \leq i < n : i^2)=\sum^{n-1}_{i=0} i^2$ \\ \\
-- Wert hängt von n ab, aber nicht von i. \\ \\
+- Wert h\"angt von n ab, aber nicht von i. \\ \\
 $E_2:(\sum j :\ZN | 0 \leq j < n : j^2)$ \\ \\
 $n=3 :  0^2+1^2+2^2$ \\
 $n=0 : 0$
@@ -313,17 +313,17 @@ P(2) & $\wedge$ & $(P(2) \ra P(3)))$ & $\wedge$ & P(3) \\ \\
 \end{tabular} \\
 Für alle $n:\NN$ gilt : $n^3+5n$ ist Vielfaches von 6. \\
 \begin{description}
-	\item[1.) Induktionsanfang] zu zeigen: P(0), das heisst es gilt $r:\ZN$ mit $0^3+5*0=6*z$ klar, wähle z=0
+	\item[1.) Induktionsanfang] zu zeigen: P(0), das heisst es gilt $r:\ZN$ mit $0^3+5*0=6*z$ klar, w\"ahle z=0
 	\item[2.) Induktionsschritt] zu zeigen: $P(n) \ra P(n+1)$ für alle $n \geq 0$. Sei n eine \Bold {beliebige} natürliche Zahl \\
 	\item[Annahme:] es gelte P(n), das heisst es gibt $r:\ZN$ mit $n^3+5n =6r$ 
 	\item[zu Zeigen:] es gibt ein $s:\ZN$ mit $(n+1)^3+5(n+1)=6s$
 \end{description}
-$(n+1)^3 + 5(n+1)$  \\ = $<Arith>$ (arithmetische Veränderungen) \\
+$(n+1)^3 + 5(n+1)$  \\ = $<Arith>$ (arithmetische Ver\"anderungen) \\
 $(n^3+3n^2+3n +1)+(5n+5)$ \\ = $<Arith>$ \\
 $(n^3+5n) + (3n^2+3n+6)$ \\ = $<Annahme>$ \\
 $6r + 3n(n+1)+6$ \\ $<n(n+1)$ immer durch 2 teilbar, d.h. $n(n+1)=2t, t=\ZN>$ \\
 $6r +3*2t + 6$ \\ = $<Arith>$ \\
-$6(r+t+1)$ \\ = $<$ wähle $s:\ZN=r+t+1>$ \\ $\uuline{6s}$ 
+$6(r+t+1)$ \\ = $<$ w\"ahle $s:\ZN=r+t+1>$ \\ $\uuline{6s}$ 
 
 \subsubsection{Schema}
 \begin{description}
@@ -379,7 +379,7 @@ Für alle $n:\NN$ gilt: fact$(n)=(*i:\NN | 1 \leq i \leq n : i)$
 	\item[1. Induktionsanfang:] \hfill \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq 0 : i)$
 	\item[2. Induktionsschritt:] \hfill \\
-		Zeigen: $P(0)\ra P(n+1)$, für alle $n \geq 0$ \\
+		Zeigen: $P(0)\ra P(n+1)$, für alle $n \geq 0$ \\ Sei n eine beliebige nat\"urliche Zahl. \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq n : i)$ \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq (n+1) : i)$
 \end{description}
@@ -389,12 +389,12 @@ $=$fact$(n)*(n+1)$ \\ $<Rekursion>$ \\
 =fact$(n+1)$
 
 \subsubsection{Fibonaci Beispiel}
-Für alle $n:\NN$ gilt: $(+ i: \NN | 1 \leq i \leq n : fib(i))=fib(n+2)-1$
+F\"ur alle $n:\NN$ gilt: $(+ i: \NN | 1 \leq i \leq n : fib(i))=fib(n+2)-1$
 \begin{description}
 	\item[1. Induktionsanfang:] \hfill \\
 		$(+ i: \NN | 1 \leq i \leq 0 : fib(i))=fib(0+2)-1$
 	\item[2. Induktionsschritt:] \hfill \\
-		Zeigen: $P(0)\ra P(n+1)$, für alle $n \geq 0$ \\
+		Zeigen: $P(0)\ra P(n+1)$, f\"ur alle $n \geq 0$ \\ Sei n eine beliebige nat\"urliche Zahl. \\
 		$(+ i: \NN | 1 \leq i \leq n : fib(i))=fib(n+2)-1$ \\
 		$(+ i: \NN | 1 \leq i \leq (n+1) : fib(i))=fib(n+3)-1$
 \end{description}
