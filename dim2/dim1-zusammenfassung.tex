@@ -161,8 +161,8 @@ $(\oplus v_1:T_1, ..., v_n:T_n|R:P)$
 				  \hline 
 				  $\sum$ & $+$ & $0$ & $\ZN \times \ZN \ra \ZN$  \\
 				  $\prod$ & $*$ & $1$ & $\ZN \times \ZN \ra \ZN$  \\
-				  $\forall$ & $\wedge$ & $0$ & $\BN \times \BN \ra \BN$  \\
-				  $\exists$ & $\vee$ & $0$ & $\BN \times \BN \ra \BN$ \\
+				  $\forall$ & $\wedge$ & $true$ & $\BN \times \BN \ra \BN$  \\
+				  $\exists$ & $\vee$ & $false$ & $\BN \times \BN \ra \BN$ \\
 			\end{tabular}
 	\end{itemize}
 \end{description}
@@ -178,16 +178,25 @@ $(\oplus v_1:T_1, ..., v_n:T_n|R:P)$
 \end{itemize}
 
 \subsection{Rechenregeln}
+\begin{tabular}{l c l}
+	$\oplus$ & $\ra$ & beliebiger Quantor \\
+	$FV(E)$ & $\ra$ & Menge der freien Variabeln in E
+\end{tabular}
+
 \begin{description}
 	\item[Empty-Range] \hfill \\
-		 $(\oplus v | false : P) = u \oplus$
+		Bei einer leeren Range, ist das Resultat die Indendit\"at: \\
+		 $(\oplus v | false : P) = neutral\oplus$ (identit\"at)
 	\item[One-Point] \hfill \\
+		Eine gebundene Variabel wird durch eine freie ersetzt: \\
 		$(\oplus v | v=E : P) = P[v \la E]$ wenn: $v  \notin FV(E)$ \\ \\
-		Bsp $(\sum i | i = j + 3 :i^2)=(i^2)[i \la i+3]=(j+3)^2$
+		Bsp $(\sum i | i = j + 3 :i^2)=(i^2)[i \la (i+3)]=(j+3)^2$
 	\item [Split-Off Term] \hfill \\
+		Die Range wird gek\"urzt. Weggenommenes Element anschliessend angef\"ugt: \\
 		$(\oplus i | 0 \leq i < n+1:P)=(\oplus i | 0 \leq i < n : P) \oplus P[i \la n]$ \\ \\
 		Bsp: $\underbrace{(\sum i | 0 \leq i < n+1:i^2)}_{0^2+1^2+...+(n-1)^2+n^2} = \underbrace{(\sum i | 0 \leq i < n : i^2)}_{0^2+1^2+...+(n-1)^2} + \underbrace{(i^2)[i \la n]}_{n^2}$
 	\item[Trading] \hfill \\
+		Bei mehreren Bedingungen in der Range, kann eine in den Body genommen werden: \\
 		$(\oplus | \underbrace{R_1 \wedge R_2}_{Bool}:\underbrace{P}_{irgendein Datentyp}) = (\oplus v | R_1:$if $R_2$ then P else $v_{\oplus}$ endif$)$ \\ \\
 		Bsp: $\underbrace{(\sum i | 0 \leq  i < 10 \wedge odd(i) : i )}_{1+3+5+7+9} = \underbrace{(\sum i | 0 \leq i < 10 :  if \hspace{3pt} odd(i) \hspace{3pt} then \hspace{3pt} i \hspace{3pt} else \hspace{3pt} 0 \hspace{3pt} endfi)}_{0+1+0+3+0+5+0+7+0+9}$
 \end{description}
@@ -195,7 +204,7 @@ $(\oplus v_1:T_1, ..., v_n:T_n|R:P)$
 \newpage
 \section{Variabeln}
 
-\subsection{Einführung}
+\subsection{Einf\"uhrung}
 $E_1:(\sum i : \ZN | 0 \leq i < n : i^2)=\sum^{n-1}_{i=0} i^2$ \\ \\
 - Wert h\"angt von n ab, aber nicht von i. \\ \\
 $E_2:(\sum j :\ZN | 0 \leq j < n : j^2)$ \\ \\
@@ -209,6 +218,7 @@ $n=0 : 0$
 		FV(E) = Menge der freien Variablen in E
 	\item[Bem.] Werte der freien Variablen stehen nicht im Ausdruck selbst, diese Info muss aus anderer Quelle kommen. (Background Info)
 	\item[Def.] Ein Ausdruck E ohne freie Variable heisst geschlossen.
+	\item[Bem.] Die erste gebundene Variabel nennt man bindend und alle volgenden angewandt.
 \end{description}
 
 \subsection{Beispiele}
@@ -219,13 +229,11 @@ $E_5 :(\pi \overbrace{\overbrace{u} | \underbrace{k}_{frei} \leq \overbrace{u} \
 
 \subsection{Umbenennung (dummy renaming)}
 \begin{description}
-	\item[Bed.] $w \notin FV(R) \cup FV(P)$ \\
-		$(\oplus v | R : P) = (\oplus w | R[v \la w] : P[v \la w])$
+	\item[Bed.] $w \notin FV(R) \cup FV(P)$ (w darf nicht als FV im Ausdruck vorkommen)
+	\item[Regel:] $(\oplus v | R : P) = (\oplus w | R[v \la w] : P[v \la w])$
 	\item[Def.] $E[v \la F]$ bezeichnet den selben Ausdruck wie E, aber alle freien Aufteten von v ersetzt durch (F).
-	\item[Bsp.] $(i^2)[i \la z+3] = (z+3)^2$ \\
-		$(\sum i | 0 \nleq i < n : i^2) = (\sum j | (0 \nleq i < n)[i \la j] : (i^2)[i \la j] = (\sum j | 0 \nleq j \nleq n : j^2)$
-	\item[Anm.] $E: (\sum i | \overbrace{0 \nleq i < n}^{R} : \overbrace{i^2}^{R})$ \\
-		i ist nicht frei in E
+	\item[Bsp.] $(i^2)[i \la (z+3)] = (z+3)^2$
+	\item[Bsp.] $(\sum i | 0 \nleq i < n : i^2) = (\sum j | (0 \nleq i < n)[i \la j] : (i^2)[i \la j] = (\sum j | 0 \nleq j \nleq n : j^2)$
 \end{description}
 
 
@@ -281,7 +289,7 @@ $E_5 :(\pi \overbrace{\overbrace{u} | \underbrace{k}_{frei} \leq \overbrace{u} \
 	\item[Aussage] \hfill \\
 		$P(n) \equiv n^3 +5n$ istV Vielfaches von 6.
 	\item[Satz] \hfill \\
-		$P(n)$ gilt für alle $n:\NN$
+		$P(n)$ gilt f\"ur alle $n:\NN$
 	\item[Test] \hfill \\
 		Sei n=3. $P(3) = \overbrace{27+15}^{7*6}$ ist ein Vielfaches von 6.
 	\item[Bemerkung] \hfill \\
@@ -292,7 +300,7 @@ $E_5 :(\pi \overbrace{\overbrace{u} | \underbrace{k}_{frei} \leq \overbrace{u} \
 \Bold {Man zeigt:}
 \begin{itemize}
 	\item[1.] $P(0)$
-	\item[2.] $P(n) \ra P(n+1)$ für alle $n:\NN$, d.h. $n\geq 0$ \\
+	\item[2.] $P(n) \ra P(n+1)$ f\"ur alle $n:\NN$, d.h. $n\geq 0$ \\
 		Erinnerung \Bold {Modus ponens}: $(p \wedge (p \ra q))\ra q$
 \end{itemize}
 \begin{tabular}{ c c l c l}
@@ -303,7 +311,7 @@ P(1) & $\wedge$ & $(P(1) \ra P(2)))$ & $\wedge$ & P(2) \\ \\
 1.) & & 2.) mit n=2 & & Modus ponens \\
 P(2) & $\wedge$ & $(P(2) \ra P(3)))$ & $\wedge$ & P(3) \\ \\
 \end{tabular} \\
-\Bold {Damit gilt P(n) für alle $n \geq 0$}
+\Bold {Damit gilt P(n) f\"ur alle $n \geq 0$}
 
 \subsubsection{Prinzip der Induktion}
 \begin{tabular}{| c |}
@@ -311,10 +319,10 @@ P(2) & $\wedge$ & $(P(2) \ra P(3)))$ & $\wedge$ & P(3) \\ \\
 		$(P(0) \wedge (\forall n : \NN | : P(n) \ra P(n+1))) \ra (\forall n : \NN | : P(n))$ \\ \\
 	\hline
 \end{tabular} \\
-Für alle $n:\NN$ gilt : $n^3+5n$ ist Vielfaches von 6. \\
+F\"ur alle $n:\NN$ gilt : $n^3+5n$ ist Vielfaches von 6. \\
 \begin{description}
 	\item[1.) Induktionsanfang] zu zeigen: P(0), das heisst es gilt $r:\ZN$ mit $0^3+5*0=6*z$ klar, w\"ahle z=0
-	\item[2.) Induktionsschritt] zu zeigen: $P(n) \ra P(n+1)$ für alle $n \geq 0$. Sei n eine \Bold {beliebige} natürliche Zahl \\
+	\item[2.) Induktionsschritt] zu zeigen: $P(n) \ra P(n+1)$ f\"ur alle $n \geq 0$. Sei n eine \Bold {beliebige} nat\"urliche Zahl \\
 	\item[Annahme:] es gelte P(n), das heisst es gibt $r:\ZN$ mit $n^3+5n =6r$ 
 	\item[zu Zeigen:] es gibt ein $s:\ZN$ mit $(n+1)^3+5(n+1)=6s$
 \end{description}
@@ -328,19 +336,19 @@ $6(r+t+1)$ \\ = $<$ w\"ahle $s:\ZN=r+t+1>$ \\ $\uuline{6s}$
 \subsubsection{Schema}
 \begin{description}
 	\item[Induktionsanfang] zu zeigen: P(0)
-	\item[Induktionsschritt] zu zeigen: $P(n) \ra P(n+1)$ für alle $n:\NN$ \\
-		Sei n eine beliebige natürliche Zahl \\
+	\item[Induktionsschritt] zu zeigen: $P(n) \ra P(n+1)$ f\"ur alle $n:\NN$ \\
+		Sei n eine beliebige nat\"urliche Zahl \\
 		\Bold {Annahme:} Es gelte P(n) \\
 		\Bold {zu zeigen:} Es gilt P(n+1)
 \end{description}
 
 \subsubsection{Beispiel 1}
-Für alle $n:\NN$ gilt: $(+ i | 1 \leq i < n : i) = \frac{n(n+1)}{2}$ 
+F\"ur alle $n:\NN$ gilt: $(+ i | 1 \leq i < n : i) = \frac{n(n+1)}{2}$ 
 \begin{description}
 	\item[1. Induktionsanfang:] \hfill \\
 		zu zeigen: $<neutral+>0 = \frac{0(0+1)}{2}=0$ $\checkmark$
 	\item[2. Induktionsschritt:] \hfill \\
-		zu zeigen: $P(n) \ra P(n+1)$ für alle $n:\NN$ \\
+		zu zeigen: $P(n) \ra P(n+1)$ f\"ur alle $n:\NN$ \\
 		Sei n eine beliebige Zahl \\
 		\Bold {Annahme:} es gelte $(i+|1 \leq i \leq n : i)=\frac{n(n+1)}{2}$ \\
 		\Bold {zu zeigen:} es gilt $(i+|1 \leq i \leq n : i)=\frac{(n+1)(n+2)}{2}$ \\
@@ -352,12 +360,12 @@ $= \frac{n^2+n}{2} + \frac{2n+2}{2}$ \\ $<Arith>$ \\
 $=\frac{(n+1)(n+2)}{2}$
 
 \subsubsection{Beispiel 2}
-Für alle $n:\NN$ gilt: $(+ i :\NN| 1 \leq i \leq n : 2i-1) = n^2$ 
+F\"ur alle $n:\NN$ gilt: $(+ i :\NN| 1 \leq i \leq n : 2i-1) = n^2$ 
 \begin{description}
 	\item[1. Induktionsanfang:] \hfill \\
 		zu zeigen: $\underbrace{(+ i :\NN| 1 \leq i \leq n : 2i-1)}_{0 (<neutral+>)} = \underbrace{n^2}_{=0}$
 	\item[2. Induktionsschritt:] \hfill \\
-		zu zeigen: $P(n) \ra P(n+1)$ für alle $n:\NN$ \\
+		zu zeigen: $P(n) \ra P(n+1)$ f\"ur alle $n:\NN$ \\
 		Sei n eine beliebige Zahl \\
 		\Bold {Annahme:} es gelte $(+ i :\NN| 1 \leq i \leq n : 2i-1)=n^2$ \\
 		\Bold {zu zeigen:} es gilt $(+ i :\NN| 1 \leq i \leq (n+1) : 2i-1)=(n+1)^2$ \\
@@ -371,15 +379,16 @@ $=(n+1)^2)$
 \subsection{Rekursion}
 $fact: \NN \rightarrow \NN$ \\
 $fact(0) = 1$ \\
-$\underbrace{fact(n) = n+fact(n-1)}_{Rekursion}$, für alle $n>0$.
+$\underbrace{fact(n) = n+fact(n-1)}_{Rekursion}$, f\"ur alle $n>0$.
 
 \subsubsection{Factorial Beispiel}
-Für alle $n:\NN$ gilt: fact$(n)=(*i:\NN | 1 \leq i \leq n : i)$
+F\"ur alle $n:\NN$ gilt: fact$(n)=(*i:\NN | 1 \leq i \leq n : i)$
 \begin{description}
 	\item[1. Induktionsanfang:] \hfill \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq 0 : i)$
 	\item[2. Induktionsschritt:] \hfill \\
-		Zeigen: $P(0)\ra P(n+1)$, für alle $n \geq 0$ \\ Sei n eine beliebige nat\"urliche Zahl. \\
+		Zeigen: $P(0)\ra P(n+1)$, f\"ur alle $n \geq 0$ \\ 
+		Sei n eine beliebige nat\"urliche Zahl. \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq n : i)$ \\
 		fact$(0) = (*i : \NN | 1 \leq i \leq (n+1) : i)$
 \end{description}
@@ -394,7 +403,8 @@ F\"ur alle $n:\NN$ gilt: $(+ i: \NN | 1 \leq i \leq n : fib(i))=fib(n+2)-1$
 	\item[1. Induktionsanfang:] \hfill \\
 		$(+ i: \NN | 1 \leq i \leq 0 : fib(i))=fib(0+2)-1$
 	\item[2. Induktionsschritt:] \hfill \\
-		Zeigen: $P(0)\ra P(n+1)$, f\"ur alle $n \geq 0$ \\ Sei n eine beliebige nat\"urliche Zahl. \\
+		Zeigen: $P(0)\ra P(n+1)$, f\"ur alle $n \geq 0$ \\ 
+		Sei n eine beliebige nat\"urliche Zahl. \\
 		$(+ i: \NN | 1 \leq i \leq n : fib(i))=fib(n+2)-1$ \\
 		$(+ i: \NN | 1 \leq i \leq (n+1) : fib(i))=fib(n+3)-1$
 \end{description}
