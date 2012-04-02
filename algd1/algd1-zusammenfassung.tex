@@ -690,6 +690,69 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 	\item Collections können für alle möglichen Referenztypen verwendet werden, auch
 für Object (= früherer interner Aufbau)
 \end{itemize}
+
+\newpage
+\section{Programmverifikation}
+
+\subsection{Black and White}
+\subsubsection{Aufgabe}
+\begin{description}
+	\item[Gegeben:] \hfill
+		\begin{itemize}
+			\item Beh\"alter mit w weissen Kugeln und b schwarzen Kugeln
+			\item mindestens eine Kukel ist im Beh\"alter: $b + w \geq 1$
+		\end{itemize}
+	\item[Ablauf:] \hfill
+		\begin{itemize}
+			\item solange wenigstens zwei Kugeln im Beh\"alter sind, zufällig zwei Kugeln rausnehmen und ...
+			\item haben beide herausgenommenen Kugeln die gleiche Farbe \\
+				$\rightarrow$ eine weisse ugel in den Beh\"alter legen
+			\item haben beide herausgenommenen Kugeln unterschiedliche Farben \\
+				$\rightarrow$ schwarze Kugel in den Beh\"alter zurücklegen
+		\end{itemize}
+	\item[Gesucht] \hfill
+		\begin{itemize}
+			\item Terminiert dieser Ablauf?
+			\item Falls ja, wie und wovon hängt die Schlusssituation ab?
+		\end{itemize}
+\end{description}
+
+\subsubsection{Antwort}
+\begin{description}
+	\item[Frage 1:] Ja, der Prozess Terminiert, da es bei jedem Schritt eine Kugel weniger wird.
+	\item[Frage 2:] Bei allen drei m\"oglichen Schritten, verändert sich die Parit\"at von b nicht. Das bedeutet, dass wenn am Ende eine Schwarze Kugel \"ubrig ist muss am Anfang eine ungerade Anzahl Kugeln in dem Beh\"alter gewesen sein.
+\end{description}
+
+\subsubsection{Prozess}
+Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (Variante) und was nicht (Invariante). Findet man heraus, was sich nicht ver\"andert kann man von der Schlusssituation R\"uckschl\"usse auf die Startsituation treffen.
+\begin{description}
+	\item[Variante:] Anzahl Kugeln im Berh\"alter wird dekremiert
+	\item[Invariante:] Parity(b)
+\end{description}
+
+
+\subsection{Verbindungslinien}
+\subsubsection{Aufgabe}
+\begin{description}
+	\item[Gegeben:] \hfill
+		\begin{itemize}
+			\item n scharze und n weisse Punkte in der Ebene
+			\item keine drei Punkte kollinear (in einer Reihe)
+		\end{itemize}
+	\item[Ablauf:] \hfill
+		\begin{itemize}
+			\item je ein weisser und ein scharzer Ounkt werden mit einer Strecke verbunden
+			\item jeder Punkt darf nur mit einem andern Punkt verbunden werden
+		\end{itemize}
+	\item[Gesucht] \hfill
+		\begin{itemize}
+			\item Existiert eine schnittfreie Anordnung der Verbindungsstrecken?
+			\item Falls ja, wie findet man eine solche?
+		\end{itemize}
+\end{description}
+
+\subsubsection{Antwort}
+
 \end{document}
 
 
