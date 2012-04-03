@@ -693,9 +693,8 @@ für Object (= früherer interner Aufbau)
 
 \newpage
 \section{Programmverifikation}
-
-\subsection{Black and White}
-\subsubsection{Aufgabe}
+\subsection{Einleitung}
+\subsubsection{Black and White}
 \begin{description}
 	\item[Gegeben:] \hfill
 		\begin{itemize}
@@ -704,7 +703,7 @@ für Object (= früherer interner Aufbau)
 		\end{itemize}
 	\item[Ablauf:] \hfill
 		\begin{itemize}
-			\item solange wenigstens zwei Kugeln im Beh\"alter sind, zufällig zwei Kugeln rausnehmen und ...
+			\item solange wenigstens zwei Kugeln im Beh\"alter sind, zuf\"allig zwei Kugeln rausnehmen und ...
 			\item haben beide herausgenommenen Kugeln die gleiche Farbe \\
 				$\rightarrow$ eine weisse ugel in den Beh\"alter legen
 			\item haben beide herausgenommenen Kugeln unterschiedliche Farben \\
@@ -713,26 +712,21 @@ für Object (= früherer interner Aufbau)
 	\item[Gesucht] \hfill
 		\begin{itemize}
 			\item Terminiert dieser Ablauf?
-			\item Falls ja, wie und wovon hängt die Schlusssituation ab?
+			\item Falls ja, wie und wovon h\"angt die Schlusssituation ab?
 		\end{itemize}
 \end{description}
 
-\subsubsection{Antwort}
 \begin{description}
 	\item[Frage 1:] Ja, der Prozess Terminiert, da es bei jedem Schritt eine Kugel weniger wird.
-	\item[Frage 2:] Bei allen drei m\"oglichen Schritten, verändert sich die Parit\"at von b nicht. Das bedeutet, dass wenn am Ende eine Schwarze Kugel \"ubrig ist muss am Anfang eine ungerade Anzahl Kugeln in dem Beh\"alter gewesen sein.
+	\item[Frage 2:] Bei allen drei m\"oglichen Schritten, ver\"andert sich die Parit\"at von b nicht. Das bedeutet, dass wenn am Ende eine Schwarze Kugel \"ubrig ist muss am Anfang eine ungerade Anzahl Kugeln in dem Beh\"alter gewesen sein.
 \end{description}
-
-\subsubsection{Prozess}
 Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (Variante) und was nicht (Invariante). Findet man heraus, was sich nicht ver\"andert kann man von der Schlusssituation R\"uckschl\"usse auf die Startsituation treffen.
 \begin{description}
 	\item[Variante:] Anzahl Kugeln im Berh\"alter wird dekremiert
 	\item[Invariante:] Parity(b)
 \end{description}
 
-
-\subsection{Verbindungslinien}
-\subsubsection{Aufgabe}
+\subsubsection{Verbindungslinien}
 \begin{description}
 	\item[Gegeben:] \hfill
 		\begin{itemize}
@@ -750,9 +744,159 @@ Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (
 			\item Falls ja, wie findet man eine solche?
 		\end{itemize}
 \end{description}
+Ja es gibt immer eine schnittfreie Anordung der Verbindungsstrecken. Am besten findet man diese, wenn man die Punkte einmal beliebig verbindet und danach alle gekreuzten Linien vertauscht (swapt).
 
-\subsubsection{Antwort}
+\begin{description}
+	\item[Variante:] Die gesamtl\"ange aller Linien nimmt ab
+	\item[Invariante:] Die Anzahl Linien nimmt ab.
+\end{description}
 
+\subsection{Korrektheit eines Algorithmus}
+Ein Algorithmus heisst \Bold {korrekt}, wenn er seinen Spezifikationen gen\"ugt, wenn er zu allen Eingabedaten, die der Vorbedingung (Pre Conditions) gen\"ugen, die Ausgabedaten erzeugt, welche die Nachbedinungen (Post Condition) erf\"ullen. 
+\begin{description}
+	\item[Vorbedingung (Precondition)] \hfill \\
+		Ein Algorithmus muss in einem klar definierten Zustand starten, andernfalls sind keine klaren Aussagen über seine Arbeitsweise m\"oglich. Alle Parameterwerte des Algorithmus m\"ussen innerhalb der spezifizierten Wertebereiche liegen.
+	\item[Nachbedingung (Postcondition)] \hfill \\
+		Die Ausgabe (Endwerte) eines Algorithmus muss der Spezifikation.
+entsprechen
+\end{description}
+
+\subsection{Aussagelogik}
+\subsubsection{Syntax}
+		\begin{itemize}
+			\item atomare Formeln (Atome): A, B, C, ...
+			\item seien F und G zwei beliebige Formeln
+				\begin{itemize}
+					\item Konjunktion: $(F \wedge G)$ ist eine Formel
+					\item Disjunktion: $(F \vee G)$ ist eine Formel
+					\item Negation: $\neg F$ ist eine Formel
+					\item Implikation: $(F \rightarrow G)$ ist eine Kurzschreibweise für $(\neg F \vee G)$
+					\item Bikonditional: $(F \leftrightarrow G)$ ist eine Kurzschreibweise für $(F \ra G) \wedge (G \ra F)$
+				\end{itemize}
+		\end{itemize}
+		
+\subsubsection{Semantik}
+		\begin{itemize}
+				\item Belegung B: eine Teilmenge der atomaren Formeln wird mit einem Wahrheitswert aus {false, true} bzw. {0,1} belegt
+				\item die Bedeutungen der Konjunktion, Disjunktion und Negation sind analog zur Bool'schen Algebra definiert
+				\item passende Belegung B auf Formel F angewendet: B(F)
+		\end{itemize}
+		
+\subsubsection{Modell}
+		\begin{itemize}
+			\item eine Belegung heisst zu einer Formel F \Bold {passend}, wenn alle in F
+vorkommenden Atome belegt sind
+			\item eine Belegung B ist ein \Bold {Modell} für eine Formel F, wenn sie passend ist
+und wenn der Wahrheitswert von B(F) = true ist: $B \models F$
+			\item Belegung ist B \Bold {kein Modell} für Formel F, wenn sie zwar passend ist,
+aber wenn der Wahrheitswert von B(F) = false ist: $B \nvDash F$
+		\end{itemize}
+		
+\subsubsection{Erf\"ullbarkeit}
+\begin{itemize}
+	\item Eine Formel F heisst \Bold {erf\"ullbar}, wenn für sie ein Modell existiert, andernfalls \Bold {unerf\"ullbar}
+	\item Eine Formel F heisst \Bold {gültig} (oder Tautologie), wenn alle passenden Belegungen Modelle sind: $ \models F$
+\end{itemize}
+
+\subsubsection{\"Aquivalenz}
+Zwei Formeln F und G heissen (semantisch) äquivalent, falls für alle passenden Belegungen B gilt: B(F) = B(G). Dafür schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
+\begin{tabular}{l l c | c l l}
+\multicolumn{2}{c}{AND} &&& \multicolumn{2}{c}{OR} \\
+\hline 
+&&&&& \\
+$(F \wedge F)$                    & $\equiv F$                                                 &&& $(F \vee F)$ & $\equiv F$ \\
+$(F \wedge G)$                   & $\equiv (G \wedge F)$                               &&& $(F \vee G)$ & $\equiv (G \vee F)$ \\
+$((F \wedge G) \wedge H)$ & $\equiv (F \wedge (G \wedge H))$             &&& $((F \vee G) \vee H)$ & $\equiv (F \vee (G \vee H))$ \\
+$(F \wedge (F \vee G))$      & $\equiv F$                                                 &&& $(F \vee (F \wedge G))$ & $\equiv F$ \\
+$(F \wedge (G \vee H))$     & $\equiv ((F \wedge G) \vee (F \wedge H))$ &&& $(F \vee (G \wedge H))$ & $\equiv ((F \vee G) \wedge (F \vee H))$ \\
+$\neg (F \wedge G)$          & $\equiv (\neg F \vee \neg G)$                    &&& $\neg (F \vee G)$ & $\equiv (\neg F \wedge \neg G)$ \\
+$(F \wedge G)$                  & $\equiv G$, falls $\models F$                    &&& $(F \vee G)$ & $ \equiv G$, falls $\models F$ \\
+$(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar                 &&& $(F \vee G)$ & $\equiv$ F, falls F unerf\"ullbar \\
+
+\end{tabular}
+
+\subsection{Pr\"adikatenlogik}
+\subsubsection{Syntax}
+\begin{itemize}
+	\item Erweiterung der Aussagenlogik um Quantoren, Funktionen, Prädikate, Relationen und Variablen
+		\begin{itemize}
+			\item nullstellige Prädikate entsprechen den Atomen der Aussagelogik
+			\item Relationen können als Prädikate aufgefasst werden
+			\item nullstellige Funktionen sind Konstanten
+		\end{itemize}
+	\item Formeln
+		\begin{itemize}
+			\item logische Verknüpfung von Prädikaten: \\
+				die Argumente der Prädikate sind Terme, gebildet aus Funktionen, Variablen und Konstanten
+			\item sei x eine Variable und F eine Formel
+				\begin{itemize}
+					\item $\forall$ x F ist eine Formel mit gebundenem x
+					\item $\exists$ x F ist eine Formel mit gebundenem x
+				\end{itemize}
+			\item eine Formel heisst geschlossen oder Aussage, wenn alle ihre Variablen durch Quantoren gebunden sind
+		\end{itemize}
+	\item Prädikatenlogik mit Identität \\
+		wenn F und G zwei Formeln sind, so ist auch F = G eine Formel
+\end{itemize}
+
+\subsubsection{Semantik}
+\begin{itemize}
+	\item Struktur $S = (U_s, I_s)$ \\
+		$U_s$ ist eine nicht-leere Grundmenge und IS eine Abbildung
+		\begin{itemize}
+			\item der Prädikate über $U_s$
+			\item der Funktionen auf $U_s$
+			\item der Variablen auf Elemente von $U_s$
+		\end{itemize}
+	\item Semantik bezüglich passender Struktur S
+		\begin{itemize}
+			\item[S(Term)] jeder Term wird gemäss IS auf ein Element aus US abgebildet
+			\item[S(Prädikat)] jedes Prädikat bestimmt einen Wahrheitswert in Abhängigkeit seiner Argumente (Terme)
+			\item[S(Formel)] die aussagenlogische Verknüpfung der Wahrheitswerte der Prädikate
+			\item[S($\forall$x F)] F ist eine Formel 
+				\begin{itemize}
+					\item ist true, falls für alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist false, sonst
+				\end{itemize}
+			\item[S($\exists$x F)] F ist eine Formel
+				\begin{itemize}
+					\item ist true, falls für alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist false, sonst
+				\end{itemize}
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{\"Aquivalenz}
+\begin{description}
+	\item[Definition] \hfill \\
+		Zwei prädikatenlogische Formeln F und G sind äquivalent, falls für alle passenden Strukturen S gilt: S(F) = S(G). Dafür schreiben wir F $\equiv$ G.
+	\item[\"Aquivalenzregeln (zus\"atzlich zur Aussagenlogik)] \hfill \\
+		$\neg \forall x F \equiv \exists x \neg F$ \\
+		$\forall x \forall y F \equiv \forall y \forall x F$ \\
+		$(\forall x F \wedge \forall x G) \equiv \forall x (F \wedge G)$ \\
+		$\neg \exists x F \equiv \forall x \neg F$ \\		
+		$\exists x \exists y F \equiv \exists y \exists x F$ \\
+		$(\exists F \vee \exists x G) \equiv \exists x (F \vee G)$ \\ \\
+		falls x in G nicht frei vorkommt, gilt: \\
+		$(\forall x F \wedge G) \equiv \forall x (F \ wedge G)$ \\
+		$(\forall x F \vee G) \equiv \forall x (F \vee G)$ \\
+		$(\exists x F \wedge G) \equiv \exists x (F \wedge G)$ \\
+		$(\exists x F \vee G) \equiv \exists (F \vee G)$ \\
+\end{description}
+
+\subsubsection{Beispiele}
+\begin{description}
+	\item[Alle Studierenden von Professor p m\"ogen Logik.] \hfill \\
+		L(x) : "x mag Logik" \\
+		S(x,y) : "x studiert bei y" \\
+		$\forall x: S(x,p) \ra L(x)$ \\
+		$\forall x: \neg S(x,p) \vee L(x)$
+	\item[Ein Professor ist gl\"ucklich, wenn alle seine Studierenden Logik m\"ogen] \hfill \\
+		G(x) : "x ist gl\"ucklich" \\
+		$\exists y: (\forall x : S(x,y) \ra L(x)) \ra G(y)$
+	\item[Ein Professor ist ungl\"ucklich, wenn er keine Studierende hat.] \hfill \\
+		$\exists y: (\forall x : \neg S(x,y)) \ra \neg G(y)$
+\end{description}
 \end{document}
 
 
