@@ -152,15 +152,17 @@ $-1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=-128+32+4+2+1=\uuline{-89}$
 	\item[dezimal (10)] - Zahlen die nicht mit 0 beginnen
 	\item[hex (16)] - Zahlen die mit 0x beginnen
 \end{description}
-Positive Zahlen: $\sum b_i+B^i$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei i. \\ \\
-Ganze Zahlen: $-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei i.
+Positive Zahlen: $\sum b_i+B^i$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei $i$. \\ \\
+Ganze Zahlen: $-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei $i$.
 
 \subsection{Gleitkommazahlen}
 Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
+IEEE 754 Float: $(-1)^V * (1+M) * 2^{E-127}$ \\
+IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \begin{description}
 	\item[V] - Vorzeichen (float 1Bit / double 1 Bit)
-	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float 23 Bit / double 52Bit)
-	\item[E] - Exponent (E+127) (float 8 Bit / double 11 Bit)
+	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
+	\item[E] - Exponent (float: Signed-8-Bit $-$ 127  / double: Signed-11-Bit $-$ 1023)
 \end{description} 
 \begin{tabular}{|c|l|l|}
 	\hline
@@ -168,19 +170,19 @@ Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
 	\hline
 \end{tabular}
 
-\subsubsection{Beispiele}
+\subsubsection{Beispiele (IEEE 754 32bit Float)}
 \begin{description}
 	\item[2.5] $=1.25*2^1$
-	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{-1+127}\underbrace{1000...}_{0.5}=-1.5*2^{-1}$
-	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{11110111}_{-4+127}\underbrace{100\overline{1100}}_{0.6}=1.6*2^{-4}$
+	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{-1 - 127} \underbrace{100000...}_{2^{-1}}=-1.5*2^{-1}$
+	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01110111}_{123 - 127} \underbrace{100\overline{1100}......}_{2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
 \end{description}
 
 \subsubsection{Spezialf\"alle}
 \begin{description}
-	\item[E=-127 M=0] $\Rightarrow 0$
-	\item[E=128 M=0 V=+] $\Rightarrow +\infty$
-	\item[E=128 M=0 V=$-$] $\Rightarrow -\infty$
-	\item[E=128 M!=0] $\Rightarrow NaN$
+	\item[E=00000000 M=0] $\Rightarrow 0$
+	\item[E=11111111 M=0 V=+] $\Rightarrow +\infty$
+	\item[E=11111111 M=0 V=$-$] $\Rightarrow -\infty$
+	\item[E=11111111 M$\neq$0] $\Rightarrow NaN$
 \end{description}
 
 \subsubsection{Division mit Null}
@@ -191,18 +193,18 @@ Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
 \end{itemize}
 
 \newpage
-\section{Operationen \& Ausdrücke}
+\section{Operationen \& Ausdr\"ucke}
 
 \subsection{Auswertungsreihenfolge}
 \begin{itemize}
 	\item einstellige und mehrstellige Operatoren
 		\begin{itemize}
-			\item[1.] Teilausdrücke in Klammern
-			\item[2.] Ausdrücke mit unären Operatoren (pro Operand von rechts nach links)
-			\item[3.] Teilausdrücke mit mehrstelligen Operatoren gemäss Prioritätstabelle
+			\item[1.] Teilausdr\"ucke in Klammern
+			\item[2.] Ausdr\"ucke mit un\"aren Operatoren (pro Operand von rechts nach links)
+			\item[3.] Teilausdr\"ucke mit mehrstelligen Operatoren gem\"ass Priorit\"atstabelle
 		\end{itemize}
-	\item mehrstellige Operatoren gleicher Priorität \\
-		bei gleicher Priorität entscheidet die Assoziativität (von links nach rechts oder von rechts nach links)
+	\item mehrstellige Operatoren gleicher Priorit\"at \\
+		bei gleicher Priorit\"at entscheidet die Assoziativit\"at (von links nach rechts oder von rechts nach links)
 	\item Bewertungsreihenfolge von Operanden \\
 		die Operanden eines Operators werden strikt von links nach rechts ausgewertet
 \end{itemize}
@@ -214,12 +216,12 @@ logische oder auch Boolesche Operatore:
 	\item Operanden sind von einem ganzzahligen Datentyp
 	\item Negation ~a ($\sim 0 \equiv 1$ / $\sim 1\equiv 0$)
 	\item AND a \& b
-	\item OR a | b
+	\item OR a $|$ b
 	\item XOR a $\wedge$  b
 \end{itemize}
 \begin{tabular}{|c|c|c|c|}
 	\hline
-	a & b & {a \& b} & a | b \\
+	a & b & {a \& b} & a $|$ b \\
 	\hline
 	0 & 0 & 0 & 0 \\
 	0 & 1 & 0 & 1 \\
@@ -241,7 +243,7 @@ logische oder auch Boolesche Operatore:
 		\end{itemize}
 \end{itemize}
 
-\subsubsection{1er-Bits zählen}
+\subsubsection{1er-Bits z\"ahlen}
 \begin{lstlisting}
 public static int count(int x) {
 	final int intSize = 32;  // Anzahl Bits einer Integer-Zahl
@@ -255,7 +257,7 @@ public static int count(int x) {
 
 \end{lstlisting}
 
-\subsubsection{effizienter Zähler der 1er-Bits}
+\subsubsection{effizienter Z\"ahler der 1er-Bits}
 \begin{lstlisting}
 public static int countEfficiently(int x) {
 	int iEven, iOdd, d = 1;
@@ -308,7 +310,7 @@ public static long mult(int a, int b) {
 			\item Operanden sind vom Datentyp boolean
 			\item logische Negation !A
 			\item logisches UND A \&\& B  / A \& B \\
-				(Bei zwei \& Zeichen wird erst A überprüft und B nur, falls A wahr ist.)
+				(Bei zwei \& Zeichen wird erst A \"uberpr\"uft und B nur, falls A wahr ist.)
 			\item logisches ODER A $||$ B / A $|$ B
 		\end{itemize}
 	\item Bedingungsoperator: A ? B : C \\
@@ -319,19 +321,19 @@ public static long mult(int a, int b) {
 \begin{itemize}
 	\item explizite Typkonvertierung
 		\begin{itemize}
-			\item Konvertierungen sind möglich:
+			\item Konvertierungen sind m\"oglich:
 				\begin{itemize}
-					\item zwischen numerischen Datentypen (erweiternd und einschränkend)
+					\item zwischen numerischen Datentypen (erweiternd und einschr\"ankend)
 					\item zwischen Referenztypen
 				\end{itemize}
-			\item funktionieren gleich wie implizite, allerdings bestehen mehr Möglichkeiten
+			\item funktionieren gleich wie implizite, allerdings bestehen mehr M\"oglichkeiten
 			\item cast-Operator: (Typname) Ausdruck
 		\end{itemize}
 	\item implizite (automatische) Typkonvertierung
 		\begin{itemize}
 			\item zwischen Operanden von numerischem Typ (nur erweiternd)
 			\item zwischen Operanden von Referenztypen
-			\item bei Verknüpfungen von String-Objekten mit Operanden anderer Typen
+			\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen
 		\end{itemize}
 \end{itemize}
 
@@ -339,65 +341,65 @@ public static long mult(int a, int b) {
 \begin{itemize}
 	\item erweiternde Umwandlung \\
 		Wert ist immer darstellbar \\
-		möglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
+		m\"oglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
 		\includegraphics[width=75mm]{erweiternde_typumwandlung.png} \\
 		
-	\item einschränkende Umwandlung \\
-		möglicher Informationsverlust in Grösse, Vorzeichen \& Genauigkeit \\ \\
+	\item einschr\"ankende Umwandlung \\
+		m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen \& Genauigkeit \\ \\
 		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
 \end{itemize}
 
 \subsubsection{Integer-Erweiterung}
 \begin{itemize}
-	\item Datentypen byte, short und char werden in Ausdrücken mit unären und binären Operatoren implizit in int konvertiert
+	\item Datentypen byte, short und char werden in Ausdr\"ucken mit un\"aren und bin\"aren Operatoren implizit in int konvertiert
 		\begin{itemize}
 			\item Dimensionsausdruck bei der Erzeugung von Arrays
 			\item Indexausdruck in Arrays
-			\item Operand der unären Operatoren + und –
-			\item Operand des Invertierungsoperators für Bits $\sim$
+			\item Operand der un\"aren Operatoren + und –
+			\item Operand des Invertierungsoperators f\"ur Bits $\sim$
 			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
 		\end{itemize}
-	\item byte, short und char werden somit fast ausschliesslich als Datenfelder für Klassen benutzt
+	\item byte, short und char werden somit fast ausschliesslich als Datenfelder f\"ur Klassen benutzt
 \end{itemize}
 
 \subsubsection{Implizite Konvertierung}
 \begin{itemize}
 	\item arithmetische Operatoren
 		\begin{itemize}
-			\item Ziel: gemeinsamer Typ für beide Operanden und somit auch für das Resultat
-			\item Konvertierung in höheren Typ gemäss Hierarchie
+			\item Ziel: gemeinsamer Typ f\"ur beide Operanden und somit auch f\"ur das Resultat
+			\item Konvertierung in h\"oheren Typ gem\"ass Hierarchie
 			\item Beispiele: \\ $c = (5.0/9)*(f – 32)$ \\ $x = 2*3L + 1.1$
 		\end{itemize}
 	\item Zuweisungsoperatoren
 		\begin{itemize}
-			\item zulässig sind nur erweiternde Konvertierungen mit der einen Ausnahme, wenn rechts ein konstanter Ausdruck vom Typ int steht, der darstellbar ist
-			\item Rückgabewert von Methoden: wie bei Zuweisung
-			\item Parameterübergabe bei Methoden: wie Zuweisung aber ohne deren Ausnahme mit dem konstanten Ausdruck
+			\item zul\"assig sind nur erweiternde Konvertierungen mit der einen Ausnahme, wenn rechts ein konstanter Ausdruck vom Typ int steht, der darstellbar ist
+			\item R\"uckgabewert von Methoden: wie bei Zuweisung
+			\item Parameter\"ubergabe bei Methoden: wie Zuweisung aber ohne deren Ausnahme mit dem konstanten Ausdruck
 		\end{itemize}
 \end{itemize}
 
 \subsubsection{Konvertierungsvorschriften}
 \begin{itemize}
 	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
-		Wert bleibt unverändert
+		Wert bleibt unver\"andert
 	\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen
 		\begin{itemize}
 			\item char ist vorzeichenlos
 			\item bei gleicher Breite: Bitmuster bleibt erhalten
-			\item char ist breiter: von links mit Nullen auffüllen und Vorzeichen propagieren
-			\item char ist schmaler: kein korrektes Resultat, wenn Wert grösser als $2^16$
+			\item char ist breiter: von links mit Nullen auff\"ullen und Vorzeichen propagieren
+			\item char ist schmaler: kein korrektes Resultat, wenn Wert gr\"osser als $2^{16}$
 		\end{itemize}
 	\item Konvertierung von Integer nach Gleitpunkt \\
-		nächst höherer oder niedriger darstellbarer Wert
+		n\"achst h\"oherer oder niedriger darstellbarer Wert
 	\item Konvertierung von Gleitpunkt nach Integer
 		\begin{itemize}
 			\item Nachkommastellen werden abgeschnitten
-			\item bei Werten grösser als $2^31 – 1$ ist das Resultat nicht korrekt ($= 2^31 – 1$)
+			\item bei Werten gr\"osser als $2^{31} - 1$ ist das Resultat nicht korrekt ($= 2^{31} - 1$)
 		\end{itemize}
 	\item Konvertierung zwischen Gleitpunkt-Typen
 		\begin{itemize}
-			\item float nach double: Wert bleibt unverändert
-			\item double nach float: Wert im zulässigen Wertebereich von float, dann nächst höherer oder niedriger darstellbarer Wert
+			\item float nach double: Wert bleibt unver\"andert
+			\item double nach float: Wert im zul\"assigen Wertebereich von float, dann n\"achst h\"oherer oder niedriger darstellbarer Wert
 		\end{itemize}
 \end{itemize}
 
@@ -490,7 +492,7 @@ Auswertung: $T(n,m) = m(n-m+1)=m*n-m^2+m$
 
 \subsubsection{Knuth-Morris-Pratt (KMP)}
 Als erstes wird beim KMP das zu suchende Pattern untersucht. Das Pattern wird mit sich selber verglichen. Das Ziel ist zu wissen, bei welchem Buchstaben des Patterns man bei einem Missmatch weitermachen soll. \\
-Es wird für jedes Teilstück des Patterns das Endstück maximaler Länge gesucht, welches einem Anfangsstück entspricht. Dann wird abgespeichert, wo mit dem Vergleichen fortgefahren werden muss, wenn an dieser Stelle ein Fehler auftritt. \\ \\
+Es wird f\"ur jedes Teilst\"uck des Patterns das Endst\"uck maximaler L\"ange gesucht, welches einem Anfangsst\"uck entspricht. Dann wird abgespeichert, wo mit dem Vergleichen fortgefahren werden muss, wenn an dieser Stelle ein Fehler auftritt. \\ \\
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 	\hline 
 	0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
@@ -500,8 +502,8 @@ Es wird für jedes Teilstück des Patterns das Endstück maximaler Länge ge
 	-1 & 0 & 0 & 0 & 0 & 1 & 2 & 0 \\
 	\hline
 \end{tabular} \\ \\ \\
-Die Tabelle Zeigt die Verschiebeinformationen für das Beispiel. Wenn beim Vergleich der Position 5 mit dem Text ein Fehler auftritt, dann muss bei Position 1 (also 1 wieder verglichen werden). Nur für den Anfangsbuchstaben ist der Wert -1. Wenn dieser genommen wird, heisst das, dass das Pattern wieder von vorne verglichen werden muss. \\
-Diese Verschiebeinformationen werden zu Beginn der Suche im Text berechnet. Damit muss bei der Suche nie ein Teilstück zweimal durchsucht werden. \\
+Die Tabelle Zeigt die Verschiebeinformationen f\"ur das Beispiel. Wenn beim Vergleich der Position 5 mit dem Text ein Fehler auftritt, dann muss bei Position 1 (also 1 wieder verglichen werden). Nur f\"ur den Anfangsbuchstaben ist der Wert -1. Wenn dieser genommen wird, heisst das, dass das Pattern wieder von vorne verglichen werden muss. \\
+Diese Verschiebeinformationen werden zu Beginn der Suche im Text berechnet. Damit muss bei der Suche nie ein Teilst\"uck zweimal durchsucht werden. \\
 
 \Bold{Implementierung:}
 
@@ -622,8 +624,8 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 		\end{itemize}
 	\item[Nachteile] 
 		\begin{itemize}
-			\item wenn sich die Anzahl Elemente während der Ausführung eines Algorithmus stark ändert, so ist die Speichereffizienz nur bedingt gut
-			\item wenn zu Beginn des Algorithmus unklar ist, wie viele Elemente maximal abgespeichert werden müssen, so ist die Datenstruktur Array in Reinform wenig hilfreich.
+			\item wenn sich die Anzahl Elemente w\"ahrend der Ausf\"uhrung eines Algorithmus stark \"andert, so ist die Speichereffizienz nur bedingt gut
+			\item wenn zu Beginn des Algorithmus unklar ist, wie viele Elemente maximal abgespeichert werden m\"ussen, so ist die Datenstruktur Array in Reinform wenig hilfreich.
 		\end{itemize}
 \end{itemize}
 
@@ -631,7 +633,7 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 
 \subsubsection{statische Datenstruktur: Array}
 \begin{itemize}
-	\item fixer Speicherbedarf, unabhängig von der Anzahl genutzter Elemente im Array
+	\item fixer Speicherbedarf, unabh\"angig von der Anzahl genutzter Elemente im Array
 	\item direkter Zugriff auf die Elemente des Arrays
 \end{itemize}
 
@@ -639,13 +641,13 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 \begin{itemize}
 	\item Speicherbedarf passt sich schrittweise der genutzten Anzahl Elemente an und bleibt zwischendrin konstant
 	\item direkter Zugriff auf die Elemente
-	\item Anpassung des Speicherbedarfs ist zeitaufwändig
+	\item Anpassung des Speicherbedarfs ist zeitaufw\"andig
 \end{itemize}
 
 \subsubsection{dynamische Datenstrukturen: Liste, Stack, Baum usw.}
 \begin{itemize}
-	\item Speicherbedarf hängt direkt von der genutzten Anzahl Elemente ab
-	\item üblich unterstützte Operationen: Suchen, Einfügen, Entfernen
+	\item Speicherbedarf h\"angt direkt von der genutzten Anzahl Elemente ab
+	\item \"ublich unterst\"utzte Operationen: Suchen, Einf\"ugen, Entfernen
 	\item indirekter Zugriff auf die Elemente
 \end{itemize}
 
@@ -655,7 +657,7 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 \subsection{Das ArrayList}
 \begin{itemize}
 	\item ArrayList verwendet intern ein Array von Objekten
-	\item die Länge des Arrays entspricht der Kapazität
+	\item die L\"ange des Arrays entspricht der Kapazit\"at
 	\item die verwendete Anzahl Elemente ist in size gespeichert
 	\item Eine ArrayList startet mit der Gr\"osse 10 wenn nicht's anderes angegeben wurde
 	\item Die Kapazit\"at wird erh\"oht, wenn die ArrayList voll ist und ein neues Element hinzugef\"ugt wird.
@@ -664,7 +666,7 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 
 \subsubsection{Interner Aufbau (bis Java 1.4.2)}
 \begin{itemize}
-	\item alle Klassen aus dem Java Collections Framework verwalten intern Referenzen vom Typ Object \\ $\Rightarrow$ maximale Flexibilität
+	\item alle Klassen aus dem Java Collections Framework verwalten intern Referenzen vom Typ Object \\ $\Rightarrow$ maximale Flexibilit\"at
 	\item alle Methodenschnittstellen verwenden den Typ Object
 	\item da alle Referenztypen zur Klasse Object zuweisungskompatibel sind, bieten die Collections keine Typsicherheit
 \end{itemize}
@@ -685,10 +687,10 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 
 \subsubsection{Interner Aufbau (seit Java 5.0)}
 \begin{itemize}
-	\item alle Collections verwalten intern Referenzen vom Typ <E>, wobei E ein beliebiger Platzhalter (Typ-Parameter) für einen konkreten Referenztyp ist
-	\item Collections werden generisch (maximale Flexibilität)
-	\item Collections können für alle möglichen Referenztypen verwendet werden, auch
-für Object (= früherer interner Aufbau)
+	\item alle Collections verwalten intern Referenzen vom Typ <E>, wobei E ein beliebiger Platzhalter (Typ-Parameter) f\"ur einen konkreten Referenztyp ist
+	\item Collections werden generisch (maximale Flexibilit\"at)
+	\item Collections k\"onnen f\"ur alle m\"oglichen Referenztypen verwendet werden, auch
+f\"ur Object (= fr\"uherer interner Aufbau)
 \end{itemize}
 
 \newpage
@@ -707,7 +709,7 @@ für Object (= früherer interner Aufbau)
 			\item haben beide herausgenommenen Kugeln die gleiche Farbe \\
 				$\rightarrow$ eine weisse ugel in den Beh\"alter legen
 			\item haben beide herausgenommenen Kugeln unterschiedliche Farben \\
-				$\rightarrow$ schwarze Kugel in den Beh\"alter zurücklegen
+				$\rightarrow$ schwarze Kugel in den Beh\"alter zur\"ucklegen
 		\end{itemize}
 	\item[Gesucht] \hfill
 		\begin{itemize}
@@ -755,7 +757,7 @@ Ja es gibt immer eine schnittfreie Anordung der Verbindungsstrecken. Am besten f
 Ein Algorithmus heisst \Bold {korrekt}, wenn er seinen Spezifikationen gen\"ugt, wenn er zu allen Eingabedaten, die der Vorbedingung (Pre Conditions) gen\"ugen, die Ausgabedaten erzeugt, welche die Nachbedinungen (Post Condition) erf\"ullen. 
 \begin{description}
 	\item[Vorbedingung (Precondition)] \hfill \\
-		Ein Algorithmus muss in einem klar definierten Zustand starten, andernfalls sind keine klaren Aussagen über seine Arbeitsweise m\"oglich. Alle Parameterwerte des Algorithmus m\"ussen innerhalb der spezifizierten Wertebereiche liegen.
+		Ein Algorithmus muss in einem klar definierten Zustand starten, andernfalls sind keine klaren Aussagen \"uber seine Arbeitsweise m\"oglich. Alle Parameterwerte des Algorithmus m\"ussen innerhalb der spezifizierten Wertebereiche liegen.
 	\item[Nachbedingung (Postcondition)] \hfill \\
 		Die Ausgabe (Endwerte) eines Algorithmus muss der Spezifikation.
 entsprechen
@@ -770,8 +772,8 @@ entsprechen
 					\item Konjunktion: $(F \wedge G)$ ist eine Formel
 					\item Disjunktion: $(F \vee G)$ ist eine Formel
 					\item Negation: $\neg F$ ist eine Formel
-					\item Implikation: $(F \rightarrow G)$ ist eine Kurzschreibweise für $(\neg F \vee G)$
-					\item Bikonditional: $(F \leftrightarrow G)$ ist eine Kurzschreibweise für $(F \ra G) \wedge (G \ra F)$
+					\item Implikation: $(F \rightarrow G)$ ist eine Kurzschreibweise f\"ur $(\neg F \vee G)$
+					\item Bikonditional: $(F \leftrightarrow G)$ ist eine Kurzschreibweise f\"ur $(F \ra G) \wedge (G \ra F)$
 				\end{itemize}
 		\end{itemize}
 		
@@ -786,20 +788,20 @@ entsprechen
 		\begin{itemize}
 			\item eine Belegung heisst zu einer Formel F \Bold {passend}, wenn alle in F
 vorkommenden Atome belegt sind
-			\item eine Belegung B ist ein \Bold {Modell} für eine Formel F, wenn sie passend ist
+			\item eine Belegung B ist ein \Bold {Modell} f\"ur eine Formel F, wenn sie passend ist
 und wenn der Wahrheitswert von B(F) = true ist: $B \models F$
-			\item Belegung ist B \Bold {kein Modell} für Formel F, wenn sie zwar passend ist,
+			\item Belegung ist B \Bold {kein Modell} f\"ur Formel F, wenn sie zwar passend ist,
 aber wenn der Wahrheitswert von B(F) = false ist: $B \nvDash F$
 		\end{itemize}
 		
 \subsubsection{Erf\"ullbarkeit}
 \begin{itemize}
-	\item Eine Formel F heisst \Bold {erf\"ullbar}, wenn für sie ein Modell existiert, andernfalls \Bold {unerf\"ullbar}
-	\item Eine Formel F heisst \Bold {gültig} (oder Tautologie), wenn alle passenden Belegungen Modelle sind: $ \models F$
+	\item Eine Formel F heisst \Bold {erf\"ullbar}, wenn f\"ur sie ein Modell existiert, andernfalls \Bold {unerf\"ullbar}
+	\item Eine Formel F heisst \Bold {g\"ultig} (oder Tautologie), wenn alle passenden Belegungen Modelle sind: $ \models F$
 \end{itemize}
 
 \subsubsection{\"Aquivalenz}
-Zwei Formeln F und G heissen (semantisch) äquivalent, falls für alle passenden Belegungen B gilt: B(F) = B(G). Dafür schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
+Zwei Formeln F und G heissen (semantisch) \"aquivalent, falls f\"ur alle passenden Belegungen B gilt: B(F) = B(G). Daf\"ur schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
 \begin{tabular}{l l c | c l l}
 \multicolumn{2}{c}{AND} &&& \multicolumn{2}{c}{OR} \\
 \hline 
@@ -818,16 +820,16 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsection{Pr\"adikatenlogik}
 \subsubsection{Syntax}
 \begin{itemize}
-	\item Erweiterung der Aussagenlogik um Quantoren, Funktionen, Prädikate, Relationen und Variablen
+	\item Erweiterung der Aussagenlogik um Quantoren, Funktionen, Pr\"adikate, Relationen und Variablen
 		\begin{itemize}
-			\item nullstellige Prädikate entsprechen den Atomen der Aussagelogik
-			\item Relationen können als Prädikate aufgefasst werden
+			\item nullstellige Pr\"adikate entsprechen den Atomen der Aussagelogik
+			\item Relationen k\"onnen als Pr\"adikate aufgefasst werden
 			\item nullstellige Funktionen sind Konstanten
 		\end{itemize}
 	\item Formeln
 		\begin{itemize}
-			\item logische Verknüpfung von Prädikaten: \\
-				die Argumente der Prädikate sind Terme, gebildet aus Funktionen, Variablen und Konstanten
+			\item logische Verkn\"upfung von Pr\"adikaten: \\
+				die Argumente der Pr\"adikate sind Terme, gebildet aus Funktionen, Variablen und Konstanten
 			\item sei x eine Variable und F eine Formel
 				\begin{itemize}
 					\item $\forall$ x F ist eine Formel mit gebundenem x
@@ -835,7 +837,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 				\end{itemize}
 			\item eine Formel heisst geschlossen oder Aussage, wenn alle ihre Variablen durch Quantoren gebunden sind
 		\end{itemize}
-	\item Prädikatenlogik mit Identität \\
+	\item Pr\"adikatenlogik mit Identit\"at \\
 		wenn F und G zwei Formeln sind, so ist auch F = G eine Formel
 \end{itemize}
 
@@ -844,23 +846,23 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 	\item Struktur $S = (U_s, I_s)$ \\
 		$U_s$ ist eine nicht-leere Grundmenge und IS eine Abbildung
 		\begin{itemize}
-			\item der Prädikate über $U_s$
+			\item der Pr\"adikate \"uber $U_s$
 			\item der Funktionen auf $U_s$
 			\item der Variablen auf Elemente von $U_s$
 		\end{itemize}
-	\item Semantik bezüglich passender Struktur S
+	\item Semantik bez\"uglich passender Struktur S
 		\begin{itemize}
-			\item[S(Term)] jeder Term wird gemäss IS auf ein Element aus US abgebildet
-			\item[S(Prädikat)] jedes Prädikat bestimmt einen Wahrheitswert in Abhängigkeit seiner Argumente (Terme)
-			\item[S(Formel)] die aussagenlogische Verknüpfung der Wahrheitswerte der Prädikate
+			\item[S(Term)] jeder Term wird gem\"ass IS auf ein Element aus US abgebildet
+			\item[S(Pr\"adikat)] jedes Pr\"adikat bestimmt einen Wahrheitswert in Abh\"angigkeit seiner Argumente (Terme)
+			\item[S(Formel)] die aussagenlogische Verkn\"upfung der Wahrheitswerte der Pr\"adikate
 			\item[S($\forall$x F)] F ist eine Formel 
 				\begin{itemize}
-					\item ist true, falls für alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 			\item[S($\exists$x F)] F ist eine Formel
 				\begin{itemize}
-					\item ist true, falls für alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 		\end{itemize}
@@ -869,7 +871,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsubsection{\"Aquivalenz}
 \begin{description}
 	\item[Definition] \hfill \\
-		Zwei prädikatenlogische Formeln F und G sind äquivalent, falls für alle passenden Strukturen S gilt: S(F) = S(G). Dafür schreiben wir F $\equiv$ G.
+		Zwei pr\"adikatenlogische Formeln F und G sind \"aquivalent, falls f\"ur alle passenden Strukturen S gilt: S(F) = S(G). Daf\"ur schreiben wir F $\equiv$ G.
 	\item[\"Aquivalenzregeln (zus\"atzlich zur Aussagenlogik)] \hfill \\
 		$\neg \forall x F \equiv \exists x \neg F$ \\
 		$\forall x \forall y F \equiv \forall y \forall x F$ \\
