@@ -689,15 +689,17 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 	\item Object get(int index)
 	\item  int indexOf(Object o)
 	\item boolean isEmpty()
-	\item ListIterator listIterator(int index) • Object remove(int index)
-	\item booleanremove(Object o)
-	\item Object set(int index, Object element) • int size()
+	\item ListIterator listIterator(int index) 
+	\item  Object remove(int index)
+	\item boolean remove(Object o)
+	\item Object set(int index, Object element) 
+	\item  int size()
 	\item ...
 \end{itemize}
 
 \subsubsection{Interner Aufbau (seit Java 5.0)}
 \begin{itemize}
-	\item alle Collections verwalten intern Referenzen vom Typ <E>, wobei E ein beliebiger Platzhalter (Typ-Parameter) f\"ur einen konkreten Referenztyp ist
+	\item alle Collections verwalten intern Referenzen vom Typ $<$E$>$, wobei E ein beliebiger Platzhalter (Typ-Parameter) f\"ur einen konkreten Referenztyp ist
 	\item Collections werden generisch (maximale Flexibilit\"at)
 	\item Collections k\"onnen f\"ur alle m\"oglichen Referenztypen verwendet werden, auch
 f\"ur Object (= fr\"uherer interner Aufbau)
