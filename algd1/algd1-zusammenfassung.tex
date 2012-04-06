@@ -587,16 +587,20 @@ Aufwand: linear in der L\"ange des Arrays \\
 \subsection{Sortieren durch direktes Ausw\"ahlen (selection sort)}
 Das Array wird durch gegangen und nach dem gr\"ossten Element durchsucht. Einmal gefunden, wird es hinten hingesetzt. Danach wird das zweitgr\"osste Element gesucht und vor das gr\"osste Element gestellt. Wenn man dies weiterf\"uhrt w\"achst der sortierte Teil des Arrays kontinuierlich, w\"ahrend der unsortierte Teil kleiner wird.
 \begin{lstlisting}
-for (int last = a.length-1; last > 0; last--) {
-  k=0;
+int k, max; //k = index of max ; max = value of max
+for (int last = a.length - 1; last > 0; last--) {
+  k = 0;
   max = a[k];
-  for(int i=1; i <= last; i++) {
-    if ( a[i] > max) {
-      k=i;
-      max=a[k];
+  for (int j = 1; j <= last; j++) {
+    if (a[j] > max) {
+      max = a[k = j];
     }
   }
-}	
+  if(k!=last){
+    a[k] = a[last];
+    a[last] = max;
+  }
+}
 \end{lstlisting}
 Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 
