@@ -719,7 +719,7 @@ f\"ur Object (= fr\"uherer interner Aufbau)
 		\begin{itemize}
 			\item solange wenigstens zwei Kugeln im Beh\"alter sind, zuf\"allig zwei Kugeln rausnehmen und ...
 			\item haben beide herausgenommenen Kugeln die gleiche Farbe \\
-				$\rightarrow$ eine weisse ugel in den Beh\"alter legen
+				$\rightarrow$ eine weisse Kugel in den Beh\"alter legen
 			\item haben beide herausgenommenen Kugeln unterschiedliche Farben \\
 				$\rightarrow$ schwarze Kugel in den Beh\"alter zur\"ucklegen
 		\end{itemize}
@@ -734,7 +734,7 @@ f\"ur Object (= fr\"uherer interner Aufbau)
 	\item[Frage 1:] Ja, der Prozess Terminiert, da es bei jedem Schritt eine Kugel weniger wird.
 	\item[Frage 2:] Bei allen drei m\"oglichen Schritten, ver\"andert sich die Parit\"at von b nicht. Das bedeutet, dass wenn am Ende eine Schwarze Kugel \"ubrig ist muss am Anfang eine ungerade Anzahl Kugeln in dem Beh\"alter gewesen sein.
 \end{description}
-Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (Variante) und was nicht (Invariante). Findet man heraus, was sich nicht ver\"andert kann man von der Schlusssituation R\"uckschl\"usse auf die Startsituation treffen.
+Man untersucht einen Prozess darauf, was sich w\"ahrend dem Prozess ver\"andert (Variante) und was nicht (Invariante). Findet man heraus, was sich nicht ver\"andert kann man von der Schlusssituation R\"uckschl\"usse auf die Startsituation treffen.
 \begin{description}
 	\item[Variante:] Anzahl Kugeln im Berh\"alter wird dekremiert
 	\item[Invariante:] Parity(b)
@@ -749,8 +749,8 @@ Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (
 		\end{itemize}
 	\item[Ablauf:] \hfill
 		\begin{itemize}
-			\item je ein weisser und ein scharzer Ounkt werden mit einer Strecke verbunden
-			\item jeder Punkt darf nur mit einem andern Punkt verbunden werden
+			\item je ein weisser und ein scharzer Punkt werden mit einer Strecke verbunden
+			\item jeder Punkt darf nur mit einem andersfarbigen Punkt verbunden werden
 		\end{itemize}
 	\item[Gesucht] \hfill
 		\begin{itemize}
@@ -758,21 +758,20 @@ Man untersucht einen Prozess darauf, was sich w\"arend dem Prozess ver\"andert (
 			\item Falls ja, wie findet man eine solche?
 		\end{itemize}
 \end{description}
-Ja es gibt immer eine schnittfreie Anordung der Verbindungsstrecken. Am besten findet man diese, wenn man die Punkte einmal beliebig verbindet und danach alle gekreuzten Linien vertauscht (swapt).
+Ja, es gibt immer eine schnittfreie Anordung der Verbindungsstrecken. Am besten findet man diese, wenn man die Punkte einmal beliebig verbindet und danach alle gekreuzten Linien vertauscht (swapt).
 
 \begin{description}
 	\item[Variante:] Die gesamtl\"ange aller Linien nimmt ab
-	\item[Invariante:] Die Anzahl Linien nimmt ab.
+	\item[Invariante:] Die Anzahl Linien bleibt gleich.
 \end{description}
 
 \subsection{Korrektheit eines Algorithmus}
-Ein Algorithmus heisst \Bold {korrekt}, wenn er seinen Spezifikationen gen\"ugt, wenn er zu allen Eingabedaten, die der Vorbedingung (Pre Conditions) gen\"ugen, die Ausgabedaten erzeugt, welche die Nachbedinungen (Post Condition) erf\"ullen. 
+Ein Algorithmus heisst \Bold {korrekt}, wenn er seinen Spezifikationen gen\"ugt, wenn er zu allen Eingabedaten, die der Vorbedingung (Preconditions) gen\"ugen, die Ausgabedaten erzeugt, welche die Nachbedinungen (Postcondition) erf\"ullen. 
 \begin{description}
 	\item[Vorbedingung (Precondition)] \hfill \\
 		Ein Algorithmus muss in einem klar definierten Zustand starten, andernfalls sind keine klaren Aussagen \"uber seine Arbeitsweise m\"oglich. Alle Parameterwerte des Algorithmus m\"ussen innerhalb der spezifizierten Wertebereiche liegen.
 	\item[Nachbedingung (Postcondition)] \hfill \\
-		Die Ausgabe (Endwerte) eines Algorithmus muss der Spezifikation.
-entsprechen
+		Die Ausgabe (Endwerte) eines Algorithmus muss der Spezifikation entsprechen.
 \end{description}
 
 \subsection{Aussagelogik}
@@ -791,19 +790,19 @@ entsprechen
 		
 \subsubsection{Semantik}
 		\begin{itemize}
-				\item Belegung B: eine Teilmenge der atomaren Formeln wird mit einem Wahrheitswert aus {false, true} bzw. {0,1} belegt
+				\item Belegung $\mathfrak{B}$: eine Teilmenge der atomaren Formeln wird mit einem Wahrheitswert aus {false, true} bzw. {0,1} belegt
 				\item die Bedeutungen der Konjunktion, Disjunktion und Negation sind analog zur Bool'schen Algebra definiert
-				\item passende Belegung B auf Formel F angewendet: B(F)
+				\item passende Belegung $\mathfrak{B}$ auf Formel F angewendet: $\mathfrak{B}$(F)
 		\end{itemize}
 		
 \subsubsection{Modell}
 		\begin{itemize}
 			\item eine Belegung heisst zu einer Formel F \Bold {passend}, wenn alle in F
 vorkommenden Atome belegt sind
-			\item eine Belegung B ist ein \Bold {Modell} f\"ur eine Formel F, wenn sie passend ist
-und wenn der Wahrheitswert von B(F) = true ist: $B \models F$
-			\item Belegung ist B \Bold {kein Modell} f\"ur Formel F, wenn sie zwar passend ist,
-aber wenn der Wahrheitswert von B(F) = false ist: $B \nvDash F$
+			\item eine Belegung $\mathfrak{B}$ ist ein \Bold {Modell} f\"ur eine Formel F, wenn sie passend ist
+und wenn der Wahrheitswert von $\mathfrak{B}$(F) = true ist: $\mathfrak{B} \models F$
+			\item Belegung ist $\mathfrak{B}$ \Bold {kein Modell} f\"ur Formel F, wenn sie zwar passend ist,
+aber wenn der Wahrheitswert von $\mathfrak{B}$(F) = false ist: $\mathfrak{B} \nvDash F$
 		\end{itemize}
 		
 \subsubsection{Erf\"ullbarkeit}
@@ -813,7 +812,7 @@ aber wenn der Wahrheitswert von B(F) = false ist: $B \nvDash F$
 \end{itemize}
 
 \subsubsection{\"Aquivalenz}
-Zwei Formeln F und G heissen (semantisch) \"aquivalent, falls f\"ur alle passenden Belegungen B gilt: B(F) = B(G). Daf\"ur schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
+Zwei Formeln F und G heissen (semantisch) \"aquivalent, falls f\"ur alle passenden Belegungen $\mathfrak{B}$ gilt: $\mathfrak{B}$(F) = $\mathfrak{B}$(G). Daf\"ur schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
 \begin{tabular}{l l c | c l l}
 \multicolumn{2}{c}{AND} &&& \multicolumn{2}{c}{OR} \\
 \hline 
