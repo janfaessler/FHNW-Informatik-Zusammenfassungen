@@ -372,7 +372,7 @@ public static long mult(int a, int b) {
 		\begin{itemize}
 			\item Ziel: gemeinsamer Typ f\"ur beide Operanden und somit auch f\"ur das Resultat
 			\item Konvertierung in h\"oheren Typ gem\"ass Hierarchie
-			\item Beispiele: \\ $c = (5.0/9)*(f – 32)$ \\ $x = 2*3L + 1.1$
+			\item Beispiele: \\ $c = (5.0/9)*(f - 32)$ \\ $x = 2*3L + 1.1$
 		\end{itemize}
 	\item Zuweisungsoperatoren
 		\begin{itemize}
@@ -572,14 +572,14 @@ public class KPM {
 \newpage
 \section{Sortieren}
 Ein Array a ist sortiert, wenn gilt: \\ \\
-$ \forall i \in [0, a.lenght-2] : a[i] relop a[i+1]$ \\
+$ \forall i \in [0, a.lenght-2] : a[i]\ relop\ a[i+1]$ \\
 relop: Relation, Bin\"ares Pr\"adikat (typisch: $\leq,\geq,<,>$)
 
 \subsection{\"Uberpr\"ufen, ob das Array sortiert ist}
 
 \begin{lstlisting}
 i=0;
-while(i<a.lenght-1 && a[i] relop a[i+1] i++;
+while(i<a.lenght-1 && a[i] relop a[i+1]) i++;
 boolean sortiert = (i==a.length-1);
 \end{lstlisting}
 Aufwand: linear in der L\"ange des Arrays \\
