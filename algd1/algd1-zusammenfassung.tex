@@ -333,7 +333,11 @@ public static long mult(int a, int b) {
 		\begin{itemize}
 			\item zwischen Operanden von numerischem Typ (nur erweiternd)
 			\item zwischen Operanden von Referenztypen
-			\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen
+			\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen \\
+			    Object o = new Object();\\
+			    String s = $"$X$"$+null+o;\\
+			   String s = $"$X$"$+$"$null$"$+o.toString();\\
+                                   String s = $"$Xnulljava.lang.Object@47ac1adf$"$;
 		\end{itemize}
 \end{itemize}
 
