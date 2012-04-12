@@ -908,10 +908,89 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		G(x) : "x ist gl\"ucklich" \\
 		$\exists y: (\forall x : S(x,y) \ra L(x)) \ra G(y)$
 	\item[Ein Professor ist ungl\"ucklich, wenn er keine Studierende hat.] \hfill \\
-		$\exists y: (\forall x : \neg S(x,y)) \ra \neg G(y)$
+		$\exists y: (\forall x : \neg S(x,y)) \ra \neg G(y))$
 \end{description}
+
+\subsection{Verifikation}
+\subsubsection{Hoare-Tribble}
+Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorbedingung R und nach Ausf\"uhrung von P die Spezifikation (Nachbedingung) S erf\"ullt ist. Das Programm P ist korrekt, wenn das Hoare-Triple g\"ultig ist.
+\begin{description}
+	\item[Variablen] \hfill \\
+		Input: $a, b, c, ..., z$ \\
+		Output: $a', b', c', ..., z'$
+	\item[Vorbedingung (Precondition)] \hfill \\
+		Damit das Programm P die Spezifikation (Postcondition) S erf\"ullen kann, muss die Vorbedingung R erf\"ullt sein. Je schw\"acher die Vorbedingung R, desto besser: \Bold {weakest precondition (WP)}.
+	\item[Beispiele] \hfill \\
+		Spezifikation: $S = (x' = 10)$ \\
+		Programm: $P = (x' := x + 2)$ \\
+		m\"ogliche Vorbedingung $R = (a = 0 \vee b = 2 \vee x = 8 \vee z = 0)$ \\
+		einfachste Vorbedingung (weakest Precondition);  $WP = (x = 8)$
+	\item[Nachbedingungen (Postcondition)] \hfill \\
+		Die Nachbedingungen entsprechen der \Bold {Spezifikation} des Programms und sind je pr\"aziser, umso besser. \\
+		Implikation: $[\underbrace{S}_{spezielle Spez.} \ra \underbrace{T}_{allg. Spez.}] \equiv \forall a, b, c, ..., z, a', b', c', ..., z': \neg S \vee T$
+		\begin{itemize}
+			\item $a, b, c, ..., z$ sind alle Variablen, die in den Spezifikationen S und T vorkommen
+			\item wenn ein Programm P die speziellere Spezifikation S erfüllt, so auch die allgemeinere T
+			\item es gibt ein Programm Q, welches die Spezifikation T erf\"ullt und mindestens so einfach ist wie das Programm P, welches die Spezifikation S erf\"ullt
+		\end{itemize}
+	\item[Besipiele:] \hfill \\
+		$S = (x' = 10), T = (x' > 0)$ \\
+		$P_1 = (x' := 6), P_2 = (x' := 10), P_3 = (x' := x + 1)$
+		\begin{itemize}
+			\item $\underbrace{\{true\}}_{algemeinste Vorbedingung} P_1 \{S\} = false$
+			\item $\{true\} P_1 \{T\} = true$
+			\item $\{true\} P_2 \{S\} = true$
+			\item $\{true\} P_2 \{T\} = true$
+			\item $\{true\} P_3 \{S\} = false$
+			\item $\{x=9\} P_3 \{S\} = true$
+		\end{itemize}
+\end{description}
+
+\subsubsection{Ablauf der Verifikation}
+\begin{description}
+	\item[Gegeben] \hfill \\ \\
+		Vorbedingung R, Spezifikation S, Programm P
+	\item[Ablauf] \hfill 
+		\begin{itemize}
+			\item aus S und P die schw\"achste Vorbedingung $WP = wp(P, S)$ berechnen
+			\item falls $[R \ra WP]$ gilt, dann erf\"ullt das Programm P die Spezifikation S bei eingehaltener Vorbedingung R
+			\item R kann somit durch WP ersetzt werden
+		\end{itemize}
+	\item[Berechnung der WP] \hfill 
+		\begin{itemize}
+			\item ausgehend von der Spezifikation S
+			\item Anweisung für Anweisung r\"uckwärts rechnen
+			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
+		\end{itemize}
+\end{description}
+\subsubsection{WP-Rechenregel: Zuweisung}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Zuweisung $P = (x' := y)$ \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) = wp((x' := y), S) = S |_{alle \hspace{2mm} x' \hspace{2mm} durch \hspace{2mm} y \vspace{2mm} ersetzt}$
+	\item[Beispiele] \hfill \\
+		$S = (a' = z), P = (a' := b + c), WP = (b + c = z)$ \\
+		$S = (n' = n), P = (n' := n-1), WP = (n = n-1) = false$
+\end{description}
+\subsubsection{WP-Rechenregel: Sequenz}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Sequenz P = $(Anweisung_1; Anweisung_2; ...; Anweisung_n)$ \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) =
+wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
+	\item[Beispiele] \hfill \\
+		$P = (t' := x; x' := y; y' := t')$ \\
+		$S = (x' = b \wedge y' = a)$ \\
+		$WP =wp((t':=x;x':=y;y':=t'),(x'=b \wedge y'=a))$ \\
+		$= wp((t' := x; x' := y), wp((y' := t'), (x' = b \wedge y' = a)))$ \\
+		$= wp((t' := x; x' := y), (x' = b \wedge t' = a))$ \\
+		$= wp((t' := x), wp((x' := y), (x' = b \wedge t' = a)))$ \\
+		$= wp((t' := x), (y = b \wedge t' = a))$ \\
+		$= (y = b \wedge x = a)$
+\end{description}
+\subsubsection{WP-Rechenregel: Sequenz}
 \end{document}
-
-
-
-	
