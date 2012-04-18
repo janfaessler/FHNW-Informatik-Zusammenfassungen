@@ -443,6 +443,63 @@ Aber:
 \end{itemize}
 
 \newpage
+\section{Hauptspeicherverwaltung}
+\subsection{Virtual Memory}
+\begin{itemize}
+\item Hauptspeichererweiterung pro einzelnes System oder Prozess.
+\item Systematische Abstraktion f\"ur systemspezifische Overlay-
+Techniken
+\item Organisation des Hauptspeichers in gleich grosse,
+einheitlich adressierbare Einheiten (Seiten, pages)
+\item Ben\"otigt hardware-unterst\"utze Abbildung zwischen
+physischen und virtuellen Adressen
+\end{itemize}
+
+\subsection{Swapping}
+Swapper (Process 0) wird periodisch vom Kernel aufgerufen.\\
+
+Swap Device  $\longleftrightarrow$ Swapper $\longleftrightarrow$ Hauptspeicher\\
+
+Swap Out (Hauptspeicher zu SwapDevice):
+\begin{itemize}
+\item Kein Platz im HS f\"ur weitere Prozesse, Prozess ruft aber fork auf $\Rightarrow$ fork swap
+\item Kein Platz im HS aber Prozess w\"achst, weil z.B. Stack w\"achst $\Rightarrow$ expansion swap
+\item Swap Device ausgelagerter wartender Prozess wird ready to run und wird vom Scheduler ausgef\"uhrt $\Rightarrow$ exchange swap
+\end{itemize}
+
+Swap In (SwapDevice zu Hauptspeicher):
+\begin{itemize}
+\item Nur ready to run Prozesse sind w\"ahlbar $\Rightarrow$
+\item Pr\"aferenz auf Prozesse die > 2 sec. Ausgelagert waren
+\end{itemize}
+
+\subsection{Demand Paging}
+Anforderung: ein einzelner Prozess soll gr\"osser sein d\"urfen, als der
+verf\"ugbare Hauptspeicher.\\
+\\
+Voraussetzungen:
+\begin{itemize}
+\item Hardware unterst\"utzt seitenorientieres Speichermanagement (1$/$2 $–$ 4 kB / Seite)
+\item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen \"uber eine Seiten-
+grenze verlaufen)
+\end{itemize}
+
+Idee:\\
+Nur die gerade verwendeten Teile des Codes werden geladen. Dies sind 10 bis 15 
+Prozent die im HS liegen (working set). Wird auf eine Seite zugegriffen die nicht geladen ist, so gibt es einen page fault und die Seite wird nachgeladen.\\
+
+Optimierung des “demand paging” durch
+\begin{itemize}
+\item Reference bit $\rightarrow$ erm\"oglicht nicht-lineares “working set”
+\item Age bit $\rightarrow$ verbleibende Zet einer Seite im “working set”
+\end{itemize}
+Zwei Aufgaben f\"ur das Paging-Subsystem:
+\begin{itemize}
+\item Seitenalterung und Auslagerung/L\"oschung gen\"ugend alter Seiten
+\item Bearbeitung von “page faults”
+\end{itemize}
+
+\newpage
 \section{I/O, Peripherie}
 \subsection{Anforderungen von Peripheriegeräten}
 \begin{itemize}
@@ -531,65 +588,8 @@ Bei der Verwendung von zeichen-orientierten Gerätetreibern ist der Buffer Cach
 	\item Die Abfrage ist nicht blockierend, d.h. ein Prozess wird nicht blockiert, wenn das Gerät gerade nicht bereit ist.
 	\item Mit dem Systemaufruf mmap() kann ein Prozess den Inhalt einer Datei in seinen virtuellen Adressraum kopieren und dort die Daten direkt manipulieren, anstatt read() und write() zu verwenden. Dies ist der gleiche Mechanismus wie im neuen Buffer Cache, jedoch ist er nun auch direkt für die Progammierung zugänglich. Falls die Datei gerade von mehreren Prozessen benutzt wird, schreiben alle Prozesse auf die gleiche physische Speicherposition. Dermmap()Systemaufrufkannzudemaufdem zeichen-orientierten Gerätespezialdatei eines Geräts benutzt werden, um direkten Zugriff auf den “on-board” Speicher des Geräts zu erhalten (z.B. auf den Frame Buffer einer Video-Karte)
 \end{itemize}
-\end{document}
 
-
-\section{Hauptspeicherverwaltung}
-\subsection{Virtual Memory}
-\begin{itemize}
-\item Hauptspeichererweiterung pro einzelnes System oder Prozess.
-\item Systematische Abstraktion f\"ur systemspezifische Overlay-
-Techniken
-\item Organisation des Hauptspeichers in gleich grosse,
-einheitlich adressierbare Einheiten (Seiten, pages)
-\item Ben\"otigt hardware-unterst\"utze Abbildung zwischen
-physischen und virtuellen Adressen
-\end{itemize}
-
-\subsection{Swapping}
-Swapper (Process 0) wird periodisch vom Kernel aufgerufen.\\
-
-Swap Device  $\longleftrightarrow$ Swapper $\longleftrightarrow$ Hauptspeicher\\
-
-Swap Out (Hauptspeicher zu SwapDevice):
-\begin{itemize}
-\item Kein Platz im HS f\"ur weitere Prozesse, Prozess ruft aber fork auf $\Rightarrow$ fork swap
-\item Kein Platz im HS aber Prozess w\"achst, weil z.B. Stack w\"achst $\Rightarrow$ expansion swap
-\item Swap Device ausgelagerter wartender Prozess wird ready to run und wird vom Scheduler ausgef\"uhrt $\Rightarrow$ exchange swap
-\end{itemize}
-
-Swap In (SwapDevice zu Hauptspeicher):
-\begin{itemize}
-\item Nur ready to run Prozesse sind w\"ahlbar $\Rightarrow$
-\item Pr\"aferenz auf Prozesse die > 2 sec. Ausgelagert waren
-\end{itemize}
-
-\subsection{Demand Paging}
-Anforderung: ein einzelner Prozess soll gr\"osser sein d\"urfen, als der
-verf\"ugbare Hauptspeicher.\\
-\\
-Voraussetzungen:
-\begin{itemize}
-\item Hardware unterst\"utzt seitenorientieres Speichermanagement (1$/$2 $–$ 4 kB / Seite)
-\item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen \"uber eine Seiten-
-grenze verlaufen)
-\end{itemize}
-
-Idee:\\
-Nur die gerade verwendeten Teile des Codes werden geladen. Dies sind 10 bis 15 
-Prozent die im HS liegen (working set). Wird auf eine Seite zugegriffen die nicht geladen ist, so gibt es einen page fault und die Seite wird nachgeladen.\\
-
-Optimierung des “demand paging” durch
-\begin{itemize}
-\item Reference bit $\rightarrow$ erm\"oglicht nicht-lineares “working set”
-\item Age bit $\rightarrow$ verbleibende Zet einer Seite im “working set”
-\end{itemize}
-Zwei Aufgaben f\"ur das Paging-Subsystem:
-\begin{itemize}
-\item Seitenalterung und Auslagerung/L\"oschung gen\"ugend alter Seiten
-\item Bearbeitung von “page faults”
-\end{itemize}
-
+\newpage
 \section{Sheduling Strategien}
 Funktionsweise:
 \begin{itemize}
@@ -623,7 +623,7 @@ Scheduling-Strategien:
 Schnellere Beendigung und Freigabe und Beendigung im Zeitlimit
 \end{itemize}
 
-
+\newpage
 \section{System\"uberwachung}
 Was kann alles sinnvollerweise \"uberwacht werden:
 \begin{itemize}
@@ -648,118 +648,5 @@ Anm.: Verschiedene Fachbegriffe rund um System\"uberwachung
 \item Triage (Rollen, Verantwortlichkeiten, Beurteilungskriterien, Prozesse, Zeitfaktor, ...)
 \end{itemize}
 
-\section{Hauptspeicherverwaltung}
-\subsection{Virtual Memory}
-\begin{itemize}
-\item Hauptspeichererweiterung pro einzelnes System oder Prozess.
-\item Systematische Abstraktion für systemspezifische Overlay-
-Techniken
-\item Organisation des Hauptspeichers in gleich grosse,
-einheitlich adressierbare Einheiten (Seiten, pages)
-\item Benötigt hardware-unterstütze Abbildung zwischen
-physischen und virtuellen Adressen
-\end{itemize}
-
-\subsection{Swapping}
-Swapper (Process 0) wird periodisch vom Kernel aufgerufen.\\
-
-Swap Device $\longleftrightarrow$ Swapper $\longleftrightarrow$ Hauptspeicher\\
-
-Swap Out (Hauptspeicher zu SwapDevice):
-\begin{itemize}
-\item Kein Platz im HS für weitere Prozesse, Prozess ruft aber fork auf $\Rightarrow$ fork swap
-\item Kein Platz im HS aber Prozess wächst, weil z.B. Stack wächst $\Rightarrow$ expansion swap
-\item Swap Device ausgelagerter wartender Prozess wird ready to run und wird vom Scheduler ausgeführt $\Rightarrow$ exchange swap
-\end{itemize}
-
-Swap In (SwapDevice zu Hauptspeicher):
-\begin{itemize}
-\item Nur ready to run Prozesse sind wählbar $\Rightarrow$
-\item Präferenz auf Prozesse die > 2 sec. Ausgelagert waren
-\end{itemize}
-
-\subsection{Demand Paging}
-Anforderung: ein einzelner Prozess soll grösser sein dürfen, als der
-verfügbare Hauptspeicher.\\
-\\
-Voraussetzungen:
-\begin{itemize}
-\item Hardware unterstützt seitenorientieres Speichermanagement (1$/$2 $–$ 4 kB / Seite)
-\item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen über eine Seiten-
-grenze verlaufen)
-\end{itemize}
-
-Idee:\\
-Nur die gerade verwendeten Teile des Codes werden geladen. Dies sind 10 bis 15
-Prozent die im HS liegen (working set). Wird auf eine Seite zugegriffen die nicht geladen ist, so gibt es einen page fault und die Seite wird nachgeladen.\\
-
-Optimierung des “demand paging” durch
-\begin{itemize}
-\item Reference bit $\rightarrow$ ermöglicht nicht-lineares “working set”
-\item Age bit $\rightarrow$ verbleibende Zet einer Seite im “working set”
-\end{itemize}
-Zwei Aufgaben für das Paging-Subsystem:
-\begin{itemize}
-\item Seitenalterung und Auslagerung/Löschung genügend alter Seiten
-\item Bearbeitung von “page faults”
-\end{itemize}
-
-\section{Sheduling Strategien}
-Funktionsweise:
-\begin{itemize}
-\item Fairness / Regeleinhaltung bezüglich der Zuteilung von Betriebsmitteln an Prozesse gemäss definierter Kriterien
-\item Vermeidung von „Starvation“ und „Deadlocks“
-\end{itemize}
-Einsatzgebiete:
-\begin{itemize}
-\item Echtzeitsysteme mit „harten“ Garantien
-\item Möglichst unterbruchsfreie Batchverarbeitung
-\item Interaktives Mehrbenutzersystem
-\end{itemize}
-
-\subsection{Scheduling in Unix}
-3 Prioritätsklassen:
-\begin{itemize}
-\item Realtime: Scheduling mit fixen Prioritäten
-\item System: Geschlossene Scheduling-Klasse für Systemprozesse
-\item Time-Shared: Für alle Benutzerprozesse
-\end{itemize}
-
-Prioritäts-basiertes Scheduling:
-\begin{itemize}
-\item Verminderte Prozesspriorität mit steigendem Ressourcenverbrauch
-\item Verminderung der Priorität gemäss Laufzeit
-\end{itemize}
-Scheduling-Strategien:
-\begin{itemize}
-\item Kleine, schnelle Prozesse präferieren (z.B. Shell)
-\item Ressourcen-intensiven Prozessen alle benötigten Ressourcen geben:
-Schnellere Beendigung und Freigabe und Beendigung im Zeitlimit
-\end{itemize}
-
-
-\section{Systemüberwachung}
-Was kann alles sinnvollerweise Überwacht werden:
-\begin{itemize}
-\item Betriebssystem Typ, Alter
-\item Laufzeitüberwachung
-\item Verschiedene Speicher, Prozesse CPU, RAM, Disks
-\item Auslastung/Trending CPU
-\item Netzwerkanschlüsse
-\item Autorisierter Anschluss an Netzwerk
-\item Peripheriegeräte,
-\item Backupüberwachung
-\item Software und Version, Lizenz
-\item Laufzeitüberwachung Disk
-\item Benutzer und Berechtigung
-\end{itemize}
-
-Anm.: Verschiedene Fachbegriffe rund um Systemüberwachung
-\begin{itemize}
-\item Incident (Einzelfall)
-\item Problem (Reihung)
-\item Desaster (Notfallplan ausführen!)
-\item Triage (Rollen, Verantwortlichkeiten, Beurteilungskriterien, Prozesse, Zeitfaktor, ...)
-\end{itemize}
 
 \end{document}
