@@ -422,4 +422,49 @@ Aber:
 	\item Signalisierung
 	\item Prozesskommunikation
 \end{itemize}
+
+\newpage
+\section{I/O, Peripherie}
+\subsection{Anforderungen von Peripheriegeräten}
+\begin{itemize}
+	\item Ressourcenverwaltung:
+		\begin{itemize}
+			\item Hauptspeicher für Zwischenpufferung von Daten beim Transfer
+			\item CPU-Zeit für das Behandeln asynchroner Events (z.B. Ankunft von Daten an der Netzwerkschnittstelle)
+		\end{itemize}
+	\item Zugriffssteuerung und –synchronisation:
+		\begin{itemize}
+			\item Einheitliche Schnittstelle
+			\item Synchronisation von Zugriffen durch die Prozesse
+			\item Signalisierung
+		\end{itemize}
+	\item Scheduling
+\end{itemize}
+
+\subsection{Aufgaben und Funktionsweise des I/O-Subsystems}
+\begin{itemize}
+	\item Aufgabe: schneller und zuverlässiger Datentransfer zwischen Geräten (Disk, Drucker, Tastatur, Bildschirm, Maus etc.) und Prozessen, d.h. Datenstrukturen im Prozess-Adressraum (read und write Operationen)
+	\item Design: Das I/O Subsystem besteht aus einer oberen Schicht, die Daten zwischen dem Benutzer- und dem Kernel-Adressraum bewegt, und einer unteren Schicht, die Daten zwischen dem Kernel-Adressraum und den Geräten bewegt.
+	\item Standardisiertes I/O (Geräteunabhängigkeit bezüglich Programmierung und Benutzung)
+	\item Optimiertes I/O (abhängig vom Gerät und dessen Eigenschaften, Durch- satz, Sicherheit usw.)
+	\item Konsistenz trotz Unterbrechbarkeit der Operationen und Zugriffssicher- heit wenn Daten zwichen Kernel und Benutzer-Prozess bewegt werden
+	\item Drei Typen von I/O: Datei-basiert, Zeichen-basiert, STREAM-basiert
+\end{itemize}
+
+\subsection{Buffer-Cache}
+\subsubsection{Der klassische Buffer Cache}
+\begin{itemize}
+	\item Ziel: Optimierung des Zugriffs auf block-orientierte geräte, maximale Menge Daten im Speicher behalten.
+	\item Strategie 1: vorausschauendes Lesen (read ahead)
+		\begin{itemize}
+			\item Vorteil: beschleunigt das sequentielle Lesen (z.B. einer Datei)
+			\item Risiko: potentielle Verschwendung von Hauptspeicher
+		\end{itemize}
+	\item Strategie 2: verzögertes Schreiben (delayed write)
+		\begin{itemize}
+			\item Vorteil: Bündeln von Daten in Blöcke für das Schreiben auf langsame Geräte (z.B. Disk)
+			\item Risiko:nacheinemerfolgreichenwrite()Systemaufrufsind die Daten noch nicht auf der Disk gespeichert (Verlustrisiko)
+		\end{itemize}
+	\item Optimiert für die Arbeit mit dummen Peripheriegeräten
+\end{itemize}
 \end{document}
