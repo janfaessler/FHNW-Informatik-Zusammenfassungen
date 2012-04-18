@@ -27,7 +27,7 @@
 
 %Metadata
 \title{Betriebssysteme}
-\author{Fabian Stebler}
+\author{Fabian Stebler \& Jan F\"assler}
 \date{2. Semester (FS 2012)}
 
 
@@ -35,14 +35,28 @@
 \maketitle
 \newpage
 \section{Einleitung}
+
+\subsection{Anforderungen an ein Betriebssystem}
+\begin{itemize}
+	\item Start des Systems
+	\item Laden und Unterbrechen von Programmen
+	\item Methoden für die Interprozesskommunikation
+	\item Verwaltung der Prozessorzeit
+	\item Verwaltung des primären und sekundären Speicherplatzes für das Betriebssystem und seine Anwendungen
+	\item Verwaltung der angeschlossenen Geräte, Netzwerke etc.
+	\item Schutz des Systemkerns und seiner Ressourcen vor nicht intendierter Benutzung
+	\item Benutzerführung, Rollen \& Rechte	
+	\item Einheitliche Schnittstelle für die System- \& Anwendungs- programmierung
+	\item Ereignisprotokollierung
+\end{itemize}
 \subsection{Definition}
-Ein Betriebssystem ist die Software die die Verwendung eines Computers ermöglicht. Es verwaltet Betriebsmittel wie den Speicher, die I/O-Geräte, usw.\\
+Ein Betriebssystem ist die Software die die Verwendung eines Computers erm\"oglicht. Es verwaltet Betriebsmittel wie den Speicher, die I/O-Ger\"ate, usw.
 \subsection{Bestandteile}
 Betriebssysteme bestehen in der Regel aus einem Betriebssystemkern (englisch: Kernel), der die Hardware des Computers verwaltet, sowie grundlegenden Programmen, die dem Start des Betriebssystems und dessen Konfiguration dienen.\\
-Zu den Komponenten zählen:
+Zu den Komponenten z\"ahlen:
 \begin{itemize}
 \item Boot-Loader
-\item Gerätetreiber
+\item Ger\"atetreiber
 \item Systemdienste
 \item Programmbibliotheken
 \item Dienstprogramme
@@ -58,36 +72,36 @@ Zu den Komponenten zählen:
 Betriebssysteme finden sich in fast allen Computern: als Echtzeitbetriebssysteme auf Prozessrechnern, auf normalen PCs und als Mehrprozessorsysteme auf Hosts und Grossrechnern.
 
 \subsection{Geschichte}
-Mechanische Rechenmaschienen wurden mit der Zeit mit Lochstreifen versehen und somit konnte von einer Art Betriebssystem gesprochen werden. Später wurden die mechanischen Teile durch die Röhrentechnologie und anschliessend durch Transistoren ersetzt (ca.1947).
+Mechanische Rechenmaschienen wurden mit der Zeit mit Lochstreifen versehen und somit konnte von einer Art Betriebssystem gesprochen werden. Sp\"ater wurden die mechanischen Teile durch die R\"ohrentechnologie und anschliessend durch Transistoren ersetzt (ca.1947).
 \begin{itemize}
 \item 1955 Erfindung Mikroprogrammierung
-\item 1964 Erstes modellreihenübergreifendes BS
+\item 1964 Erstes modellreihen\"ubergreifendes BS
 \item 1969 Beginn Arbeit an UNIX
-\item 1972-1974 Umschreiben UNIX in C (portabilität)
-\item 1980-1990 Popularitätssteigerung bei Heimcomputern
-\item 1981 Entwicklung erste graphische Oberfläche. Apple kauft sich mit Aktien ein, kreirt MAC und MAC OS. Verliert aber aufgrund der Experimentierfreudigkeit Marktanteile an Windows.
+\item 1972-1974 Umschreiben UNIX in C (portabilit\"at)
+\item 1980-1990 Popularit\"atssteigerung bei Heimcomputern
+\item 1981 Entwicklung erste graphische Oberfl\"ache. Apple kauft sich mit Aktien ein, kreirt MAC und MAC OS. Verliert aber aufgrund der Experimentierfreudigkeit Marktanteile an Windows.
 \item 1991 Linus Torvalds beginnt mit der Entwicklung des LINUX-Kernels. (Start Open Source Bewegung)
 \item Microsoft entwickelte MS-DOS weiter und liefert MS-Windows
 95 Mitte der 90‘er Jahre aus. (Tabellenkalkulation)
 \item Im PC-Desktop-Bereich tobte ein eigentlicher „Glaubenskrieg“ zwischen Microsoft und Apple.
-\item IBM und andere zogen sicher immer mehr in den Midrange/Mainframe-Markt zurück.
+\item IBM und andere zogen sicher immer mehr in den Midrange/Mainframe-Markt zur\"uck.
 \end{itemize}
 
 \subsection{Lessons learned}
 \begin{itemize}
 
 
-\item Die Grundkonzepte haben sich stark angenähert.
-\item Kompatibilität wird (oft zähneknirschend) bereitgestellt.
-\item Entscheide für/gegen ein Betriebssystem (bes. im Privat-
-bereich) haben teilweise weltanschauliche Hintergründe.
+\item Die Grundkonzepte haben sich stark angen\"ahert.
+\item Kompatibilit\"at wird (oft z\"ahneknirschend) bereitgestellt.
+\item Entscheide f\"ur/gegen ein Betriebssystem (bes. im Privat-
+bereich) haben teilweise weltanschauliche Hintergr\"unde.
 \item Der Quellcode ist kein Geheimnis und kein Marktvorteil mehr.
 \item Partizipative Entwicklung durch Communities hat ein grosses
 Markt- und Sparpotential.
-\item Die Positionen scheinen bezogen, der Markt wächst immer
+\item Die Positionen scheinen bezogen, der Markt w\"achst immer
 noch stark genug, um den etablierten Anbietern Wachstum zu
-ermöglichen.
-\item Die Wertschöpfung hat sich verlagert:
+erm\"oglichen.
+\item Die Wertsch\"opfung hat sich verlagert:
 \begin{itemize}
 \item Hardware zu Betriebssystem
 \item GUI zu Applikationen
@@ -101,13 +115,13 @@ ermöglichen.
 \begin{itemize}
 \item Start des Systems
 \item Laden und Unterbrechen von Programmen (Laufzeitumgebung)
-\item Methoden für die Interprozesskommunikation
+\item Methoden f\"ur die Interprozesskommunikation
 \item Verwaltung der Prozessorzeit
-\item Verwaltung des primären und sekundären Speicherplatzes für das Betriebssystem und seine Anwendungen
-\item Verwaltung der angeschlossenen Geräte, Netzwerke etc.
+\item Verwaltung des prim\"aren und sekund\"aren Speicherplatzes f\"ur das Betriebssystem und seine Anwendungen
+\item Verwaltung der angeschlossenen Ger\"ate, Netzwerke etc.
 \item Schutz des Systemkerns und seiner Ressourcen vor nicht intendierter Benutzung
-\item Benutzerführung, Rollen und Rechte
-\item Einheitliche Schnittstelle für die System- und Anwendungsprogrammierung Ereignisprotokollierung
+\item Benutzerf\"uhrung, Rollen und Rechte
+\item Einheitliche Schnittstelle f\"ur die System- und Anwendungsprogrammierung Ereignisprotokollierung
 
 \end{itemize}
 
@@ -115,14 +129,14 @@ ermöglichen.
 Untenstehende Grafik zeigt die Schichtenarchitektur eines modernen Betriebssystems (Linux).\\
 \includegraphics[scale=0.15]{Bsys.jpg}\\
 
-\subsection{Aufgabenteilung der Blöcke}
+\subsection{Aufgabenteilung der Bl\"ocke}
 \subsubsection{Dateisystem}
 \begin{itemize}
 \item Struktur des Dateisystems (Baum, Graph, flach, ...)
 \item Strukturelemente (Directories)
 \item Zugriffsrechte auf Directories und Dateien
-\item Anlage, Suche, Manipulation, Löschen von Dateien
-\item Verwaltung von Datenblöcken auf Speichermedien
+\item Anlage, Suche, Manipulation, L\"oschen von Dateien
+\item Verwaltung von Datenbl\"ocken auf Speichermedien
 \item Kombination von Dateisystemen (mounting)
 \item Benutzerschnittstelle und Navigation
 \item Backup / Restore
@@ -138,20 +152,20 @@ Untenstehende Grafik zeigt die Schichtenarchitektur eines modernen Betriebssyste
 \item Prozesskommunikation (Prozess-Prozess und Kern-Prozess / Prozess-Kern)
 \item Zuordnung von Hauptspeicher und anderen geteilten Ressourcen
 \item Ein-/Auslagerung von Prozessen
-\item Prozesse und ihre Zustände anzeigen
+\item Prozesse und ihre Zust\"ande anzeigen
 \end{itemize}
 
 \subsubsection{System Call Interface}
 \begin{itemize}
 \item Einzige Schnittstelle zwischen Kern und Benutzer
 \item Normierung der Syntax und Semantik (POSIX 1003)
-\item Parametrisierung und Übergabe
-\item Übergabe der Kontrolle $\rightarrowtail$ Betriebsmodi
+\item Parametrisierung und \"ubergabe
+\item \"ubergabe der Kontrolle $\rightarrowtail$ Betriebsmodi
 \end{itemize}
 
 \subsubsection{Programmierung}
 \begin{itemize}
-\item Wahl der Programmiersprache / Systempräferenz
+\item Wahl der Programmiersprache / Systempr\"aferenz
 \item System-/Applikationsnahe Bibliotheksfunktionen
 \item Programmierumgebung (Editor, Compiler, Assembler, Linker, Loader, Debugger)
 \item „Bundling“ in einer Applikation (z.B. Eclipse)
@@ -162,7 +176,7 @@ Untenstehende Grafik zeigt die Schichtenarchitektur eines modernen Betriebssyste
 \item Textuelle Basis-Schnittstelle mit Kommando-Interpreter (Shell) Konsole
 \item Programmierbarkeit (Scripting, Pipelining, I/O-Redirection) der Benutzerschnittstelle
 \item Graphische Benutzerschnittstelle (GUI) mit
-\item Abstraktion der unterliegenden Komplexität und Syntax für Nicht Systemspezialisten
+\item Abstraktion der unterliegenden Komplexit\"at und Syntax f\"ur Nicht Systemspezialisten
 \item Austauschbarkeit der Shell und der Systembefehle (Applikationen)
 \end{itemize}
 
@@ -170,23 +184,23 @@ Untenstehende Grafik zeigt die Schichtenarchitektur eines modernen Betriebssyste
 \subsubsection{I/O Management}
 Ein Betriebssystem muss auch die Hardware kontrollieren:
 \begin{itemize}
-\item Die Fähigkeiten der Hardware voll ausschöpfen.
+\item Die F\"ahigkeiten der Hardware voll aussch\"opfen.
 \item Die verschiedenen inhomogenen Komponenten zu einer Einheit formen.
-\item Die Hardware schützen vor unerlaubtem Zugriff.
+\item Die Hardware sch\"utzen vor unerlaubtem Zugriff.
 \end{itemize}
-Anm.: Peripheriegeräte sind meist unterschiedlich, sollten aber leicht in das System integrierbar sein.
+Anm.: Peripherieger\"ate sind meist unterschiedlich, sollten aber leicht in das System integrierbar sein.
 
 \subsubsection{File System als generelle Schnittstelle}
-Die Idee von Unix war, dass File System für möglichst viele Subsysteme als Schnittstelle zu verwenden.
+Die Idee von Unix war, dass File System f\"ur m\"oglichst viele Subsysteme als Schnittstelle zu verwenden.
 \begin{itemize}
 \item Dateien, Directories
 \item Prozesssynchronisation (Lock Files, ...)
 \item Prozesskommunikation (Pipes, Sockets)
-\item Peripheriegeräte (Device Special Files)
+\item Peripherieger\"ate (Device Special Files)
 \item Kommunikationsprotokolle (TCP/IP, ...)
 \item Prozesse (/proc Dateisystem)
 \end{itemize}
-Anm.: Es bedingt einer zusätzlichen Abstraktionsschicht.
+Anm.: Es bedingt einer zus\"atzlichen Abstraktionsschicht.
 
 \newpage
 \section{Filesystem}
@@ -199,37 +213,37 @@ Die anschliessende Graphik zeigt ein virtuelles Dateisytem:\\
 \\
 Superblockinhalt:
 \begin{itemize}
-\item Anzahl inodes und Datenblöcke
+\item Anzahl inodes und Datenbl\"ocke
 \item Adresse des 1. Datenblocks
-\item Anzahl freie Blöcke und inodes
-\item Grösse eines Datenblocks
-\item Blöcke / inodes pro Gruppe
+\item Anzahl freie Bl\"ocke und inodes
+\item Gr\"osse eines Datenblocks
+\item Bl\"ocke / inodes pro Gruppe
 \item Anzahl Bytes pro inode
 \end{itemize}
 
 \subsection{Blockallokationen}
-\subsubsection{Zusammenhängende Belegung}
+\subsubsection{Zusammenh\"angende Belegung}
 Vorteile:
 \begin{itemize}
 \item Einfachste aller Methoden
 \item Sehr schneller direkter Zugriff auf die Daten
-\item Für die Lokalisierung der Dateiblöcke brauchen wir
-nur Anfangsblock und Größe der Datei zu wissen.
-\item Lese-Operationen können sehr effizient implementiert
+\item F\"ur die Lokalisierung der Dateibl\"ocke brauchen wir
+nur Anfangsblock und Gr\"oße der Datei zu wissen.
+\item Lese-Operationen k\"onnen sehr effizient implementiert
 werden.
 \item Gute Fehlereingrenzung
 \end{itemize}
 Nachteile:
 \begin{itemize}
-\item Dynamische Dateigrößen sind ein Problem
+\item Dynamische Dateigr\"oßen sind ein Problem
 \item Im Laufe der Zeit wird die Platte fragmentiert.
-\item Platz zu finden für neue Dateien ist ein Problem
-\item Verwaltung von freien Speicherplätzen notwendig
-\item Regelmäßige Kompaktifizierung notwendig
-\item Platte hin- und zurück kopieren
+\item Platz zu finden f\"ur neue Dateien ist ein Problem
+\item Verwaltung von freien Speicherpl\"atzen notwendig
+\item Regelm\"aßige Kompaktifizierung notwendig
+\item Platte hin- und zur\"uck kopieren
 \end{itemize}
-\subsubsection{Verlinkte Blöcke}
-Jede Datei wird als verkettete Liste von Plattenblöcken gespeichert. Nur die Plattenadresse des ersten und letzten Blocks wird in dem Verzeichniseintrag gespeichert.\\
+\subsubsection{Verlinkte Bl\"ocke}
+Jede Datei wird als verkettete Liste von Plattenbl\"ocken gespeichert. Nur die Plattenadresse des ersten und letzten Blocks wird in dem Verzeichniseintrag gespeichert.\\
 Vorteile:
 \begin{itemize}
 \item Keine externe Fragmentierung
@@ -239,8 +253,8 @@ Nachteile:
 \begin{itemize}
 \item Schlechter wahlfreier Zugriff auf Dateiinhalte
 \item Jeder Verweis verursacht einen neuen Plattenzugriff
-\item Overhead für das Speichern der Verkettung (Lösung: clusters aus mehren Blöcken)
-\item Erhöhter Aufwand bei Dateizugriffen
+\item Overhead f\"ur das Speichern der Verkettung (L\"osung: clusters aus mehren Bl\"ocken)
+\item Erh\"ohter Aufwand bei Dateizugriffen
 \item Schlechte Fehlereingrenzung
 \end{itemize}
 
@@ -251,13 +265,13 @@ Nachteile:
 
 Vorteile:
 \begin{itemize}
-\item Dateien können sehr leicht und effizient vergrößert werden
+\item Dateien k\"onnen sehr leicht und effizient vergr\"oßert werden
 \end{itemize}
 Nachteile:
 \begin{itemize}
 \item Interne Fragmentierung
-\item schlecht für random accesses
-\item fehleranfällig
+\item schlecht f\"ur random accesses
+\item fehleranf\"allig
 \end{itemize}
 \newpage
 \subsubsection{Index Allokation}
@@ -268,7 +282,7 @@ Nachteile:
 
 \subsubsection{Informatione Inode}
 \begin{tabular}{p{7cm}|p{7cm}}
-\textbf{Auf der Disk} & \textbf{Zusätzlich im Memory} \\ \hline
+\textbf{Auf der Disk} & \textbf{Zus\"atzlich im Memory} \\ \hline
 \begin{itemize}
 \item Inode Nummer
 \item Anzahl hard links
@@ -276,7 +290,7 @@ Nachteile:
 \item Rechte (-, r, w, x, s)
 \item Besitzer
 \item Gruppe
-\item Grösse
+\item Gr\"osse
 \item Letzte “access time”
 \item Letzte “content change time”
 \item Letzte “inode modification time”
@@ -286,32 +300,32 @@ Nachteile:
 \begin{itemize}
 \item Link auf die “hash list”
 \item Link auf die “inode list”
-\item Benutzerzähler
-\item Gerätenummer
+\item Benutzerz\"ahler
+\item Ger\"atenummer
 \item “Device special file” Indikator
-\item Grösse eines Blocks
-\item Anzahl Blöcke
+\item Gr\"osse eines Blocks
+\item Anzahl Bl\"ocke
 \item Lock auf den inode
 \item “Mount point” Indikator
 \item Warteschlange wartender Prozesse
 \item Locks auf die Datei
-\item Hauptspeicher-Region (für Memory-mapped file I/O)
+\item Hauptspeicher-Region (f\"ur Memory-mapped file I/O)
 \item Belegte Seiten im Hauptspeicher
 \end{itemize}
 \end{tabular}
 
-\subsection{Designvorgaben für Filesystem}
+\subsection{Designvorgaben f\"ur Filesystem}
 \begin{itemize}
 \item Anzahl Disks und Disk Controller
 \item Verteilung auf Partitionen
-\item Blockgrösse pro Partition
+\item Blockgr\"osse pro Partition
 \begin{itemize}
-\item Grosse Blöcke: schneller Zugriff auf Dateien (Datei-Durchschnittsgrösse $<$ 4 kB)
-\item Kleine Blöcke: weniger interne Fragmentierung
+\item Grosse Bl\"ocke: schneller Zugriff auf Dateien (Datei-Durchschnittsgr\"osse $<$ 4 kB)
+\item Kleine Bl\"ocke: weniger interne Fragmentierung
 \end{itemize}
 \item Anzahl Dateien / Inodes pro Partition
 \begin{itemize}
-\item Wenige Inodes: mehr Platz für Dateiblöcke
+\item Wenige Inodes: mehr Platz f\"ur Dateibl\"ocke
 \item Viele Inodes: mehr Dateien pro Partition mgl.
 \end{itemize}
 \end{itemize}
@@ -376,7 +390,7 @@ Linux verwendet eine Mischform (dynamisch angelegte Prozesskon- trollblöcke (P
 \subsection{Sichern des Prozess Kontexts}
 \includegraphics[scale=0.3]{save_process_context.png}
 
-\subsection{Prozess Zustände}
+\subsection{Prozess Zust\"ande}
 \includegraphics[scale=0.5]{process_states.png}
 
 \subsection{Prozess-bezogene System Calls}
@@ -524,11 +538,11 @@ Bei der Verwendung von zeichen-orientierten Gerätetreibern ist der Buffer Cach
 \subsection{Virtual Memory}
 \begin{itemize}
 \item Hauptspeichererweiterung pro einzelnes System oder Prozess.
-\item Systematische Abstraktion für systemspezifische Overlay-
+\item Systematische Abstraktion f\"ur systemspezifische Overlay-
 Techniken
 \item Organisation des Hauptspeichers in gleich grosse,
 einheitlich adressierbare Einheiten (Seiten, pages)
-\item Benötigt hardware-unterstütze Abbildung zwischen
+\item Ben\"otigt hardware-unterst\"utze Abbildung zwischen
 physischen und virtuellen Adressen
 \end{itemize}
 
@@ -539,25 +553,25 @@ Swap Device  $\longleftrightarrow$ Swapper $\longleftrightarrow$ Hauptspeicher\\
 
 Swap Out (Hauptspeicher zu SwapDevice):
 \begin{itemize}
-\item Kein Platz im HS für weitere Prozesse, Prozess ruft aber fork auf $\Rightarrow$ fork swap
-\item Kein Platz im HS aber Prozess wächst, weil z.B. Stack wächst $\Rightarrow$ expansion swap
-\item Swap Device ausgelagerter wartender Prozess wird ready to run und wird vom Scheduler ausgeführt $\Rightarrow$ exchange swap
+\item Kein Platz im HS f\"ur weitere Prozesse, Prozess ruft aber fork auf $\Rightarrow$ fork swap
+\item Kein Platz im HS aber Prozess w\"achst, weil z.B. Stack w\"achst $\Rightarrow$ expansion swap
+\item Swap Device ausgelagerter wartender Prozess wird ready to run und wird vom Scheduler ausgef\"uhrt $\Rightarrow$ exchange swap
 \end{itemize}
 
 Swap In (SwapDevice zu Hauptspeicher):
 \begin{itemize}
-\item Nur ready to run Prozesse sind wählbar $\Rightarrow$
-\item Präferenz auf Prozesse die > 2 sec. Ausgelagert waren
+\item Nur ready to run Prozesse sind w\"ahlbar $\Rightarrow$
+\item Pr\"aferenz auf Prozesse die > 2 sec. Ausgelagert waren
 \end{itemize}
 
 \subsection{Demand Paging}
-Anforderung: ein einzelner Prozess soll grösser sein dürfen, als der
-verfügbare Hauptspeicher.\\
+Anforderung: ein einzelner Prozess soll gr\"osser sein d\"urfen, als der
+verf\"ugbare Hauptspeicher.\\
 \\
 Voraussetzungen:
 \begin{itemize}
-\item Hardware unterstützt seitenorientieres Speichermanagement (1$/$2 $–$ 4 kB / Seite)
-\item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen über eine Seiten-
+\item Hardware unterst\"utzt seitenorientieres Speichermanagement (1$/$2 $–$ 4 kB / Seite)
+\item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen \"uber eine Seiten-
 grenze verlaufen)
 \end{itemize}
 
@@ -567,70 +581,70 @@ Prozent die im HS liegen (working set). Wird auf eine Seite zugegriffen die nich
 
 Optimierung des “demand paging” durch
 \begin{itemize}
-\item Reference bit $\rightarrow$ ermöglicht nicht-lineares “working set”
+\item Reference bit $\rightarrow$ erm\"oglicht nicht-lineares “working set”
 \item Age bit $\rightarrow$ verbleibende Zet einer Seite im “working set”
 \end{itemize}
-Zwei Aufgaben für das Paging-Subsystem:
+Zwei Aufgaben f\"ur das Paging-Subsystem:
 \begin{itemize}
-\item Seitenalterung und Auslagerung/Löschung genügend alter Seiten
+\item Seitenalterung und Auslagerung/L\"oschung gen\"ugend alter Seiten
 \item Bearbeitung von “page faults”
 \end{itemize}
 
 \section{Sheduling Strategien}
 Funktionsweise:
 \begin{itemize}
-\item Fairness / Regeleinhaltung bezüglich der Zuteilung von Betriebsmitteln an Prozesse gemäss definierter Kriterien
+\item Fairness / Regeleinhaltung bez\"uglich der Zuteilung von Betriebsmitteln an Prozesse gem\"ass definierter Kriterien
 \item Vermeidung von „Starvation“ und „Deadlocks“
 \end{itemize}
 Einsatzgebiete:
 \begin{itemize}
 \item Echtzeitsysteme mit „harten“ Garantien
-\item Möglichst unterbruchsfreie Batchverarbeitung
+\item M\"oglichst unterbruchsfreie Batchverarbeitung
 \item Interaktives Mehrbenutzersystem
 \end{itemize}
 
 \subsection{Scheduling in Unix}
-3 Prioritätsklassen:
+3 Priorit\"atsklassen:
 \begin{itemize}
-\item Realtime: Scheduling mit fixen Prioritäten
-\item System: Geschlossene Scheduling-Klasse für Systemprozesse
-\item Time-Shared: Für alle Benutzerprozesse
+\item Realtime: Scheduling mit fixen Priorit\"aten
+\item System: Geschlossene Scheduling-Klasse f\"ur Systemprozesse
+\item Time-Shared: F\"ur alle Benutzerprozesse
 \end{itemize}
 
-Prioritäts-basiertes Scheduling:
+Priorit\"ats-basiertes Scheduling:
 \begin{itemize}
-\item Verminderte Prozesspriorität mit steigendem Ressourcenverbrauch
-\item Verminderung der Priorität gemäss Laufzeit
+\item Verminderte Prozesspriorit\"at mit steigendem Ressourcenverbrauch
+\item Verminderung der Priorit\"at gem\"ass Laufzeit
 \end{itemize}
 Scheduling-Strategien:
 \begin{itemize}
-\item Kleine, schnelle Prozesse präferieren (z.B. Shell)
-\item Ressourcen-intensiven Prozessen alle benötigten Ressourcen geben:
+\item Kleine, schnelle Prozesse pr\"aferieren (z.B. Shell)
+\item Ressourcen-intensiven Prozessen alle ben\"otigten Ressourcen geben:
 Schnellere Beendigung und Freigabe und Beendigung im Zeitlimit
 \end{itemize}
 
 
-\section{Systemüberwachung}
-Was kann alles sinnvollerweise Überwacht werden:
+\section{System\"uberwachung}
+Was kann alles sinnvollerweise \"uberwacht werden:
 \begin{itemize}
 \item Betriebssystem Typ, Alter
-\item Laufzeitüberwachung
+\item Laufzeit\"uberwachung
 \item Verschiedene Speicher, Prozesse CPU, RAM, Disks
 \item Auslastung/Trending CPU
-\item Netzwerkanschlüsse
+\item Netzwerkanschl\"usse
 \item Autorisierter Anschluss an Netzwerk
-\item Peripheriegeräte, 
-\item Backupüberwachung
+\item Peripherieger\"ate, 
+\item Backup\"uberwachung
 \item Software und Version, Lizenz
-\item Laufzeitüberwachung Disk
+\item Laufzeit\"uberwachung Disk
 \item Benutzer und Berechtigung
 \end{itemize}
 
-Anm.: Verschiedene Fachbegriffe rund um Systemüberwachung
+Anm.: Verschiedene Fachbegriffe rund um System\"uberwachung
 \begin{itemize}
 \item Incident (Einzelfall)
 \item Problem (Reihung)
-\item Desaster (Notfallplan ausführen!)
+\item Desaster (Notfallplan ausf\"uhren!)
 \item Triage (Rollen, Verantwortlichkeiten, Beurteilungskriterien, Prozesse, Zeitfaktor, ...)
 \end{itemize}
 
