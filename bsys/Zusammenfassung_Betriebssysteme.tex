@@ -36,7 +36,7 @@ Ein Betriebssystem ist die Software die die Verwendung eines Computers ermöglic
 Betriebssysteme bestehen in der Regel aus einem Betriebssystemkern (englisch: Kernel), der die Hardware des Computers verwaltet, sowie grundlegenden Programmen, die dem Start des Betriebssystems und dessen Konfiguration dienen.\\
 Zu den Komponenten zählen:
 \begin{itemize}
-\item Boot-Loader 
+\item Boot-Loader
 \item Gerätetreiber
 \item Systemdienste
 \item Programmbibliotheken
@@ -47,13 +47,13 @@ Zu den Komponenten zählen:
 \subsection{Varianten von Betriebssystemen}
 \begin{itemize}
 \item Einbenutzer- und Mehrbenutzersysteme
-\item Einzelprogramm- und Mehrprogrammsysteme 
+\item Einzelprogramm- und Mehrprogrammsysteme
 \item Stapelverarbeitungs- und Dialogsysteme
 \end{itemize}
 Betriebssysteme finden sich in fast allen Computern: als Echtzeitbetriebssysteme auf Prozessrechnern, auf normalen PCs und als Mehrprozessorsysteme auf Hosts und Grossrechnern.
 
 \subsection{Geschichte}
-Mechanische Rechenmaschienen wurden mit der Zeit mit Lochstreifen versehen und somit konnte von einer Art Betriebssystem gesprochen werden. Später wurden die mechanischen Teile  durch die Röhrentechnologie und anschliessend durch Transistoren ersetzt (ca.1947).
+Mechanische Rechenmaschienen wurden mit der Zeit mit Lochstreifen versehen und somit konnte von einer Art Betriebssystem gesprochen werden. Später wurden die mechanischen Teile durch die Röhrentechnologie und anschliessend durch Transistoren ersetzt (ca.1947).
 \begin{itemize}
 \item 1955 Erfindung Mikroprogrammierung
 \item 1964 Erstes modellreihenübergreifendes BS
@@ -224,7 +224,92 @@ Nachteile:
 \item Platte hin- und zurück kopieren
 \end{itemize}
 \subsubsection{Verlinkte Blöcke}
+Jede Datei wird als verkettete Liste von Plattenblöcken gespeichert. Nur die Plattenadresse des ersten und letzten Blocks wird in dem Verzeichniseintrag gespeichert.\\
 Vorteile:
+\begin{itemize}
+\item Keine externe Fragmentierung
+\item Sequenzieller Zugriff ist kein Problem
+\end{itemize}
+Nachteile:
+\begin{itemize}
+\item Schlechter wahlfreier Zugriff auf Dateiinhalte
+\item Jeder Verweis verursacht einen neuen Plattenzugriff
+\item Overhead für das Speichern der Verkettung (Lösung: clusters aus mehren Blöcken)
+\item Erhöhter Aufwand bei Dateizugriffen
+\item Schlechte Fehlereingrenzung
+\end{itemize}
+
+\subsubsection{Filemap (Landkarte)}
+\begin{wrapfigure}{r}{8cm}
+\includegraphics[scale=0.4]{filemap.jpg}
+\end{wrapfigure}
+
+Vorteile:
+\begin{itemize}
+\item Dateien können sehr leicht und effizient vergrößert werden
+\end{itemize}
+Nachteile:
+\begin{itemize}
+\item Interne Fragmentierung
+\item schlecht für random accesses
+\item fehleranfällig
+\end{itemize}
+\newpage
+\subsubsection{Index Allokation}
+\includegraphics[scale=0.5]{index_allocation.jpg}
+
+\subsection{Struktur von Inodes}
+\includegraphics[scale=0.6]{inodes.jpg}
+
+\subsubsection{Informatione Inode}
+\begin{tabular}{p{7cm}|p{7cm}}
+\textbf{Auf der Disk} & \textbf{Zusätzlich im Memory} \\ \hline
+\begin{itemize}
+\item Inode Nummer
+\item Anzahl hard links
+\item Typ (-, l, d, b, c, p)
+\item Rechte (-, r, w, x, s)
+\item Besitzer
+\item Gruppe
+\item Grösse
+\item Letzte “access time”
+\item Letzte “content change time”
+\item Letzte “inode modification time”
+\item Datenblock Information
+\end{itemize}
+&
+\begin{itemize}
+\item Link auf die “hash list”
+\item Link auf die “inode list”
+\item Benutzerzähler
+\item Gerätenummer
+\item “Device special file” Indikator
+\item Grösse eines Blocks
+\item Anzahl Blöcke
+\item Lock auf den inode
+\item “Mount point” Indikator
+\item Warteschlange wartender Prozesse
+\item Locks auf die Datei
+\item Hauptspeicher-Region (für Memory-mapped file I/O)
+\item Belegte Seiten im Hauptspeicher
+\end{itemize}
+\end{tabular}
+
+\subsection{Designvorgaben für Filesystem}
+\begin{itemize}
+\item Anzahl Disks und Disk Controller
+\item Verteilung auf Partitionen
+\item Blockgrösse pro Partition
+\begin{itemize}
+\item Grosse Blöcke: schneller Zugriff auf Dateien (Datei-Durchschnittsgrösse $<$ 4 kB)
+\item Kleine Blöcke: weniger interne Fragmentierung
+\end{itemize}
+\item Anzahl Dateien / Inodes pro Partition
+\begin{itemize}
+\item Wenige Inodes: mehr Platz für Dateiblöcke
+\item Viele Inodes: mehr Dateien pro Partition mgl.
+\end{itemize}
+\end{itemize}
 
 
 

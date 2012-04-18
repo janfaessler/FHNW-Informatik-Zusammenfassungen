@@ -2,6 +2,7 @@
 
 
 \usepackage{listings}
+\usepackage{moreverb}
 
 %Math
 \usepackage{amsmath}
@@ -992,5 +993,55 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		$= wp((t' := x), (y = b \wedge t' = a))$ \\
 		$= (y = b \wedge x = a)$
 \end{description}
-\subsubsection{WP-Rechenregel: Sequenz}
+\subsubsection{WP-Rechenregel: Selektion}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		logischer Ausdruck b \\
+		Selektion P= (if b then $P_1$ else $P_2$) \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) = wp(($ if b then $P_1$ else $P_2), S)$ \\
+		$=(b\ra wp(P_1, S)) \wedge (\neg b \ra wp(P_2,S))$ \\ 
+		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
+		$= \neg b \wedge b \vee \neg b \wedge wp(P_2,S) \vee  b \wedge wp(P_1,S) \vee wp(P_1,S)\wedge wp(P_2,S) $ \\
+		$= false \vee \neg b \wedge wp(P_2,S) \vee b \wedge wp(P_1,S) \vee false$ \\
+		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
+\end{description}
+
+\subsubsection{WP-Rechenregel: Iteration}
+\begin{description}
+	\item[Iterationen] \hfill \\
+		for-Schleife: Anzahl Durchläufe bekannt $\ra$ als Sequenz betraten \\
+		while-Schleife: Spezialfall der Rekursion $\ra$ Invariante bestimmen
+	\item[Gegeben] \hfill \\
+		logischer Ausdruck B (so genannte Schleifenbedingung) \\
+		Programm P = (while B do $P_1$) \\
+		Nachbedingung $S= \neg B \wedge INV$
+	\item[Invariante (INV)] \hfill \\
+		eine logische Bedingung ausgedrückt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ gültig ist \\
+		wenn $\{INV \wedge B\} P_1 \{ INV \}$ gültig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ gültig
+	\item[Regel] \hfill \\
+		WP = wp(P,S) = INV
+	\item[Beispiel] \hfill 
+		\begin{verbatimtab}
+long multiply(int x, int y) {
+	// 4. schwächste Vorbedingung WP
+	long a = x, b = y, r = 0;
+	// 3. INV muss gelten
+	while (a != 0) {
+		// 2. INV & (a!=0) muss gelten
+		if ((a & 1) == 1) r += b;
+		b = b << 1;
+		a = a >> 1;
+		// 1. INV muss gelten
+	}
+	// 5. INV & (a = 0) muss gelten
+	return r;
+	//Nachbedingung S muss gelten
+}
+		\end{verbatimtab}
+	\item[Nachbedingung] $S = (r = x*y)$
+	\item[Invariante] $INV = (a \geq 0 \wedge a*b + r = x*y)$
+
+\end{description}
 \end{document}
