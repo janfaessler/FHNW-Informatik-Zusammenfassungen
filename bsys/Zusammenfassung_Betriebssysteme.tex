@@ -1,5 +1,6 @@
 \documentclass[a4paper, 10pt]{article}
 
+\usepackage{wrapfig}
 \usepackage{listings}
 %Math
 \usepackage{amsmath}
@@ -28,8 +29,6 @@
 \begin{document}
 \maketitle
 \newpage
-\thispagestyle{fancy} %f\UTF{00FC}r Header
-
 \section{Einleitung}
 \subsection{Definition}
 Ein Betriebssystem ist die Software die die Verwendung eines Computers ermöglicht. Es verwaltet Betriebsmittel wie den Speicher, die I/O-Geräte, usw.\\
@@ -226,12 +225,119 @@ Nachteile:
 \end{itemize}
 \subsubsection{Verlinkte Blöcke}
 Vorteile:
-\begin{itemize}
 
+
+
+\maketitle
+\newpage
+\section{Prozesse}
+
+\subsection{Einleitung}
+
+\subsubsection{Was ist ein Prozess?}
+Ein oder mehrere Programme (deterministische Sequenz von Instruktionen) werden auf einem oder mehreren physischen oder virtuellen Prozessoren ausgeführt. Zu jedem Zeitpunkt der Ausführung verbunden mit einem “computational state” (aktuell verwendete Variablen etc. im Programm), externe Ressourcen wie Zustand der CPU, Register, Zeitnahme, usw. Ein Prozess wird durch das Betriebssystem strikt überwacht und verwaltet
+
+\subsubsection{Anforderungen an ein Prozess-Steuersystem}
+\begin{itemize}
+	\item Prozesse kreieren
+	\item Prozesse starten
+	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
+	\item Prozesse stoppen / unterbrechen
+	\item Prozesse terminieren (freiwillig / wegen Fehler)
+	\item Prozess-Signalisierung und -kommunikation
+	\item Faire Zuordnung von Hauptspeicher und anderen geteilten Ressourcen
+	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
+	\item Prozesse und ihre Zustände anzeigen
 \end{itemize}
 
+\subsubsection{Unix-Prozess Segmente}
+\begin{itemize}
+	\item Text Segment (8 K)
+	\item Daten Segment (32 K)
+	\item Stack Segment (64 K)
+	\item Shared Memory Segment
+	\item Mapped File Segment
+\end{itemize}
 
+\subsection{Kernel und User Mode}
+Ein Prozess hat mindestens (in Unix genau) zwei Ausführungsmodi:
+\begin{description}
+	\item[User Mode:] Es wird der normale Programmcode ausgeführt.
+	\item[Kernel Mode:] Ss werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
+\end{description}
+Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation (Fehler) oder durch asynchrone Events (Kom- munikation etc). Beide Modi haben separate Segmente und sind voneinander abgeschirmt.
 
+\subsubsection{Prozess-/Kontext- Wechsel}
+Wenn ein Prozess:
+\begin{itemize}
+	\item warten muss (z.B. auf I/O oder einen Event),
+	\item seine zugeordnete Laufzeit oder andere Ressourcen- grenzen erreicht bzw. überschreitet,
+	\item terminiert oder gestoppt wird,
+	\item die CPU freiwillig abgibt
+\end{itemize}
+muss das Betriebssystem die CPU einen anderen ablaufbereiten Prozess zuteilen und diesen starten. Dies erfordert das Abspeichern des exakten Prozess- Zustandes und das spätere Restaurieren, wenn der Prozess wieder weiterlaufen soll.\\
 
-  		
+\begin{wrapfigure}{r}{7cm}
+\includegraphics[scale=0.2]{process_region_table.png}
+\end{wrapfigure}
+
+\subsubsection{Kernel-Datenstrukturen für das Prozess-Management}
+In älteren Unix-Varianten ist die Grösse der Prozesstabelle statisch (schnelle Indexierung, Lizenzierung über Anzahl Prozesse / Benutzer).\\
+Alternativ kann die Prozesstabelle eine verkettete Liste sein (variable Anzahl Prozesse, aber komplizierte Indexierung und Überlauf-Gefahr). \\
+Linux verwendet eine Mischform (dynamisch angelegte Prozesskon- trollblöcke (PCB) in einer verketteten Liste mit einer statischen Hash- Tabelle für die schnelle Suche).
+
+\subsection{Sichern des Prozess Kontexts}
+\includegraphics[scale=0.3]{save_process_context.png}
+
+\subsection{Prozess Zustände}
+\includegraphics[scale=0.5]{process_states.png}
+
+\subsection{Prozess-bezogene System Calls}
+\begin{description}
+	\item[fork] Erstellen eines neuen Prozesses durch Kopieren
+	\item[exec] AusführeneinesneuenProgrammsineiner vorhandenen Prozesshülle
+	\item[Signal] Stoppen eines Prozesses
+	\item[exit] Terminieren eines Prozesses
+	\item[wait] Warten auf das Terminieren eines Prozesses, einfache Synchronisation
+\end{description}
+
+\subsection{Prozesse versus Threads}
+Kontextwechsel sind eine “schwere” Operation mit viel Verarbeitungsaufwand durch den Kernel. Da viele Unix-Prozesse I/O-intensiv sind, verbringen sie die meiste Laufzeit mit Warten, dadurch erhöht sich die Anzahl von Kontextwechseln im System. Neuere Unix-/Linux-Systeme unterstützen mehr als einen parallelen Ausführungspfad innerhalb eines Prozesses (multi-threading). Es muss kein Kontextwechsel vorgenommen werden, um eine andere Aktivität zu starten. \\
+Aber:
+\begin{itemize}
+	\item Das Scheduling muss innerhalb des Prozesses erfolgen,
+	\item die Threads sind verwandt, d.h. ihr Code liegt innerhalb des gleichen Unix-Prozesses,
+	\item der Programmierer muss für die Datenintegrität selbst sorgen.
+\end{itemize}
+\includegraphics[scale=0.3]{process_vs_threads.png}
+
+\subsubsection{Basismodell für Threads}
+\begin{itemize}
+	\item Kernel-Code (System Call Interface) oder Library?
+	\item Ausführungsmodelle
+		\begin{itemize}
+			\item Master/Slave(s)
+			\item Cooperating Pool
+			\item Pipeline
+			\item Hybrid
+		\end{itemize}
+	\item Besondere Anforderungen
+		\begin{itemize}
+			\item Synchronisation
+			\item Betriebsmittel-Zuteilung (Scheduling)
+			\item Ausnahmebehandlung
+		\end{itemize}
+\end{itemize}
+
+\subsubsection{Benutzungs- und Administrationssicht auf ein Prozess-Steuersystem}
+\begin{itemize}
+	\item Prozess-Erzeugung und –Termination
+	\item Identifikation
+	\item Priorisierung
+	\item Besitzer	
+	\item Ressourcenverbrauch
+	\item Prozess-Ein-/Auslagerung
+	\item Signalisierung
+	\item Prozesskommunikation
+\end{itemize}
 \end{document}
