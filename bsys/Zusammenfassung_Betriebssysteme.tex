@@ -1,0 +1,237 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage{listings}
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{textcomp}
+
+
+%PageStyle
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{fancyhdr} %for header/footer
+\usepackage{wrapfig}
+%Metadata
+\title{Betriebssysteme}
+\author{Fabian Stebler}
+\date{2. Semester (FS 2012)}
+
+
+\begin{document}
+\maketitle
+\newpage
+\thispagestyle{fancy} %f\UTF{00FC}r Header
+
+\section{Einleitung}
+\subsection{Definition}
+Ein Betriebssystem ist die Software die die Verwendung eines Computers ermöglicht. Es verwaltet Betriebsmittel wie den Speicher, die I/O-Geräte, usw.\\
+\subsection{Bestandteile}
+Betriebssysteme bestehen in der Regel aus einem Betriebssystemkern (englisch: Kernel), der die Hardware des Computers verwaltet, sowie grundlegenden Programmen, die dem Start des Betriebssystems und dessen Konfiguration dienen.\\
+Zu den Komponenten zählen:
+\begin{itemize}
+\item Boot-Loader 
+\item Gerätetreiber
+\item Systemdienste
+\item Programmbibliotheken
+\item Dienstprogramme
+\item Anwendungen
+\end{itemize}
+
+\subsection{Varianten von Betriebssystemen}
+\begin{itemize}
+\item Einbenutzer- und Mehrbenutzersysteme
+\item Einzelprogramm- und Mehrprogrammsysteme 
+\item Stapelverarbeitungs- und Dialogsysteme
+\end{itemize}
+Betriebssysteme finden sich in fast allen Computern: als Echtzeitbetriebssysteme auf Prozessrechnern, auf normalen PCs und als Mehrprozessorsysteme auf Hosts und Grossrechnern.
+
+\subsection{Geschichte}
+Mechanische Rechenmaschienen wurden mit der Zeit mit Lochstreifen versehen und somit konnte von einer Art Betriebssystem gesprochen werden. Später wurden die mechanischen Teile  durch die Röhrentechnologie und anschliessend durch Transistoren ersetzt (ca.1947).
+\begin{itemize}
+\item 1955 Erfindung Mikroprogrammierung
+\item 1964 Erstes modellreihenübergreifendes BS
+\item 1969 Beginn Arbeit an UNIX
+\item 1972-1974 Umschreiben UNIX in C (portabilität)
+\item 1980-1990 Popularitätssteigerung bei Heimcomputern
+\item 1981 Entwicklung erste graphische Oberfläche. Apple kauft sich mit Aktien ein, kreirt MAC und MAC OS. Verliert aber aufgrund der Experimentierfreudigkeit Marktanteile an Windows.
+\item 1991 Linus Torvalds beginnt mit der Entwicklung des LINUX-Kernels. (Start Open Source Bewegung)
+\item Microsoft entwickelte MS-DOS weiter und liefert MS-Windows
+95 Mitte der 90‘er Jahre aus. (Tabellenkalkulation)
+\item Im PC-Desktop-Bereich tobte ein eigentlicher „Glaubenskrieg“ zwischen Microsoft und Apple.
+\item IBM und andere zogen sicher immer mehr in den Midrange/Mainframe-Markt zurück.
+\end{itemize}
+
+\subsection{Lessons learned}
+\begin{itemize}
+
+
+\item Die Grundkonzepte haben sich stark angenähert.
+\item Kompatibilität wird (oft zähneknirschend) bereitgestellt.
+\item Entscheide für/gegen ein Betriebssystem (bes. im Privat-
+bereich) haben teilweise weltanschauliche Hintergründe.
+\item Der Quellcode ist kein Geheimnis und kein Marktvorteil mehr.
+\item Partizipative Entwicklung durch Communities hat ein grosses
+Markt- und Sparpotential.
+\item Die Positionen scheinen bezogen, der Markt wächst immer
+noch stark genug, um den etablierten Anbietern Wachstum zu
+ermöglichen.
+\item Die Wertschöpfung hat sich verlagert:
+\begin{itemize}
+\item Hardware zu Betriebssystem
+\item GUI zu Applikationen
+\item Daten zu Business Intelligence
+\end{itemize}
+\end{itemize}
+\newpage
+
+\section{Blockstruktur eines Betriebssystems}
+\subsection{Aufgaben des Betriebssystems}
+\begin{itemize}
+\item Start des Systems
+\item Laden und Unterbrechen von Programmen (Laufzeitumgebung)
+\item Methoden für die Interprozesskommunikation
+\item Verwaltung der Prozessorzeit
+\item Verwaltung des primären und sekundären Speicherplatzes für das Betriebssystem und seine Anwendungen
+\item Verwaltung der angeschlossenen Geräte, Netzwerke etc.
+\item Schutz des Systemkerns und seiner Ressourcen vor nicht intendierter Benutzung
+\item Benutzerführung, Rollen und Rechte
+\item Einheitliche Schnittstelle für die System- und Anwendungsprogrammierung Ereignisprotokollierung
+
+\end{itemize}
+
+\subsection{Grapische Darstellung}
+Untenstehende Grafik zeigt die Schichtenarchitektur eines modernen Betriebssystems (Linux).\\
+\includegraphics[scale=0.15]{Bsys.jpg}\\
+
+\subsection{Aufgabenteilung der Blöcke}
+\subsubsection{Dateisystem}
+\begin{itemize}
+\item Struktur des Dateisystems (Baum, Graph, flach, ...)
+\item Strukturelemente (Directories)
+\item Zugriffsrechte auf Directories und Dateien
+\item Anlage, Suche, Manipulation, Löschen von Dateien
+\item Verwaltung von Datenblöcken auf Speichermedien
+\item Kombination von Dateisystemen (mounting)
+\item Benutzerschnittstelle und Navigation
+\item Backup / Restore
+\end{itemize}
+
+\subsubsection{Prozesssteuersystem}
+\begin{itemize}
+\item Prozesse kreieren
+\item Prozesse starten
+\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
+\item Prozesse stoppen / unterbrechen
+\item Prozesse terminieren (freiwillig / wegen Fehler)
+\item Prozesskommunikation (Prozess-Prozess und Kern-Prozess / Prozess-Kern)
+\item Zuordnung von Hauptspeicher und anderen geteilten Ressourcen
+\item Ein-/Auslagerung von Prozessen
+\item Prozesse und ihre Zustände anzeigen
+\end{itemize}
+
+\subsubsection{System Call Interface}
+\begin{itemize}
+\item Einzige Schnittstelle zwischen Kern und Benutzer
+\item Normierung der Syntax und Semantik (POSIX 1003)
+\item Parametrisierung und Übergabe
+\item Übergabe der Kontrolle $\rightarrowtail$ Betriebsmodi
+\end{itemize}
+
+\subsubsection{Programmierung}
+\begin{itemize}
+\item Wahl der Programmiersprache / Systempräferenz
+\item System-/Applikationsnahe Bibliotheksfunktionen
+\item Programmierumgebung (Editor, Compiler, Assembler, Linker, Loader, Debugger)
+\item „Bundling“ in einer Applikation (z.B. Eclipse)
+\end{itemize}
+
+\subsubsection{Benutzerschnittstelle}
+\begin{itemize}
+\item Textuelle Basis-Schnittstelle mit Kommando-Interpreter (Shell) Konsole
+\item Programmierbarkeit (Scripting, Pipelining, I/O-Redirection) der Benutzerschnittstelle
+\item Graphische Benutzerschnittstelle (GUI) mit
+\item Abstraktion der unterliegenden Komplexität und Syntax für Nicht Systemspezialisten
+\item Austauschbarkeit der Shell und der Systembefehle (Applikationen)
+\end{itemize}
+
+
+\subsubsection{I/O Management}
+Ein Betriebssystem muss auch die Hardware kontrollieren:
+\begin{itemize}
+\item Die Fähigkeiten der Hardware voll ausschöpfen.
+\item Die verschiedenen inhomogenen Komponenten zu einer Einheit formen.
+\item Die Hardware schützen vor unerlaubtem Zugriff.
+\end{itemize}
+Anm.: Peripheriegeräte sind meist unterschiedlich, sollten aber leicht in das System integrierbar sein.
+
+\subsubsection{File System als generelle Schnittstelle}
+Die Idee von Unix war, dass File System für möglichst viele Subsysteme als Schnittstelle zu verwenden.
+\begin{itemize}
+\item Dateien, Directories
+\item Prozesssynchronisation (Lock Files, ...)
+\item Prozesskommunikation (Pipes, Sockets)
+\item Peripheriegeräte (Device Special Files)
+\item Kommunikationsprotokolle (TCP/IP, ...)
+\item Prozesse (/proc Dateisystem)
+\end{itemize}
+Anm.: Es bedingt einer zusätzlichen Abstraktionsschicht.
+
+\newpage
+\section{Filesystem}
+Die anschliessende Graphik zeigt ein virtuelles Dateisytem:\\
+\\
+\includegraphics[scale=0.4]{Dateisystem.jpg}\\
+
+\subsection{Partition auf der Disk}
+\includegraphics[scale=0.3]{Partition_HD.jpg}\\
+\\
+Superblockinhalt:
+\begin{itemize}
+\item Anzahl inodes und Datenblöcke
+\item Adresse des 1. Datenblocks
+\item Anzahl freie Blöcke und inodes
+\item Grösse eines Datenblocks
+\item Blöcke / inodes pro Gruppe
+\item Anzahl Bytes pro inode
+\end{itemize}
+
+\subsection{Blockallokationen}
+\subsubsection{Zusammenhängende Belegung}
+Vorteile:
+\begin{itemize}
+\item Einfachste aller Methoden
+\item Sehr schneller direkter Zugriff auf die Daten
+\item Für die Lokalisierung der Dateiblöcke brauchen wir
+nur Anfangsblock und Größe der Datei zu wissen.
+\item Lese-Operationen können sehr effizient implementiert
+werden.
+\item Gute Fehlereingrenzung
+\end{itemize}
+Nachteile:
+\begin{itemize}
+\item Dynamische Dateigrößen sind ein Problem
+\item Im Laufe der Zeit wird die Platte fragmentiert.
+\item Platz zu finden für neue Dateien ist ein Problem
+\item Verwaltung von freien Speicherplätzen notwendig
+\item Regelmäßige Kompaktifizierung notwendig
+\item Platte hin- und zurück kopieren
+\end{itemize}
+\subsubsection{Verlinkte Blöcke}
+Vorteile:
+\begin{itemize}
+
+\end{itemize}
+
+
+
+
+  		
+\end{document}
