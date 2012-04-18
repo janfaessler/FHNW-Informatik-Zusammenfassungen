@@ -20,6 +20,11 @@
 \usepackage{textcomp}
 \usepackage{fancyhdr} %for header/footer
 \usepackage{wrapfig}
+
+
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+
 %Metadata
 \title{Betriebssysteme}
 \author{Fabian Stebler}
@@ -467,5 +472,49 @@ Aber:
 		\end{itemize}
 	\item Optimiert für die Arbeit mit dummen Peripheriegeräten
 \end{itemize}
-\section{Idiot}
+\subsubsection{Der neue Buffer Cache}
+Der neue Buffer Cache verwendet einen seitenorientierten Zugriff auf Dateien, ähnlich der Hauptspeicherverwaltung. Zu diesem Zweck unterstützt der Kernel einen neuen Regionstyp (memory-mapped file), der den Inhalt einer Datei in Speicherseiten im Prozessadressraum abbildet. Der Zugriff erfolgt weiter via inodes und einen Offset – der Kernel bildet diese Zugriffe intern auf die mmap- Strukturen ab (typischerweise 8096 aufeinanderfolgende
+Blöcke von 8 kB Grösse).
+
+\subsection{Basisfunktionen des Datei I/O}
+Jeder Dateisystem-Typ definiert zwei spezifische Opera- tionen (getpage() und putpage()). Diese Funktionen werden für den seiten-orientierten Daten- transfer zwischen dem Kernel-Adressraum und den Dateien im Dateisystem verwendet.ür die Organsiation des seiten-orientierten Transfers werden 5 Basisfunktionen im Kernel verwendet:
+\begin{description}
+	\item[pageio\_setup():] Pufferspeicher alloziieren
+	\item[strategy():] Gerätetreiberfunktion für das Lesen/Schreiben über den alten oder neuen
+Buffer Cache
+	\item[biowait():] Warten auf das Ende eines synchronen Schreibvorgangs
+	\item[biodone():] Aufwecken eines in biowait() schlafenden Prozesses (“up-call” durch den Gerätetreiber)
+	\item[pageio\_done():] De-allokation der durch pageio\_setup() gebrauchten Puffer
+\end{description}
+
+\subsection{Einbindung und Verwaltung von Peripherie-Geräten}
+\begin{itemize}
+	\item Zentrales Element: Gerätespezialdateien im /dev bzw. /devices Dateisystem als einheitliche Schnittstelle
+	\item Major / Minor Device Number zur Identifikation
+	\item Zugriffsrechte auf die Gerätespezialdateien sind relevant
+	\item Geräte in verschiedenen Betriebs-Modi: block- oder zeichen-weiser Zugriff
+	\item Echte Geräte und Pseudo-Geräte (z.B. virtuelle Terminals, Netzwerkprotokolle oder /dev/null)
+\end{itemize}
+
+\subsection{Gerätetreiber}
+Gerätetreiber sind die einzige Schnittstelle, über die ein Prozess mit Geräten kommunizieren kann. Sie sind Teil des Kernel-Codes des Systems, und werden entweder statisch beim Systemstart oder zur Laufzeit (in Linux: insmod/rmmod) geladen. In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) – in anderen Betriebssystemen sind sie nur speziellen Kommunikationsprozessen zugänglich über die die anderen Prozesse dann mit Geräten kommunizieren müssen.
+\subsubsection{Interrupt Behandlung}
+Routinen zur Interrupt-Behandlung sind sehr system- und hardware-spezifisch, es gibt nur wenige allgemeine Regeln für das Design. In Unix werden Interrupts immer im Kontext des gerade laufenden Prozesses behandelt, auch wenn der Prozess den Interrupt nicht verursacht hat oder nicht davon profitiert. Der gerade laufende Prozess muss also seine Arbeit unterbrechen, den Kontext sichern, den Interrupt behandeln, den Kontext restaurieren und kann dann weiterarbeiten. Die Zeitstrafe für das Behandeln von Interrupts verbleibt bei jedem Prozess.
+
+\subsubsection{Block-orientierte Gerätetreiber}
+Block-orientierte Geräte erlauben random access auf Datenblöcke (meist Disk-Partitionen zb das Mounten eines Dateisystems).	WennDatenviadas/mntDateisystemgelesen oder geschrieben werden, müssen die entsprechenden Prozeduren für das assoziierte Block Device aus der Block Device Switching Table verwendet werden (major device number). Die Hauptschnittstelle für die Arbeit mit block-orientierten Gerätetreibern ist die strategy() Funktion. Sie implementiert die read() und write() Operationen. Der Aufruf von strategy() geht durch den Buffer Cache und kann synchron (sleep) oder asynchron ausgeführt werden. \\
+\Bold {Achtung}: nicht jeder Aufruf von strategy() führt zum sofortigen Schreiben der Daten auf die Disk (Datenverlust!). \\ \\
+\Bold {Die “Raw I/O” Schnittstelle}\\
+In diesem Modus werden der Buffer Cache und das Abbilden von Dateien auf virtuelle Speicheradressen (mmap) nicht verwendet (z.B. für Datenbanken). Stattdessen werden die Daten direkt zwischen dem Prozess-Adressraum und dem on-board Speicher des Geräts transferiert (DMA). Dies vermeidet den Kopier- vorgang zwischen Prozess-Adressraum und Kernel- Adressraum. Das Lesen und Schreiben ist somit nicht optimiert, d.h. jeder Aufruf von read() oder write() resultiert in
+einem physischen Datentransfer über den entsprechenden zeichen-orientierten Gerätetreiber.
+
+\subsubsection{Zeichen-orientierte Gerätetreiber}
+Bei der Verwendung von zeichen-orientierten Gerätetreibern ist der Buffer Cache nicht involviert. Es wird zwischen STREAM- und nicht-STREAM- basierten zeichen-orientierten Geräten unterschieden (Flusskontrolle etc.). Die Eingabe kann im “cooked mode” (Verarbeitung von Spezialzeichen wie Backspace) oder “raw mode” erfolgen. Hauptnutzer von zeichen-orientierten Geräten sind Programme, die mit interaktiven, zeichenbasierten Geräten wie Terminals, Modems usw. arbeiten. Die wesentlichen Operationen sind read(), write(), ioctl(), poll(), und mmap().
+\begin{itemize}
+	\item Für die read() und write() Operationen gibt es gerätespezifische Prozeduren in der Character Device Switching Table.
+	\item \"Uber die ioctl() Funktion können gerätespezifische Eigenschaften (Übertragungsgeschwindigkeit, Parität, Puffergrössen etc.) abgefragt oder verändert werden.
+	\item Mittelsderpoll()Funktionkanneinzeichen- orientiertes Gerät oder ein STREAM bezüglich Bereitschaft für eine Eingabe- oder Ausgabe- Operation angefragt werden.
+	\item Die Abfrage ist nicht blockierend, d.h. ein Prozess wird nicht blockiert, wenn das Gerät gerade nicht bereit ist.
+	\item Mit dem Systemaufruf mmap() kann ein Prozess den Inhalt einer Datei in seinen virtuellen Adressraum kopieren und dort die Daten direkt manipulieren, anstatt read() und write() zu verwenden. Dies ist der gleiche Mechanismus wie im neuen Buffer Cache, jedoch ist er nun auch direkt für die Progammierung zugänglich. Falls die Datei gerade von mehreren Prozessen benutzt wird, schreiben alle Prozesse auf die gleiche physische Speicherposition. Dermmap()Systemaufrufkannzudemaufdem zeichen-orientierten Gerätespezialdatei eines Geräts benutzt werden, um direkten Zugriff auf den “on-board” Speicher des Geräts zu erhalten (z.B. auf den Frame Buffer einer Video-Karte)
+\end{itemize}
 \end{document}
