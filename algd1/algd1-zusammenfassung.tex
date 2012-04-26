@@ -2,7 +2,6 @@
 
 
 \usepackage{listings}
-\usepackage{moreverb}
 
 %Math
 \usepackage{amsmath}
@@ -1031,7 +1030,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \end{description}
 
 \subsection{Invarianten-Anwendung}
-\begin{verbatimtab}
+\begin{lstlisting}
 long multiply(int x, int y) {
 	// 4. schwächste Vorbedingung WP
 	long a = x, b = y, r = 0;
@@ -1045,7 +1044,7 @@ long multiply(int x, int y) {
 	} // 5. INV & (a = 0) muss gelten
 	return r;
 } //Nachbedingung S muss gelten
-\end{verbatimtab}
+\end{lstlisting}
 \subsubsection{Ist INV wirklich eine korrekte Invariante?}
 \begin{description}
 	\item[Gegeben] \hfill \\
