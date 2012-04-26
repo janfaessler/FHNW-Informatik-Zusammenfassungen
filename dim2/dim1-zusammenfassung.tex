@@ -438,6 +438,22 @@ $fib(n+2)-1 + fib(n+1) $  \\ $<Rekursion>$ \\
 		Wir nennen q den \Bold {Quotienten} und r den \Bold {Rest} von c geteilt durch b.
 	\item[Beispiel] \hfill \\
 		$17=5*3+2 \wedge 0 \leq 2 < 3$ \\
-		$b=q*c+r \wedge 0 \leq r < c$
+		$b=q*c+r \wedge 0 \leq r < |c|$
+	\item[Eindeutigkeit] \hfill \\
+		Seien $b,c : \ZN, c > 0$ Ausserdem $q,q',r,r':\ZN$ mit \\
+		\begin{tabular}{l c l}
+			$b=q*c + r$ & $\wedge$ & $0 \leq r < c$ \\
+			$b=q'*c+r'$ & $\wedge$ & $0 \leq r' < c$ $| *(-1)$ \\
+			\hline
+			$b-b = (q-q') * c + (r-r')$ & & $-0 \geq -r' > -c$ $|$ umdrehen \\
+			$0 \Ra r-r'=(q'-q) *c$ && $-c < -r' \leq -0$\\
+			&& $0 \leq r < c$ \\
+			\hline
+			$r=r' \equiv q = q'$ && $-c < r-r' < c$ \\
+			&& $-c < (q'-q)*c<c$ \\
+			&& $-1 < q' - q < 1$ \\
+		\end{tabular} \\
+	$\Ra q'-q =0$, also $q'=q$, also $r=r'$ \\
+		
 \end{description}
 \end{document}
