@@ -440,13 +440,13 @@ public static long mult(int a, int b) {
 \end{itemize}
 \subsubsection{ISO 8859-1 (Latin-1)}
 \begin{itemize}
-	\item 256 Zeichen für europäische Sprachen (8-Bit-Zeichencode)
+	\item 256 Zeichen f\"ur europ\"aische Sprachen (8-Bit-Zeichencode)
 	\item die ersten 128 Zeichen sind identisch zu ASCII
-	\item die zweiten 128 Zeichen enthalten europäische Sonderzeichen, z.B. Umlaute
+	\item die zweiten 128 Zeichen enthalten europ\"aische Sonderzeichen, z.B. Umlaute
 \end{itemize}
 \subsubsection{Unicode}
 \begin{itemize}
-	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebräisch, Chinesisch usw.)
+	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebr\"aisch, Chinesisch usw.)
 	\item 21-Bit-Zeichencode: ersten 256 Zeichen sind identisch zu ISO 8859-1
 \end{itemize}
 
@@ -456,7 +456,7 @@ public static long mult(int a, int b) {
 	\item[Datentyp int] \hfill 
 		\begin{itemize}
 			\item 32-Bit im UTF-32 Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0
-			\item eine int-Variable kann jeden möglichen Zeichencode (code point) des Unicodes aufnehmen
+			\item eine int-Variable kann jeden m\"oglichen Zeichencode (code point) des Unicodes aufnehmen
 		\end{itemize}
 	\item[Datentyp char] \hfill 
 		\begin{itemize}
@@ -474,9 +474,9 @@ public static long mult(int a, int b) {
 \subsubsection{Zeichenketten (Strings)}
 \begin{description}
 	\item[Character-Array] \hfill \\
-		ver\"anderbare Zeichenkette mit expliziter Längenangabe (Teil des Arrays)
+		ver\"anderbare Zeichenkette mit expliziter L\"angenangabe (Teil des Arrays)
 	\item[Klasse String (UTF-16 Format)] \hfill \\
-		unver\"anderbare Zeichenkette mit expliziter Längenangabe
+		unver\"anderbare Zeichenkette mit expliziter L\"angenangabe
 	\item[Klassen StringBuilder und StringBuffer (UTF-16 Format)] \hfill \\
 		ver\"anderbare Zeichenkette gekapselt als abstrakter Datentyp
 \end{description}
@@ -486,9 +486,9 @@ public static long mult(int a, int b) {
 	\item[String equals(String vergleichenMit)] \hfill \\
 		vergleicht den Inhalt von zwei Strings
 	\item[String substring(int anfang, int ende)] \hfill \\
-		Schneidet eine Zeichenkette zwischen anfang und ende –1 aus und erzeugt damit ein neues Stringobjekt. Der ursprüngliche String wird dabei nicht verändert.
+		Schneidet eine Zeichenkette zwischen Anfang und Ende –1 aus und erzeugt damit ein neues Stringobjekt. Der urspr\"ungliche String wird dabei nicht ver\"andert.
 	\item[String trim()] \hfill \\
-		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zurückgegeben.
+		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zur\"uckgegeben.
 \end{description}
 
 \subsection{Universal Character Encoding Standard (Unicode)}
@@ -534,6 +534,18 @@ Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Da
 Dies ist ein sehr verbreiteter Standard in XML oder im Web. Er ist sehr speichereffizient f\"ur h\"aufige Zeichen und kompatibel mit dem ASCII Standard. F\"ur seltenere Zeichen ist er jedoch speicherineffizient und ist kompliziert in der Handhabung, da er aus 1 bis 4 Bytes besteht: \\
 \includegraphics[scale=0.35]{utf8.png}
 
+\subsubsection{UTF-32 in UTF-16 Umwandlung}
+\begin{lstlisting}
+    public char[] utf32to16(char[] array, int pos) {
+        char c = array[pos];
+        if (c >= (2^16)) {
+            array[pos] = (char) (0xD800 + ((c & 0xFFFFFF) >> 10));
+            array[pos+1] = (char) (0xDC00 + (c & 0x3FF));
+        } else array[pos] = c;
+            
+        return array;
+    }
+\end{lstlisting}
 \subsubsection{Codierungsschemen}
 Das bestimmt Codierungsformat und Byte-Reihenfolge:
 \begin{itemize}
@@ -546,6 +558,8 @@ Das bestimmt Codierungsformat und Byte-Reihenfolge:
  	\item nicht relevant bei UTF-8 (die Reihenfolge ist klar)
  	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
 \end{itemize}
+
+
 \newpage
 \section{Suchen}
 
@@ -555,7 +569,7 @@ Generell gilt hier: Ordnung reduziert den Suchaufwand!
 \subsubsection{Lineare Suche}
 \begin{lstlisting}
 int i=0;
-while(i<array.lenght && array[i]!=x) i++;
+while(i<array.length && array[i]!=x) i++;
 boolean gefunden = (i < array.length);
 \end{lstlisting}
 
@@ -737,6 +751,7 @@ for(int first=1; first<a.length;first++) {
 Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \frac{(n-1)}{2}  + \frac{n}{2}=\sum^{n-1}_{i=1} \frac{i}{2}=\frac{1}{2}*\sum^{n-1}_{i=1} i = \frac{1}{2}*(\frac{n^2-n}{2})\approx\uuline{\frac{n^2}{4}}$
 
+\newpage
 \section{Halbdynamischen Datenstrukturen}
 
 \subsection{Das Array}
@@ -906,7 +921,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		\end{itemize}
 	\item Semantik bez\"uglich passender Struktur S
 		\begin{itemize}
-			\item[S(Term)] jeder Term wird gem\"ass IS auf ein Element aus US abgebildet
+			\item[S(Term)] jeder Term wird gem\"ass $I_s$ auf ein Element aus $U_s$ abgebildet
 			\item[S(Pr\"adikat)] jedes Pr\"adikat bestimmt einen Wahrheitswert in Abh\"angigkeit seiner Argumente (Terme)
 			\item[S(Formel)] die aussagenlogische Verkn\"upfung der Wahrheitswerte der Pr\"adikate
 			\item[S($\forall$x F)] F ist eine Formel 
@@ -956,7 +971,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 
 \subsection{Verifikation}
 \subsubsection{Hoare-Tribble}
-Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorbedingung R und nach Ausf\"uhrung von P die Spezifikation (Nachbedingung) S erf\"ullt ist. Das Programm P ist korrekt, wenn das Hoare-Triple g\"ultig ist.
+\Bold {Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorbedingung R und nach Ausf\"uhrung von P die Spezifikation (Nachbedingung) S erf\"ullt ist.} Das Programm P ist korrekt, wenn das Hoare-Triple g\"ultig ist.
 \begin{description}
 	\item[Variablen] \hfill \\
 		Input: $a, b, c, ..., z$ \\
@@ -973,7 +988,7 @@ Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorb
 		Implikation: $[\underbrace{S}_{spezielle Spez.} \ra \underbrace{T}_{allg. Spez.}] \equiv \forall a, b, c, ..., z, a', b', c', ..., z': \neg S \vee T$
 		\begin{itemize}
 			\item $a, b, c, ..., z$ sind alle Variablen, die in den Spezifikationen S und T vorkommen
-			\item wenn ein Programm P die speziellere Spezifikation S erfüllt, so auch die allgemeinere T
+			\item wenn ein Programm P die speziellere Spezifikation S erf\"ullt, so auch die allgemeinere T
 			\item es gibt ein Programm Q, welches die Spezifikation T erf\"ullt und mindestens so einfach ist wie das Programm P, welches die Spezifikation S erf\"ullt
 		\end{itemize}
 	\item[Besipiele:] \hfill \\
@@ -1066,11 +1081,11 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \subsubsection{Iteration}
 \begin{description}
 	\item[Iterationen] \hfill \\
-		for-Schleife: Anzahl Durchläufe bekannt $\ra$ als Sequenz betraten \\
+		for-Schleife: Anzahl Durchl\"aufe bekannt $\ra$ als Sequenz betrachten \\
 		while-Schleife: Spezialfall der Rekursion $\ra$ Invariante bestimmen
 	\item[Invariante (INV)] \hfill \\
 		eine logische Bedingung ausgedrückt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ gültig ist \\
-		wenn $\{INV \wedge B\} P_1 \{ INV \}$ gültig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ gültig
+		wenn $\{INV \wedge B\} P_1 \{ INV \}$ g\"ultig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ g\"ultig
 	\item[Regel] \hfill \\
 		WP = wp(P,S) = INV
 \end{description}
