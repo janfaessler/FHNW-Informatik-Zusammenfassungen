@@ -80,6 +80,32 @@
 \usepackage[all]{xy}
 \usepackage{ucs}
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+ 
+\lstset{ %
+  language=Octave,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{black},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{black},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+  morekeywords={int,long,float,public,static,class}               % if you want to add more keywords to the set
+}
+
 %Config
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{15.2pt}
@@ -118,34 +144,7 @@ Mit einer Bitfolge der L\"ange n k\"onnen $2^n$ verschiedene Zust\"ande codiert 
 	GiByte & $2^{30}$ Byte \\
 \end{tabular}
 
-\subsection{Daten \& Informationenen}
-Bitfolgen sind lediglich Daten und werden nach der Interpretation zu Informationen. \\ \\
-Interpretationsarten sind Datentypen
-\begin{itemize}
-	\item Interpretation als ganze Zahl
-	\item Interpretation als Gleitkommazahl
-	\item Interpretation als alphanumerisches Zeichen
-	\item benutzerdefinierte Interpretation
-\end{itemize}
-
-\subsection{Positive Zahlen}
-\begin{tabular}{c c c c c c c c}
-	MSP & & & & & & & LSB \\
-	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
-	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
-\end{tabular}
-In Java nur char (16 Bit) \\ \\ \\
-$1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=128+32+4+2+1=\uuline{167}$
-
-\subsection{Ganze Zahlen (2er - Komplement)}
-\begin{tabular}{c c c c c c c c}
-	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
-	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
-\end{tabular} 
-In Java: long (64 Bit), int (32 Bit), short (16 Bit) \& byte (8 Bit) \\ \\ \\
-$-1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=-128+32+4+2+1=\uuline{-89}$
-
-\subsection{Zahlendarstellung mit beliebiger Basis}
+\subsection{Zahlendarstellung}
 \begin{description}
 	\item[bin\"ar (2)] - Zahlen die mit 0b beginnen
 	\item[octal (8)] - Zahlen die mit 0 beginnen
@@ -154,6 +153,37 @@ $-1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=-128+32+4+2+1=\uuline{-89}$
 \end{description}
 Positive Zahlen: $\sum b_i+B^i$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei $i$. \\ \\
 Ganze Zahlen: $-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei $i$.
+
+\subsection{Datentypen in JAVA}
+\begin{tabular}{l c c l l}
+	Name & Byte & Bit & kleinste Zahl & gr\"osste Zahl \\
+	\hline
+	\Bold {byte} & 1 & 8 & -127 & 128 \\
+	\Bold {short} & 2 & 16 &-32.768 & 32.767 \\
+	\Bold {char} & 2 & 16 & $\backslash$u0000 (0) & 	$\backslash$uFFFF (65.535) \\
+	\Bold {int} & 4 & 32 & -2.147.483.648 & 2.147.483.647 \\
+	\Bold {long} & 8 & 64 & -9.223.372.036.854.775.808 & 9.223.372.036.854.775.807 \\
+	\Bold {float} & 4 & 32 & $1,40 * 10^{-45}$ & $3,40282346638528860 * 10^{38}$ \\
+	\Bold {double} & 8 & 64 & $4,94065645841246544*10^{-324}$ & $1,79769313486231570*10^{308}$  \\
+\end{tabular}
+
+\subsection{Ganze Zahlen}
+
+\subsubsection{Positive Zahlen}
+\begin{tabular}{c c c c c c c c}
+	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
+\end{tabular}
+$1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=128+32+4+2+1=\uuline{167}$
+
+\subsubsection{Negative Zahlen (2er - Komplement)}
+\begin{tabular}{c c c c c c c c}
+	1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+	$2^7$ & $2^6$ & $2^5$ & $2^4$ & $2^3$ & $2^2$ & $2^1$ & $2^0$
+\end{tabular} 
+$-1*2^7+1*2^5+1*2^2+1*2^1+1*2^0=-128+32+4+2+1=\uuline{-89}$
+
+
 
 \subsection{Gleitkommazahlen}
 Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
@@ -211,17 +241,11 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \includegraphics[width=150mm]{operatoren_prios.png}
 
 \subsection{Bitoperatoren}
-logische oder auch Boolesche Operatore:
-\begin{itemize}
-	\item Operanden sind von einem ganzzahligen Datentyp
-	\item Negation $\sim$a ($\sim 0 \equiv 1$ / $\sim 1\equiv 0$)
-	\item AND a \& b
-	\item OR a $|$ b
-	\item XOR a $\wedge$  b
-\end{itemize}
+logische oder auch boolesche Operatoren: \\
 \begin{tabular}{|c|c|c|c|c|c|}
 	\hline
-	a & b & {a \& b} & a $|$ b & $\sim$a &  a $\wedge$  b \\
+	& & \Bold {AND} & \Bold {OR} & \Bold {Negation} & \Bold {XOR} \\
+	\Bold {a} & \Bold {b} & \Bold {a \& b} & \Bold {a $|$ b} & \Bold {$\sim$a} & \Bold {a $\wedge$  b} \\
 	\hline
 	0 & 0 & 0 & 0 & 1 & 0 \\
 	0 & 1 & 0 & 1 & 1 & 1 \\
@@ -232,16 +256,100 @@ logische oder auch Boolesche Operatore:
 
 \subsection{Schiebeoperatoren}
 \begin{itemize}
-	\item Rechtsschiebe-Operatoren
+	\item \Bold {Rechtsschiebe-Operatoren}
 		\begin{itemize}
 			\item vorzeichenbehaftet: $a >> b$
 			\item vorzeichenlos: $a >>> b$
 		\end{itemize}
-	\item Linksschiebe-Operator
+	\item \Bold {Linksschiebe-Operator}
 		\begin{itemize}
 			\item kann Vorzeichen ver\"andern:  $a << b$
 		\end{itemize}
 \end{itemize}
+
+\subsection{Logische Operatoren}
+\begin{description}
+	\item[logische Negation:] !A
+	\item[logisches UND:] A \&\& B  / A \& B \\
+				(Bei zwei \& Zeichen wird erst A \"uberpr\"uft und B nur, falls A wahr ist.)
+	\item[logisches ODER:] A $||$ B / A $|$ B
+	\item[Bedingungsoperator:] A ? B : C (if (A) then B else C)
+\end{description}
+
+\subsection{Konvertierung von Datentypen}
+
+\subsubsection{explizite Typkonvertierung}
+\begin{itemize}
+	\item Konvertierungen sind m\"oglich:
+		\begin{itemize}
+			\item zwischen numerischen Datentypen (\Bold {erweiternd und einschr\"ankend})
+			\item zwischen Referenztypen
+		\end{itemize}
+	\item funktionieren gleich wie implizite, allerdings bestehen mehr M\"oglichkeiten
+	\item cast-Operator: (Typname) Ausdruck
+\end{itemize}
+
+\subsubsection{implizite (automatische) Typkonvertierung}
+\begin{itemize}
+	\item zwischen Operanden von numerischem Typ (\Bold {nur erweiternd})
+	\item zwischen Operanden von Referenztypen
+	\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen \\
+			    Object o = new Object();\\
+			    String s = $"$X$"$+null+o;\\
+			   String s = $"$X$"$+$"$null$"$+o.toString();\\
+                                   String s = $"$Xnulljava.lang.Object@47ac1adf$"$;
+	\item arithmetische Operatoren: Konvertierung in h\"oheren Typ gem\"ass Hierarchie
+\end{itemize}
+
+\subsubsection{erweiternde Typkonvertierungen}
+		Wert ist immer darstellbar \\
+		m\"oglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
+		\includegraphics[width=75mm]{erweiternde_typumwandlung.png} \\
+		
+\subsubsection{einschr\"ankende Typkonvertierungen}
+		m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen \& Genauigkeit \\ \\
+		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
+
+
+\subsubsection{Integer-Erweiterung}
+\begin{itemize}
+	\item Datentypen byte, short und char werden in Ausdr\"ucken mit un\"aren und bin\"aren Operatoren implizit in int konvertiert
+		\begin{itemize}
+			\item Dimensionsausdruck bei der Erzeugung von Arrays
+			\item Indexausdruck in Arrays
+			\item Operand der un\"aren Operatoren + und –
+			\item Operand des Invertierungsoperators f\"ur Bits $\sim$
+			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
+		\end{itemize}
+	\item byte, short und char werden somit fast ausschliesslich als Datenfelder f\"ur Klassen benutzt
+\end{itemize}
+
+\subsubsection{Konvertierungsvorschriften}
+\begin{itemize}
+	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
+		Wert bleibt unver\"andert
+	\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen
+		\begin{itemize}
+			\item char ist vorzeichenlos
+			\item bei gleicher Breite: Bitmuster bleibt erhalten
+			\item char ist breiter: von links mit Nullen auff\"ullen und Vorzeichen propagieren
+			\item char ist schmaler: kein korrektes Resultat, wenn Wert gr\"osser als $2^{16}$
+		\end{itemize}
+	\item Konvertierung von Integer nach Gleitpunkt \\
+		n\"achst h\"oherer oder niedriger darstellbarer Wert
+	\item Konvertierung von Gleitpunkt nach Integer
+		\begin{itemize}
+			\item Nachkommastellen werden abgeschnitten
+			\item bei Werten gr\"osser als $2^{31} - 1$ ist das Resultat nicht korrekt ($= 2^{31} - 1$)
+		\end{itemize}
+	\item Konvertierung zwischen Gleitpunkt-Typen
+		\begin{itemize}
+			\item float nach double: Wert bleibt unver\"andert
+			\item double nach float: Wert im zul\"assigen Wertebereich von float, dann n\"achst h\"oherer oder niedriger darstellbarer Wert
+		\end{itemize}
+\end{itemize}
+
+\subsection{Code-Listings}
 
 \subsubsection{1er-Bits z\"ahlen}
 \begin{lstlisting}
@@ -302,138 +410,127 @@ public static long mult(int a, int b) {
 }
 \end{lstlisting}
 
-\subsection{Logische Operatoren}
-
-\begin{itemize}
-	\item logische oder auch Boolesche Operatoren
-		\begin{itemize}
-			\item Operanden sind vom Datentyp boolean
-			\item logische Negation !A
-			\item logisches UND A \&\& B  / A \& B \\
-				(Bei zwei \& Zeichen wird erst A \"uberpr\"uft und B nur, falls A wahr ist.)
-			\item logisches ODER A $||$ B / A $|$ B
-		\end{itemize}
-	\item Bedingungsoperator: A ? B : C \\
-		if (A) then B else C
-\end{itemize}
-
-\subsection{Konvertierung von Datentypen}
-\begin{itemize}
-	\item explizite Typkonvertierung
-		\begin{itemize}
-			\item Konvertierungen sind m\"oglich:
-				\begin{itemize}
-					\item zwischen numerischen Datentypen (erweiternd und einschr\"ankend)
-					\item zwischen Referenztypen
-				\end{itemize}
-			\item funktionieren gleich wie implizite, allerdings bestehen mehr M\"oglichkeiten
-			\item cast-Operator: (Typname) Ausdruck
-		\end{itemize}
-	\item implizite (automatische) Typkonvertierung
-		\begin{itemize}
-			\item zwischen Operanden von numerischem Typ (nur erweiternd)
-			\item zwischen Operanden von Referenztypen
-			\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen \\
-			    Object o = new Object();\\
-			    String s = $"$X$"$+null+o;\\
-			   String s = $"$X$"$+$"$null$"$+o.toString();\\
-                                   String s = $"$Xnulljava.lang.Object@47ac1adf$"$;
-		\end{itemize}
-\end{itemize}
-
-\subsubsection{Typkonvertierungen}
-\begin{itemize}
-	\item erweiternde Umwandlung \\
-		Wert ist immer darstellbar \\
-		m\"oglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
-		\includegraphics[width=75mm]{erweiternde_typumwandlung.png} \\
-		
-	\item einschr\"ankende Umwandlung \\
-		m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen \& Genauigkeit \\ \\
-		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
-\end{itemize}
-
-\subsubsection{Integer-Erweiterung}
-\begin{itemize}
-	\item Datentypen byte, short und char werden in Ausdr\"ucken mit un\"aren und bin\"aren Operatoren implizit in int konvertiert
-		\begin{itemize}
-			\item Dimensionsausdruck bei der Erzeugung von Arrays
-			\item Indexausdruck in Arrays
-			\item Operand der un\"aren Operatoren + und –
-			\item Operand des Invertierungsoperators f\"ur Bits $\sim$
-			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
-		\end{itemize}
-	\item byte, short und char werden somit fast ausschliesslich als Datenfelder f\"ur Klassen benutzt
-\end{itemize}
-
-\subsubsection{Implizite Konvertierung}
-\begin{itemize}
-	\item arithmetische Operatoren
-		\begin{itemize}
-			\item Ziel: gemeinsamer Typ f\"ur beide Operanden und somit auch f\"ur das Resultat
-			\item Konvertierung in h\"oheren Typ gem\"ass Hierarchie
-			\item Beispiele: \\ $c = (5.0/9)*(f - 32)$ \\ $x = 2*3L + 1.1$
-		\end{itemize}
-	\item Zuweisungsoperatoren
-		\begin{itemize}
-			\item zul\"assig sind nur erweiternde Konvertierungen mit der einen Ausnahme, wenn rechts ein konstanter Ausdruck vom Typ int steht, der darstellbar ist
-			\item R\"uckgabewert von Methoden: wie bei Zuweisung
-			\item Parameter\"ubergabe bei Methoden: wie Zuweisung aber ohne deren Ausnahme mit dem konstanten Ausdruck
-		\end{itemize}
-\end{itemize}
-
-\subsubsection{Konvertierungsvorschriften}
-\begin{itemize}
-	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
-		Wert bleibt unver\"andert
-	\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen
-		\begin{itemize}
-			\item char ist vorzeichenlos
-			\item bei gleicher Breite: Bitmuster bleibt erhalten
-			\item char ist breiter: von links mit Nullen auff\"ullen und Vorzeichen propagieren
-			\item char ist schmaler: kein korrektes Resultat, wenn Wert gr\"osser als $2^{16}$
-		\end{itemize}
-	\item Konvertierung von Integer nach Gleitpunkt \\
-		n\"achst h\"oherer oder niedriger darstellbarer Wert
-	\item Konvertierung von Gleitpunkt nach Integer
-		\begin{itemize}
-			\item Nachkommastellen werden abgeschnitten
-			\item bei Werten gr\"osser als $2^{31} - 1$ ist das Resultat nicht korrekt ($= 2^{31} - 1$)
-		\end{itemize}
-	\item Konvertierung zwischen Gleitpunkt-Typen
-		\begin{itemize}
-			\item float nach double: Wert bleibt unver\"andert
-			\item double nach float: Wert im zul\"assigen Wertebereich von float, dann n\"achst h\"oherer oder niedriger darstellbarer Wert
-		\end{itemize}
-\end{itemize}
-
 \newpage
-\section{Zeichen \& Strings}
-\subsection{Wichtige Zeichencodes}
+\section{Zeichen und Strings}
+\subsection{Standardisierte Zeichencodierungen}
+\subsubsection{ASCII (American Standard Code for Information Interchange)}
+\begin{itemize}
+	\item nur 128 verschiedene Zeichen (Steuerzeichen, Satzzeichen, Ziffern, Buchstaben usw.)
+	\item pro Zeichen ein eindeutiger 7-Bit-Zeichencode
+\end{itemize}
+\subsubsection{ISO 8859-1 (Latin-1)}
+\begin{itemize}
+	\item 256 Zeichen für europäische Sprachen (8-Bit-Zeichencode)
+	\item die ersten 128 Zeichen sind identisch zu ASCII
+	\item die zweiten 128 Zeichen enthalten europäische Sonderzeichen, z.B. Umlaute
+\end{itemize}
+\subsubsection{Unicode}
+\begin{itemize}
+	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebräisch, Chinesisch usw.)
+	\item 21-Bit-Zeichencode: ersten 256 Zeichen sind identisch zu ISO 8859-1
+\end{itemize}
 
-\subsection{Alte Zeichencodes}
+\subsection{Java}
+\subsubsection{Unicode in JAVA}
+\begin{description}
+	\item[Datentyp int] \hfill 
+		\begin{itemize}
+			\item 32-Bit im UTF-32 Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0
+			\item eine int-Variable kann jeden möglichen Zeichencode (code point) des Unicodes aufnehmen
+		\end{itemize}
+	\item[Datentyp char] \hfill 
+		\begin{itemize}
+			\item 16-Bit (Codierungseinheit, code unit)
+			\item eine char-Variable kann nur einen der ersten $2^16$ Zeichencodes des Unicodes (Basic Multilingual Plane, BMP) aufnehmen
+			\item alle anderen Zeichencodes werden durch char-Paare codiert
+		\end{itemize}
+	\item[Interface CharSequence] \hfill 
+		\begin{itemize}
+			\item Sequenz von Zeichencodes im UTF-16 Format
+			\item bekannte Implementierungen: String, StringBuffer, StringBuilder
+		\end{itemize}
+\end{description}
 
-\subsection{Unicode}
+\subsubsection{Zeichenketten (Strings)}
+\begin{description}
+	\item[Character-Array] \hfill \\
+		ver\"anderbare Zeichenkette mit expliziter Längenangabe (Teil des Arrays)
+	\item[Klasse String (UTF-16 Format)] \hfill \\
+		unver\"anderbare Zeichenkette mit expliziter Längenangabe
+	\item[Klassen StringBuilder und StringBuffer (UTF-16 Format)] \hfill \\
+		ver\"anderbare Zeichenkette gekapselt als abstrakter Datentyp
+\end{description}
+
+\subsubsection{String Funktionen}
+\begin{description}
+	\item[String equals(String vergleichenMit)] \hfill \\
+		vergleicht den Inhalt von zwei Strings
+	\item[String substring(int anfang, int ende)] \hfill \\
+		Schneidet eine Zeichenkette zwischen anfang und ende –1 aus und erzeugt damit ein neues Stringobjekt. Der ursprüngliche String wird dabei nicht verändert.
+	\item[String trim()] \hfill \\
+		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zurückgegeben.
+\end{description}
+
+\subsection{Universal Character Encoding Standard (Unicode)}
+\subsubsection{Coderaum}
+\begin{description}
+	\item[Ebene 0: Basic Multilingual Plane (BMP)] \hfill
+		\begin{itemize}
+			\item U+0 bis U+FFFF
+			\item enth\"alt die wichtigsten Zeichen von verschiedenen Sprachen
+		\end{itemize}
+	\item[Ebene 1: Supplementary Multilingual Plane (SMP)] \hfill
+		\begin{itemize}
+			\item U+1'0000 bis U+1'FFFF
+			\item enth\"alt weniger oft gebrauchte Zeichen (z.B. gotische Zeichen, Musiksymbole)
+		\end{itemize}
+	\item[Ebene 2: Supplementary Ideographic Plane (SIP)] \hfill
+		\begin{itemize}
+			\item U+2'0000 bis U+2'FFFF
+			\item enth\"alt sehr seltene CJK Zeichen
+		\end{itemize}
+	\item[Ebene 3 bis 13] \hfill \\
+		reserviert für spätere Erg\"anzungen
+	\item[Ebene 14: Supplementary Special-purpose Plane (SSP)] \hfill
+		\begin{itemize}
+			\item U+E'0000 bis U+E'FFFF
+			\item enth\"alt zus\"atzliche Formatierungszeichen
+		\end{itemize}
+	\item[Ebenen 15 und 16: Private Use Planes] \hfill
+		\begin{itemize}
+			\item U+F'0000 bis U+F'FFFF und U+10'0000 bis 10'FFFF
+			\item f\"ur private, nicht standardisierte Zwecke einsetzbar
+		\end{itemize}
+\end{description}
+
+\subsubsection{UTF-32}
+Dies ist die einfachste Umsetzung, es werden 21 Bits in einem (vorzeichenlosen) 32-Bit-Integer abgespeichert. Dabei sind die h\"oherwertigen 11 Bits immer null. Dies bedeutet jedoch eine grosse Speicherverschwendung
 
 \subsubsection{UTF-16}
+Dies ist ein guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung. In diesem Standard werden Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert. Die Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten (Ersatzpaare) gespeichert. \\
+Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Das erste Zeichen jeweils aus dem Bereich \Bold {U+D800 bis U+DBFF}. Das zweite Zeichen jeweils aus dem Bereich \Bold {U+DC00 bis U+DFFF}. Das ergiebt 2 mal 10 Bit Nutzdaten.
 
 \subsubsection{UTF-8}
+Dies ist ein sehr verbreiteter Standard in XML oder im Web. Er ist sehr speichereffizient f\"ur h\"aufige Zeichen und kompatibel mit dem ASCII Standard. F\"ur seltenere Zeichen ist er jedoch speicherineffizient und ist kompliziert in der Handhabung, da er aus 1 bis 4 Bytes besteht: \\
+\includegraphics[scale=0.35]{utf8.png}
 
-
+\subsubsection{Codierungsschemen}
+Das bestimmt Codierungsformat und Byte-Reihenfolge:
+\begin{itemize}
+	\item bei Dateneinheiten bestehend aus mehreren Bytes muss festgehalten werden, welches Byte zuerst behandelt wird, das
+		\begin{itemize}
+			\item most significant byte (MSB) zuerst: big-endian
+			\item least significant byte (LSB) zuerst: little-endian
+ 		\end{itemize}		 
+ 	\item relevant bei UTF-16 und UTF-32
+ 	\item nicht relevant bei UTF-8 (die Reihenfolge ist klar)
+ 	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
+\end{itemize}
 \newpage
 \section{Suchen}
 
 \subsection{Zahlensuche}
 Generell gilt hier: Ordnung reduziert den Suchaufwand!
-
-\subsubsection{Array einf\"ullen}
-\begin{lstlisting}
-final int n=10000;
-int[] array=new int[n];
-for(int i=0;i<array.length;i++) {
-  array[i] = (int) (Math.random()*Integer.MAX_VALUE);
-}
-\end{lstlisting}
 
 \subsubsection{Lineare Suche}
 \begin{lstlisting}
@@ -624,18 +721,18 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 
 \subsection{Das Array}
 
-\begin{itemize}
-	\item[Vorteile] 
+\begin{description}
+	\item[Vorteile]  \hfill
 		\begin{itemize}
 			\item hohe Zeiteffizienz, weil auf alle Elemente des Arrays direkt zugegriffen werden kann
 			\item hohe Speichereffizienz, wenn die Anzahl der Elemente des Arrays konstant bleibt
 		\end{itemize}
-	\item[Nachteile] 
+	\item[Nachteile] \hfill
 		\begin{itemize}
 			\item wenn sich die Anzahl Elemente w\"ahrend der Ausf\"uhrung eines Algorithmus stark \"andert, so ist die Speichereffizienz nur bedingt gut
 			\item wenn zu Beginn des Algorithmus unklar ist, wie viele Elemente maximal abgespeichert werden m\"ussen, so ist die Datenstruktur Array in Reinform wenig hilfreich.
 		\end{itemize}
-\end{itemize}
+\end{description}
 
 \subsection{Datenstrukturen}
 
@@ -681,22 +778,6 @@ Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \f
 	\item da alle Referenztypen zur Klasse Object zuweisungskompatibel sind, bieten die Collections keine Typsicherheit
 \end{itemize}
 
-\subsubsection*{Code:}
-\begin{itemize}
-	\item void add(int index, Object element)
-	\item void clear()
-	\item boolean contains(Object o)
-	\item Object get(int index)
-	\item  int indexOf(Object o)
-	\item boolean isEmpty()
-	\item ListIterator listIterator(int index) 
-	\item  Object remove(int index)
-	\item boolean remove(Object o)
-	\item Object set(int index, Object element) 
-	\item  int size()
-	\item ...
-\end{itemize}
-
 \subsubsection{Interner Aufbau (seit Java 5.0)}
 \begin{itemize}
 	\item alle Collections verwalten intern Referenzen vom Typ $<$E$>$, wobei E ein beliebiger Platzhalter (Typ-Parameter) f\"ur einen konkreten Referenztyp ist
@@ -707,64 +788,6 @@ f\"ur Object (= fr\"uherer interner Aufbau)
 
 \newpage
 \section{Programmverifikation}
-\subsection{Einleitung}
-\subsubsection{Black and White}
-\begin{description}
-	\item[Gegeben:] \hfill
-		\begin{itemize}
-			\item Beh\"alter mit w weissen Kugeln und b schwarzen Kugeln
-			\item mindestens eine Kukel ist im Beh\"alter: $b + w \geq 1$
-		\end{itemize}
-	\item[Ablauf:] \hfill
-		\begin{itemize}
-			\item solange wenigstens zwei Kugeln im Beh\"alter sind, zuf\"allig zwei Kugeln rausnehmen und ...
-			\item haben beide herausgenommenen Kugeln die gleiche Farbe \\
-				$\rightarrow$ eine weisse Kugel in den Beh\"alter legen
-			\item haben beide herausgenommenen Kugeln unterschiedliche Farben \\
-				$\rightarrow$ schwarze Kugel in den Beh\"alter zur\"ucklegen
-		\end{itemize}
-	\item[Gesucht] \hfill
-		\begin{itemize}
-			\item Terminiert dieser Ablauf?
-			\item Falls ja, wie und wovon h\"angt die Schlusssituation ab?
-		\end{itemize}
-\end{description}
-
-\begin{description}
-	\item[Frage 1:] Ja, der Prozess Terminiert, da es bei jedem Schritt eine Kugel weniger wird.
-	\item[Frage 2:] Bei allen drei m\"oglichen Schritten, ver\"andert sich die Parit\"at von b nicht. Das bedeutet, dass wenn am Ende eine Schwarze Kugel \"ubrig ist muss am Anfang eine ungerade Anzahl Kugeln in dem Beh\"alter gewesen sein.
-\end{description}
-Man untersucht einen Prozess darauf, was sich w\"ahrend dem Prozess ver\"andert (Variante) und was nicht (Invariante). Findet man heraus, was sich nicht ver\"andert kann man von der Schlusssituation R\"uckschl\"usse auf die Startsituation treffen.
-\begin{description}
-	\item[Variante:] Anzahl Kugeln im Berh\"alter wird dekremiert
-	\item[Invariante:] Parity(b)
-\end{description}
-
-\subsubsection{Verbindungslinien}
-\begin{description}
-	\item[Gegeben:] \hfill
-		\begin{itemize}
-			\item n scharze und n weisse Punkte in der Ebene
-			\item keine drei Punkte kollinear (in einer Reihe)
-		\end{itemize}
-	\item[Ablauf:] \hfill
-		\begin{itemize}
-			\item je ein weisser und ein scharzer Punkt werden mit einer Strecke verbunden
-			\item jeder Punkt darf nur mit einem andersfarbigen Punkt verbunden werden
-		\end{itemize}
-	\item[Gesucht] \hfill
-		\begin{itemize}
-			\item Existiert eine schnittfreie Anordnung der Verbindungsstrecken?
-			\item Falls ja, wie findet man eine solche?
-		\end{itemize}
-\end{description}
-Ja, es gibt immer eine schnittfreie Anordung der Verbindungsstrecken. Am besten findet man diese, wenn man die Punkte einmal beliebig verbindet und danach alle gekreuzten Linien vertauscht (swapt).
-
-\begin{description}
-	\item[Variante:] Die gesamtl\"ange aller Linien nimmt ab
-	\item[Invariante:] Die Anzahl Linien bleibt gleich.
-\end{description}
-
 \subsection{Korrektheit eines Algorithmus}
 Ein Algorithmus heisst \Bold {korrekt}, wenn er seinen Spezifikationen gen\"ugt, wenn er zu allen Eingabedaten, die der Vorbedingung (Preconditions) gen\"ugen, die Ausgabedaten erzeugt, welche die Nachbedinungen (Postcondition) erf\"ullen. 
 \begin{description}
@@ -908,10 +931,182 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		G(x) : "x ist gl\"ucklich" \\
 		$\exists y: (\forall x : S(x,y) \ra L(x)) \ra G(y)$
 	\item[Ein Professor ist ungl\"ucklich, wenn er keine Studierende hat.] \hfill \\
-		$\exists y: (\forall x : \neg S(x,y)) \ra \neg G(y)$
+		$\exists y: (\forall x : \neg S(x,y)) \ra \neg G(y))$
+\end{description}
+
+\subsection{Verifikation}
+\subsubsection{Hoare-Tribble}
+Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorbedingung R und nach Ausf\"uhrung von P die Spezifikation (Nachbedingung) S erf\"ullt ist. Das Programm P ist korrekt, wenn das Hoare-Triple g\"ultig ist.
+\begin{description}
+	\item[Variablen] \hfill \\
+		Input: $a, b, c, ..., z$ \\
+		Output: $a', b', c', ..., z'$
+	\item[Vorbedingung (Precondition)] \hfill \\
+		Damit das Programm P die Spezifikation (Postcondition) S erf\"ullen kann, muss die Vorbedingung R erf\"ullt sein. Je schw\"acher die Vorbedingung R, desto besser: \Bold {weakest precondition (WP)}.
+	\item[Beispiele] \hfill \\
+		Spezifikation: $S = (x' = 10)$ \\
+		Programm: $P = (x' := x + 2)$ \\
+		m\"ogliche Vorbedingung $R = (a = 0 \vee b = 2 \vee x = 8 \vee z = 0)$ \\
+		einfachste Vorbedingung (weakest Precondition);  $WP = (x = 8)$
+	\item[Nachbedingungen (Postcondition)] \hfill \\
+		Die Nachbedingungen entsprechen der \Bold {Spezifikation} des Programms und sind je pr\"aziser, umso besser. \\
+		Implikation: $[\underbrace{S}_{spezielle Spez.} \ra \underbrace{T}_{allg. Spez.}] \equiv \forall a, b, c, ..., z, a', b', c', ..., z': \neg S \vee T$
+		\begin{itemize}
+			\item $a, b, c, ..., z$ sind alle Variablen, die in den Spezifikationen S und T vorkommen
+			\item wenn ein Programm P die speziellere Spezifikation S erfüllt, so auch die allgemeinere T
+			\item es gibt ein Programm Q, welches die Spezifikation T erf\"ullt und mindestens so einfach ist wie das Programm P, welches die Spezifikation S erf\"ullt
+		\end{itemize}
+	\item[Besipiele:] \hfill \\
+		$S = (x' = 10), T = (x' > 0)$ \\
+		$P_1 = (x' := 6), P_2 = (x' := 10), P_3 = (x' := x + 1)$
+		\begin{itemize}
+			\item $\underbrace{\{true\}}_{algemeinste Vorbedingung} P_1 \{S\} = false$
+			\item $\{true\} P_1 \{T\} = true$
+			\item $\{true\} P_2 \{S\} = true$
+			\item $\{true\} P_2 \{T\} = true$
+			\item $\{true\} P_3 \{S\} = false$
+			\item $\{x=9\} P_3 \{S\} = true$
+		\end{itemize}
+\end{description}
+
+\subsubsection{Ablauf der Verifikation}
+\begin{description}
+	\item[Gegeben] \hfill \\ \\
+		Vorbedingung R, Spezifikation S, Programm P
+	\item[Ablauf] \hfill 
+		\begin{itemize}
+			\item aus S und P die schw\"achste Vorbedingung $WP = wp(P, S)$ berechnen
+			\item falls $[R \ra WP]$ gilt, dann erf\"ullt das Programm P die Spezifikation S bei eingehaltener Vorbedingung R
+			\item R kann somit durch WP ersetzt werden
+		\end{itemize}
+	\item[Berechnung der WP] \hfill 
+		\begin{itemize}
+			\item ausgehend von der Spezifikation S
+			\item Anweisung für Anweisung r\"uckwärts rechnen
+			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
+		\end{itemize}
+\end{description}
+
+\subsection{Weakest Precondition: Rechenregeln}
+\subsubsection{Zuweisung}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Zuweisung $P = (x' := y)$ \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) = wp((x' := y), S) = S |_{alle \hspace{2mm} x' \hspace{2mm} durch \hspace{2mm} y \vspace{2mm} ersetzt}$
+	\item[Beispiele] \hfill \\
+		$S = (a' = z), P = (a' := b + c), WP = (b + c = z)$ \\
+		$S = (n' = n), P = (n' := n-1), WP = (n = n-1) = false$
+\end{description}
+
+\subsubsection{Sequenz}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Sequenz P = $(Anweisung_1; Anweisung_2; ...; Anweisung_n)$ \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) =
+wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
+	\item[Beispiel] \hfill \\
+		$P = (t' := x; x' := y; y' := t')$ \\
+		$S = (x' = b \wedge y' = a)$ \\
+		$WP =wp((t':=x;x':=y;y':=t'),(x'=b \wedge y'=a))$ \\
+		$= wp((t' := x; x' := y), wp((y' := t'), (x' = b \wedge y' = a)))$ \\
+		$= wp((t' := x; x' := y), (x' = b \wedge t' = a))$ \\
+		$= wp((t' := x), wp((x' := y), (x' = b \wedge t' = a)))$ \\
+		$= wp((t' := x), (y = b \wedge t' = a))$ \\
+		$= (y = b \wedge x = a)$
+\end{description}
+
+\subsubsection{Selektion}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		logischer Ausdruck b \\
+		Selektion P= (if b then $P_1$ else $P_2$) \\
+		Nachbedingung S
+	\item[Regel] \hfill \\
+		$WP = wp(P, S) = wp(($ if b then $P_1$ else $P_2), S)$ \\
+		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
+		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
+	\item[Beispiel] \hfill \\
+		$P = (if x < 0 then x' := -x else x' := x – 1)$ \\
+		$S = (x' > 0)$ \\
+		$WP = wp((if x < 0 x' := -x else x' := x – 1), x' > 0)$ \\
+		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
+		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
+		$= true \wedge (x \notin [0, 1])$ \\
+		$= x \notin [0, 1]$ \\
+		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x ≥ 0 \wedge x – 1 > 0)}$ \\
+		$= (x < 0) \vee (x ≥ 0 \wedge x > 1)$ \\
+		$= (x < 0) \vee (x > 1)$ \\
+		$= x \notin [0, 1]$
+\end{description}
+
+\subsubsection{Iteration}
+\begin{description}
+	\item[Iterationen] \hfill \\
+		for-Schleife: Anzahl Durchläufe bekannt $\ra$ als Sequenz betraten \\
+		while-Schleife: Spezialfall der Rekursion $\ra$ Invariante bestimmen
+	\item[Invariante (INV)] \hfill \\
+		eine logische Bedingung ausgedrückt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ gültig ist \\
+		wenn $\{INV \wedge B\} P_1 \{ INV \}$ gültig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ gültig
+	\item[Regel] \hfill \\
+		WP = wp(P,S) = INV
+\end{description}
+
+\subsection{Invarianten-Anwendung}
+\begin{lstlisting}
+long multiply(int x, int y) {
+	\Bold {// 4. schwaechste Vorbedingung WP}
+	long a = x, b = y, r = 0;
+	// 3. INV muss gelten
+	while (a != 0) {
+		// 2. INV & (a!=0) muss gelten
+		if ((a & 1) == 1) r += b;
+		b = b << 1;
+		a = a >> 1;
+		// 1. INV muss gelten
+	} // 5. INV & (a = 0) muss gelten
+	return r;
+} //Nachbedingung S muss gelten
+\end{lstlisting}
+\subsubsection{Ist INV wirklich eine korrekte Invariante?}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ 
+	\item[Beweisverfahren] \hfill \\
+		wenn an Position 1 die Invariante INV gilt, dann muss an der Position 2 auch die Invariante gelten \\
+		zu zeigen: $\{ (INV \wedge B) \ra wp(P1, INV) \}$
+	\item[Beispiel] \hfill \\
+		R1 = wp(a := a $>>$ 1, INV) $= (\frac{a}{2} \geq 0 \wedge \frac{a}{2}*b + r = x*y)$ \\
+		R2 = wp(b := b $<<$ 1, R1) $= (\frac{a}{2} \geq 0 \wedge \frac{a}{2}*b*2 + r = x*y)$ \\
+		R3 = wp((if (a\&1) = 1 then r := r + b else NOP), R2) $= \frac{a}{2} \geq 0 \wedge a*b + r = x*y$
+\end{description}
+
+\subsubsection{Was ist die schw\"achste Vorbedingung WP?}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ 
+	\item[Beweisverfahren] \hfill \\
+		Wenn an Position 2 die Invariante INV gilt, dann gilt sie auch an der Position 3. \\
+		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem üblichen Verfahren WP berechnen.
+	\item[Beispiel] \hfill \\
+		R1 = wp(r := 0, INV) $= (a \geq 0 \wedge a*b = x*y)$ \\
+		R2 = wp(b := y, R2) $= (a \geq 0 \wedge a*y = x*y)$ \\
+		WP = wp(a := x, R3) $= (x \geq 0 \wedge x*y = x*y) = (x \geq 0)$
+\end{description}
+
+\subsubsection{Welches ist die Nachbedingung S?}
+\begin{description}
+	\item[Gegeben] \hfill \\
+		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ \\
+		Schleifenbedingung B $= (a \neq 0)$
+	\item[Verfahren] \hfill \\
+		Wenn an Position 1die Invariante INV gilt, dann gilt an der Position 5 die Invariante, nicht aber B, also S $= (INV \wedge \neg B)$
+	\item[Beispiel] \hfill \\
+		$S = (INV \wedge \neg B) = (a \geq 0 \wedge a*b + r = x*y \wedge a = 0)$ \\
+		$S = (r = x*y \wedge a = 0)$ \\
+		Der R\"uckgabewert r ist also gleich dem Produkt aus x und y.
 \end{description}
 \end{document}
-
-
-
-	
