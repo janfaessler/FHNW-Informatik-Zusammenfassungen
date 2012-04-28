@@ -203,8 +203,8 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \subsubsection{Beispiele (IEEE 754 32bit Float)}
 \begin{description}
 	\item[2.5] $=1.25*2^1$
-	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{-1 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
-	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01110111}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
+	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{126 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
+	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01111011}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
 \end{description}
 
 \subsubsection{Spezialf\"alle}
