@@ -205,6 +205,26 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 	\item[2.5] $=1.25*2^1$
 	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{126 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
 	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01111011}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
+	\item Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
+	\begin{enumerate}
+		\item Ganzzahlteil $1313_{10}=10100100001_2.$
+		\item Nachkommateil\\
+		\begin{tabular}{lll}
+			0.3125&$\times2=0.625$& \Bold{0}\\
+			0.625&$\times 2=1.25$ &\Bold{1}\\
+			0.25&$\times 2 = 0.5$ &\Bold{0}\\
+			0.5&$\times 2=1.0$ &\Bold{1}\\
+		\end{tabular}
+		\item $1313.3125_{10}=10100100001.0101_2$
+		\item Normen $10100100001.0101_2=1.01001000010101_2\times2^{10}$
+		\item Mantisse ist $01001000010101$, Exponent ist $10 + 127 = 137 = 10001001_2$, Vorzeichen ist 1.
+		\item -1313.3125 ist 
+		\begin{tabular}{|c|l|l|}
+		\hline
+		1 & 10001001 & 01001000010101000000000 \\
+		\hline
+	\end{tabular}
+	\end{enumerate} 
 \end{description}
 
 \subsubsection{Spezialf\"alle}
@@ -258,8 +278,8 @@ logische oder auch boolesche Operatoren: \\
 \begin{itemize}
 	\item \Bold {Rechtsschiebe-Operatoren}
 		\begin{itemize}
-			\item vorzeichenbehaftet: $a >> b$
-			\item vorzeichenlos: $a >>> b$
+			\item vorzeichenbehaftet: $a >> b$, \Bold{Bsp:}$-9_{10} = 11110111_2 >> 1 = 11111011_2 = -5_{10}$
+			\item vorzeichenlos: $a >>> b$, \Bold{Bsp:}$-9_{10} =  11110111_2 >>> 1 = 01111011_2 = 123_{10}$ 
 		\end{itemize}
 	\item \Bold {Linksschiebe-Operator}
 		\begin{itemize}
@@ -317,7 +337,7 @@ logische oder auch boolesche Operatoren: \\
 		\begin{itemize}
 			\item Dimensionsausdruck bei der Erzeugung von Arrays
 			\item Indexausdruck in Arrays
-			\item Operand der un\"aren Operatoren + und –
+			\item Operand der un\"aren Operatoren $+$ und $ - $
 			\item Operand des Invertierungsoperators f\"ur Bits $\sim$
 			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
 		\end{itemize}
@@ -420,13 +440,13 @@ public static long mult(int a, int b) {
 \end{itemize}
 \subsubsection{ISO 8859-1 (Latin-1)}
 \begin{itemize}
-	\item 256 Zeichen für europäische Sprachen (8-Bit-Zeichencode)
+	\item 256 Zeichen für europäische Sprachen (8-Bit-Zeichencode)
 	\item die ersten 128 Zeichen sind identisch zu ASCII
-	\item die zweiten 128 Zeichen enthalten europäische Sonderzeichen, z.B. Umlaute
+	\item die zweiten 128 Zeichen enthalten europäische Sonderzeichen, z.B. Umlaute
 \end{itemize}
 \subsubsection{Unicode}
 \begin{itemize}
-	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebräisch, Chinesisch usw.)
+	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebräisch, Chinesisch usw.)
 	\item 21-Bit-Zeichencode: ersten 256 Zeichen sind identisch zu ISO 8859-1
 \end{itemize}
 
@@ -436,12 +456,12 @@ public static long mult(int a, int b) {
 	\item[Datentyp int] \hfill 
 		\begin{itemize}
 			\item 32-Bit im UTF-32 Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0
-			\item eine int-Variable kann jeden möglichen Zeichencode (code point) des Unicodes aufnehmen
+			\item eine int-Variable kann jeden möglichen Zeichencode (code point) des Unicodes aufnehmen
 		\end{itemize}
 	\item[Datentyp char] \hfill 
 		\begin{itemize}
 			\item 16-Bit (Codierungseinheit, code unit)
-			\item eine char-Variable kann nur einen der ersten $2^16$ Zeichencodes des Unicodes (Basic Multilingual Plane, BMP) aufnehmen
+			\item eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes (Basic Multilingual Plane, BMP) aufnehmen
 			\item alle anderen Zeichencodes werden durch char-Paare codiert
 		\end{itemize}
 	\item[Interface CharSequence] \hfill 
@@ -454,9 +474,9 @@ public static long mult(int a, int b) {
 \subsubsection{Zeichenketten (Strings)}
 \begin{description}
 	\item[Character-Array] \hfill \\
-		ver\"anderbare Zeichenkette mit expliziter Längenangabe (Teil des Arrays)
+		ver\"anderbare Zeichenkette mit expliziter Längenangabe (Teil des Arrays)
 	\item[Klasse String (UTF-16 Format)] \hfill \\
-		unver\"anderbare Zeichenkette mit expliziter Längenangabe
+		unver\"anderbare Zeichenkette mit expliziter Längenangabe
 	\item[Klassen StringBuilder und StringBuffer (UTF-16 Format)] \hfill \\
 		ver\"anderbare Zeichenkette gekapselt als abstrakter Datentyp
 \end{description}
@@ -466,9 +486,9 @@ public static long mult(int a, int b) {
 	\item[String equals(String vergleichenMit)] \hfill \\
 		vergleicht den Inhalt von zwei Strings
 	\item[String substring(int anfang, int ende)] \hfill \\
-		Schneidet eine Zeichenkette zwischen anfang und ende –1 aus und erzeugt damit ein neues Stringobjekt. Der ursprüngliche String wird dabei nicht verändert.
+		Schneidet eine Zeichenkette zwischen anfang und ende –1 aus und erzeugt damit ein neues Stringobjekt. Der ursprüngliche String wird dabei nicht verändert.
 	\item[String trim()] \hfill \\
-		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zurückgegeben.
+		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zurückgegeben.
 \end{description}
 
 \subsection{Universal Character Encoding Standard (Unicode)}
@@ -490,7 +510,7 @@ public static long mult(int a, int b) {
 			\item enth\"alt sehr seltene CJK Zeichen
 		\end{itemize}
 	\item[Ebene 3 bis 13] \hfill \\
-		reserviert für spätere Erg\"anzungen
+		reserviert f\"ur sp\"atere Erg\"anzungen
 	\item[Ebene 14: Supplementary Special-purpose Plane (SSP)] \hfill
 		\begin{itemize}
 			\item U+E'0000 bis U+E'FFFF
@@ -878,7 +898,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsubsection{Semantik}
 \begin{itemize}
 	\item Struktur $S = (U_s, I_s)$ \\
-		$U_s$ ist eine nicht-leere Grundmenge und $I_S$ eine Abbildung
+		$U_s$ ist eine nicht-leere Grundmenge und IS eine Abbildung
 		\begin{itemize}
 			\item der Pr\"adikate \"uber $U_s$
 			\item der Funktionen auf $U_s$
@@ -886,17 +906,17 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		\end{itemize}
 	\item Semantik bez\"uglich passender Struktur S
 		\begin{itemize}
-			\item[S(Term)] jeder Term wird gem\"ass $I_S$ auf ein Element aus $U_S$ abgebildet
+			\item[S(Term)] jeder Term wird gem\"ass IS auf ein Element aus US abgebildet
 			\item[S(Pr\"adikat)] jedes Pr\"adikat bestimmt einen Wahrheitswert in Abh\"angigkeit seiner Argumente (Terme)
 			\item[S(Formel)] die aussagenlogische Verkn\"upfung der Wahrheitswerte der Pr\"adikate
 			\item[S($\forall$x F)] F ist eine Formel 
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in U_S$ gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 			\item[S($\exists$x F)] F ist eine Formel
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in U_S$ gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 		\end{itemize}
@@ -914,7 +934,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$\exists x \exists y F \equiv \exists y \exists x F$ \\
 		$(\exists F \vee \exists x G) \equiv \exists x (F \vee G)$ \\ \\
 		falls x in G nicht frei vorkommt, gilt: \\
-		$(\forall x F \wedge G) \equiv \forall x (F \wedge G)$ \\
+		$(\forall x F \wedge G) \equiv \forall x (F \ wedge G)$ \\
 		$(\forall x F \vee G) \equiv \forall x (F \vee G)$ \\
 		$(\exists x F \wedge G) \equiv \exists x (F \wedge G)$ \\
 		$(\exists x F \vee G) \equiv \exists (F \vee G)$ \\
@@ -953,7 +973,7 @@ Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorb
 		Implikation: $[\underbrace{S}_{spezielle Spez.} \ra \underbrace{T}_{allg. Spez.}] \equiv \forall a, b, c, ..., z, a', b', c', ..., z': \neg S \vee T$
 		\begin{itemize}
 			\item $a, b, c, ..., z$ sind alle Variablen, die in den Spezifikationen S und T vorkommen
-			\item wenn ein Programm P die speziellere Spezifikation S erfüllt, so auch die allgemeinere T
+			\item wenn ein Programm P die speziellere Spezifikation S erfüllt, so auch die allgemeinere T
 			\item es gibt ein Programm Q, welches die Spezifikation T erf\"ullt und mindestens so einfach ist wie das Programm P, welches die Spezifikation S erf\"ullt
 		\end{itemize}
 	\item[Besipiele:] \hfill \\
@@ -982,8 +1002,8 @@ Ein Hoare-Triple ( $\{ R \} P \{ S \}$ ) ist g\"ultig, wenn bei erf\"ullter Vorb
 	\item[Berechnung der WP] \hfill 
 		\begin{itemize}
 			\item ausgehend von der Spezifikation S
-			\item Anweisung für Anweisung r\"uckwärts rechnen
-			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
+			\item Anweisung für Anweisung r\"uckwärts rechnen
+			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
 		\end{itemize}
 \end{description}
 
@@ -1090,7 +1110,7 @@ long multiply(int x, int y) {
 		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ 
 	\item[Beweisverfahren] \hfill \\
 		Wenn an Position 2 die Invariante INV gilt, dann gilt sie auch an der Position 3. \\
-		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem üblichen Verfahren WP berechnen.
+		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem üblichen Verfahren WP berechnen.
 	\item[Beispiel] \hfill \\
 		R1 = wp(r := 0, INV) $= (a \geq 0 \wedge a*b = x*y)$ \\
 		R2 = wp(b := y, R2) $= (a \geq 0 \wedge a*y = x*y)$ \\
@@ -1109,4 +1129,5 @@ long multiply(int x, int y) {
 		$S = (r = x*y \wedge a = 0)$ \\
 		Der R\"uckgabewert r ist also gleich dem Produkt aus x und y.
 \end{description}
+
 \end{document}
