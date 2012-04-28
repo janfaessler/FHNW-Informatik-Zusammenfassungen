@@ -203,8 +203,8 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \subsubsection{Beispiele (IEEE 754 32bit Float)}
 \begin{description}
 	\item[2.5] $=1.25*2^1$
-	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{-1 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
-	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01110111}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
+	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{126 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
+	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01111011}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
 \end{description}
 
 \subsubsection{Spezialf\"alle}
@@ -878,7 +878,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsubsection{Semantik}
 \begin{itemize}
 	\item Struktur $S = (U_s, I_s)$ \\
-		$U_s$ ist eine nicht-leere Grundmenge und IS eine Abbildung
+		$U_s$ ist eine nicht-leere Grundmenge und $I_S$ eine Abbildung
 		\begin{itemize}
 			\item der Pr\"adikate \"uber $U_s$
 			\item der Funktionen auf $U_s$
@@ -886,17 +886,17 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		\end{itemize}
 	\item Semantik bez\"uglich passender Struktur S
 		\begin{itemize}
-			\item[S(Term)] jeder Term wird gem\"ass IS auf ein Element aus US abgebildet
+			\item[S(Term)] jeder Term wird gem\"ass $I_S$ auf ein Element aus $U_S$ abgebildet
 			\item[S(Pr\"adikat)] jedes Pr\"adikat bestimmt einen Wahrheitswert in Abh\"angigkeit seiner Argumente (Terme)
 			\item[S(Formel)] die aussagenlogische Verkn\"upfung der Wahrheitswerte der Pr\"adikate
 			\item[S($\forall$x F)] F ist eine Formel 
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in U_S$ gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 			\item[S($\exists$x F)] F ist eine Formel
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in U_S$ gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 		\end{itemize}
@@ -914,7 +914,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$\exists x \exists y F \equiv \exists y \exists x F$ \\
 		$(\exists F \vee \exists x G) \equiv \exists x (F \vee G)$ \\ \\
 		falls x in G nicht frei vorkommt, gilt: \\
-		$(\forall x F \wedge G) \equiv \forall x (F \ wedge G)$ \\
+		$(\forall x F \wedge G) \equiv \forall x (F \wedge G)$ \\
 		$(\forall x F \vee G) \equiv \forall x (F \vee G)$ \\
 		$(\exists x F \wedge G) \equiv \exists x (F \wedge G)$ \\
 		$(\exists x F \vee G) \equiv \exists (F \vee G)$ \\
