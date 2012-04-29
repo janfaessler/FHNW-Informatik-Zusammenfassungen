@@ -126,8 +126,8 @@
 
 \subsection{Digitaltechnik}
 \begin{tabular}{l l l}
-	1 & low & 0 bis 0.8V \\
-	0 & high & 2.4 bis 5V
+	0 & low & 0 bis 0.8V \\
+	1 & high & 2.4 bis 5V
 \end{tabular} \\ \\
 Mit einer Bitfolge der L\"ange n k\"onnen $2^n$ verschiedene Zust\"ande codiert werden.
 
@@ -1065,9 +1065,9 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
 		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 	\item[Beispiel] \hfill \\
-		$P = (if~x < 0~then~x' := -x~else~x' := x – 1)$ \\
+		$P = (if x < 0 then x' := -x else x' := x – 1)$ \\
 		$S = (x' > 0)$ \\
-		$WP = wp((if~x < 0~x' := -x~else~x' := x – 1), x' > 0)$ \\
+		$WP = wp((if x < 0 x' := -x else x' := x – 1), x' > 0)$ \\
 		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
 		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
 		$= true \wedge (x \notin [0, 1])$ \\
@@ -1093,7 +1093,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \subsection{Invarianten-Anwendung}
 \begin{lstlisting}
 long multiply(int x, int y) {
-	// 4. schwaechste Vorbedingung WP
+	\Bold {// 4. schwaechste Vorbedingung WP}
 	long a = x, b = y, r = 0;
 	// 3. INV muss gelten
 	while (a != 0) {
