@@ -1029,7 +1029,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		Zuweisung $P = (x' := y)$ \\
 		Nachbedingung S
 	\item[Regel] \hfill \\
-		$WP = wp(P, S) = wp((x' := y), S) = S |_{alle \hspace{2mm} x' \hspace{2mm} durch \hspace{2mm} y \vspace{2mm} ersetzt}$
+		$WP = wp(P, S) = wp((x' := y), S) = S |_{alle \hspace{2mm} x' \hspace{2mm} durch \hspace{2mm} y \hspace{2mm} ersetzt}$
 	\item[Beispiele] \hfill \\
 		$S = (a' = z), P = (a' := b + c), WP = (b + c = z)$ \\
 		$S = (n' = n), P = (n' := n-1), WP = (n = n-1) = false$
@@ -1065,14 +1065,21 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
 		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 	\item[Beispiel] \hfill \\
+<<<<<<< HEAD
 		$P = (if x < 0 then x' := -x else x' := x – 1)$ \\
 		$S = (x' > 0)$ \\
 		$WP = wp((if x < 0 x' := -x else x' := x – 1), x' > 0)$ \\
 		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
+=======
+		$P = (if~x < 0~then~x' := -x~else~x' := x - 1)$ \\
+		$S = (x' > 0)$ \\
+		$WP = wp((if~x < 0~x' := -x~else~x' := x - 1), x' > 0)$ \\
+		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x - 1 > 0)}$ \\
+>>>>>>> 3812172480e21f6244fe4393a193989b2c6e9520
 		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
 		$= true \wedge (x \notin [0, 1])$ \\
 		$= x \notin [0, 1]$ \\
-		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x ≥ 0 \wedge x – 1 > 0)}$ \\
+		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x ≥ 0 \wedge x - 1 > 0)}$ \\
 		$= (x < 0) \vee (x ≥ 0 \wedge x > 1)$ \\
 		$= (x < 0) \vee (x > 1)$ \\
 		$= x \notin [0, 1]$
@@ -1125,10 +1132,14 @@ long multiply(int x, int y) {
 		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ 
 	\item[Beweisverfahren] \hfill \\
 		Wenn an Position 2 die Invariante INV gilt, dann gilt sie auch an der Position 3. \\
+<<<<<<< HEAD
 		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem üblichen Verfahren WP berechnen.
+=======
+		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem \"ublichen Verfahren WP berechnen.
+>>>>>>> 3812172480e21f6244fe4393a193989b2c6e9520
 	\item[Beispiel] \hfill \\
 		R1 = wp(r := 0, INV) $= (a \geq 0 \wedge a*b = x*y)$ \\
-		R2 = wp(b := y, R2) $= (a \geq 0 \wedge a*y = x*y)$ \\
+		R2 = wp(b := y, R1) $= (a \geq 0 \wedge a*y = x*y)$ \\
 		WP = wp(a := x, R3) $= (x \geq 0 \wedge x*y = x*y) = (x \geq 0)$
 \end{description}
 
