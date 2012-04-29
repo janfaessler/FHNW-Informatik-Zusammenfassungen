@@ -1090,7 +1090,7 @@ long multiply(int x, int y) {
 		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ 
 	\item[Beweisverfahren] \hfill \\
 		Wenn an Position 2 die Invariante INV gilt, dann gilt sie auch an der Position 3. \\
-		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem üblichen Verfahren WP berechnen.
+		Somit ist INV an der Position 3 die Nachbedingung der Instruktionen vor der while-Schleife und wir k\"onnen mit dem \"ublichen Verfahren WP berechnen.
 	\item[Beispiel] \hfill \\
 		R1 = wp(r := 0, INV) $= (a \geq 0 \wedge a*b = x*y)$ \\
 		R2 = wp(b := y, R1) $= (a \geq 0 \wedge a*y = x*y)$ \\
