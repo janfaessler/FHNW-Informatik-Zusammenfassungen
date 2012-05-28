@@ -534,18 +534,6 @@ Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Da
 Dies ist ein sehr verbreiteter Standard in XML oder im Web. Er ist sehr speichereffizient f\"ur h\"aufige Zeichen und kompatibel mit dem ASCII Standard. F\"ur seltenere Zeichen ist er jedoch speicherineffizient und ist kompliziert in der Handhabung, da er aus 1 bis 4 Bytes besteht: \\
 \includegraphics[scale=0.35]{utf8.png}
 
-\subsubsection{UTF-32 in UTF-16 Umwandlung}
-\begin{lstlisting}
-    public char[] utf32to16(char[] array, int pos) {
-        char c = array[pos];
-        if (c >= (2^16)) {
-            array[pos] = (char) (0xD800 + ((c & 0xFFFFFF) >> 10));
-            array[pos+1] = (char) (0xDC00 + (c & 0x3FF));
-        } else array[pos] = c;
-            
-        return array;
-    }
-\end{lstlisting}
 \subsubsection{Codierungsschemen}
 Das bestimmt Codierungsformat und Byte-Reihenfolge:
 \begin{itemize}
@@ -559,6 +547,40 @@ Das bestimmt Codierungsformat und Byte-Reihenfolge:
  	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
 \end{itemize}
 
+\subsubsection{UTF-32 in UTF-16 Umwandlung}
+\begin{lstlisting}
+    public char[] utf32to16(char[] array, int pos) {
+        char c = array[pos];
+        if (c >= (2^16)) {
+            array[pos] = (char) (0xD800 + ((c & 0xFFFFFF) >> 10));
+            array[pos+1] = (char) (0xDC00 + (c & 0x3FF));
+        } else array[pos] = c;
+            
+        return array;
+    }
+\end{lstlisting}
+
+\subsubsection{UTF-16 in Latin1 Umwandlung}
+\begin{lstlisting}
+    public char[] utfToLatin1(String s) {
+        byte[] array = new byte[s.length];
+        int pos = 0;
+        for (int i = 0; i< s.length; i++) {
+        		char c = s.charAt(i);
+        		if (c >= 256 && (c < 0xDC00 || c >= 0xDFFF) {
+        				array[pos] = (byte) '?';
+        				pos++;
+        		 } else if (c < 256) {
+        		 		array[pos] = (byte) c;
+        		 		pos++;
+        		 }
+		}
+		for (int i = pos; i < s.lenght; i++) {
+				array[j] = (byte) 0;
+		}        		
+        return array;
+    }
+\end{lstlisting}
 
 \newpage
 \section{Suchen}
@@ -750,6 +772,24 @@ for(int first=1; first<a.length;first++) {
 \end{lstlisting}
 Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 Durchschnitt: $T(n)=0.5 + 1 + 1.5 + ... + \frac{(n-3)}{2} + \frac{(n-2)}{2} + \frac{(n-1)}{2}  + \frac{n}{2}=\sum^{n-1}_{i=1} \frac{i}{2}=\frac{1}{2}*\sum^{n-1}_{i=1} i = \frac{1}{2}*(\frac{n^2-n}{2})\approx\uuline{\frac{n^2}{4}}$
+
+\subsection{Enumeration Sort}
+Durchlaufe das gegebene Array a und vermerke jedes Auftreten eines Wertes u in einem Hilfsarray t an der Position p, wobei p sehr einfach aus u berechnet werden kann; d.h. t[p] muss zu Beginn 0 sein und wird mit jedem Auftreten von u um eins erh\"ot. \\
+Durchlaufe t und schreibe jeweils fortlaufend t[p] mal den wert u  in das Array a.
+\begin{lstlisting}
+public static void sort(byte[] a) {
+		int[] t = new int[256];
+		int pos = 0;
+		for (byte b: a) {
+				t[b+128] ++;
+		}
+		fort (int i=0; i< t.length; i++) {
+				for (int k = 0; k<t[i]; k++) {
+						a[pos++] = (byte) (i-128);
+				}
+		}
+}
+\end{lstlisting}
 
 \newpage
 \section{Halbdynamischen Datenstrukturen}
@@ -1065,17 +1105,10 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
 		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 	\item[Beispiel] \hfill \\
-<<<<<<< HEAD
 		$P = (if x < 0 then x' := -x else x' := x – 1)$ \\
 		$S = (x' > 0)$ \\
 		$WP = wp((if x < 0 x' := -x else x' := x – 1), x' > 0)$ \\
 		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
-=======
-		$P = (if~x < 0~then~x' := -x~else~x' := x - 1)$ \\
-		$S = (x' > 0)$ \\
-		$WP = wp((if~x < 0~x' := -x~else~x' := x - 1), x' > 0)$ \\
-		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x - 1 > 0)}$ \\
->>>>>>> 3812172480e21f6244fe4393a193989b2c6e9520
 		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
 		$= true \wedge (x \notin [0, 1])$ \\
 		$= x \notin [0, 1]$ \\
@@ -1152,4 +1185,48 @@ long multiply(int x, int y) {
 		Der R\"uckgabewert r ist also gleich dem Produkt aus x und y.
 \end{description}
 
+\newpage
+\section{Komplexit\"at}
+
+\subsection{Zeit- und Speicherbedarf}
+\begin{description}
+	\item[Modell: Random-Access-Machine (RAM)] \hfill \\
+		Eine mo\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen für beliebig grosse Zahlen.
+		\item[Speicherbedarf eines Algorithmus] \hfill \\
+			Die minimale Anzahl Speicherzellen im RAM-Modell, die vorhanden sein m\"ussen, damit der Algorithmus korrekt ausgef\"uhrt werden kann.
+		\item[Zeitbedarf eines Algorithmus] \hfill \\
+			\Bold {Laufzeit in Echtzeit}: gemessene Ausf\"uhrungszeit eines Programms mit vordefinierten Testdaten auf einem pr\"azise beschriebenen Computersystem. \\
+			\Bold {Laufzeit in RAM-Instruktionen}: die minimale Anzahl RAM-Befehle, die ausgef\"uhrt werden m\"ussen, um den Algorithmus abzuarbeiten.
+		\item[Definitionen] \hfill \\
+			Laufzeit: T(n) \\
+			Speicherbedarf: M(n)
+\end{description}
+
+\subsection{Worst-Case vs. Average-Case}
+\begin{description}
+		\item[Best-Case (meistens uninteressant)] \hfill \\
+			die Zahlen sind bereits sortiert
+		\item[Worst-Case (sinnvoll und praktikabel)] \hfill \\
+			die Zahlen sind in umgekehrter Reihenfolge
+		\item[Average-Case (oft zu schwierig)] \hfill \\
+			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu können, muss Klarheit bestehen, worüber der Durchschnitt gebildet werden darf. Fairerweise müssen alle m\"oglichen Probleminstanzen der Länge n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
+\end{description}
+
+\subsection{Gross-O und Gross-Omega}
+\subsubsection{Gross-O}
+\begin{itemize}
+	\item obere Schranke einer Worst-Case Absch\"atzung
+	\item sinnvoll für konkrete Algorithmen
+	\item Beispiel: \\
+		n Zahlen können mit Heap-Sort in Zeit T(n) $\in$ O(n log n) bei einem
+Speicherbedarf M(n) $\in$ O(n) sortiert werden
+\end{itemize}
+\subsubsection{Gross-Omega}
+\begin{itemize}
+	\item untere Schranke einer Worst-Case Absch\"atzung
+	\item sinnvoll für Problemklassen
+	\item Beispiel: \\
+		um n beliebige Zahlen in beliebiger Reihenfolge auf einer RAM zu sortieren, braucht es mindestens $\Omega$(n log n) Rechenschritte \\
+	\Bold {Formal}: $ \Omega (g(n))  = \{  h(n) | \exists c > 0 : \exists $ unendlich viele $n:h(n) \geq c * g(n) \}$
+\end{itemize}
 \end{document}

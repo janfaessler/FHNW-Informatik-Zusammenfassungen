@@ -17,6 +17,10 @@
 \usepackage{textcomp}
 \usepackage{fancyhdr} %for header/footer
 
+
+\usepackage{wrapfig}
+\usepackage{listings}
+
 %My Commands
 \newcommand{\BN}{\mathbb{B}} %BOOL
 \newcommand{\RN}{\mathbb{R}} %Real Number
@@ -454,6 +458,191 @@ $fib(n+2)-1 + fib(n+1) $  \\ $<Rekursion>$ \\
 			&& $-1 < q' - q < 1$ \\
 		\end{tabular} \\
 	$\Ra q'-q =0$, also $q'=q$, also $r=r'$ \\
-		
+	\item[Definition] \hfill \\
+		Sei b, c, q, r $:\ZN, c \neq 0$, \\
+		$b=q*c+r, 0 \leq r < |c|$ \\ \\
+		Nach Satz q, r existent und eindeutig. \\
+		Definieren die Funktionen \Bold {div} und \Bold {mod}. \\
+		\\
+		div(b,c) = b div c = def q, \\
+		mod(b,c) = b mod c = def r
+		div, mod: $\ZN$ x ${\ZN}^{\neq 0} \ra \ZN$
+\end{description}
+
+\subsection{Greatest Common Divisor (GCD)}
+$y \uparrow y \Ra$ if x $\geq y$ then x else y (max) \\
+$x \downarrow y \Ra$ if x $\leq y$ then x else y (min) \\ 
+\\ß
+Sei $M \subseteq \ZN, M \neq \varnothing,$ M endlich \\
+Dann max(M) = $(\uparrow b: \ZN | b \in M:b)$
+
+\begin{description}
+	\item[Definition] \hfill \\
+		$D_m = \{ d : \ZN | d \backslash m \}$ (Menge aller Teiler von m)
+	\item[Beispiele] \hfill \\
+		$D_{12} = \{-12, -6, -4, -3, -2, -1, 1, 2, 3, 4, 6, 12\}$ \\
+		$D_0 = \{ \ZN \}$ \\
+		$1 \in D_m$, also $D_m \neq\varnothing$
+\end{description}
+\begin{description}
+	\item[Definition] \hfill \\
+		$D_{m,n} = D_m \cap D_n$ (Menge der gemeinsamen Teiler von m und n)
+	\item[Beispiele] \hfill \\
+		$D_{4,6} = \{-4, -2, -1, 1, 2, 4\} \cap \{-6, -3, -2, -1, 1, 2, 3, 6\} = \{-2, -1, 1, 2\}$ \\
+		$D_{2,0} = \{-3, -1, 1, 3\} \cap \ZN = \{-3, -1, 1, 3\}$ \\
+		$D_{0,0} = \ZN$ \\
+		$1 \in D_{m,n}$, also $D_{m,n} \neq \varnothing$
+\end{description}
+Sei b, c : $\ZN$, $b \neq 0 \vee c \neq 0$. \\
+Dann ist $D_{b,c} \neq \varnothing$ und $D_{b,c}$ hat ein gr\"osstes Element.\\
+\\
+gcd(b,c) = b gcd c = max($D_{b,c}$) \\
+gcd(0,0) = 0 gcd 0 = 0
+\begin{description}
+	\item[Satz] \hfill
+		\begin{itemize}
+			\item[a)] b gcd b = $| b |$
+			\item[b)] 0 gcd b = $| b |$
+			\item[c)] b gcd c = $| b |$ gcd $| c |$ (ged - Algo f\"ur N genug)
+			\item[d)] b gcd c = c gcd b
+			\item[e)] b = a * c + d $\Ra$ b gcd c = c gcd d
+		\end{itemize}
+	\item[Beweis] \hfill \\
+		Annahme: Sei b = a*c + d \\
+		zu zeigen: Es gilt b gcd = c gcd d \\
+		\\
+		\Bold {1. Fall}: \\
+		b = c = 0 Dann d= 0 \\
+		Dann b gcd c = c gcd d\\
+		\\
+		\Bold {2. Fall}: \\
+		$b \neq 0 \vee c \neq 0$ \\
+		Wur zeigen $D_{b,c} = D_{c,d}$. Damit folgt b gcd = max($D_{b,c}$) = max($D_{c,d}$) = c gcd d. \\
+		\\
+		zu zeigen: $D_{b,c}$ = $D_{c,d}$ also $t \in D_{b,c} \Leftrightarrow t \in D_{c,d}$ \\
+\\		
+	\Bold {Teil 1} ($t \in D_{b,c} \Ra t \in D_{c,d}$) \\
+	$t \in D_{b,c}$ \\
+	$\Ra <Def D_{m,n}>$ \\
+	$t \in D_b \cap D_c$ \\
+	$\Ra < Def \cap>$ \\
+	$t \in D_b \wedge t \in D_c$ \\
+	$\Ra <Def D_m>$ \\
+	$t\backslash \wedge t \backslash c$ \\
+	$\Ra < Def$ $\backslash$ mit $k_1,k_2:\ZN>$ \\
+	$b = k_1 * t \wedge c = k_2 * t$ \\
+	$\Ra < d= b- a*c,$ nach Ahnnahme$>$ \\
+	$d = k_1*t - a*(k_2*t)$ \\
+	$\Ra <Arith>$ \\
+	$d = t*(k_1 - a*k_2)$ \\
+	$\Ra <Def \backslash$ mit $k_1 - a*k_2 : \ZN >$ \\
+	$t \backslash d \wedge t \backslash c$ \\
+	$\Ra <Def D_m>$ \\
+	$t \in D_d \wedge t\in D_c$ \\
+	$\Ra <Dev \cap>$ \\
+	$t \in D_d \cap D_c$ \\
+	$\Ra <Def D_{d,c}>$ \\
+	$t \in D_{d,c}$ \\
+	\\
+	\Bold {Teil 2} ($t \in D_{b,c} \La t \in D_{c,d}$) \\
+	tbd
+\end{description}
+
+\subsection{Euklid ged(27,10)} 
+\includegraphics[scale=0.4]{euklid.png} \\
+\\
+\Bold {Regel e}: b = a * c + d $\Ra$ b gcd c = c gcd d \\
+\\
+b gcd c = c gcd (b - ac) Setze a = 1 \\
+x gcd y = y gcd (x - y) \\
+gcd(x,y) = gcd(y, x-y) \\
+gcd(x,y) = gcd (x-y, y) : Korollar zu Regel e \\
+\\
+\Bold {Algo:} \\
+Algo terminiert. Sei n Anzahl Iterationen. Dann gcd(bc) = $x_n$ oder $y_n$ (beides richtig) \\
+$(x_0, y_0) = b, c$ \\
+$i : = 0 $ \\
+\Bold {while} $x_i \neq <_i$ \Bold {do} \\
+	\Bold {if}  $x_i<y_i$ \Bold {then}
+	$(x_i+1,y_i-1) = (x_i - y_i, y_i)$ \\
+	\Bold {else} \\
+	$(x_i+1,y_i-1) = (x_i,  y_i - x_i)$ \\
+	\Bold {endif} \\
+	i := i+1 \\
+\Bold {end}
+
+\subsection{Erweiterter Euklid}
+
+\Bold {Satz:} \\
+\begin{tabular}{l c l}
+	$r_{-2} \underbrace{=}_{A}$ a & & $r_{-1} \underbrace{=}_{B}$ b\\
+	$p_{-2} \underbrace{=}_{C}$ 0 & X & $p_{-1} \underbrace{=}_{D}$ 1 \\
+	$q_{-2} \underbrace{=}_{E}$ 1 & & $q_{-1} \underbrace{=}_{F}$ 0 \\
+\end{tabular} \\
+i := 0 \\ \\
+\Bold {while} $r_{i-1} \underbrace{>}_{G} 0$ \Bold {do} \\
+\Bold {berechne} $c_i$ und $r_i$ mit $r_{i-2} \underbrace{=}_{H} c_i * r_{i-1} + r_i \wedge 0 \underbrace{\leq}_{I} r_i \underbrace{<}_{J} r_{i-1}$ \\
+$p_i \underbrace{=}_{K} c_i * p_{i-1} + p_{i-2}$ \\
+$q_i \underbrace{=}_{L} c_i*q_{i-1} + 1_{i-2}$ \\
+$i:=i+1$ \\
+\Bold {end} \\ 
+\\
+Seien a, b : $\NN$. \\
+Dann gibt es Zahlen $x,y : \ZN$ mit $x*a + y*b =$ gcd(a,b). \\
+Wir konstruieren diese Zahlen durch erteiterten Euklidschen Algorithmus. 
+\begin{itemize}
+	\item[1)] $r_{n-1} =gcd(a,b)$ 
+	\item[2)] $p_n$ $gcd(a,b) = a$
+	\item[3)] $q_n$ $gcd(a,b) = b$
+	\item[4)] $a * \frac{q_{n-1}}{(-1)^{n-1}} + b * \frac{p_{n-1}}{(-1)^n}=gcd(a,b)$
+\end{itemize}
+
+\begin{tabular}{c c c c c l}
+	i & $r_i$ & $c_i$ & $p_i$ & $q_i$ & \\
+	-2 & 654 & & 0 & 1 & \\
+	-1 & 444 & & 1 & 0 & \\
+	0 & 210 & 1 & 1 & 1 & =b \\
+	1 & 24 & 2 & 3 & 2 & = 210 \\
+	2 & 18 & 8 & 25 & 17 & = 24 \\
+	3 & 6 & 1 & 28 & 19 & = 18 \\
+	4 & 0 & 3 & 109 & 74 & = 0 
+\end{tabular} \\
+\\
+\Bold {Beweis} \\
+Es gibt offensichtlich $n:\NN$ mit $r_n=0 \wedge (\forall i | 0 \leq i < n : r_i > 0)$ \\
+Invarianten f\"ur alle $i : 0 \leq i \leq n+1$
+\begin{itemize}
+	\item[$I_1$:] ged($r_{i-2}$,$r_{i-1}$) = ged(a,b) 
+	\item[$I_2$:] $p_{i-2} * r_{i-1} + p_{i-1} * r_{i-2} = a$
+	\item[$I_3$:] $q_{i-2} * r_{i-1} + q_{i-1} * r_{i-2} = b$
+	\item[$I_4$:] $q_{i-2} * p_{i-1} - q_{i-1} * p_{i-2} = (-1)^{i-1}$
+\end{itemize}
+\Bold {Beispiel $I_2$:}
+\begin{description}
+	\item[Induktionsanfang] \hfill \\
+		$i=0, p_{-2} * r_{-1} + p_{-1} * r_{-2}$ \\
+		$= <C, B, D, A>$ \\
+		$0 * b + 1 + a$ \\
+		$=<Arith>$ \\
+		$a$
+	\item[Induktionsschritt] \hfill \\
+		zu zeigen: $I_2(i) \wedge r_{i-1} > 0 \Ra I_2(i+1)$ f\"ur alle i mit $0 \leq i \leq n$. \\
+		Sei n eine $\NN$ mit $0 \leq i \leq n$ \\
+		\\
+		Annahme: es gibt $I_2(i) \wedge r_{i-1} > 0$ \\
+		zu zeigen: es gibt $I_2(i+1)$ \\
+		\\
+		$p_{(i+1)-2} * r_{(i+1)-1} + p_{(i+1)-1} * r_{(i+1)-2}$ \\
+		$= <Arith>$ \\
+		$p_{i-1} * r_i + p_i * r_{i-1}$ \\
+		$= <H, < >$ \\
+		$p_{i-1} * (r_{i-2} - c_i * r_{i-1}) +(c_i * p_{i-1} + p_{i-2}) *r_{i-1}$ \\
+		$= <Arith>$ \\
+		$p_{i-1} * r_{i-2} + p_{i-2} * r_{i-1}$ \\
+		$= <Annahme>$ \\
+		a \\
+		\\
+		Es gilt insbesondere: $p_n * r_{n-1} + p_{n-1} * \overbrace{r_n}^{0}=a$  \\
+		$p_n * gcd(a,b)=a \ra (2)$
 \end{description}
 \end{document}
