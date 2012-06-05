@@ -1229,4 +1229,70 @@ Speicherbedarf M(n) $\in$ O(n) sortiert werden
 		um n beliebige Zahlen in beliebiger Reihenfolge auf einer RAM zu sortieren, braucht es mindestens $\Omega$(n log n) Rechenschritte \\
 	\Bold {Formal}: $ \Omega (g(n))  = \{  h(n) | \exists c > 0 : \exists $ unendlich viele $n:h(n) \geq c * g(n) \}$
 \end{itemize}
+
+\newpage
+\section{Rekursion}
+
+
+\newpage
+\section{Divide-andConquer}
+\begin{itemize}
+
+	\item[Divide 1.)]
+		Gesamtproblem in 2 oder 3 gleichgrosse Teilprobleme zerlegen
+	\item[Conquer 2.)] 
+		jedes Teilproblem separat l\"osen (gleicher Algorithmus wie f\"urs Gesamtproblem)
+	\item[Merge 3.)] 
+		aus Teill\"osungen die Gesamtl\"osung erzeugen.
+\end{itemize}
+
+\subsection{Code-Listing}
+\begin{lstlisting}
+int maxTSumme(int[] a, int left, int right) {
+	if (left > right) return 0;
+	if (left == right) return (a[left] >= 0 ? A[left] : 0);
+	int m = (left + right) >>> 1;
+	int v1 = maxTSumme(a, left, m)
+	int v2 = maxTSumme(a, m+1, right);
+	int sum=0; rmax=0; lmax=0;
+	for (int i=m+1; i <= right; i++) {
+		sum += a[i];
+		if (sum > rmax) rmax =  sum;
+	}
+	sum = 0;
+	for (int i=m; i>=left; i--) {
+		sum += a[i];
+		if (sum > lmax) lmax = sum;
+	}
+	int v3 = lmax + rmax;
+	return max(v1, v2, v3);
+}
+\end{lstlisting}
+\subsection{Analyse}
+\subsubsection{Schritte}
+\begin{itemize}
+	\item[Zeile 2-4:] 10 Schritte
+	\item[Zeile 5:] $T(\frac{n}{2})$ Schritte
+	\item[Zeile 6:] $T(\frac{n}{2})$ Schritte
+	\item[Zeile 8 - 16:] $6 + 6*n$ Schritte
+	\item[Zeile 17 - 18:] 5 Schritte
+\end{itemize}
+n: l\"ange von a
+\subsubsection{Aufwandsformel}
+$T(n) = 2* T(\frac{n}{2	}) + 6n + 21$ \\
+$T(1) = 7$
+
+\subsection{Berechnung}
+\subsubsection{Teleskopieren}
+$T(n) = 2 * \underline{T(\frac{n}{2})} + 6*n +21$ \\
+$T(n) = 2 * (\underline{2*T(\frac{n}{4}) + \frac{6*n}{2} +21 } ) + 6*n + 21$ \\
+$T(n) = 4 * \underline{T(\frac{n}{4})} + 12 * n + 3* 21$ \\
+$T(n) = 4 * (\underline{2*T(\frac{n}{8}) + \frac{6*n}{4} +21 } ) + 12*n + 3*21$ \\
+$T(n) = 8 * \underline{T(\frac{n}{8})} + 18 * n + 7* 21$ 
+\subsubsection{Verankerung}
+$T(n) = 2^i*T(\frac{n}{2^i}) +6*i*n +(2^i-1)*21$ \\  \\
+$\frac{n}{1^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
+$T(n) = 2^{ld(n)} * T(1) +6*ld(n)*n + (2^{ld(n)} -1) * 21$ \\
+$T(n) = n*7 + 6*ld(n)*n +(n-1)*21$ \\
+$T(n) = 6*n*ld(n)+28*n-21$
 \end{document}
