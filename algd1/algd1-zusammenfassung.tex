@@ -791,6 +791,69 @@ public static void sort(byte[] a) {
 }
 \end{lstlisting}
 
+\subsection{Quicksort (randomisierter Algorightmus)}
+\begin{itemize}
+	\item[0.] falls A.length $<=$ 1: Array A ist schon sortiert
+	\item[1.] w\"ahle zuf\"allig ein Pivotelement p aus A und teile A wie folgt auf:
+		\begin{itemize}
+			\item[$A_1$:] enth\"alt nur Elemente aus A $\backslash$ p, die $<= p$ sind
+			\item[$A_2$:] enth\"alt nur Elementa us A $\backslash$ p, die $>= p$ sind 
+		\end{itemize}
+	\item[2.] quicksort($A_1$) \\
+		quicksort($A_2$)
+	\item[3.] $A = [A_1, p, A_2]$
+\end{itemize}
+\subsubsection{Implementierung}
+\begin{lstlisting}
+void quicksort (int[] a) {
+	if (a.length > 1) sort(a,0,a.length-1);
+}
+void sort(int[] a, int l, int r) {
+	int i=l, j=r;
+	int p = Math.random(a, l, r),
+	do {
+		while (a[i] < p) i++;
+		while (a[j] > p) j--;
+		if (i <= j) {
+			int tmp = a[i];
+			a[i] = a[j];
+			a[j] = tmp;
+			i++;
+			j--;
+		}
+	} while (i < j);
+	if (l < j) sort(a, l, j);
+	if (i < r) sort(a, i, r);
+}
+\end{lstlisting}
+\subsubsection{Aufwand}
+\begin{description}
+	\item[Fall 1] \hfill \\
+		$T(1) = 0$ \\
+		$T(n) = c_1 + c_2 * n + T(1) + T(n-1)  = c_1 + c_2 * n + 0 + T(n-1)$ \\
+		$T(n) = c_1 + c_2 * n + (c_1 + c_2 * (n - 1) + T(n - 2)) = 2 * c_1 + c_2 * ((n-2) + (n-1) + n) + T(n-3)$ \\
+		$T(n) = 2 * c_1 + c_2 * ((n-1) + n) + (c_1 + c_2 * (n-2) + T(n-3)) = 3 * c_1 + c_2 * ( (n - 2) + (n - 1) + n) + T(n-3)$ \\
+		$T(n) =  i * c_1 + c_2 * \sum_{k=0}^{i-1} (n-k) + T(n-i) = i * c_1 + c_2 * (n * \sum_{k=0}^{i-1} 1 - \sum_{k=0}^{i-1} k) + T(n-1)$\\
+		$T(n) = c_1 * (n-1) + c_2 * (n * (n-1) - \frac{(n-2) * (n-1)}{2}) + T(1)$ \\
+		$T(n) = c_1 * (n-1) + c_2 * (n^2-n-\frac{n^2}{2} + \frac{3*n}{2} -1)$ \\
+		$T(n) =c_1 * (n-1) + c_2 * (\frac{n^2}{2} + \frac{n}{2} -1)$ \\
+		$T(n) \in O(n^2)$
+	\item[Fall 2] \hfill \\
+		$T(1) = 0$ \\
+		$T(n) = c_1 + c_2 * n + 2 * T(\frac{n}{2})$ \\
+		$T(n) = 2 * T(\frac{n}{2}) + c_2 * n + c_1$ \\
+		$T(n)= 2 *(2 * T(\frac{n}{4})+c_2*\frac{n}{2} + c_1) + c_2 * n + c_1 = 4  * T(\frac{n}{4}) + c_4) + c_2 * n + 2 * c_1 + c_2 * n + c_1$ \\
+		$T(n)= 4 ( 2* T(\frac{n}{8}) + c_2 * \frac{n}{4} + c_1) + 2 * c_2*n+3*c_1=8*T(\frac{n}{8}) + 3 *c_2 * n + 7* c_1$\\
+		$\Ra 2^i=n$ $i=ld(n)$ \\
+		$T(n)=2^i * T(\frac{n}{2^i}) + i * c_2 * n + \sum_{k=0}^{i-1} 2^k*c_1$ \\
+		$T(n)= n* T(\frac{n}{n}) +ld(n)*c_2*n+ c_1 * \sum_{k=0}^{ld(n)-1} 2^k$ \\
+		$T(n)=c_2 * n * ld(n) + c_1 *(2^{ld(n)} -1)$ \\
+		$T(n)=c_2 * n * ld(n) + c_1 * (n-1)$ \\
+		$T(n) = n * (c_2 * ld(n) + c_1) - c_1$  \\
+		$T(n) \in$ O( n log n)
+\end{description}
+
+
 \newpage
 \section{Halbdynamischen Datenstrukturen}
 
@@ -1289,7 +1352,7 @@ $T(n) = 2 * (\underline{2*T(\frac{n}{4}) + \frac{6*n}{2} +21 } ) + 6*n + 21$ \\
 $T(n) = 4 * \underline{T(\frac{n}{4})} + 12 * n + 3* 21$ \\
 $T(n) = 4 * (\underline{2*T(\frac{n}{8}) + \frac{6*n}{4} +21 } ) + 12*n + 3*21$ \\
 $T(n) = 8 * \underline{T(\frac{n}{8})} + 18 * n + 7* 21$ 
-\subsubsection{Verankerung}
+\subsubsection{Verallgemeinerung}
 $T(n) = 2^i*T(\frac{n}{2^i}) +6*i*n +(2^i-1)*21$ \\  \\
 $\frac{n}{1^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
 $T(n) = 2^{ld(n)} * T(1) +6*ld(n)*n + (2^{ld(n)} -1) * 21$ \\

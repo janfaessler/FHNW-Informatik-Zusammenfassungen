@@ -645,4 +645,174 @@ Invarianten f\"ur alle $i : 0 \leq i \leq n+1$
 		Es gilt insbesondere: $p_n * r_{n-1} + p_{n-1} * \overbrace{r_n}^{0}=a$  \\
 		$p_n * gcd(a,b)=a \ra (2)$
 \end{description}
+
+\subsection{Primzahlen}
+\begin{description}
+	\item[Def.] Eine Zahl $n:\NN$ heisst prim, wenn ihre einzigen positiven Teiler 		1 und n sind, mit $1 \neq p$: \\ \\
+		p ist prim = $p \geq 2 \wedge ( \forall i:\NN | 1 < i < p : i$ $\neg\setminus$ $p)$ \\
+		$|D_p^+|=2$ \\ \\
+		Sonst heissst, p zusammengesetzt.
+	\item[Def.] Zahlen $b,c:\NN$ heisst relativ prim $(b \perp c)$ falls der $ged(b,c)=1$
+	\item[Satz] Jede nat\"urliche Zahl $n:\NN, n \geq 1$ kann als Produkt von PRimzahlen geschrieben werden. \\
+		D.h. es existiert eine Zahl $m:\NN$ und m Primzahlen $(p_0,p_1, ...,p_{m-1})$ \\ \\
+		$n:=(*i|0 \leq i < m : p^i)$
+	\item[Satz] Sei $n:\NN, n \geq 1$. Die Zerlegung von n in Primzahlen ist eindeutig.
+	\item[Bsp.] $328 = 2 * 164 = 2 * 2 * 82 = 2 * 2 * 2 * 41$ \\
+		$328=2^3*41^1$ \\
+		$328=p_0^{\alpha 0},p_1^{\alpha 1}, ..., p_{m-1}^{\alpha m-1}$
+	\item[Satz] Es gibt unendlich viele Primzahlen.
+\end{description}
+
+\subsection{Modulare Arithmetik}
+\subsubsection{Kongruenz}
+\begin{description}
+	\item[Def] $a,b:\ZN, m:{\NN}^{> 0}.$ a heisst kongruent b modulo n, wenn $n\setminus (a - b)$ \\
+		$a {\equiv}_n b = n \setminus (a - b)$ \\
+		$a \equiv b$ (mod n)
+	\item[Bsp.] $5 {\equiv}_3 7 = false$ \\
+		$5 {\equiv}_3 8 = true$ \\
+	\item[Satz] Sei $n:{\NN} ^{>0} {\equiv}_n$ eine \"Aquivalenzrellation.
+	\item[Beweis] \hfill
+		\begin{description}
+			\item[Symmetrisch] $n\setminus (a-b) \ra a-b = k* n \ra b-a = (-k)*n \ra n\setminus (b - a)$
+			\item[Reflexiv] $ a {\equiv}_n a \ra n \setminus (a - a) \ra n \setminus 0$
+			\item[Transitiv] $ a{\equiv}_n b \wedge b {\equiv}_n c \ra a {\equiv}_n c$
+			\item[1. Annahme] \hfill \\
+				 $a {\equiv}_n b$ \\
+				$<$ def $\setminus k:\ZN>$ \\
+				$a-b=k_n*n$
+			\item[2. Annahme] \hfill \\
+				$b {\equiv}_n c$ \\
+				$<$ def $\setminus k_2:\ZN >$ \\
+				$(b-c)=k_2*n$ 
+			\item[zu zeigen] \hfill \\
+				$a {\equiv}_n c$ \\
+				$a-b = k_1 * n$ \\
+				$b - c = k_2 *n$ \\
+				$a-c = (k_1+k_2) * n$ \\
+				$<$ def $\setminus$ mit $(k_1+k_2):\ZN >$ \\
+				$n \setminus (a-c)$
+		\end{description}
+ \end{description}
+
+\subsubsection{Restklasse modulo n}
+\begin{description}
+	\item[Def.] $[a]_n=\{h:\ZN|:a+k*n\}$ \\
+		Jedes $a' \in [a]_n$ ist ein Repr\"asentant von $[a]_n$
+	\item[Satz] Sei $a {\equiv}_n a'$ Dann $[a]=[a']$
+	\item[Bsp.] $[3]_7 = \{k:\ZN|3+k*7:\} = \{ ..., -11, -4, 3, 10, 17, ...\}$ \\
+		$[-4]_7 = \{k:\ZN|-4+k*7:\} = \{ ..., -11, -4, 3, 10, 17, ...\}$\\
+		$[2]_7 = \{k:\ZN|2+k*7:\} = \{ ..., -12, -5, 2, 9, 16, ...\}$
+\end{description}
+
+\subsubsection{Zerlegung, Partition}
+\begin{description}
+	\item[Def.] $Z_n = \{a:\NN |0 \leq a < n : [a]_n \}$
+	\item[Bsp.] $Z_3= \{[0]_3, [1]_3, [2]_3 \}$ \\
+		\begin{tabular}{r c c c c l}
+			$Z_3=\{\{ ...,$ & -3, & 0, & 3, & 6, & $...\},$ \\
+			$\{ ...,$ & -2, & 1, & 4, & 7, & $...\},$ \\ 
+			$\{ ...,$ & -1, & 2, & 5, & 8, & $...\}\}$ \\ 
+		\end{tabular}
+	\item[Satz] $a,a',b,b':\ZN, n:{\NN}^{>0}$ \\
+		$a {\equiv}_n a'$ und $b {\equiv}_n b'$ \\
+		$a + b {\equiv}_n a'+b'$ \\
+		$a*b {\equiv}_n a' * b'$
+	\item[Def] $a,b : \ZN$ $n:{\NN}^{>0}$ \\
+		$[a]_n {+}_n [b]_n = [a+b]_n$ \\
+		$[a]_n {*}_n [b]_n = [a*b]_n$
+	\item[Bsp.] $[5]_n {+}_n [4]_n = [5+4]_n = [9]_7 = [2]_7$
+\end{description}
+
+\subsubsection{Gruppe}
+Eine Gruppe $(S,\oplus)$ ist eine Menge S mit einer Operation $\oplus$ aus S mit: $\oplus:SxS \ra a'$
+\begin{description}
+	\item[1. Abgeschlossenheit] \hfill \\
+		$a \oplus b \in S'$ \\ $\forall a,b \in S'$
+	\item[2. Identit\"at, neutrales Element] \hfill \\
+		$\exists e \in S' $ mit $e \oplus a=a=a\oplus e$ \\ $ \forall a$
+	\item[3. Assoziativit\"at] \hfill \\
+		$a \oplus (b \oplus c) = (a \oplus b) \oplus c$ \\ $\forall a,b,c \in S$
+	\item[4. Inverse] \hfill \\
+		f\"ur jedes $a \in S$ gibt es ein $b \in S$ mit $a \oplus b = b \oplus a = e$
+	\item[5. Symmetrie] \hfill \\
+		$a \oplus b = b \oplus a$ \\ $\forall a,b$
+\end{description}
+dan heisst $(S', \oplus)$ abelsche Gruppe.
+
+\subsubsection{endliche Gruppe}
+Ist S endlich, dann ist $(S, \oplus)$ eine endliche Gruppe.
+\begin{description}
+	\item[Def.] $(Z_n,+_n)$ heisst additive Gruppe modulo n.
+	\item[Satz] $(Z_n,+_n)$ ist endliche abelsche Gruppe.
+\end{description}
+\Bold {Beispiel:} \\ \\
+\begin{tabular}{c | c | c | c | c }
+	$+_4$ & $[0]_4$ & $[1]_4$ & $[2]_4$ & $[3]_4$ \\
+	\hline
+	$[0]_4$ & $[0]_4$ & $[1]_4$ & $[2]_4$ & $[3]_4$ \\
+	\hline
+	$[1]_4$ & $[1]_4$ & $[2]_4$ & $[3]_4$ & $[0]_4$ \\
+	\hline
+	$[2]_4$ & $[2]_4$ & $[3]_4$ & $[0]_4$ & $[1]_4$ \\
+	\hline
+	$[3]_4$ & $[3]_4$ & $[0]_4$ & $[1]_4$ & $[2]_4$
+\end{tabular} \\ \\
+\Bold {Beweis:}
+\begin{itemize}
+	\item[1.] Abgeschlossen: klar aus Def
+	\item[2.] Identit\"at $[0]_n$
+	\item[3.] Asso: aus Def
+	\item[4.] Inv: $[a]_n  + [n-a]_n = [a+(n-a)]_n=[n]_n=[0]_n$
+	\item[5.] Sym: aus Def
+	\item[6.] $|Z_n|=n$ endlich
+\end{itemize}
+
+\subsubsection{reduzierte Menge}
+\begin{description}
+	\item[Def.] $Z_n^*=\{a:\ZN | gcd(a,n) =1:[a]_n \}$ \\
+		heisst reduzierte Menge Des Rest modulo n
+	\item[Bsp.] $Z_{10}^*=\{[1]_{10},[3]_{10}, [7]_{10}, [9]_{10} \}$
+\end{description}
+\begin{tabular}{c | c | c | c | c }
+	$*_{10}$ & $[1]_{10}$ & $[3]_{10}$ & $[7]_{10}$ & $[9]_{10}$ \\
+	\hline
+	$[1]_{10}$ & $[1]_{10}$ & $[3]_{10}$ & $[7]_{10}$ & $[9]_{10}$ \\
+	\hline
+	$[3]_{10}$ & $[3]_{10}$ & $[9]_{10}$ & $[1]_{10}$ & $[7]_{10}$ \\
+	\hline
+	$[7]_{10}$ & $[7]_{10}$ & $[1]_{10}$ & $[9]_{10}$ & $[3]_{10}$ \\
+	\hline
+	$[9]_{10}$ & $[9]_{10}$ & $[7]_{10}$ & $[3]_{10}$ & $[1]_{10}$
+\end{tabular} \\ \\
+\Bold {Beweis:}
+\begin{itemize}
+	\item[1.] Abgeschlossen: \\
+		$\underbrace{gcd(a,n)=1}_{a \in Z_n^*} \wedge \underbrace{gcd(b,n)=1}_{b \in Z_n^*} \Ra \underbrace{gcd(a*b,n)=1}_{a*b \in Z_n^*}$
+	\item[2.] Identit\"at: \\
+		$[1]_n$ weil $[a]_n * [1]_n = [a*1]_n =[a]_n$
+	\item[3.] Assozativit\"at: \\
+		$[a]_n *_n ([b]_n * [c]_n)$ \\
+		= $<$Def $*_n>$ \\
+		$[a]_n *_n [b*c]_n$ \\
+		= $<$Def $*_n>$ \\
+		$[a * (b*c)]_n$ \\
+		= $<$Asso $*>$ \\
+		$[(a*b)*c]_n$ \\
+		= $<$Def $*_n>$ \\
+		$[a * b]_n *_n [c]_n$ \\
+		= $<$Def $*_n>$ \\
+		$([a]_n *_n [b]_n) *_n [c]_n$
+	\item[4.] Inv: (erweiterter Euklid) \\
+		$\exists x,y$ \\
+		$x*b+y*c=gcd(b,c)$ \\
+		$x*a+y*n=gcd(a,n)=1$ \\
+		also $x*a {\equiv}_n 1$ \\
+		$[x]_n$ ist also multiplikativ Inverses \\
+		$[x]_n*[a]_n=[x*a]_n=[1]_n$ \\
+		x ausrechenbar mit erweitertem Euklid
+	\item[5.] Sym: wie Asso
+	\item[6.] $|Z_n^*|<|Z_n|'$ endlich
+\end{itemize}
+
 \end{document}
