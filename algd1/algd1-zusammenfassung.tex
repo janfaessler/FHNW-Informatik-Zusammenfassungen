@@ -1120,8 +1120,8 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 	\item[Berechnung der WP] \hfill 
 		\begin{itemize}
 			\item ausgehend von der Spezifikation S
-			\item Anweisung für Anweisung r\"uckwärts rechnen
-			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
+			\item Anweisung f\"ur Anweisung r\"uckw\"arts rechnen
+			\item Berechnungsregeln f\"ur Zuweisung, Sequenz, Selektion, Iteration
 		\end{itemize}
 \end{description}
 
@@ -1187,7 +1187,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		for-Schleife: Anzahl Durchl\"aufe bekannt $\ra$ als Sequenz betrachten \\
 		while-Schleife: Spezialfall der Rekursion $\ra$ Invariante bestimmen
 	\item[Invariante (INV)] \hfill \\
-		eine logische Bedingung ausgedrückt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ gültig ist \\
+		eine logische Bedingung ausgedr\"uckt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ g\"ultig ist \\
 		wenn $\{INV \wedge B\} P_1 \{ INV \}$ g\"ultig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ g\"ultig
 	\item[Regel] \hfill \\
 		WP = wp(P,S) = INV
