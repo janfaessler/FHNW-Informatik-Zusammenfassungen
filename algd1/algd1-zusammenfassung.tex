@@ -1254,7 +1254,7 @@ long multiply(int x, int y) {
 \subsection{Zeit- und Speicherbedarf}
 \begin{description}
 	\item[Modell: Random-Access-Machine (RAM)] \hfill \\
-		Eine mo\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen für beliebig grosse Zahlen.
+		Eine mo\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen f\"ur beliebig grosse Zahlen.
 		\item[Speicherbedarf eines Algorithmus] \hfill \\
 			Die minimale Anzahl Speicherzellen im RAM-Modell, die vorhanden sein m\"ussen, damit der Algorithmus korrekt ausgef\"uhrt werden kann.
 		\item[Zeitbedarf eines Algorithmus] \hfill \\
@@ -1272,33 +1272,48 @@ long multiply(int x, int y) {
 		\item[Worst-Case (sinnvoll und praktikabel)] \hfill \\
 			die Zahlen sind in umgekehrter Reihenfolge
 		\item[Average-Case (oft zu schwierig)] \hfill \\
-			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu können, muss Klarheit bestehen, worüber der Durchschnitt gebildet werden darf. Fairerweise müssen alle m\"oglichen Probleminstanzen der Länge n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
+			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu k\"onnen, muss Klarheit bestehen, wor\"uber der Durchschnitt gebildet werden darf. Fairerweise m\"ussen alle m\"oglichen Probleminstanzen der L\"ange n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
 \end{description}
 
 \subsection{Gross-O und Gross-Omega}
 \subsubsection{Gross-O}
 \begin{itemize}
 	\item obere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für konkrete Algorithmen
+	\item sinnvoll f\"ur konkrete Algorithmen
 	\item Beispiel: \\
-		n Zahlen können mit Heap-Sort in Zeit T(n) $\in$ O(n log n) bei einem
-Speicherbedarf M(n) $\in$ O(n) sortiert werden
+		n Zahlen k\"onnen mit Heap-Sort in Zeit T(n) $\in \mathcal{O}$(n log n) bei einem
+Speicherbedarf M(n) $\in \mathcal{O}$(n) sortiert werden
 \end{itemize}
 \subsubsection{Gross-Omega}
 \begin{itemize}
 	\item untere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für Problemklassen
+	\item sinnvoll f\"ur Problemklassen
 	\item Beispiel: \\
 		um n beliebige Zahlen in beliebiger Reihenfolge auf einer RAM zu sortieren, braucht es mindestens $\Omega$(n log n) Rechenschritte \\
 	\Bold {Formal}: $ \Omega (g(n))  = \{  h(n) | \exists c > 0 : \exists $ unendlich viele $n:h(n) \geq c * g(n) \}$
+	\item Gross-Theta: Sind $\mathcal{O}$ und $\Omega$ gleich wird  geschrieben: $T(f) \in \Theta(g)$ \\
+	Kann gelesen werden als: \glqq $f$ w\"achst genauso schnell wie $g$\grqq
 \end{itemize}
 
 \newpage
 \section{Rekursion}
 
 
+
+\subsubsection{Formeln}
+
+Der kleine Gauss:\\
+$\sum_{k=0}^n{k} = 0+1+2+...+n = \frac{n(n+1)}{2}$ 
+\\\\
+Beispiele:\\
+$\sum_{k=0}^{n-1}{k} =  \frac{(n-1)(n-1+1)}{2} = \frac{n(n-1)}{2}$
+\\\\
+$\sum_{k=0}^{n-1}{n-k} = \sum_{k=1}^{n}{n} - \sum_{k=0}^{n-1}{k} =
+n^2 - \frac{n(n-1)}{2}$\\
+
+
 \newpage
-\section{Divide-andConquer}
+\section{Divide-and-Conquer}
 \begin{itemize}
 
 	\item[Divide 1.)]
