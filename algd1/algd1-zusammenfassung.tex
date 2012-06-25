@@ -1369,7 +1369,7 @@ $T(n) = 4 * (\underline{2*T(\frac{n}{8}) + \frac{6*n}{4} +21 } ) + 12*n + 3*21$ 
 $T(n) = 8 * \underline{T(\frac{n}{8})} + 18 * n + 7* 21$ 
 \subsubsection{Verallgemeinerung}
 $T(n) = 2^i*T(\frac{n}{2^i}) +6*i*n +(2^i-1)*21$ \\  \\
-$\frac{n}{1^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
+$\frac{n}{2^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
 $T(n) = 2^{ld(n)} * T(1) +6*ld(n)*n + (2^{ld(n)} -1) * 21$ \\
 $T(n) = n*7 + 6*ld(n)*n +(n-1)*21$ \\
 $T(n) = 6*n*ld(n)+28*n-21$
