@@ -1328,7 +1328,7 @@ n^2 - \frac{n(n-1)}{2}$\\
 \begin{lstlisting}
 int maxTSumme(int[] a, int left, int right) {
 	if (left > right) return 0;
-	if (left == right) return (a[left] >= 0 ? A[left] : 0);
+	if (left == right) return (a[left] >= 0 ? a[left] : 0);
 	int m = (left + right) >>> 1;
 	int v1 = maxTSumme(a, left, m)
 	int v2 = maxTSumme(a, m+1, right);
