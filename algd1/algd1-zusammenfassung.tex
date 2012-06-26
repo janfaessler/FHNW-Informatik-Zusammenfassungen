@@ -151,7 +151,7 @@ Mit einer Bitfolge der L\"ange n k\"onnen $2^n$ verschiedene Zust\"ande codiert 
 	\item[dezimal (10)] - Zahlen die nicht mit 0 beginnen
 	\item[hex (16)] - Zahlen die mit 0x beginnen
 \end{description}
-Positive Zahlen: $\sum b_i+B^i$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei $i$. \\ \\
+Positive Zahlen: $\sum {b_i * B^i}$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei $i$. \\ \\
 Ganze Zahlen: $-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei $i$.
 
 \subsection{Datentypen in JAVA}
@@ -1052,7 +1052,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$\exists x \exists y F \equiv \exists y \exists x F$ \\
 		$(\exists F \vee \exists x G) \equiv \exists x (F \vee G)$ \\ \\
 		falls x in G nicht frei vorkommt, gilt: \\
-		$(\forall x F \wedge G) \equiv \forall x (F \ wedge G)$ \\
+		$(\forall x F \wedge G) \equiv \forall x (F \wedge G)$ \\
 		$(\forall x F \vee G) \equiv \forall x (F \vee G)$ \\
 		$(\exists x F \wedge G) \equiv \exists x (F \wedge G)$ \\
 		$(\exists x F \vee G) \equiv \exists (F \vee G)$ \\
@@ -1120,8 +1120,8 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 	\item[Berechnung der WP] \hfill 
 		\begin{itemize}
 			\item ausgehend von der Spezifikation S
-			\item Anweisung für Anweisung r\"uckwärts rechnen
-			\item Berechnungsregeln für Zuweisung, Sequenz, Selektion, Iteration
+			\item Anweisung f\"ur Anweisung r\"uckw\"arts rechnen
+			\item Berechnungsregeln f\"ur Zuweisung, Sequenz, Selektion, Iteration
 		\end{itemize}
 \end{description}
 
@@ -1161,22 +1161,22 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \begin{description}
 	\item[Gegeben] \hfill \\
 		logischer Ausdruck b \\
-		Selektion P= (if b then $P_1$ else $P_2$) \\
+		Selektion P = (if b then $P_1$ else $P_2$) \\
 		Nachbedingung S
 	\item[Regel] \hfill \\
 		$WP = wp(P, S) = wp(($ if b then $P_1$ else $P_2), S)$ \\
 		$=\textcolor{red}{(\neg b \vee wp(P_1,S)) \wedge (b \vee wp(P_2,S))}$ \\
 		$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 	\item[Beispiel] \hfill \\
-		$P = (if x < 0 then x' := -x else x' := x – 1)$ \\
+		$P = (if~x < 0~then~x' := -x~else~x' := x – 1)$ \\
 		$S = (x' > 0)$ \\
-		$WP = wp((if x < 0 x' := -x else x' := x – 1), x' > 0)$ \\
+		$WP = wp((if~x < 0~then~x' := -x~else~x' := x – 1), x' > 0)$ \\
 		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
 		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
 		$= true \wedge (x \notin [0, 1])$ \\
 		$= x \notin [0, 1]$ \\
-		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x ≥ 0 \wedge x - 1 > 0)}$ \\
-		$= (x < 0) \vee (x ≥ 0 \wedge x > 1)$ \\
+		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x \ge 0 \wedge x - 1 > 0)}$ \\
+		$= (x < 0) \vee (x \ge 0 \wedge x > 1)$ \\
 		$= (x < 0) \vee (x > 1)$ \\
 		$= x \notin [0, 1]$
 \end{description}
@@ -1187,7 +1187,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		for-Schleife: Anzahl Durchl\"aufe bekannt $\ra$ als Sequenz betrachten \\
 		while-Schleife: Spezialfall der Rekursion $\ra$ Invariante bestimmen
 	\item[Invariante (INV)] \hfill \\
-		eine logische Bedingung ausgedrückt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ gültig ist \\
+		eine logische Bedingung ausgedr\"uckt in den Variabeln aus P, welche vor P und nach jedem durchlauf von $P_1$ g\"ultig ist \\
 		wenn $\{INV \wedge B\} P_1 \{ INV \}$ g\"ultig ist, so ist auch  $\{INV \}$ while B do $P_1 \{ INV \wedge \neg B \}$ g\"ultig
 	\item[Regel] \hfill \\
 		WP = wp(P,S) = INV
@@ -1241,7 +1241,7 @@ long multiply(int x, int y) {
 		Invariante INV $= (a \geq 0 \wedge a*b + r = x*y)$ \\
 		Schleifenbedingung B $= (a \neq 0)$
 	\item[Verfahren] \hfill \\
-		Wenn an Position 1die Invariante INV gilt, dann gilt an der Position 5 die Invariante, nicht aber B, also S $= (INV \wedge \neg B)$
+		Wenn an Position 1 die Invariante INV gilt, dann gilt an der Position 5 die Invariante, nicht aber B, also S $= (INV \wedge \neg B)$
 	\item[Beispiel] \hfill \\
 		$S = (INV \wedge \neg B) = (a \geq 0 \wedge a*b + r = x*y \wedge a = 0)$ \\
 		$S = (r = x*y \wedge a = 0)$ \\
@@ -1254,7 +1254,7 @@ long multiply(int x, int y) {
 \subsection{Zeit- und Speicherbedarf}
 \begin{description}
 	\item[Modell: Random-Access-Machine (RAM)] \hfill \\
-		Eine mo\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen für beliebig grosse Zahlen.
+		Eine m\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen f\"ur beliebig grosse Zahlen.
 		\item[Speicherbedarf eines Algorithmus] \hfill \\
 			Die minimale Anzahl Speicherzellen im RAM-Modell, die vorhanden sein m\"ussen, damit der Algorithmus korrekt ausgef\"uhrt werden kann.
 		\item[Zeitbedarf eines Algorithmus] \hfill \\
@@ -1272,33 +1272,48 @@ long multiply(int x, int y) {
 		\item[Worst-Case (sinnvoll und praktikabel)] \hfill \\
 			die Zahlen sind in umgekehrter Reihenfolge
 		\item[Average-Case (oft zu schwierig)] \hfill \\
-			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu können, muss Klarheit bestehen, worüber der Durchschnitt gebildet werden darf. Fairerweise müssen alle m\"oglichen Probleminstanzen der Länge n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
+			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu k\"onnen, muss Klarheit bestehen, wor\"uber der Durchschnitt gebildet werden darf. Fairerweise m\"ussen alle m\"oglichen Probleminstanzen der L\"ange n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
 \end{description}
 
 \subsection{Gross-O und Gross-Omega}
 \subsubsection{Gross-O}
 \begin{itemize}
 	\item obere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für konkrete Algorithmen
+	\item sinnvoll f\"ur konkrete Algorithmen
 	\item Beispiel: \\
-		n Zahlen können mit Heap-Sort in Zeit T(n) $\in$ O(n log n) bei einem
-Speicherbedarf M(n) $\in$ O(n) sortiert werden
+		n Zahlen k\"onnen mit Heap-Sort in Zeit T(n) $\in \mathcal{O}$(n log n) bei einem
+Speicherbedarf M(n) $\in \mathcal{O}$(n) sortiert werden
 \end{itemize}
 \subsubsection{Gross-Omega}
 \begin{itemize}
 	\item untere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für Problemklassen
+	\item sinnvoll f\"ur Problemklassen
 	\item Beispiel: \\
 		um n beliebige Zahlen in beliebiger Reihenfolge auf einer RAM zu sortieren, braucht es mindestens $\Omega$(n log n) Rechenschritte \\
 	\Bold {Formal}: $ \Omega (g(n))  = \{  h(n) | \exists c > 0 : \exists $ unendlich viele $n:h(n) \geq c * g(n) \}$
+	\item Gross-Theta: Sind $\mathcal{O}$ und $\Omega$ gleich wird  geschrieben: $T(f) \in \Theta(g)$ \\
+	Kann gelesen werden als: \glqq $f$ w\"achst genauso schnell wie $g$\grqq
 \end{itemize}
 
 \newpage
 \section{Rekursion}
 
 
+
+\subsubsection{Formeln}
+
+Der kleine Gauss:\\
+$\sum_{k=0}^n{k} = 0+1+2+...+n = \frac{n(n+1)}{2}$ 
+\\\\
+Beispiele:\\
+$\sum_{k=0}^{n-1}{k} =  \frac{(n-1)(n-1+1)}{2} = \frac{n(n-1)}{2}$
+\\\\
+$\sum_{k=0}^{n-1}{n-k} = \sum_{k=1}^{n}{n} - \sum_{k=0}^{n-1}{k} =
+n^2 - \frac{n(n-1)}{2}$\\
+
+
 \newpage
-\section{Divide-andConquer}
+\section{Divide-and-Conquer}
 \begin{itemize}
 
 	\item[Divide 1.)]
@@ -1313,7 +1328,7 @@ Speicherbedarf M(n) $\in$ O(n) sortiert werden
 \begin{lstlisting}
 int maxTSumme(int[] a, int left, int right) {
 	if (left > right) return 0;
-	if (left == right) return (a[left] >= 0 ? A[left] : 0);
+	if (left == right) return (a[left] >= 0 ? a[left] : 0);
 	int m = (left + right) >>> 1;
 	int v1 = maxTSumme(a, left, m)
 	int v2 = maxTSumme(a, m+1, right);
@@ -1354,7 +1369,7 @@ $T(n) = 4 * (\underline{2*T(\frac{n}{8}) + \frac{6*n}{4} +21 } ) + 12*n + 3*21$ 
 $T(n) = 8 * \underline{T(\frac{n}{8})} + 18 * n + 7* 21$ 
 \subsubsection{Verallgemeinerung}
 $T(n) = 2^i*T(\frac{n}{2^i}) +6*i*n +(2^i-1)*21$ \\  \\
-$\frac{n}{1^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
+$\frac{n}{2^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$ \\ \\
 $T(n) = 2^{ld(n)} * T(1) +6*ld(n)*n + (2^{ld(n)} -1) * 21$ \\
 $T(n) = n*7 + 6*ld(n)*n +(n-1)*21$ \\
 $T(n) = 6*n*ld(n)+28*n-21$
