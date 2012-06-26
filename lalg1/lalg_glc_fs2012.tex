@@ -1,5 +1,6 @@
-\documentclass[11pt,a4paper,onecolumn]{article}
-\usepackage[utf8]{inputenc}
+\documentclass[11pt,a4paper,onecolumn]{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -189,7 +190,22 @@ $ax + by + c = 0 $ Gerade in der Ebene (R2)
 $\vec{x} = \vec{p} + t \cdot \vec{v}$
 
 \subsubsection{Koordinatengleichung}
-Die Koordinatengleichung kann von der Parametergleichung abgeleitet werden indem man die Zeilen des dort entstehenden Gleichungssystems nach t auflöst. Und die so entstandenen Terme gleichsetzt.
+Die Koordinatengleichung kann von der Parametergleichung abgeleitet werden indem man die Zeilen des dort entstehenden Gleichungssystems nach t auflöst. Und die so entstandenen Terme gleichsetzt. \linebreak
+\newline
+Beispiel: \linebreak
+4x + 2y -z = 8 \linebreak
+$y, z$ null setzen $\Rightarrow (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix})$ \linebreak
+$x, z$ null setzen $\Rightarrow (\begin{smallmatrix} 0 \\ 4 \\ 0 \end{smallmatrix})$ \linebreak 
+$x, y$ null setzen $\Rightarrow (\begin{smallmatrix} 0 \\ 0 \\ -8 \end{smallmatrix})$ \linebreak 
+Daraus entsteht nun die folgende Gleichung: \linebreak
+$(\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}) + r *((\begin{smallmatrix} 0 \\ 4 \\ 0 \end{smallmatrix}) - (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix})) + s * ((\begin{smallmatrix} 0 \\ 0 \\ -8 \end{smallmatrix}) - (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}))$  = \linebreak
+$(\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}) + r *(\begin{smallmatrix} -2 \\ 4 \\ 0 \end{smallmatrix}) + s * (\begin{smallmatrix} -2 \\ 0 \\ -8 \end{smallmatrix})$
+\newline
+In die umgekehrte Richtung muss man zuerst den Normalenvektor finden: \linebreak
+Dazu nimmt man das Kreuzprodukt der beiden Richtungsvektoren \linebreak
+$(\begin{smallmatrix} -2 \\ 4 \\ 0 \end{smallmatrix}) \times (\begin{smallmatrix} -2 \\ 0 \\ -8 \end{smallmatrix}) = (\begin{smallmatrix} -32 \\ -16 \\ 8 \end{smallmatrix})$ \linebreak
+Damit entsteht die Gleichung $-32x - 16y + 8z - D = 0$. Hier setzt man den Ursprungspunkt für x, y und z ein und berechnet D. \linebreak
+$-32(2) - 16(0) + 8 (0) = D \Rightarrow D -64 \Rightarrow -32x - 16y + 8z  + 64 = 0$
 
 
 
@@ -204,7 +220,7 @@ $ \vec{x} = \vec{p} + s \cdot \vec{u} + t \cdot \vec{v}$
 \subsubsection{Normalengleichung}
 $ \vec{n} \cdot (\vec{x}-\vec{p}) = 0 \leftrightarrow \vec{n}\cdot \vec{x} = \vec{n} \cdot \vec{p} $ \linebreak
 
-Die Normalengleichung einer Ebene stellt in Komponenten eine lineare Gleichun für die Koordinaten des laufenden Punktes der Ebene dar. \linebreak\linebreak
+Die Normalengleichung einer Ebene stellt in Komponenten eine lineare Gleichung für die Koordinaten des laufenden Punktes der Ebene dar. \linebreak\linebreak
 \textbf{Koordinatengleichung}\linebreak
 $ax_{1}+bx_{2}+cx_{3} = d $
 
