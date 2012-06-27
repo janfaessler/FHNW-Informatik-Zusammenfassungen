@@ -122,7 +122,7 @@
 \newpage
 \thispagestyle{fancy} %f\UTF{00FC}r Header
 
-\section{Daten \& Informationenen}
+\section{Daten \& Informationen}
 
 \subsection{Digitaltechnik}
 \begin{tabular}{l l l}
@@ -191,14 +191,16 @@ IEEE 754 Float: $(-1)^V * (1+M) * 2^{E-127}$ \\
 IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \begin{description}
 	\item[V] - Vorzeichen (float 1Bit / double 1 Bit)
-	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
+	\item[M] - normalisierte Mantisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
 	\item[E] - Exponent (float: Signed-8-Bit $-$ 127  / double: Signed-11-Bit $-$ 1023)
+	\item[Berechnung des Zahlenwerts:] (-1)V (1+M) 2E
 \end{description} 
 \begin{tabular}{|c|l|l|}
 	\hline
-	V & Exponent & Mantrisse \\
+	V & Exponent & Mantisse \\
 	\hline
 \end{tabular}
+
 
 \subsubsection{Beispiele (IEEE 754 32bit Float)}
 \begin{description}
