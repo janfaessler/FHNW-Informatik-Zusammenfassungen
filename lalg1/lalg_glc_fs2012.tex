@@ -1,0 +1,395 @@
+\documentclass[11pt,a4paper,onecolumn]{scrartcl}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Metadata
+\author{platzh1rsch}
+\title{Lineare Algebra}
+
+
+\begin{document}
+
+\maketitle
+\newpage
+\begin{flushleft}
+
+\section{Mathematische Symbole}
+\subsection{spezielle Zeichen}
+
+\begin{tabular}{|c|c|c|}
+\hline 
+Symbol & alternativ & Beschreibung \\ 
+\hline 
+$ \langle $ a $ \rangle $ & $ \overline{a} $ & Mittelwert von a \\ 
+\hline 
+\end{tabular} 
+
+\subsection{Mengen und Intervalle}
+
+\begin{tabular}{|c|c|c|}
+\hline 
+Symbol & alternativ & Beschreibung \\ 
+\hline 
+D  &  & Definitionsbereich \\ 
+W  &  & Wertebereich \\ 
+L  &  & Lösungsmenge \\ 
+\hline
+$ [a;b] $ &  & geschlossenes Intervall (von a bis b, inkl. a und b)\\ 
+$(a;b)$  & ]a;b[ & offenes Intervall (von a bis b, exkl. a und b) \\ 
+\hline
+$ \in $ &  & Element von .. \\  
+$ \notin $ &  & nicht Element von .. \\  
+$ \subset $ & & Teilmenge von (z.B. N $ /subset $ R) \\
+$ \supset $ & & Obermenge von (z.b. (R $ /supset $ N)\\
+$\cup$& & Vereinigungsmenge (alle Elemente die in Menge 1 oder in Menge 2 vorkommen)\\
+$ /cap $ & & Schnittmenge (alle Elemente welche in beiden Mengen vorkommen)\\
+\hline
+\end{tabular}
+
+\subsection{Syntax und logische Symbole}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Symbol & alternativ & Beschreibung \\
+\hline
+$ | $ & $:$ & "mit der Eigenschaft"\\
+$\approx $ & $ \sim $ & näherungsweise gleich / ziemlich genau\\
+$ \sim $ & $ \propto $ & Proportional zu .. \\
+$:= $ & $=:$ & linke / rechte Seite wird definiert zu ...\\
+$\Rightarrow$& & daraus folgt ...\\
+$\Leftrightarrow$& & Aus einer Seite folgt andere Seite \\
+$:\Leftrightarrow$& $\Leftrightarrow:$ & linke / rechte Seite ist per Definition gleichwertig \\
+\hline
+$ \neg $ & & nicht \\
+$ \wedge $ & & und \\
+$ \vee $ & & oder \\
+$ \backslash $ & & ohne \\
+$ \circ $ & & Verknüpfung zweier Aussagen \\
+\hline 
+$ \forall $ & & "für alle" \\
+$ \exists $ & & "existiert (mindestens) ein" \\
+$ \exists^{1} $ & $\exists!$ & "existiert genau ein" \\
+$ \nexists $ &$\neg\exists$ & "existiert kein" \\
+\hline
+\end{tabular} 
+
+\subsection{Vektoren}
+\begin{tabular}{|c|c|c|}
+\hline
+Symbol & alternativ & Bedeutung \\
+\hline
+$|\vec{v|}$ & & Betrag des Vektors = $ \sqrt{v^{2}_{1}+v^{2}_{2} ...v^{2}_{n}}$ \\
+$ \vec{e}_{v} $ & & Einheitsvektor von $\vec{v}$ = $ \frac{\vec{v}}{|\vec{v}|}$\\
+$\vec{r}_{A}$ & $\vec{OA}$ & Ortsvektor eines Punktes\\
+$ \vec{v}_{A}B$ & $\vec{AB}$ & Verbindungsvektor zweier Punkte \\
+$ d_{AB} $ & $ \overline{AB} $ & Abstand zweier Punkte \\
+\hline
+$\vec{a}\centerdot\vec{b} $ = c & $\langle a,b \rangle = c $ & Skalarprodukt (inneres Produkt)\\
+$\vec{a}\times\vec{b} = \vec{c}$ & & Vektorprodukt / Kreuzprodukt (äusseres Produkt)\\
+$[\vec{a}\vec{b}\vec{c}] = V$ & & Spatprodukt ($\vec{a}\centerdot(\vec{b}\times\vec{b} = \vec{c})$)\\
+\hline
+\end{tabular}
+
+\subsection{Matrizen}
+Sollte nicht allzu kompliziert sein... \linebreak
+\begin{tabular}{|c|c|c|}
+\hline
+Symbol & alternativ & Bedeutung \\
+\hline
+
+
+\end{tabular}
+\section{der n-dimensionale Vektorraum}
+\subsection{Matrizenräume}
+\subsubsection{Normalensystem}
+Das Normalensystem ist sehr hilfreich um Näherungslösungen zu berechnen.\linebreak
+\linebreak
+
+$(A^{T}A)x=(A^{T}b)$
+
+\section{Matrizen und lineare Abbildungen}
+\subsection{Terminologie von Matrizen}
+\subsubsection{Dimension}
+Eine Matrix hat keine Dimension, die Zeilen und Spalten hingegen schon. \linebreak
+Die Dimension des Zeilenraums entspricht dem Rang der Matrix bzw. der Anzahl Zeilen ungleich 0. \linebreak
+Ebenso liesse sich die Dimension des Spaltenraums über die Anzahl Spalten ungleich 0 berechnen, was nicht nötig ist, da immer identisch zur Dimension des Zeilenraums.
+\subsubsection{Defekt / Dimension des Nullraums}
+Der Defekt entspricht der Dimension des Nullraums, also der Anzahl an Zeilen gleich 0. \linebreak
+Defekt und Dimension des Zeilenraums addiert entspricht wieder der Anzahl an Zeilen.
+\subsection{Dimensionssatz}
+Der Rang einer Matrix entspricht der Dimension des Zeilen- und des Spaltenraums.
+\subsection{Normalensystem}
+$(A^T * A)*x = (A^T *b) \Rightarrow$ Näherungslösung.
+\subsection{Abbildung}
+Eine Abbildung ist eine Zuordnung welche jedem Element a der Menge A ein Element b der Menge B zuordnet. (Dabei kann auch A = B sein).\linebreak
+Allgemeine Schreibweise:
+$T : A \longrightarrow B : a \mapsto b$
+b heisst Bild von a unter der Abbildung und wird mit T(a) bezeichnet.\linebreak
+Eine Abbildung kann auch als Transformation oder als Funktion bezeichnet werden.
+
+\subsubsection{lineare Abbildung}
+Eine lineare Abbildung im $\Re^{2}$ ist eine Abbildung
+$T:\Re^{2} \Rightarrow \Re^{2} : x \mapsto y T(x)$
+mit den folgenden Abbildungsgleichungen:
+...\linebreak
+
+Die Bilder der Basisvektoren unter einer linearen Abbildung mit Matrix A
+sind die Spaltenvektoren der Matrix A.
+\subsubsection{Eigenschaften einer linearen Abbildung}
+T(x+x')=T(x)+T(x')\linebreak
+$T(t\centerdot x) = t \centerdot T(x)$\linebreak
+
+
+
+\section{lineare Gleichungssysteme}
+\subsection{Gleichungssysteme mit mehr als einer Unbekannten}
+\subsection{Rang einer Matrix}
+Der Rang einer Matrix ist die Anzahl Stufenspalten einer Matrix oder anders betrachtet einfach die Anzahl der Zeilen die nicht 0 sind.
+
+
+\section{Vektorgeometrie}
+
+\subsection{Basis}
+Die Basis in der linearen Algebra ist eine Teilmengen eines Vektorraumes, mit deren Hilfe sich jeder Vektor des Raumes eindeutig als endliche Linearkombination darstellen lässt. Eine Basis besteht aus mehreren Basisvektoren welche alle voneinander linear unabhängig sind.
+Der zur Basis gehörende Vektorraum ist die lineare Hülle ebendieses.
+
+\subsection{Einheitsvektoren}
+Vektoren der Länge 1 heissen Einheitsvektoren.\linebreak
+Der Einheitsvektor eines Vektors kann berechnet werden mit \linebreak
+
+$\vec{a} := \frac{\vec{a}}{|\vec{a}|}$ dies nennt sich "normieren".
+
+\subsection{Nullvektor}
+Vektoren der Länge 0 sind Nullvektoren.
+
+\subsection{Skalarprodukt}
+Mit dem Skalarprodukt können Winkel und Längen berechnet werden.
+
+$ ||\vec{a}||^{2} = \vec{a}\cdot\vec{a}$
+
+\subsubsection{Geometrische Bedeutung des Skalarprodukts}
+$ \vec{a} \cdot \vec{b} = ||\vec{a}|| \cdot ||\vec{b} || \cdot cos(\varphi)$\linebreak
+$ \vec{a} \cdot \vec{b} = 0 \rightarrow \vec{a} \perp \vec{b}$\linebreak
+
+
+\subsection{Vektorprodukt (Kreuzprodukt)}
+Das Vektorprodukt existiert nur im $R^{3}$. Es ordnet zwei Vektoren einen dritten Vektor zu welcher senkrecht auf den zweien steht.
+
+\subsubsection{Gesetze des Vektorprodukts}
+1. $\vec{a} \times \vec{b} = -\vec{b}\times\vec{a}$\linebreak
+2. $\vec{a}\times\vec{a}$\linebreak
+3. $ \vec{a}\times(\vec{b}+\vec{c}) = \vec{a}\times\vec{b}+\vec{a}\times\vec{x}$\linebreak
+4. $ (\vec{a}+\vec{b}\times\vec{c} = \vec{a}\times\vec{2} + \vec{b}\times\vec{c}$ \linebreak
+5. $||\vec{c}|| = ||\vec{a}|| \cdot ||\vec{b}|| \cdot sin(\varphi) = Parallelogramm $ \linebreak\linebreak
+\textbf{ACHTUNG:} Assoziativgesetz nicht gültig:\linebreak
+$(\vec{a}\times\vec{b})\times \vec{c} \neq \vec{a}\times(\vec{b}\times\vec{c})$\linebreak
+Der Betrag des Vektorprodukts entspricht der Fläche des von den beiden Vektoren aufgespannten Parallelogramms.
+
+
+\subsection{Spatprodukt}
+Das Spatprodukt dreier Vektoren spannt ein Spat (Parallelepided) auf und existiert nur im R3. Berechnet wird es mit \linebreak
+$[\vec{a},\vec{b},\vec{c}] := (\vec{a}\times\vec{b})\circ \vec{c}$ \linebreak
+Die Vektoren liegen auf derselben Ebene wenn ihr Spatprodukt 0 ist.\linebreak
+Das Spatprodukt entspricht der 3x3 Matrix mit a, b und c als Spaltenvektoren.
+
+\subsection{Geraden}
+$ax + by + c = 0 $ Gerade in der Ebene (R2)
+
+\subsubsection{Parametergleichung}
+$\vec{x} = \vec{p} + t \cdot \vec{v}$
+
+\subsubsection{Koordinatengleichung}
+Die Koordinatengleichung kann von der Parametergleichung abgeleitet werden indem man die Zeilen des dort entstehenden Gleichungssystems nach t auflöst. Und die so entstandenen Terme gleichsetzt. \linebreak
+\newline
+
+\subsubsection{Spurpunkte}
+Spurpunkte sind Schnittpunkte einer Geraden mit den Koordinatenebenen.
+
+\subsection{Ebene}
+Eine Ebene im R3 ist durch 3 Punkte gegeben und nach jeder Seite unendlich ausgedehnt. Ebenen können mit der Parametergleichung, mit der Normalengleichung oder der Koordinatengleichung dargestellt werden.
+
+\subsubsection{Parametergleichung}
+$ \vec{x} = \vec{p} + s \cdot \vec{u} + t \cdot \vec{v}$
+\subsubsection{Normalengleichung}
+$ \vec{n} \cdot (\vec{x}-\vec{p}) = 0 \leftrightarrow \vec{n}\cdot \vec{x} = \vec{n} \cdot \vec{p} $ \linebreak
+
+Die Normalengleichung einer Ebene stellt in Komponenten eine lineare Gleichung für die Koordinaten des laufenden Punktes der Ebene dar. \linebreak\linebreak
+\subsubsection{Koordinatengleichung}
+$Ax+By+Cz-D = 0 $ \linebreak
+A, B und C entsprechen dabei den Komponenten des Normalenvektors. D berechnet sich dann, indem die Koordinaten eines Punktes eingesetzt werden, von dem bekannt ist, dass er auf der Ebene liegt.
+
+Beispiel zur Umrechnung von Koordinatengleichung zu Parametergleichung und zurück: \linebreak
+4x + 2y -z = 8 \linebreak
+$y, z$ null setzen $\Rightarrow (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix})$ \linebreak
+$x, z$ null setzen $\Rightarrow (\begin{smallmatrix} 0 \\ 4 \\ 0 \end{smallmatrix})$ \linebreak 
+$x, y$ null setzen $\Rightarrow (\begin{smallmatrix} 0 \\ 0 \\ -8 \end{smallmatrix})$ \linebreak 
+Daraus entsteht nun die folgende Gleichung: \linebreak
+$(\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}) + r *((\begin{smallmatrix} 0 \\ 4 \\ 0 \end{smallmatrix}) - (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix})) + s * ((\begin{smallmatrix} 0 \\ 0 \\ -8 \end{smallmatrix}) - (\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}))$  = \linebreak
+$(\begin{smallmatrix} 2 \\ 0 \\ 0 \end{smallmatrix}) + r *(\begin{smallmatrix} -2 \\ 4 \\ 0 \end{smallmatrix}) + s * (\begin{smallmatrix} -2 \\ 0 \\ -8 \end{smallmatrix})$
+\newline
+In die umgekehrte Richtung muss man zuerst den Normalenvektor finden: \linebreak
+Dazu nimmt man das Kreuzprodukt der beiden Richtungsvektoren \linebreak
+$(\begin{smallmatrix} -2 \\ 4 \\ 0 \end{smallmatrix}) \times (\begin{smallmatrix} -2 \\ 0 \\ -8 \end{smallmatrix}) = (\begin{smallmatrix} -32 \\ -16 \\ 8 \end{smallmatrix})$ \linebreak
+Damit entsteht die Gleichung $-32x - 16y + 8z - D = 0$. Hier setzt man den Ursprungspunkt für x, y und z ein und berechnet D. \linebreak
+$-32(2) - 16(0) + 8 (0) = D \Rightarrow D -64 \Rightarrow -32x - 16y + 8z  + 64 = 0$
+
+
+\section{Determinanten}
+Die Determinante ist eine Funktion welche jeder quadratischen Matrix eine reelle Zahl zuordnet. Sie gibt u.a. an ob eine Matrix invertierbar ist.\linebreak
+$ A invertierbar \Leftrightarrow det(A) \neq 0 $ \linebreak
+
+\subsection{Berechnung von Determinanten}
+
+\subsubsection{Zeilen- und Spaltenentwicklung}
+Die Determinante einer Matrix kann auf verschiedene Weisen als Summe von Determinanten von Untermatrizen einer Matrix berechnet werden. Dies nennt man Zeilen- und Spaltenentwicklung. Für alle Matrizen grösser 3x3 ist diese Berechnungsmethode zwingend, da die Methode von Sarrus nur bis 3x3 funktioniert.\linebreak
+
+\textbf{Notation}\linebreak
+$A^{ij} $ bezeichnet die Untermatrix von A in welcher Zeile i und Spalte j gestrichen wurden.\linebreak
+$A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{pmatrix} 
+$
+$
+A^{23} = \begin{pmatrix}
+a_{11} & a_{12} \\
+a_{31} & a_{32} 
+\end{pmatrix}
+$\linebreak
+Für das Berechnen der Determinante sieht die Formel so aus: \linebreak
+$a_{11} \cdot det(A^{11}) - a_{12} \cdot det(A^{12}) + a_{13} \cdot det(A^{13})$\linebreak
+\linebreak
+Wichtig ist dass das folgende Schema für die Vorzeichen der Koeffizienten eingehalten wird: \linebreak
+$\begin{pmatrix}
++ & - & + & .. \\
+- & + & - & ..\\
++ & - & + & .. \\
+.. & .. &.. & 
+\end{pmatrix}
+$
+\subsection{Eigenschaften der Determinanten}
+1. Die Determinante ändert sich nicht beim Transponieren\linebreak
+$det(A) = det(A^{T})$\linebreak
+
+2. Die Determinante ist linear in jeder Zeile / Spalte \linebreak
+$det \begin{pmatrix}
+c \cdot a_{11} & c \cdot a_{12} & c \cdot a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{pmatrix} 
+$ = $
+c \cdot det \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} 
+\end{pmatrix} 
+$ = $
+det \begin{pmatrix}
+a_{11} & a_{12} & c \cdot a_{13} \\
+a_{21} & a_{22} & c \cdot a_{23} \\
+a_{31} & a_{32} & c \cdot a_{33} 
+\end{pmatrix} 
+$ \linebreak
+
+3. Das Vertauschen zweier Zeilen ändert das Vorzeichen der Determinante\linebreak
+
+4. Wenn zwei Zeilen oder zwei Spalten in einer Matrix identisch sind, ist die Determinante = 0\linebreak
+
+5. Enthählt eine Matrix eine Nullzeile oder Nullspalte ist die Determinante = 0\linebreak
+
+6. Lineare Umformungen mit Addition ändern nichts an der Determinanten \linebreak
+
+\subsection{elementare Zeilenoperationen}
+Um die Berechnung der Determinante einfacher zu machen hilft es oft die Matrix vor der Entwicklung noch umzuformen. Dabei gelten einige Regeln bzgl. der Auswirkungen auf die Determinante.\linebreak
+
+1. Multiplikation einer Zeile mit dem Faktor $ c \rightarrow A\cdot c$ \linebreak
+2. Vertauschung zweier Zeilen $ \rightarrow A\cdot-1 $\linebreak
+
+
+\subsection{Geometrische Bedeutung der Determinanten}
+
+
+\section{lineare Unabhängigkeit}
+\subsection{Linearkombinationen}
+Eine Linearkombination ist die Summe der Vielfachen von Vektoren. Allgemeine Definition: \linebreak
+$ b = \lambda a_{1} + \lambda a_{2} ... + \lambda a_{n} $
+Wobei $\lambda$ die Koeffizienten sind.
+
+\subsection{Matrizen und lineare Abbildungen}
+\subsubsection{inverse Abbildung}
+Ist eine lineare Abbildung T invertierbar, d.h. besitzt sie eine Umkehrabbildung $ T^{-1} $, dann ist diese Abbildung ebenfalls linear.
+Bezeichnet nun A die Abbildungsmatrix von T, so gehört zu $ T^{-1} $ ebenfalls eine Abbildungsmatrix $ A^{*} $. Da die Zusammensetzung der beiden Abbildungen $ T^{-1} \circ $ T die identische Abbildung ergibt, muss für die Matrizen gelten:\linebreak
+
+
+
+$ T^{-1}(T(x)) = x $ für alle x\linebreak
+$ A^{*} (Ax) = x $\linebreak
+$ (A^{*} \circ A)x = x $\linebreak
+
+\subsubsection{Drehung mit Drehmatrizen}
+Die Drehung eines Vektors um einen festen Ursprung um den Winkel $\alpha$ wird durch die Multiplikation mit der Drehmatrix $R_{\alpha}$ erreicht.\linebreak
+
+$
+R_{\alpha} = \begin{pmatrix}
+    cos(\alpha) & -sin(\alpha) \\
+    sin(\alpha) & cos(\alpha)
+\end{pmatrix}
+$,
+$
+R_{x}(\alpha) = \begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & cos(\alpha) & -sin(\alpha) \\
+    0 & sin(\alpha) & cos(\alpha)
+\end{pmatrix}
+$,
+$
+R_{y}(\alpha) = \begin{pmatrix}
+    cos(\alpha) & 0 & sin(\alpha) \\
+    0 & 1 & 0 \\
+    -sin(\alpha) & 0 & cos(\alpha)
+\end{pmatrix}
+$,
+$
+R_{z}(\alpha) = \begin{pmatrix}
+    cos(\alpha) & -sin(\alpha) & 0 \\
+    sin(\alpha) & cos(\alpha) & 0 \\
+    0 & 0 & 1
+\end{pmatrix}
+$
+\subsection{Inverse einer Matrix}
+So wie gilt $a \cdot a^{-1} = 1$ so gibt es das gleiche "Phänomen" bei Matrizen mit den sogenannten invertierten Matrizen. Eine Matrix ist invertierbar wenn es eine Matrix B gibt für die gilt:\linebreak \linebreak
+$ A \cdot B = II $ und $ B \cdot A = II  \longrightarrow B = A^{-1} $ \linebreak \linebreak
+$A^{-1} $ ist die Inverse von A. Da Matrizenmultiplikationen nicht kommutativ sind gibt es für jede invertierbare Matrix eine Links- und eine Rechtsinverse. Allerdings sind diese stets identisch.\linebreak
+
+\textbf{Regeln}\linebreak
+$ (A \cdot B)^{-1} = B^{-1} \cdot A^{-1} $\linebreak
+$ (A^{T})^{-1} = (A^{-1})^{T}$\linebreak
+$ (A^{-1})^{-1} = A $\linebreak
+
+
+\subsection{Orthogonalisierungsverfahren nach Gram-Schmidt}
+Der Gram-Schmidt Algorithmus berechnet zu den lineaer unabhängigen Vektoren $w_{1} .. w_{n} $ ein Orthogonalsystem von n paarweise orthogonalen Vektoren ($v_{1} .. v_{2} $ welche ebenfalls denselben Untervektorraum erzeugen.\linebreak
+\linebreak
+$ v_{1} = w_{1} $ \linebreak
+$ v_{2} = w_{2} - \frac{v_{1} \circ w_{2}}{v_{1} \circ v_{1}} v_{1} $ \linebreak
+$ v_{3} = w_{3} - \frac{v_{1} \circ w_{2}}{v_{1} \circ v_{1}} v_{1} - \frac{v_{2} \circ w_{3}}{v_{2} \circ v_{2}} v_{2}$ \linebreak
+...
+\subsection{Orthonormalisierungsverfahren nach Gram-Schmidt}
+Das Orthonormalisierungsverfahren ist eine Erweiterung des Orthogonalisierungsverfahrens. Der Algorithmus ist mehr oder weniger derselbe. Nur dass jeder Vektor nach der Orthogonalisierung noch normalisiert wird.\linebreak
+\linebreak
+\textbf{In der Regel ist es allerdings einfacher zuerst den Orthogonalisierungsalgorithmus auf alle Vektoren anzuwenden und erst am Schluss die Vektoren zu normieren.}
+\linebreak
+
+$ v_ {1} = \frac{w_{1}}{||w_{1}||} $ (Normalisieren des ersten Vektors)\linebreak
+$ v^{'}_{2} = w_{2}-(v_{1} \circ w_{2}) \cdot v_{1} $ (Orthogonalisieren von $w_{2}$)\linebreak
+$ v_{2} = \frac{v^{'}_{2}}{||v^{'}_{2}||} $ (Normalisieren von $v_{2}$\linebreak
+$ v^{'}_{3} = w_{3}-(v_{1} \circ w_{3}) \cdot v_{1} - (v_{2} \circ w_{3}) \cdot v_{2} $ (Orthogonalisieren von $w_{3}$)\linebreak
+...
+
+
+\end{flushleft}
+\end{document}
