@@ -332,10 +332,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 			\item $y=3<<2\Ra y=00001100_2=12$ (F\"ur jeden linksschiebeoperator wird $\cdot 2$ gerechnet.
 		\end{itemize}
 \end{itemize}
-\lstinputlisting[label=OneBitCounter,caption=OneBitCounter]{OneBitCounter.java}
-\lstinputlisting[label=Addition,caption=Addition]{Addition.java}
-\pagebreak
-\lstinputlisting[label=Multiplication,caption=Multiplication]{Multiplication.java}
+
 \subsection{Logische Operatoren}
 \begin{description}
 	\item[logische Negation:] !A
@@ -345,7 +342,13 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 	\item[Bedingungsoperator:] A ? B : C (if (A) then B else C)
 \end{description}
 
-\subsection{Konvertierung von Datentypen}
+\subsection{Beispiele}
+\lstinputlisting[label=OneBitCounter,caption=OneBitCounter]{OneBitCounter.java}
+\lstinputlisting[label=Addition,caption=Addition]{Addition.java}
+\lstinputlisting[label=Multiplication,caption=Multiplication]{Multiplication.java}
+
+\newpage
+\section{Konvertierung von Datentypen}
 
 \subsubsection{explizite Typkonvertierung}
 \begin{itemize}
@@ -369,7 +372,6 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
                                    String s = $"$Xnulljava.lang.Object@47ac1adf$"$;
 	\item arithmetische Operatoren: Konvertierung in h\"oheren Typ gem\"ass Hierarchie
 \end{itemize}
-\pagebreak
 \subsubsection{erweiternde Typkonvertierungen}
 		Wert ist immer darstellbar \\
 		m\"oglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
@@ -377,23 +379,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 		
 \subsubsection{einschr\"ankende Typkonvertierungen}
 		m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen \& Genauigkeit \\ \\
-		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
-
-\begin{tabular}{|l|l|}
-\hline
-\Bold{Umwandlung}&\Bold{Resultat}\\\hline\hline
-
-(int) Double.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
-(int) (float) Integer.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
-(int) (float) Integer.MAX\_VALUE - 1 & Integer.MAX\_VALUE (Genauigkeit ist nicht gegeben!)\\\hline
-(int) Long.MAX\_VALUE & -1\\\hline
-(int) Long.MIN\_VALUE & 0 \\\hline
-
-(byte)(char) 254 & -2 \\\hline
-(char)(byte) -2 & 65534 (falsch) \\\hline
-(char)(byte) -2 $\&$ 0xff & 254 (korrekt) \\\hline
-\hline
-\end{tabular}
+\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
 
 \subsubsection{Integer-Erweiterung}
 \begin{itemize}
@@ -407,7 +393,6 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 		\end{itemize}
 	\item byte, short und char werden somit fast ausschliesslich als Datenfelder f\"ur Klassen benutzt
 \end{itemize}
-\pagebreak
 \subsubsection{Konvertierungsvorschriften}
 \begin{itemize}
 	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
@@ -432,6 +417,25 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 			\item double nach float: Wert im zul\"assigen Wertebereich von float, dann n\"achst h\"oherer oder niedriger darstellbarer Wert
 		\end{itemize}
 \end{itemize}
+\subsection{Beispiele}
+\begin{tabular}{|l|l|}
+\hline
+\Bold{Umwandlung}&\Bold{Resultat}\\\hline\hline
+
+(int) Double.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
+(int) (float) Integer.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
+(int) (float) Integer.MAX\_VALUE - 1 & Integer.MAX\_VALUE (Genauigkeit ist nicht gegeben!)\\\hline
+(int) Long.MAX\_VALUE & -1\\\hline
+(int) Long.MIN\_VALUE & 0 \\\hline
+
+(byte)(char) 254 & -2 \\\hline
+(char)(byte) -2 & 65534 (falsch) \\\hline
+(char)(byte) -2 $\&$ 0xff & 254 (korrekt) \\\hline
+\hline
+\end{tabular}
+
+
+
 \pagebreak
 \section{Zeichen und Strings}
 \subsection{Zeichen in Java}
@@ -440,16 +444,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \item char: 16 Bit; eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes aufnehmen; alle anderen Zeichencodes werden durch char-Paare codiert
 \item Interface CharSequence: Sequenz von Zeichencodes im UTF-16 Format; bekannte Implementierung$\ra$ String, StringBuffer, StringBuilder
 \end{itemize}
-\subsection{Aufteilung des Coderaums}
-Aufteilung des Coderaums [0, 10FFFF$_{16}$] in 17 gleichgrosse Ebenen
-\begin{itemize}
-\item Ebene 0: Basic Multilingual Plane (BMP), U+0 - U+FFFF; wichtigsten Zeichen
-\item Ebene 1: Supplementary Multilingual Plane (SMP), U+1'0000 - U+1'FFFF; weniger oft gebrauchte Zeichen
-\item Ebene 2: Supplementary Ideographic Plane (SIP), U+2'0000 - U+2'FFFF; seltene Chinese, Japanese, Korean Zeichen
-\item Ebene 3 - 13: reserviert f\"ur sp\"atere Erg\"anzungen
-\item Ebene 14: Supplementary Special-purpose Plane (SSP), U+E'0000 - U+E'FFFF; zus\"atzliche Formatierungszeichen
-\item Ebene 15 und 16: Private Use Planes, U+F'0000 - U+10'FFFF; f\"ur private Zwecke
-\end{itemize}
+
 \subsection{Standardisierte Zeichencodierungen}
 \subsubsection{ASCII (American Standard Code for Information Interchange)}
 \begin{itemize}
@@ -468,28 +463,58 @@ Aufteilung des Coderaums [0, 10FFFF$_{16}$] in 17 gleichgrosse Ebenen
 	\item 21-Bit-Zeichencode: ersten 256 Zeichen sind identisch zu ISO 8859-1
 \end{itemize}
 
-\subsection{Codierungsformate}
+\subsection{Universal Character Encoding Standard (Unicode)}
+\begin{description}
+	\item[Ebene 0: Basic Multilingual Plane (BMP)] \hfill
+		\begin{itemize}
+			\item U+0 bis U+FFFF
+			\item enth\"alt die wichtigsten Zeichen von verschiedenen Sprachen
+		\end{itemize}
+	\item[Ebene 1: Supplementary Multilingual Plane (SMP)] \hfill
+		\begin{itemize}
+			\item U+1'0000 bis U+1'FFFF
+			\item enth\"alt weniger oft gebrauchte Zeichen (z.B. gotische Zeichen, Musiksymbole)
+		\end{itemize}
+	\item[Ebene 2: Supplementary Ideographic Plane (SIP)] \hfill
+		\begin{itemize}
+			\item U+2'0000 bis U+2'FFFF
+			\item enth\"alt sehr seltene CJK Zeichen
+		\end{itemize}
+	\item[Ebene 3 bis 13] \hfill \\
+		reserviert f\"ur sp\"atere Erg\"anzungen
+	\item[Ebene 14: Supplementary Special-purpose Plane (SSP)] \hfill
+		\begin{itemize}
+			\item U+E'0000 bis U+E'FFFF
+			\item enth\"alt zus\"atzliche Formatierungszeichen
+		\end{itemize}
+	\item[Ebenen 15 und 16: Private Use Planes] \hfill
+		\begin{itemize}
+			\item U+F'0000 bis U+F'FFFF und U+10'0000 bis 10'FFFF
+			\item f\"ur private, nicht standardisierte Zwecke einsetzbar
+		\end{itemize}
+\end{description}
+
 \subsubsection{UTF-32}
 \begin{itemize}
 \item einfachste Umsetzung: die 21 Bits werden in einem (vorzeichnlosen) 32-Bit-Integer abgespeichert; die h\"oherwertigen 11 Bits sind immer null
 \item Vorteile: einfache Umsetzung; einheitliche Codierungsl\"ange
 \item Nachteil: hohe Speicherverschwendung
-\item Bsp: A: U+0041 $\to$ 0000'0041; $\Gamma$: U+03A9 $\to$ 0000'03A9
+\item Bsp: \\ A: U+0041 $\to$ 0000'0041; \\ $\Gamma$: U+03A9 $\to$ 0000'03A9
 \end{itemize}
+
 \subsubsection{UTF-16}
 \begin{itemize}
 \item Umsetzung: Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert; Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten gespeichert $\to$ Ersatzpaare; guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung
 \item Ersatzpaare: beide Zeichen eines Ersatzpaares stammen aus der Surrogates Area; das erste Zeichen jeweils aus dem Bereich U+D800 bis U+DBFF; das zweite Zeichen jeweils aus dem Bereich U+DC00 und U+DFFF
 \item Bsp: U+1'0384 $\to$ D800, DF84
 \end{itemize}
-\Bold{Beispiel: utfToLatin1}
-\lstinputlisting[label=UTF 16 zu Latin1,caption=UTF 16 zu Latin1]{utfToLatin1.java}
+
 \subsubsection{UTF-8}
 \begin{itemize}
 \item Bekannte Umsetzung: popul\"are Verwendung in XML; Zeichencodes brauchen zwischen 1 und 4 Bytes
 \item Vorteile: speichereffizient f\"ur h\"aufig verwendete Zeichen; kompatibel mit ASCII
 \item Nachteile: speicherineffizient f\"ur seltene Zeichen, jedoch nicht schlimmer als UTF-32; komplizierte Handhabung, weil unterschiedliche Anzahl von Bytes pro Zeichen beachtet werden muss; nicht kompatibel mit ISO-Latin-1, d.h. Umlaute brauchen bereits 2 Bytes
-\item Bsp: A: U+0041 $\to$ 41; $\Omega$: U+03A9 $\to$ CE, A9; U+10384 $\to$ F0, 90, 8E, 84
+\item Bsp: \\ A: U+0041 $\to$ 41; \\ $\Omega$: U+03A9 $\to$ CE, A9; \\ U+10384 $\to$ F0, 90, 8E, 84
 \end{itemize}
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -507,9 +532,19 @@ yyxxxxxx&$\to$\textcolor{red}{3} byte&&&\\
 zzzzyyyy&$\to$\textcolor{red}{4} byte&&&\\
 yyxxxxxx&$\to$\textcolor{red}{21}bit (alle)&&&\\\hline
 \end{tabular}
-\pagebreak
 
-
+\subsubsection{Codierungsschemen}
+Das bestimmt Codierungsformat und Byte-Reihenfolge:
+\begin{itemize}
+	\item bei Dateneinheiten bestehend aus mehreren Bytes muss festgehalten werden, welches Byte zuerst behandelt wird, das
+		\begin{itemize}
+			\item most significant byte (MSB) zuerst: big-endian
+			\item least significant byte (LSB) zuerst: little-endian
+ 		\end{itemize}		 
+ 	\item relevant bei UTF-16 und UTF-32
+ 	\item nicht relevant bei UTF-8 (die Reihenfolge ist klar)
+ 	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
+\end{itemize}
 
 \subsection{Java}
 \subsubsection{Unicode in JAVA}
@@ -552,98 +587,12 @@ yyxxxxxx&$\to$\textcolor{red}{21}bit (alle)&&&\\\hline
 		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zur\"uckgegeben.
 \end{description}
 
-\subsection{Universal Character Encoding Standard (Unicode)}
-\subsubsection{Coderaum}
-\begin{description}
-	\item[Ebene 0: Basic Multilingual Plane (BMP)] \hfill
-		\begin{itemize}
-			\item U+0 bis U+FFFF
-			\item enth\"alt die wichtigsten Zeichen von verschiedenen Sprachen
-		\end{itemize}
-	\item[Ebene 1: Supplementary Multilingual Plane (SMP)] \hfill
-		\begin{itemize}
-			\item U+1'0000 bis U+1'FFFF
-			\item enth\"alt weniger oft gebrauchte Zeichen (z.B. gotische Zeichen, Musiksymbole)
-		\end{itemize}
-	\item[Ebene 2: Supplementary Ideographic Plane (SIP)] \hfill
-		\begin{itemize}
-			\item U+2'0000 bis U+2'FFFF
-			\item enth\"alt sehr seltene CJK Zeichen
-		\end{itemize}
-	\item[Ebene 3 bis 13] \hfill \\
-		reserviert f\"ur sp\"atere Erg\"anzungen
-	\item[Ebene 14: Supplementary Special-purpose Plane (SSP)] \hfill
-		\begin{itemize}
-			\item U+E'0000 bis U+E'FFFF
-			\item enth\"alt zus\"atzliche Formatierungszeichen
-		\end{itemize}
-	\item[Ebenen 15 und 16: Private Use Planes] \hfill
-		\begin{itemize}
-			\item U+F'0000 bis U+F'FFFF und U+10'0000 bis 10'FFFF
-			\item f\"ur private, nicht standardisierte Zwecke einsetzbar
-		\end{itemize}
-\end{description}
+\subsubsection{Umwandlungen}
+\lstinputlisting[label=UTF 16 zu Latin1,caption=UTF 16 zu Latin1]{utfToLatin1.java}
+\lstinputlisting[label=UTF 32 zu UTF 16,caption=UTF 32 zu UTF 16]{utf32to16.java}
 
-\subsubsection{UTF-32}
-Dies ist die einfachste Umsetzung, es werden 21 Bits in einem (vorzeichenlosen) 32-Bit-Integer abgespeichert. Dabei sind die h\"oherwertigen 11 Bits immer null. Dies bedeutet jedoch eine grosse Speicherverschwendung
-
-\subsubsection{UTF-16}
-Dies ist ein guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung. In diesem Standard werden Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert. Die Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten (Ersatzpaare) gespeichert. \\
-Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Das erste Zeichen jeweils aus dem Bereich \Bold {U+D800 bis U+DBFF}. Das zweite Zeichen jeweils aus dem Bereich \Bold {U+DC00 bis U+DFFF}. Das ergiebt 2 mal 10 Bit Nutzdaten.
-
-\subsubsection{UTF-8}
-Dies ist ein sehr verbreiteter Standard in XML oder im Web. Er ist sehr speichereffizient f\"ur h\"aufige Zeichen und kompatibel mit dem ASCII Standard. F\"ur seltenere Zeichen ist er jedoch speicherineffizient und ist kompliziert in der Handhabung, da er aus 1 bis 4 Bytes besteht: \\
-\includegraphics[scale=0.35]{utf8.png}
-
-\subsubsection{Codierungsschemen}
-Das bestimmt Codierungsformat und Byte-Reihenfolge:
-\begin{itemize}
-	\item bei Dateneinheiten bestehend aus mehreren Bytes muss festgehalten werden, welches Byte zuerst behandelt wird, das
-		\begin{itemize}
-			\item most significant byte (MSB) zuerst: big-endian
-			\item least significant byte (LSB) zuerst: little-endian
- 		\end{itemize}		 
- 	\item relevant bei UTF-16 und UTF-32
- 	\item nicht relevant bei UTF-8 (die Reihenfolge ist klar)
- 	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
-\end{itemize}
-
-\subsubsection{UTF-32 in UTF-16 Umwandlung}
-\begin{lstlisting}
-    public char[] utf32to16(char[] array, int pos) {
-        char c = array[pos];
-        if (c >= (2^16)) {
-            array[pos] = (char) (0xD800 + ((c & 0xFFFFFF) >> 10));
-            array[pos+1] = (char) (0xDC00 + (c & 0x3FF));
-        } else array[pos] = c;
-            
-        return array;
-    }
-\end{lstlisting}
-
-\subsubsection{UTF-16 in Latin1 Umwandlung}
-\begin{lstlisting}
-    public char[] utfToLatin1(String s) {
-        byte[] array = new byte[s.length];
-        int pos = 0;
-        for (int i = 0; i< s.length; i++) {
-        		char c = s.charAt(i);
-        		if (c >= 256 && (c < 0xDC00 || c >= 0xDFFF) {
-        				array[pos] = (byte) '?';
-        				pos++;
-        		 } else if (c < 256) {
-        		 		array[pos] = (byte) c;
-        		 		pos++;
-        		 }
-		}
-		for (int i = pos; i < s.lenght; i++) {
-				array[j] = (byte) 0;
-		}        		
-        return array;
-    }
-\end{lstlisting}
-\pagebreak
-\subsubsection{ASCII-Zeichentabelle}
+\newpage
+\subsection{ASCII-Zeichentabelle}
 {\footnotesize
 \begin{longtable}{|c|c|c|c||c|c|c|c|}
 \hline
@@ -793,7 +742,7 @@ Aufwand: linear in der L\"ange des Arrays \\
 \subsection{Sortieren durch direktes Ausw\"ahlen (selection sort)}
 Das Array wird durch gegangen und nach dem gr\"ossten Element durchsucht. Einmal gefunden, wird es hinten hingesetzt. Danach wird das zweitgr\"osste Element gesucht und vor das gr\"osste Element gestellt. Wenn man dies weiterf\"uhrt w\"achst der sortierte Teil des Arrays kontinuierlich, w\"ahrend der unsortierte Teil kleiner wird.
 \lstinputlisting[label=Selection Sort,caption=Selection Sort]{selection_sort.java}
-Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum^{n-1}_{k=1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
+Worst-Case Aufwand: $T(n)=1+2+3+...+(n-3)+(n-2)+(n-1)=\sum_{k=1}^{n-1} k=\frac{n(n-1)}{2}=\frac{n^2-n}{2}\approx\uuline{\frac{n^2}{2}}$
 
 \subsection{Sortierten durch direktes einf\"ugen (insertion sort)}
 Das Array wird durch gegangen und jedes Element an der richtigen Stelle, der bereits durch gegangenen Elemente, eingesetzt.
@@ -855,6 +804,11 @@ Durchlaufe t und schreibe jeweils fortlaufend t[p] mal den wert u  in das Array 
 		T(n) &\in O( n log n)
 	\end{align*}
 \end{description}
+
+\newpage
+\subsection{Mergesort}
+\lstinputlisting[label=Mergesort,caption=Mergesort]{mergesort.java}
+
 \subsection{Laufzeiten}
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -864,9 +818,9 @@ Insertionsort&$O(n)$&$O(n^2)$&$O(n^2)$&\\\hline
 Mergesort&$O(n\cdot \log(n))$&$O(n\cdot \log(n))$&$O(n\cdot \log(n))$&bei Array $O(n)$ bis $O(n\cdot \log(n))$\\\hline
 Quicksort&$O(n\cdot \log(n))$&$O(n\cdot \log(n))$&$O(n^2)$&$O(n\cdot \log(n))$ f\"ur Stack\\\hline
 Selectionsort&$O(n^2)$&$O(n^2)$&$O(n^2)$&\\\hline
-
 \end{tabular}
-\\ \\
+
+\pagebreak
 \section{Halbdynamische Datenstrukturen}
 \subsection{Halbdynamische Datenstruktur}
 \begin{description}
@@ -890,7 +844,6 @@ Selectionsort&$O(n^2)$&$O(n^2)$&$O(n^2)$&\\\hline
 \end{description}
 \subsection{Datennutzung \"uber die Zeit}
 \includegraphics[width=1\textwidth]{datennutzung_ueber_zeit.png}
-\pagebreak
 \subsection{Datenstruktur: ArrayList}
 Implementiert das Interface list
 \begin{itemize} \setlength{\itemsep}{-2pt}
@@ -931,24 +884,23 @@ Implementiert das Interface list
 	\item bei G$<$T$>$ steht der formale Typ-Parameter T stellvertretend f\"ur genau einene Referenztyp
 	\item bei G$<$?$>$ steht das Fragezeichen f\"ur alle m\"oglichen Referenztypen
 	\end{itemize}
-\item[Bsp] 
-\item \lstinputlisting[label=Unbound Wildcard,caption=Unbound Wildcard]{unbound_wildcard.java}
 \end{description}
+\lstinputlisting[label=Unbound Wildcard,caption=Unbound Wildcard]{unbound_wildcard.java}
+
 \subsubsection{Upper Bound Wildcard $<$? extends T$>$}
 \begin{description}
 \item[Einsatz] Deklaration einer Referenzvariable, die auf Objekte eines generischen Typs zeigen kann, wobei die Objekte mit T oder einer Subklasse von T aktuell parametrisiert sein m\"ussen
 \item[Interpretation] bezeichnet die oberste Klasse in der Klassenhierarchie, welche als aktuellen Typ-Parameter f\"ur den formalen Typ-Parameter T eingesetzt werden darf
-\item[Bsp]
-\item \lstinputlisting[label=Upper Bound Wildcard,caption=Upper Bound Wildcard]{upper_bound_wildcard.java}
 \end{description}
+\lstinputlisting[label=Upper Bound Wildcard,caption=Upper Bound Wildcard]{upper_bound_wildcard.java}
+
 \subsubsection{Low Bound Wildcard $<$? super T$>$}
 \begin{description}
 \item[Einsatz] Deklaration einer Referenzvariable, die auf Objekte eines generischen Typs zeigen kann, wobei die Objekte mti T oder einer Superklasse von T aktuell parametrisiert sein m\"ussen
 \item[Interpretation] bei G$<$? super C$>$ steht das Fragezeichen f\"ur alle m\"oglichen Superklassen von C (inkl. C selber)
-\item[Bsp]
-\item
-\lstinputlisting[label=Lower Bound Wildcard,caption=Lower Bound Wildcard]{lower_bound_wildcard.java}
 \end{description}
+\lstinputlisting[label=Lower Bound Wildcard,caption=Lower Bound Wildcard]{lower_bound_wildcard.java}
+
 \subsubsection{Interner Aufbau (bis Java 1.4.2)}
 \begin{itemize}
 	\item alle Klassen aus dem Java Collections Framework verwalten intern Referenzen vom Typ Object \\ $\Rightarrow$ maximale Flexibilit\"at
@@ -1444,7 +1396,7 @@ $T(n) = 8 \cdot  T(\frac{n}{8}) + 18 \cdot  n + 7\cdot  21$\\
 \subsubsection{Verallgemeinerung}
 $T(n) = 2^i\cdot T(\frac{n}{2^i}) +6\cdot i\cdot n +(2^i-1)\cdot 21$ \\  \\
 \fbox{
-$\frac{n}{1^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$
+$\frac{n}{2^i} = 1 \Ra n=2^i \Ra i = log_2(n) =  ld(n)$
 }\\ \\
 $T(n) = 2^{ld(n)} \cdot  T(1) +6\cdot ld(n)\cdot n + (2^{ld(n)} -1) \cdot  21$ \\
 $T(n) = n\cdot 7 + 6\cdot ld(n)\cdot n +(n-1)\cdot 21$ \\
@@ -1458,14 +1410,12 @@ T(n) &= 2T(\frac{n}{2})+\sqrt{n}\\
 &= 8T(\frac{n}{8})+4\sqrt{\frac{n}{4}}+2\sqrt{\frac{n}{2}}+\sqrt{n}\\
 &\dots\\
 &=2^iT(\frac{n}{2^i})+\Sum{k=0}{i-1}2^k\sqrt{\frac{n}{2^k}}=2^T(\frac{n}{2^i})+\Sum{k=0}{i-1}\sqrt{2^k}\sqrt{n}\\
-&=2^iT(\frac{n}{2^i}+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}\\
+&=2^iT(\frac{n}{2^i})+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}\\
 &\T{mit }T(1)=1\T{ und }n=2^i\\
 &=n\cdot T(1)+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}=n+\sqrt{n}\Sum{k=0}{i-1}\sqrt{2}^k\\
 &=n+\sqrt{n}\frac{\sqrt{2}^i-1}{\sqrt{2}-1}=n+\sqrt{n}\frac{\sqrt{n}-1}{\sqrt{2}-1}\\
 &=n+\frac{n-\sqrt{n}}{\sqrt{2}-1}\\
 T(n)&\in O(n)
 \end{align*}
-\pagebreak
-\subsection{Mergesort implementation}
-\lstinputlisting[label=Mergesort,caption=Mergesort]{mergesort.java}
+
 \end{document}

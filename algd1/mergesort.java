@@ -1,7 +1,6 @@
 public class Mergesort {
     private int[] numbers;
     private int[] helper;
-
     private int number;
 
     public void sort(int[] values) {
@@ -10,7 +9,6 @@ public class Mergesort {
         this.helper = new int[number];
         mergesort(0, number - 1);
     }
-
     private void mergesort(int low, int high) {
         // Check if low is smaller then high, if not then the array is sorted
         if (low < high) {
@@ -24,14 +22,11 @@ public class Mergesort {
             merge(low, middle, high);
         }
     }
-
     private void merge(int low, int middle, int high) {
-
         // Copy both parts into the helper array
         for (int i = low; i <= high; i++) {
             helper[i] = numbers[i];
         }
-
         int i = low;
         int j = middle + 1;
         int k = low;
@@ -53,6 +48,5 @@ public class Mergesort {
             k++;
             i++;
         }
-
     }
 }
