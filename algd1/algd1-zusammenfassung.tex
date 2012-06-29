@@ -1129,18 +1129,19 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$S = (n' = n), P = (n' := n-1), WP = (n = n-1) = false$
 \end{description}
 \subsubsection{Weakest Precondition herausfinden (Beispiel)}
-$S=(r'=x\cdot y)$, $P=(\T{if }x=2\cdot k\cdot y\T{ else }s':=2\cdot k\cdot y;r':=s'+y)$, $B=(x=2\cdot k)$
+$S=(r'=x\cdot y)$, $P=(\T{if } ( B ) ~then~ ( x=2\cdot k\cdot y ) \T{ else }( s':=2\cdot k\cdot y;r':=s'+y ))$, $B=(x=2\cdot k)$
 \begin{align*}
 S1&=wp((r':=2ky),S)=(2ky=xy)=(2k=x)=B\\
 S2&=wp((s':=2ky;r':=s'+y),S)=wp(s':=2ky,s'+y=xy)=(2ky+y=xy)=(2k+1=x)\\
 R&=wp(P,S)=(B\to S1\wedge\neg B\to S2)\\
-&=(\neg B\vee S1)\wedge(B\vee S2)=\neg B\wedge B\vee\neg B\wedge S2\vee S1\wedge B\vee S1\wedge S2\\
-&=\neg B\wedge S2\vee S1\wedge \vee S1\wedge S2\\
+&=(\neg B\vee S1)\wedge(B \vee S2)=\neg B\wedge B\vee\neg B\wedge S2\vee S1\wedge B \vee S1\wedge S2\\
+&=\neg B\wedge S2\vee S1\wedge B \vee S1\wedge S2\\
 &=B\wedge S1\vee\neg B\wedge S2\\
 &=(x=2k\wedge x=2k)\vee(x\neq 2k\wedge 2k+1=x)\\
 &=(x=2k)\vee(2k+1\neq 2k\wedge 2k+1=x)\\
 &=(x=2k)\vee(true\wedge 2k+1=x)\\
-&=(x=2k)\wedge(x=2k+1)
+&=(x=2k)\wedge(x=2k+1)\\
+&= \T{false}
 \end{align*}
 \subsubsection{Sequenz}
 \begin{description}
