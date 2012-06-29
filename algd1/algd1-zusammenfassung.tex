@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{ulem}
 \usepackage{stmaryrd} %f\"ur Blitz!
+\usepackage{longtable} %fuer ASCII-Tabelle
 
 %PageStyle
 %\usepackage[utf8x]{inputenc}
@@ -139,19 +140,28 @@ low: 0 bis 0.8 V\\
 high: 2.4 bis 5 V\\
 \subsection{Bit und Byte}
 \begin{itemize}
-\item eine Bitfolge der Länge $n$ k\"onnen $2^n$ Zust\"ande hergestellt werden
+\item eine Bitfolge der L\"ange $n$ k\"onnen $2^n$ Zust\"ande hergestellt werden
+\item Bits werden mit Indizes von 0 bis n-1 nummeriert.
 \item LSB: Bit mit kleinstem Index
 \item MSB: Bit mit h\"ochstem Index
 \end{itemize}
+\begin{tabular}{l l l }
+	KiByte: $2^{10}$ Byte &
+	MiByte: $2^{20}$ Byte &
+	GiByte: $2^{30}$ Byte
+\end{tabular}
+
 \subsection{Zahlen in Java}
 \subsubsection{Positive Zahlen}
+$\sum {b_i * B^i}$ mit $i \in [0,n-1]$ und $b_i$ gleich der Ziffer bei $i$. \\\\
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \multicolumn{1}{c}{MSB}&\multicolumn{6}{c}{}&\multicolumn{1}{c}{LSB}\\ \hline
 1&0&1&0&0&1&1&1\\\hline
 \multicolumn{1}{c}{$2^7$}&\multicolumn{1}{c}{$2^6$}&\multicolumn{1}{c}{$2^5$}&\multicolumn{1}{c}{$2^4$}&\multicolumn{1}{c}{$2^3$}&\multicolumn{1}{c}{$2^2$}&\multicolumn{1}{c}{$2^1$}&\multicolumn{1}{c}{$2^0$}\\
 \end{tabular}\\
 $1\cdot 2^7+0\cdot 2^6+1\cdot 2^5+0\cdot 2^4+0\cdot 2^3+1\cdot 2^2+1\cdot 2^1+1\cdot 2^0=167$
-\subsubsection{Ganze Zahlen}
+\subsubsection{Ganze Zahlen (2er - Komplement)}
+$-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei $i$.\\\\
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \multicolumn{1}{c}{MSB}&\multicolumn{6}{c}{}&\multicolumn{1}{c}{LSB}\\ \hline
 1&0&1&0&0&1&1&1\\\hline
@@ -160,40 +170,69 @@ $1\cdot 2^7+0\cdot 2^6+1\cdot 2^5+0\cdot 2^4+0\cdot 2^3+1\cdot 2^2+1\cdot 2^1+1\
 $-1\cdot 2^7+0\cdot 2^6+1\cdot 2^5+0\cdot 2^4+0\cdot 2^3+1\cdot 2^2+1\cdot 2^1+1\cdot 2^0=-89$\\
 \subsubsection{Zahlendarstellung mit beliebiger Basis}
 \begin{itemize}
-\item bin\"ar: Zahlen, die mit 0b beginnen
-\item octal: Zahlen, die mit 0 beginnen
-\item dezimal: Zahlen, die nicht mit 0 beginnen
-\item  hexadezimal: Zahlen, die mit 0x beginnen
+\item bin\"ar (2): Zahlen, die mit \Bold{0b} beginnen
+\item octal (8): Zahlen, die mit \Bold{0} beginnen
+\item dezimal (10): Zahlen, die \Bold{nicht mit 0} beginnen
+\item  hexadezimal (16): Zahlen, die mit \Bold{0x} beginnen
 \end{itemize}
-\subsubsection{Gleitkommazahlen}
-\begin{tabular}{lll}
-\Bold{Exponentialdarstellung}&float&double\\
-$\bullet$ Vorzeichen (V)&1&1\\
-$\bullet$ normalisierte Mantisse (1.M)&23&52\\
-$\bullet$ Exponent (E + 127)&8&11
+
+\subsection{Datentypen in JAVA}
+\begin{tabular}{l c c l l}
+	Name & Byte & Bit & kleinste Zahl & gr\"osste Zahl \\
+	\hline
+	\Bold {byte} & 1 & 8 & -127 & 128 \\
+	\Bold {short} & 2 & 16 &-32.768 & 32.767 \\
+	\Bold {char} & 2 & 16 & $\backslash$u0000 (0) & 	$\backslash$uFFFF (65.535) \\
+	\Bold {int} & 4 & 32 & -2.147.483.648 & 2.147.483.647 \\
+	\Bold {long} & 8 & 64 & -9.223.372.036.854.775.808 & 9.223.372.036.854.775.807 \\
+	\Bold {float} & 4 & 32 & $1,40 * 10^{-45}$ & $3,40282346638528860 * 10^{38}$ \\
+	\Bold {double} & 8 & 64 & $4,94065645841246544*10^{-324}$ & $1,79769313486231570*10^{308}$  \\
 \end{tabular}
-\Bold{Berechnung:} $(-1)^V(1+M)2^E$\\
-\Bold{Bsp:} 
-Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
-\begin{enumerate}
-\item Ganzzahlteil $1313_{10}=10100100001_2.$
-\item Nachkommateil\\
-\begin{tabular}{lll}
-	0.3125&$\times2=0.625$& \Bold{0}\\
-	0.625&$\times 2=1.25$ &\Bold{1}\\
-	0.25&$\times 2 = 0.5$ &\Bold{0}\\
-	0.5&$\times 2=1.0$ &\Bold{1}\\
+
+
+
+\subsection{Gleitkommazahlen}
+Exponentialdarstellung: $(-1)^V * (1+M)*2^E$ \\
+IEEE 754 Float: $(-1)^V * (1+M) * 2^{E-127}$ \\
+IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
+\begin{description}
+	\item[V] - Vorzeichen (float 1Bit / double 1 Bit)
+	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
+	\item[E] - Exponent (float: Signed-8-Bit $-$ 127  / double: Signed-11-Bit $-$ 1023)
+\end{description} 
+\begin{tabular}{|c|l|l|}
+	\hline
+	V & Exponent & Mantrisse \\
+	\hline
 \end{tabular}
-	\item $1313.3125_{10}=10100100001.0101_2$
-	\item Normen $10100100001.0101_2=1.01001000010101_2\times2^{10}$
-	\item Mantisse ist $01001000010101$, Exponent ist $10 + 127 = 137 = 10001001_2$, Vorzeichen ist 1.
-	\item -1313.3125 ist 
+
+\subsubsection{Beispiele (IEEE 754 32bit Float)}
+\begin{description}
+	\item[2.5] $=1.25*2^1$
+	\item[-0.75] $=\underbrace{1}_{\ominus}\underbrace{01111110}_{126 - 127} \underbrace{100000...}_{1+2^{-1}}=-1.5*2^{-1}$
+	\item[0.1] $=\underbrace{0}_{\oplus}\underbrace{01111011}_{123 - 127} \underbrace{100\overline{1100}.........}_{1+2^{-1}+2^{-4}+2^{-5}...}=1.6*2^{-4} = 0.100000001490116119384765625$ 
+	\item Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
+	\begin{enumerate}
+		\item Ganzzahlteil $1313_{10}=10100100001_2.$
+		\item Nachkommateil\\
+		\begin{tabular}{lll}
+			0.3125&$\times2=0.625$& \Bold{0}\\
+			0.625&$\times 2=1.25$ &\Bold{1}\\
+			0.25&$\times 2 = 0.5$ &\Bold{0}\\
+			0.5&$\times 2=1.0$ &\Bold{1}\\
+		\end{tabular}
+		\item $1313.3125_{10}=10100100001.0101_2$
+		\item Normen $10100100001.0101_2=1.01001000010101_2\times2^{10}$
+		\item Mantisse ist $01001000010101$, Exponent ist $10 + 127 = 137 = 10001001_2$, Vorzeichen ist 1.
+		\item -1313.3125 ist 
 		\begin{tabular}{|c|l|l|}
-		\hline
-		1 & 10001001 & 01001000010101000000000 \\
-		\hline
-	\end{tabular}
-\end{enumerate} 
+			\hline
+			1 & 10001001 & 01001000010101000000000 \\
+			\hline
+		\end{tabular}
+	\end{enumerate} 
+\end{description}
+
 \subsubsection{Spezialf\"alle}
 \begin{description}
 	\item[E=00000000 M=0] $\Rightarrow 0$
@@ -208,9 +247,23 @@ Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
 	\item float f = 7.6f/0.0f = -7.6f/-0.0f = $+\infty$
 	\item float f = -3.9f/0.0f = 3.9f/-0.0f = $-\infty$
 \end{itemize}
-\pagebreak
-\section{Operatoren und Ausdr\"ucke}
-\subsection{Priorit\"atstabelle}
+
+\newpage
+\section{Operationen \& Ausdr\"ucke}
+
+\subsection{Auswertungsreihenfolge}
+\begin{itemize}
+	\item einstellige und mehrstellige Operatoren
+		\begin{itemize}
+			\item[1.] Teilausdr\"ucke in Klammern
+			\item[2.] Ausdr\"ucke mit un\"aren Operatoren (pro Operand von rechts nach links)
+			\item[3.] Teilausdr\"ucke mit mehrstelligen Operatoren gem\"ass Priorit\"atstabelle
+		\end{itemize}
+	\item mehrstellige Operatoren gleicher Priorit\"at \\
+		bei gleicher Priorit\"at entscheidet die Assoziativit\"at (von links nach rechts oder von rechts nach links)
+	\item Bewertungsreihenfolge von Operanden \\
+		die Operanden eines Operators werden strikt von links nach rechts ausgewertet
+\end{itemize}
 \begin{center}
 \begin{tabular}{|c|l|l|c|}
 \hline
@@ -219,15 +272,15 @@ Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
 &()&Methodenaufruf&links\\
 &.&Komponentenzugriff&links\\
 &++&Postinkrement&links\\
-&--&Postdekrement&links\\\hline
+&$--$&Postdekrement&links\\\hline
 2&++&Pr\"ainkrement&rechts\\
-&--&Pr\"adekrement&rechts\\
-&+ -&Vorzeichen (un\"ar)&rechts\\
-&~&bitweises Komplement&rechts\\
+&$--$&Pr\"adekrement&rechts\\
+&+ $-$&Vorzeichen (un\"ar)&rechts\\
+&$\sim$&bitweises Komplement&rechts\\
 &!&logischer Negationsoperator&rechts\\\hline
 3&(type)&Typ-Umwandlungt&rechts\\
 &new&Erzeugung&rechts\\\hline
-4&* / \%&Multiplikation, Division, Rest&links\\\hline
+4&* { }/ { }\%&Multiplikation, Division, Rest&links\\\hline
 5&+ -&Addition, Subratktion&links\\
 &+&Stringverkettung&links\\\hline
 6&$<<$&Linksshift&links\\
@@ -241,57 +294,143 @@ Umrechnen von $-1313.3125$ zu IEEE 32-bit float:
 9&\& &bitweises UND&links\\\hline
 10&$^\wedge$&bitweises Exclusiv-ODER&links\\\hline
 11&$\mid$&bitweises ODER&links\\\hline
-12&\&\& \& &logisches UND&links\\\hline
-13&$\mid\mid$ $\mid$&logisches ODER&links\\\hline
+12&\&\& { } \& &logisches UND&links\\\hline
+13&$\mid\mid$ { } $\mid$&logisches ODER&links\\\hline
 14&? :&Bedingungsoperator&rechts\\\hline
 15&=&Wertzuweisung&rechts\\\hline
-&*= /= \%= += -= $<<$=&kombinierter Zuweisungsoperator&rechts\\
-&$>>$= $>>>$= \&= $^\wedge$= $\mid$=&&\\\hline
+&*= { }/= { }\%=&kombinierter Zuweisungsoperator&rechts\\
+&+= { }-= { }$<<$=&&\\
+&$>>$= { } $>>>$=&&\\
+&\&= { }$^\wedge$= { }$\mid$=&&\\\hline
 
 \end{tabular}
 \end{center}
-\subsection{Operatoren}
+
+\subsection{Bitoperatoren}
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	& & \Bold {AND} & \Bold {OR} & \Bold {Negation} & \Bold {XOR} \\
+	\Bold {a} & \Bold {b} & \Bold {a \& b} & \Bold {a $|$ b} & \Bold {$\sim$a} & \Bold {a $\wedge$  b} \\
+	\hline
+	0 & 0 & 0 & 0 & 1 & 0 \\
+	0 & 1 & 0 & 1 & 1 & 1 \\
+	1 & 0 & 0 & 1 & 0 & 1 \\
+	1 & 1 & 1 & 1 & 0 & 0 \\
+	\hline
+\end{tabular}
+
+\subsection{Schiebeoperatoren}
 \begin{itemize}
-\item Negation: "~", $~0=1$, $~1=0$
-\item AND: "\&"
-\item OR: "$\Teilt$ "
-\item XOR: " $^\wedge$ "
-\item Rechtsschiebe-Operatoren
-	\begin{itemize}
-	\item vorzeichenbehaftet: "$>>$", $y=-128>>4\Ra y=11111000_2 = -8$
-	\item vorzeichenlos: "$>>>$", $y=-128>>>4\Ra y=00001000_2=8$
-	\end{itemize}
-\item Linksschiebe-Operator: "$<<$", $y=3<<2\Ra y=00001100_2=12$ (F\"ur jeden linksschiebeoperator wird $\cdot 2$ gerechnet.
+	\item \Bold {Rechtsschiebe-Operatoren}
+		\begin{itemize}
+			\item vorzeichenbehaftet: $a >> b$, \Bold{Bsp:}$-9_{10} = 11110111_2 >> 1 = 11111011_2 = -5_{10}$
+			\item vorzeichenlos: $a >>> b$, \Bold{Bsp:}$-9_{10} =  11110111_2 >>> 1 = 01111011_2 = 123_{10}$ 
+		\end{itemize}
+	\item \Bold {Linksschiebe-Operator}
+		\begin{itemize}
+			\item kann Vorzeichen ver\"andern:  $a << b$
+			\item $y=3<<2\Ra y=00001100_2=12$ (F\"ur jeden linksschiebeoperator wird $\cdot 2$ gerechnet.
+		\end{itemize}
 \end{itemize}
 \lstinputlisting[label=OneBitCounter,caption=OneBitCounter]{OneBitCounter.java}
 \lstinputlisting[label=Addition,caption=Addition]{Addition.java}
+\pagebreak
 \lstinputlisting[label=Multiplication,caption=Multiplication]{Multiplication.java}
 \subsection{Logische Operatoren}
-\begin{itemize}
-\item Negation: "!"
-\item UND: "\&\& "
-\item ODER: "$\mid\mid$"
-\item Bedingungsoperator: "? :" $\Ra A$ $?$ $B:C =$ if ($A$) then $B$ else $C$
-\end{itemize}
+\begin{description}
+	\item[logische Negation:] !A
+	\item[logisches UND:] A \&\& B  / A \& B \\
+				(Bei zwei \& Zeichen wird erst A \"uberpr\"uft und B nur, falls A wahr ist.)
+	\item[logisches ODER:] A $||$ B / A $|$ B
+	\item[Bedingungsoperator:] A ? B : C (if (A) then B else C)
+\end{description}
+
 \subsection{Konvertierung von Datentypen}
+
+\subsubsection{explizite Typkonvertierung}
 \begin{itemize}
-\item explizite Typenkonvertierung: Referenz- und numerische Datentypen (erweiternd und einschr\"ankend) k\"onnen konvertiert werden. Braucht cast-Operator: (Typ) Ausdruck
-\item implizite (automatische) Typenkonvertierung: Referenz- und numerische Datentypen (nur erweiternd) k\"onnen konvertiert und String-Objekte verkn\"upft  werden.
+	\item Konvertierungen sind m\"oglich:
+		\begin{itemize}
+			\item zwischen numerischen Datentypen (\Bold {erweiternd und einschr\"ankend})
+			\item zwischen Referenztypen
+		\end{itemize}
+	\item funktionieren gleich wie implizite, allerdings bestehen mehr M\"oglichkeiten
+	\item cast-Operator: (Typname) Ausdruck
 \end{itemize}
-\subsection{Typenkonvertierung}
+
+\subsubsection{implizite (automatische) Typkonvertierung}
 \begin{itemize}
-\item erweiternde Umwandlung: Wert ist immer darstellbar, m\"oglicher Verlust an Genauigkeit (int zu float)\\
-\includegraphics[width=75mm]{erweiternde_typumwandlung.png}
-\item einschr\"ankende Umwandlung: m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen und Genauigkeit\\
-\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
+	\item zwischen Operanden von numerischem Typ (\Bold {nur erweiternd})
+	\item zwischen Operanden von Referenztypen
+	\item bei Verkn\"upfungen von String-Objekten mit Operanden anderer Typen \\
+			    Object o = new Object();\\
+			    String s = $"$X$"$+null+o;\\
+			   String s = $"$X$"$+$"$null$"$+o.toString();\\
+                                   String s = $"$Xnulljava.lang.Object@47ac1adf$"$;
+	\item arithmetische Operatoren: Konvertierung in h\"oheren Typ gem\"ass Hierarchie
 \end{itemize}
-\subsection{Konvertierungsvorschriften}
+\pagebreak
+\subsubsection{erweiternde Typkonvertierungen}
+		Wert ist immer darstellbar \\
+		m\"oglicher Verlust an Genauigkeit (z.B. bei Konvertierung von int nach float) \\ \\
+		\includegraphics[width=75mm]{erweiternde_typumwandlung.png} \\
+		
+\subsubsection{einschr\"ankende Typkonvertierungen}
+		m\"oglicher Informationsverlust in Gr\"osse, Vorzeichen \& Genauigkeit \\ \\
+		\includegraphics[width=75mm]{einschraenkende_typumwandlung.png}
+
+\begin{tabular}{|l|l|}
+\hline
+\Bold{Umwandlung}&\Bold{Resultat}\\\hline\hline
+
+(int) Double.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
+(int) (float) Integer.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
+(int) (float) Integer.MAX\_VALUE - 1 & Integer.MAX\_VALUE (Genauigkeit ist nicht gegeben!)\\\hline
+(int) Long.MAX\_VALUE & -1\\\hline
+(int) Long.MIN\_VALUE & 0 \\\hline
+
+(byte)(char) 254 & -2 \\\hline
+(char)(byte) -2 & 65534 (falsch) \\\hline
+(char)(byte) -2 $\&$ 0xff & 254 (korrekt) \\\hline
+\hline
+\end{tabular}
+
+\subsubsection{Integer-Erweiterung}
 \begin{itemize}
-\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen: Wert bleibt unver\"andert
-\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen: char ist vorzeichenlos; bei gleicher Breite$\ra$ Bitmuster bleibt erhalten; char ist breiter$\ra$ von links mit Nullen auff\"ullen und Vorzeichen popagieren; char ist schmaler$\ra$ kein korrektes Resultat wenn Wert gr\"osser als $2^{16}$
-\item Konvertierung von Integer nach Gleitpunkt: n\"achst h\"oherer oder niedriger darstellbarer Wert
-\item Konvertierung von Gleitpunkt nach Integer: Nachkommastellen werden abgeschnitten; bei Werten gr\"osser als $2^{31}-1$ ist das Resultat nicht korrekt
-\item Konvertierung zwischen Gleitpunkt-Typen: float nach double$\ra$ Wert bleibt unver\"andert; double nach float$\ra$ Wert im zul\"assigen Wertebereich von float dann n\"achst h\"oherer oder niedriger darstellbarer Wert
+	\item Datentypen byte, short und char werden in Ausdr\"ucken mit un\"aren und bin\"aren Operatoren implizit in int konvertiert
+		\begin{itemize}
+			\item Dimensionsausdruck bei der Erzeugung von Arrays
+			\item Indexausdruck in Arrays
+			\item Operand der un\"aren Operatoren $+$ und $ - $
+			\item Operand des Invertierungsoperators f\"ur Bits $\sim$
+			\item Operanden der Schiebeoperatoren $>>$, $>>>$ und $<<$
+		\end{itemize}
+	\item byte, short und char werden somit fast ausschliesslich als Datenfelder f\"ur Klassen benutzt
+\end{itemize}
+\pagebreak
+\subsubsection{Konvertierungsvorschriften}
+\begin{itemize}
+	\item erweiternde Konvertierung von vorzeichenbehafteten Integer-Typen \\
+		Wert bleibt unver\"andert
+	\item Konvertierung zwischen char und vorzeichenbehafteten Integer-Typen
+		\begin{itemize}
+			\item char ist vorzeichenlos
+			\item short: Bitmuster bleibt erhalten, da gleiche Breite. Negativ wenn $b_{15} = 1$. 
+			\item char zu int: von links mit Nullen auff\"ullen. Positiv.
+			\item char zu byte: Bits 0 bis 7 werden \"ubernommen. Negativ wenn $b_7 = 1$.
+		\end{itemize}
+	\item Konvertierung von Integer nach Gleitpunkt \\
+		n\"achst h\"oherer oder niedriger darstellbarer Wert
+	\item Konvertierung von Gleitpunkt nach Integer
+		\begin{itemize}
+			\item Nachkommastellen werden abgeschnitten
+			\item bei Werten gr\"osser als $2^{31} - 1$ ist das Resultat nicht korrekt ($= 2^{31} - 1$)
+		\end{itemize}
+	\item Konvertierung zwischen Gleitpunkt-Typen
+		\begin{itemize}
+			\item float nach double: Wert bleibt unver\"andert
+			\item double nach float: Wert im zul\"assigen Wertebereich von float, dann n\"achst h\"oherer oder niedriger darstellbarer Wert
+		\end{itemize}
 \end{itemize}
 \pagebreak
 \section{Zeichen und Strings}
@@ -311,6 +450,24 @@ Aufteilung des Coderaums [0, 10FFFF$_{16}$] in 17 gleichgrosse Ebenen
 \item Ebene 14: Supplementary Special-purpose Plane (SSP), U+E'0000 - U+E'FFFF; zus\"atzliche Formatierungszeichen
 \item Ebene 15 und 16: Private Use Planes, U+F'0000 - U+10'FFFF; f\"ur private Zwecke
 \end{itemize}
+\subsection{Standardisierte Zeichencodierungen}
+\subsubsection{ASCII (American Standard Code for Information Interchange)}
+\begin{itemize}
+	\item nur 128 verschiedene Zeichen (Steuerzeichen, Satzzeichen, Ziffern, Buchstaben usw.)
+	\item pro Zeichen ein eindeutiger 7-Bit-Zeichencode
+\end{itemize}
+\subsubsection{ISO 8859-1 (Latin-1)}
+\begin{itemize}
+	\item 256 Zeichen f\"ur europ\"aische Sprachen (8-Bit-Zeichencode)
+	\item die ersten 128 Zeichen sind identisch zu ASCII
+	\item die zweiten 128 Zeichen enthalten europ\"aische Sonderzeichen, z.B. Umlaute
+\end{itemize}
+\subsubsection{Unicode}
+\begin{itemize}
+	\item \"uber eine Million Zeichen, verschiedene Sprachen (Arabisch, Hebr\"aisch, Chinesisch usw.)
+	\item 21-Bit-Zeichencode: ersten 256 Zeichen sind identisch zu ISO 8859-1
+\end{itemize}
+
 \subsection{Codierungsformate}
 \subsubsection{UTF-32}
 \begin{itemize}
@@ -351,6 +508,219 @@ zzzzyyyy&$\to$\textcolor{red}{4} byte&&&\\
 yyxxxxxx&$\to$\textcolor{red}{21}bit (alle)&&&\\\hline
 \end{tabular}
 \pagebreak
+
+
+
+\subsection{Java}
+\subsubsection{Unicode in JAVA}
+\begin{description}
+	\item[Datentyp int] \hfill 
+		\begin{itemize}
+			\item 32-Bit im UTF-32 Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0
+			\item eine int-Variable kann jeden m\"oglichen Zeichencode (code point) des Unicodes aufnehmen
+		\end{itemize}
+	\item[Datentyp char] \hfill 
+		\begin{itemize}
+			\item 16-Bit (Codierungseinheit, code unit)
+			\item eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes (Basic Multilingual Plane, BMP) aufnehmen
+			\item alle anderen Zeichencodes werden durch char-Paare codiert
+		\end{itemize}
+	\item[Interface CharSequence] \hfill 
+		\begin{itemize}
+			\item Sequenz von Zeichencodes im UTF-16 Format
+			\item bekannte Implementierungen: String, StringBuffer, StringBuilder
+		\end{itemize}
+\end{description}
+
+\subsubsection{Zeichenketten (Strings)}
+\begin{description}
+	\item[Character-Array] \hfill \\
+		ver\"anderbare Zeichenkette mit expliziter L\"angenangabe (Teil des Arrays)
+	\item[Klasse String (UTF-16 Format)] \hfill \\
+		unver\"anderbare Zeichenkette mit expliziter L\"angenangabe
+	\item[Klassen StringBuilder und StringBuffer (UTF-16 Format)] \hfill \\
+		ver\"anderbare Zeichenkette gekapselt als abstrakter Datentyp
+\end{description}
+
+\subsubsection{String Funktionen}
+\begin{description}
+	\item[String equals(String vergleichenMit)] \hfill \\
+		vergleicht den Inhalt von zwei Strings
+	\item[String substring(int anfang, int ende)] \hfill \\
+		Schneidet eine Zeichenkette zwischen Anfang und Ende –1 aus und erzeugt damit ein neues Stringobjekt. Der urspr\"ungliche String wird dabei nicht ver\"andert.
+	\item[String trim()] \hfill \\
+		Erzeugt Kopie und entfernt alle Leerzeichen am Anfang und Ende der Kopie. Die Kopie wird zur\"uckgegeben.
+\end{description}
+
+\subsection{Universal Character Encoding Standard (Unicode)}
+\subsubsection{Coderaum}
+\begin{description}
+	\item[Ebene 0: Basic Multilingual Plane (BMP)] \hfill
+		\begin{itemize}
+			\item U+0 bis U+FFFF
+			\item enth\"alt die wichtigsten Zeichen von verschiedenen Sprachen
+		\end{itemize}
+	\item[Ebene 1: Supplementary Multilingual Plane (SMP)] \hfill
+		\begin{itemize}
+			\item U+1'0000 bis U+1'FFFF
+			\item enth\"alt weniger oft gebrauchte Zeichen (z.B. gotische Zeichen, Musiksymbole)
+		\end{itemize}
+	\item[Ebene 2: Supplementary Ideographic Plane (SIP)] \hfill
+		\begin{itemize}
+			\item U+2'0000 bis U+2'FFFF
+			\item enth\"alt sehr seltene CJK Zeichen
+		\end{itemize}
+	\item[Ebene 3 bis 13] \hfill \\
+		reserviert f\"ur sp\"atere Erg\"anzungen
+	\item[Ebene 14: Supplementary Special-purpose Plane (SSP)] \hfill
+		\begin{itemize}
+			\item U+E'0000 bis U+E'FFFF
+			\item enth\"alt zus\"atzliche Formatierungszeichen
+		\end{itemize}
+	\item[Ebenen 15 und 16: Private Use Planes] \hfill
+		\begin{itemize}
+			\item U+F'0000 bis U+F'FFFF und U+10'0000 bis 10'FFFF
+			\item f\"ur private, nicht standardisierte Zwecke einsetzbar
+		\end{itemize}
+\end{description}
+
+\subsubsection{UTF-32}
+Dies ist die einfachste Umsetzung, es werden 21 Bits in einem (vorzeichenlosen) 32-Bit-Integer abgespeichert. Dabei sind die h\"oherwertigen 11 Bits immer null. Dies bedeutet jedoch eine grosse Speicherverschwendung
+
+\subsubsection{UTF-16}
+Dies ist ein guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung. In diesem Standard werden Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert. Die Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten (Ersatzpaare) gespeichert. \\
+Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Das erste Zeichen jeweils aus dem Bereich \Bold {U+D800 bis U+DBFF}. Das zweite Zeichen jeweils aus dem Bereich \Bold {U+DC00 bis U+DFFF}. Das ergiebt 2 mal 10 Bit Nutzdaten.
+
+\subsubsection{UTF-8}
+Dies ist ein sehr verbreiteter Standard in XML oder im Web. Er ist sehr speichereffizient f\"ur h\"aufige Zeichen und kompatibel mit dem ASCII Standard. F\"ur seltenere Zeichen ist er jedoch speicherineffizient und ist kompliziert in der Handhabung, da er aus 1 bis 4 Bytes besteht: \\
+\includegraphics[scale=0.35]{utf8.png}
+
+\subsubsection{Codierungsschemen}
+Das bestimmt Codierungsformat und Byte-Reihenfolge:
+\begin{itemize}
+	\item bei Dateneinheiten bestehend aus mehreren Bytes muss festgehalten werden, welches Byte zuerst behandelt wird, das
+		\begin{itemize}
+			\item most significant byte (MSB) zuerst: big-endian
+			\item least significant byte (LSB) zuerst: little-endian
+ 		\end{itemize}		 
+ 	\item relevant bei UTF-16 und UTF-32
+ 	\item nicht relevant bei UTF-8 (die Reihenfolge ist klar)
+ 	\item durch Verwendung des Spezialzeichens Byte Order Mark (BOM) kann die Byte-Reihenfolge automatisch detektiert werden:
+\end{itemize}
+
+\subsubsection{UTF-32 in UTF-16 Umwandlung}
+\begin{lstlisting}
+    public char[] utf32to16(char[] array, int pos) {
+        char c = array[pos];
+        if (c >= (2^16)) {
+            array[pos] = (char) (0xD800 + ((c & 0xFFFFFF) >> 10));
+            array[pos+1] = (char) (0xDC00 + (c & 0x3FF));
+        } else array[pos] = c;
+            
+        return array;
+    }
+\end{lstlisting}
+
+\subsubsection{UTF-16 in Latin1 Umwandlung}
+\begin{lstlisting}
+    public char[] utfToLatin1(String s) {
+        byte[] array = new byte[s.length];
+        int pos = 0;
+        for (int i = 0; i< s.length; i++) {
+        		char c = s.charAt(i);
+        		if (c >= 256 && (c < 0xDC00 || c >= 0xDFFF) {
+        				array[pos] = (byte) '?';
+        				pos++;
+        		 } else if (c < 256) {
+        		 		array[pos] = (byte) c;
+        		 		pos++;
+        		 }
+		}
+		for (int i = pos; i < s.lenght; i++) {
+				array[j] = (byte) 0;
+		}        		
+        return array;
+    }
+\end{lstlisting}
+\pagebreak
+\subsubsection{ASCII-Zeichentabelle}
+{\footnotesize
+\begin{longtable}{|c|c|c|c||c|c|c|c|}
+\hline
+Dez & Hex & Okt & Zeichen & Dez & Hex & Okt & Zeichen\\
+\hline
+0 & 0x00 & 000 & NUL & 32 & 0x20 & 040 & SP\\
+1 & 0x01 & 001 & SOH & 33 & 0x21 & 041 & ! \\
+2 & 0x02 & 002 & STX & 34 & 0x22 & 042 & "'\\
+3 & 0x03 & 003 & ETX & 35 & 0x23 & 043 & \# \\
+4 & 0x04 & 004 & EOT & 36 & 0x24 & 044 & \$ \\
+5 & 0x05 & 005 & ENQ & 37 & 0x25 & 045 & \% \\
+6 & 0x06 & 006 & ACK & 38 & 0x26 & 046 & \& \\
+7 & 0x07 & 007 & BEL & 39 & 0x27 & 047 & ' \\
+8 & 0x08 & 010 & BS & 40 & 0x28 & 050 & (  \\
+9 & 0x09 & 011 & TAB & 41 & 0x29 & 051 &  ) \\
+10 & 0x0A & 012 & LF & 42 & 0x2A & 052 & * \\
+11 & 0x0B & 013 & VT & 43 & 0x2B & 053 & + \\
+12 & 0x0C & 014 & FF & 44 & 0x2C & 054 & , \\
+13 & 0x0D & 015 & CR & 45 & 0x2D & 055 & $-$ \\
+14 & 0x0E & 016 & SO & 46 & 0x2E & 056 & . \\
+15 & 0x0F & 017 & SI & 47 & 0x2F & 057 & / \\
+16 & 0x10 & 020 & DLE & 48 & 0x30 & 060 & 0 \\
+17 & 0x11 & 021 & DC1 & 49 & 0x31 & 061 & 1 \\
+18 & 0x12 & 022 & DC2 & 50 & 0x32 & 062 & 2 \\
+19 & 0x13 & 023 & DC3 & 51 & 0x33 & 063 & 3 \\
+20 & 0x14 & 024 & DC4 & 52 & 0x34 & 064 & 4 \\
+21 & 0x15 & 025 & NAK & 53 & 0x35 & 065 & 5 \\
+22 & 0x16 & 026 & SYN & 54 & 0x36 & 066 & 6 \\
+23 & 0x17 & 027 & ETB & 55 & 0x37 & 067 & 7 \\
+24 & 0x18 & 030 & CAN & 56 & 0x38 & 070 & 8 \\
+25 & 0x19 & 031 & EM & 57 & 0x39 & 071 & 9 \\
+26 & 0x1A & 032 & SUB & 58 & 0x3A & 072 & : \\
+27 & 0x1B & 033 & ESC & 59 & 0x3B & 073 & ; \\
+28 & 0x1C & 034 & FS & 60 & 0x3C & 074 & $<$ \\
+29 & 0x1D & 035 & GS & 61 & 0x3D & 075 & =\\
+30 & 0x1E & 036 & RS & 62 & 0x3E & 076 & $>$ \\
+31 & 0x1F & 037 & US & 63 & 0x3F & 077 & ? \\
+\hline
+
+Dez & Hex & Okt & Zeichen & Dez & Hex & Okt & Zeichen\\
+\hline
+64 & 0x40 & 100 & @ & 96 & 0x60 & 140 & ` \\
+65 & 0x41 & 101 & A & 97 & 0x61 & 141 & a \\
+66 & 0x42 & 102 & B & 98 & 0x62 & 142 & b \\
+67 & 0x43 & 103 & C & 99 & 0x63 & 143 & c \\
+68 & 0x44 & 104 & D & 100 & 0x64 & 144 & d \\
+69 & 0x45 & 105 & E & 101 & 0x65 & 145 & e \\
+70 & 0x46 & 106 & F & 102 & 0x66 & 146 & f \\
+71 & 0x47 & 107 & G & 103 & 0x67 & 147 & g \\
+72 & 0x48 & 110 & H & 104 & 0x68 & 150 & h \\
+73 & 0x49 & 111 & I & 105 & 0x69 & 151 & i \\
+74 & 0x4A & 112 & J & 106 & 0x6A & 152 & j \\
+75 & 0x4B & 113 & K & 107 & 0x6B & 153 & k \\
+76 & 0x4C & 114 & L & 108 & 0x6C & 154 & l \\
+77 & 0x4D & 115 & M & 109 & 0x6D & 155 & m \\
+78 & 0x4E & 116 & N & 110 & 0x6E & 156 & n \\
+79 & 0x4F & 117 & O & 111 & 0x6F & 157 & o \\
+80 & 0x50 & 120 & P & 112 & 0x70 & 160 & p \\
+81 & 0x51 & 121 & Q & 113 & 0x71 & 161 & q \\
+82 & 0x52 & 122 & R & 114 & 0x72 & 162 & r \\
+83 & 0x53 & 123 & S & 115 & 0x73 & 163 & s \\
+84 & 0x54 & 124 & T & 116 & 0x74 & 164 & t \\
+85 & 0x55 & 125 & U & 117 & 0x75 & 165 & u \\
+86 & 0x56 & 126 & V & 118 & 0x76 & 166 & v \\
+87 & 0x57 & 127 & W & 119 & 0x77 & 167 & w \\
+88 & 0x58 & 130 & X & 120 & 0x78 & 170 & x \\
+89 & 0x59 & 131 & Y & 121 & 0x79 & 171 & y \\
+90 & 0x5A & 132 & Z & 122 & 0x7A & 172 & z \\
+91 & 0x5B & 133 & [ & 123 & 0x7B & 173 & \{ \\
+92 & 0x5C & 134 & $\backslash$ & 124 & 0x7C & 174 & $\mid$\\
+93 & 0x5D & 135 & ] & 125 & 0x7D & 175 & \} \\
+94 & 0x5E & 136 & \^{} & 126 & 0x7E & 176 & $\sim$ \\
+95 & 0x5F & 137 & \_ & 127 & 0x7F & 177 & DEL \\
+\hline
+\end{longtable}
+}
+\newpage
 \section{Suchen}
 \subsection{Zahlensuche}
 Generell gilt hier: Ordnung reduziert den Suchaufwand!
@@ -396,15 +766,23 @@ Es wird f\"ur jedes Teilst\"uck des Patterns das Endst\"uck maximaler L\"ange ge
 	-1 & 0 & 0 & 0 & 0 & 1 & 2 & 0 \\
 	\hline
 \end{tabular} \\ \\ \\
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}\hline 
+	0 &  1 &  2 &  3 &  4 &  5 &  6 &  7 &  8 &  9 &  0 &  1 &  2 &  3 &  4 &  5 &  6 &  7 &  8 &  9 &  0 &  1 &  2 &  3 \\\hline
+	P &  A &  R &  T &  I &  C &  I &  P &  A &  T &  E &  &  I &  N &   &  P &  A &  R &  A &  C &  H &  U &  T &  E  \\\hline
+	-1 &  0 &  0 &  0 &  0 &  0 &  0 &  0 &  1 &  2 &  0 &  0 &  0 &  0 &  0 &  0 &  1 &  2 &  3 &  0 &  0 &  0 &  0 &  0 \\\hline
+\end{tabular}
+\\ \\ \\
+
 Die Tabelle Zeigt die Verschiebeinformationen f\"ur das Beispiel. Wenn beim Vergleich der Position 5 mit dem Text ein Fehler auftritt, dann muss bei Position 1 (also 1 wieder verglichen werden). Nur f\"ur den Anfangsbuchstaben ist der Wert -1. Wenn dieser genommen wird, heisst das, dass das Pattern wieder von vorne verglichen werden muss. \\
 Diese Verschiebeinformationen werden zu Beginn der Suche im Text berechnet. Damit muss bei der Suche nie ein Teilst\"uck zweimal durchsucht werden. \\
 
+\pagebreak
 \Bold{Implementierung:}
 \lstinputlisting[label=Knuth-Morris-Pratt,caption=Knuth-Morris-Pratt]{kpm.java}
 
 \pagebreak
 \section{Sortieren}
-Ein Array a ist sortiert, wenn gilt: \\ \\
+Ein Array a ist sortiert, wenn gilt: \\
 $ \forall i \in [0, a.lenght-2] : a[i]\ relop\ a[i+1]$ \\
 relop: Relation, Bin\"ares Pr\"adikat (typisch: $\leq,\geq,<,>$)
 
@@ -488,7 +866,7 @@ Quicksort&$O(n\cdot \log(n))$&$O(n\cdot \log(n))$&$O(n^2)$&$O(n\cdot \log(n))$ f
 Selectionsort&$O(n^2)$&$O(n^2)$&$O(n^2)$&\\\hline
 
 \end{tabular}
-\pagebreak
+\\ \\
 \section{Halbdynamische Datenstrukturen}
 \subsection{Halbdynamische Datenstruktur}
 \begin{description}
@@ -503,7 +881,7 @@ Selectionsort&$O(n^2)$&$O(n^2)$&$O(n^2)$&\\\hline
 	\item direkter Zugriff auf die Elemente
 	\item Anpassung des Speicherbedarfs ist zeitaufw\"andig
 	\end{itemize}
-\item[dynamische Datenstrukturen]
+\item[dynamische Datenstrukturen (Liste, Stack, Baum usw.)]
 	\begin{itemize}
 	\item Speicherbedarf h\"angt direkt von der genutzten Anzahl Elemente ab
 	\item \"ublich unterst\"utzte Operationen: Suchen, Einf\"ugen, Entfernen
@@ -512,8 +890,20 @@ Selectionsort&$O(n^2)$&$O(n^2)$&$O(n^2)$&\\\hline
 \end{description}
 \subsection{Datennutzung \"uber die Zeit}
 \includegraphics[width=1\textwidth]{datennutzung_ueber_zeit.png}
+\pagebreak
 \subsection{Datenstruktur: ArrayList}
 Implementiert das Interface list
+\begin{itemize} \setlength{\itemsep}{-2pt}
+	\item ArrayList verwendet intern ein Array von Objekten
+	\item die L\"ange des Arrays entspricht der Kapazit\"at
+	\item die verwendete Anzahl Elemente ist in size gespeichert
+	\item Eine ArrayList startet mit der Gr\"osse 10 wenn nicht's anderes angegeben wurde
+	\item Die Kapazit\"at wird erh\"oht, wenn die ArrayList voll ist und ein neues Element hinzugef\"ugt wird.
+	\item Die neue Kapazit\"at wir bei der Erh\"ohung wie folgt berechnet:\\
+			JRE1.6: $cap_{new}=(cap_{old} * 3) / 2 + 1$\\
+			JRE1.7: $cap_{new}=cap_{old} + (cap_{old} >> 1)$
+\end{itemize}
+
 \begin{itemize}
 	\item void add(int index, Object element)
 	\item void clear()
@@ -559,6 +949,21 @@ Implementiert das Interface list
 \item
 \lstinputlisting[label=Lower Bound Wildcard,caption=Lower Bound Wildcard]{lower_bound_wildcard.java}
 \end{description}
+\subsubsection{Interner Aufbau (bis Java 1.4.2)}
+\begin{itemize}
+	\item alle Klassen aus dem Java Collections Framework verwalten intern Referenzen vom Typ Object \\ $\Rightarrow$ maximale Flexibilit\"at
+	\item alle Methodenschnittstellen verwenden den Typ Object
+	\item da alle Referenztypen zur Klasse Object zuweisungskompatibel sind, bieten die Collections keine Typsicherheit
+\end{itemize}
+
+\subsubsection{Interner Aufbau (seit Java 5.0)}
+\begin{itemize}
+	\item alle Collections verwalten intern Referenzen vom Typ $<$E$>$, wobei E ein beliebiger Platzhalter (Typ-Parameter) f\"ur einen konkreten Referenztyp ist
+	\item Collections werden generisch (maximale Flexibilit\"at)
+	\item Collections k\"onnen f\"ur alle m\"oglichen Referenztypen verwendet werden, auch
+f\"ur Object (= fr\"uherer interner Aufbau)
+\end{itemize}
+
 \pagebreak
 \section{Programmverifikation}
 \subsection{Korrektheit eines Algorithmus}
@@ -573,6 +978,8 @@ Implementiert das Interface list
 \subsection{Aussagenlogik}
 \subsubsection{Syntax}
 \begin{itemize}
+\item atomare Formeln (Atome): A, B, C, ...
+\item seien F und G zwei beliebige Formeln
 \item Konjuktion: $(F\wedge G)$ ist eine Formel
 \item Disjunktion: $(F\vee G)$ ist eine Formel
 \item Negation: $neg F$ ist eine Formel
@@ -603,7 +1010,7 @@ aber wenn der Wahrheitswert von $\mathfrak{B}$(F) = false ist: $\mathfrak{B} \nv
 \end{itemize}
 
 \subsubsection{\"Aquivalenz}
-Zwei Formeln F und G heissen (semantisch) \"aquivalent, falls f\"ur alle passenden Belegungen $\mathfrak{B}$ gilt: $\mathfrak{B}$(F) = $\mathfrak{B}$(G). Daf\"ur schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ \\
+Zwei Formeln F und G heissen (semantisch) \"aquivalent, falls f\"ur alle passenden Belegungen $\mathfrak{B}$ gilt:\\ $\mathfrak{B}$(F) = $\mathfrak{B}$(G). Daf\"ur schreiben wir $\models (F \leftrightarrow G)$ oder kurz $F \equiv G$. \\ 
 \begin{tabular}{l l c | c l l}
 \multicolumn{2}{c}{AND} &&& \multicolumn{2}{c}{OR} \\
 \hline 
@@ -623,7 +1030,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsubsection{Syntax}
 \begin{itemize}
 	\item Erweiterung der Aussagenlogik um Quantoren, Funktionen, Pr\"adikate, Relationen und Variablen
-		\begin{itemize}
+		\begin{itemize} 
 			\item nullstellige Pr\"adikate entsprechen den Atomen der Aussagelogik
 			\item Relationen k\"onnen als Pr\"adikate aufgefasst werden
 			\item nullstellige Funktionen sind Konstanten
@@ -718,6 +1125,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		Programm: $P = (x' := x + 2)$ \\
 		m\"ogliche Vorbedingung $R = (a = 0 \vee b = 2 \vee x = 8 \vee z = 0)$ \\
 		einfachste Vorbedingung (weakest Precondition);  $WP = (x = 8)$
+\pagebreak
 	\item[Nachbedingungen (Postcondition)] \hfill \\
 		Die Nachbedingungen entsprechen der \Bold {Spezifikation} des Programms und sind je pr\"aziser, umso besser. \\
 		Implikation: $[\underbrace{S}_{spezielle Spez.} \ra \underbrace{T}_{allg. Spez.}] \equiv \forall a, b, c, ..., z, a', b', c', ..., z': \neg S \vee T$
@@ -806,8 +1214,8 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \subsubsection{Selektion}
 \begin{description}
 	\item[Gegeben] \hfill \\
-		logischer Ausdruck b \\
-		Selektion P= (if b then $P_1$ else $P_2$) \\
+		logischer Ausdruck b ;
+		Selektion P = (if b then $P_1$ else $P_2$) ;
 		Nachbedingung S
 	\item[Regel] \hfill \\
 		\begin{tabular}{ll}
@@ -816,19 +1224,17 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		&$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 		\end{tabular}
 	\item[Beispiel] \hfill \\
-		$P = ($if $x < 0$ then $x' := -x$ else $x' := x – 1)$ \\
+		$P = (if~x < 0~then~x' := -x~else~x' := x – 1)$ \\
 		$S = (x' > 0)$ \\
-		\begin{tabular}{ll}
-		$WP $&$= wp(($if $x < 0 x' := -x$ else $x' := x – 1), x' > 0)$ \\
-		&$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
-		&$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
-		&$= true \wedge (x \notin [0, 1])$ \\
-		&$= x \notin [0, 1]$ \\
-		&$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x ≥ 0 \wedge x - 1 > 0)}$ \\
-		&$= (x < 0) \vee (x ≥ 0 \wedge x > 1)$ \\
-		&$= (x < 0) \vee (x > 1)$ \\
-		&$= x \notin [0, 1]$
-		\end{tabular}
+		$WP = wp((if~x < 0~then~x' := -x~else~x' := x – 1), x' > 0)$ \\
+		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x – 1 > 0)}$ \\
+		$= (x ≥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
+		$= true \wedge (x \notin [0, 1])$ \\
+		$= x \notin [0, 1]$ \\
+		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x \ge 0 \wedge x - 1 > 0)}$ \\
+		$= (x < 0) \vee (x \ge 0 \wedge x > 1)$ \\
+		$= (x < 0) \vee (x > 1)$ \\
+		$= x \notin [0, 1]$
 \end{description}
 
 \subsubsection{Iteration}
@@ -877,7 +1283,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		Invariante INV $= (a \geq 0 \wedge a\cdot b + r = x\cdot y)$ \\
 		Schleifenbedingung B $= (a \neq 0)$
 	\item[Verfahren] \hfill \\
-		Wenn an Position 1die Invariante INV gilt, dann gilt an der Position 5 die Invariante, nicht aber B, also S $= (INV \wedge \neg B)$
+		Wenn an Position 1 die Invariante INV gilt, dann gilt an der Position 5 die Invariante, nicht aber B, also S $= (INV \wedge \neg B)$
 	\item[Beispiel] \hfill \\
 		$S = (INV \wedge \neg B) = (a \geq 0 \wedge a\cdot b + r = x\cdot y \wedge a = 0)$ \\
 		$S = (r = x\cdot y \wedge a = 0)$ \\
@@ -888,7 +1294,7 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 \subsection{Zeit- und Speicherbedarf}
 \begin{description}
 	\item[Modell: Random-Access-Machine (RAM)] \hfill \\
-		Eine mo\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen für beliebig grosse Zahlen.
+		Eine m\"oglichst einfache CPU mit einem unendlich grossen Speicher bestehend aus Zellen f\"ur beliebig grosse Zahlen.
 		\item[Speicherbedarf eines Algorithmus] \hfill \\
 			Die minimale Anzahl Speicherzellen im RAM-Modell, die vorhanden sein m\"ussen, damit der Algorithmus korrekt ausgef\"uhrt werden kann.
 		\item[Zeitbedarf eines Algorithmus] \hfill \\
@@ -906,24 +1312,27 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		\item[Worst-Case (sinnvoll und praktikabel)] \hfill \\
 			die Zahlen sind in umgekehrter Reihenfolge
 		\item[Average-Case (oft zu schwierig)] \hfill \\
-			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu können, muss Klarheit bestehen, worüber der Durchschnitt gebildet werden darf. Fairerweise müssen alle m\"oglichen Probleminstanzen der Länge n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
+			Um eine Aussage der Art \"{ }Im Durchschnitt dauert es\"{ }  machen zu k\"onnen, muss Klarheit bestehen, wor\"uber der Durchschnitt gebildet werden darf. Fairerweise m\"ussen alle m\"oglichen Probleminstanzen der L\"ange n mit ihrer Wahrscheinlichkeitsverteilung in Betracht gezogen werden.
 \end{description}
+
 \subsection{Gross-O und Gross-Omega}
 \subsubsection{Gross-O}
 \begin{itemize}
 	\item obere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für konkrete Algorithmen
+	\item sinnvoll f\"ur konkrete Algorithmen
 	\item Beispiel: \\
-		n Zahlen können mit Heap-Sort in Zeit T(n) $\in$ O(n log n) bei einem
-Speicherbedarf M(n) $\in$ O(n) sortiert werden
+		n Zahlen k\"onnen mit Heap-Sort in Zeit T(n) $\in \mathcal{O}$(n log n) bei einem
+Speicherbedarf M(n) $\in \mathcal{O}$(n) sortiert werden
 \end{itemize}
 \subsubsection{Gross-Omega}
 \begin{itemize}
 	\item untere Schranke einer Worst-Case Absch\"atzung
-	\item sinnvoll für Problemklassen
+	\item sinnvoll f\"ur Problemklassen
 	\item Beispiel: \\
 		um n beliebige Zahlen in beliebiger Reihenfolge auf einer RAM zu sortieren, braucht es mindestens $\Omega$(n log n) Rechenschritte \\
 	\Bold {Formal}: $ \Omega (g(n))  = \{  h(n) | \exists c > 0 : \exists $ unendlich viele $n:h(n) \geq c \cdot  g(n) \}$
+	\item Gross-Theta: Sind $\mathcal{O}$ und $\Omega$ gleich wird  geschrieben: $T(f) \in \Theta(g)$ \\
+	Kann gelesen werden als: \glqq $f$ w\"achst genauso schnell wie $g$\grqq
 \end{itemize}
 \pagebreak
 \subsection{Reihen}
@@ -938,21 +1347,30 @@ Exponentialfunktion&$\Sum{n=0}{\infty}\frac{x^n}{n!}$&$e^x$\\\hline
 \end{tabular}
 \subsubsection{Rechenregeln}
 \begin{itemize}
+	\item $\sum_{k=\textcolor{red}{\textbf{0}}}^n{k} = \textcolor{red}{0}+1+2+...+n = \Sum{k=1}{n}k = \frac{n(n+1)}{2}$ 
+
 	\item $\Sum{i=0}{\infty}(a_i+b_i)=\Sum{i=0}{\infty}a_i+\Sum{i=0}{\infty}b_i$
 	\item $\Sum{i=0}{\infty}(a_i-b_i)=\Sum{i=0}{\infty}a_i-\Sum{i=0}{\infty}b_i$
+		\item  $\sum_{k=1}^{n}{n} =  \sum_{k=0}^{n-1}{n} = n \cdot n = n^2$
+			\item $\sum_{k=0}^{n-1}{k} =  \frac{(n-1)(n-1+1)}{2} = \frac{n(n-1)}{2}$
+		\item $\sum_{k=0}^{n-1}{n-k} = \sum_{k=1}^{n}{n} - \sum_{k=0}^{n-1}{k} = n^2 - \frac{n(n-1)}{2}$
+
 	\item $\Sum{i=0}{\infty}A\cdot a_i=A\cdot \Sum{i=0}{\infty}a_i$
 	\item $\Sum{i,j=0}{\infty}(a_i\cdot b_j)=(\Sum{i=0}{\infty}a_i)\cdot(\Sum{i=0}{\infty}b_i)$
+	
+
 \end{itemize}
-\pagebreak
+
 \section{Rekursion}
 \subsection{Rekursionsschema}
 Rekursive Methoden m\"ussen eine Fallunterscheidung enthalten
 \begin{itemize}
 \item zuerst einfachen Fall ohne Rekursion abhandeln
 \item dann der aufwendigere Fall mit dem rekursiven Aufruf
+\item Sicherstellen, dass der aufwändigere Fall durch Rekursion irgendwann im einfachen Fall endet.
 \end{itemize}
 \lstinputlisting[label=Rekursionsschema,caption=Rekursionsschema]{rek.java}
-\lstinputlisting[label=Rekursionsschema Beispiel,caption=Rekursionsschema Beispiel]{rek2.java}
+\lstinputlisting[label=Rekursionsschema Beispiel,caption=Rekursionsschema Beispiel - Fakult\"at]{rek2.java}
 \subsection{Backtracking}
 \begin{itemize}
 \item eigenet sich f\"ur Probleme, bei denen alle Kandidaten einer L\"osungsmenge (der ganze Suchraum) inspiziert werden m\"ussen, um zu eintscheiden, ob ein Kandidat eine L\"osung darstellt
@@ -966,6 +1384,7 @@ Rekursive Methoden m\"ussen eine Fallunterscheidung enthalten
 	\item \dots
 	\end{itemize}
 \end{itemize}
+
 \subsubsection{3 Voraussetzungen f\"ur Backtracking}
 \begin{enumerate}
 \item L\"osung des Problems l\"ast sich als Vektor $V$ (unbestimmter, aber endlicher L\"ange) darstellen
@@ -988,6 +1407,7 @@ Rekursive Methoden m\"ussen eine Fallunterscheidung enthalten
 	\item Einsatz von Heuristiken (vielversprechende Kandidaten zuerst) k\"onnen die Laufzeit stark reduzieren
 	\end{itemize}
 \end{itemize}
+\pagebreak
 \subsection{Code}
 \lstinputlisting[label=8-Damen-Problem,caption=8-Damen-Problem]{damen_problem.java}
 \pagebreak
@@ -1045,6 +1465,7 @@ T(n) &= 2T(\frac{n}{2})+\sqrt{n}\\
 &=n+\frac{n-\sqrt{n}}{\sqrt{2}-1}\\
 T(n)&\in O(n)
 \end{align*}
+\pagebreak
 \subsection{Mergesort implementation}
 \lstinputlisting[label=Mergesort,caption=Mergesort]{mergesort.java}
 \end{document}
