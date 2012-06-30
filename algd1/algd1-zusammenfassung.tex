@@ -1412,7 +1412,7 @@ T(n) &= 2T(\frac{n}{2})+\sqrt{n}\\
 &= 4(2T(\frac{n}{8})+\sqrt{\frac{n}{4}})+2\sqrt{\frac{n}{2}}+\sqrt{n}\\
 &= 8T(\frac{n}{8})+4\sqrt{\frac{n}{4}}+2\sqrt{\frac{n}{2}}+\sqrt{n}\\
 &\dots\\
-&=2^iT(\frac{n}{2^i})+\Sum{k=0}{i-1}2^k\sqrt{\frac{n}{2^k}}=2^T(\frac{n}{2^i})+\Sum{k=0}{i-1}\sqrt{2^k}\sqrt{n}\\
+&=2^iT(\frac{n}{2^i})+\Sum{k=0}{i-1}2^k\sqrt{\frac{n}{2^k}}=2^i T(\frac{n}{2^i})+\Sum{k=0}{i-1}\sqrt{2^k}\sqrt{n}\\
 &=2^iT(\frac{n}{2^i})+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}\\
 &\T{mit }T(1)=1\T{ und }n=2^i\\
 &=n\cdot T(1)+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}=n+\sqrt{n}\Sum{k=0}{i-1}\sqrt{2}^k\\
