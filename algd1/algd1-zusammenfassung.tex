@@ -170,10 +170,10 @@ $-b_{n-1}*B^{n-1}+\sum b_i*B^i$ mit $i \in [0,n-2]$ und  $b_i$ Ziffer bei $i$.\\
 $-1\cdot 2^7+0\cdot 2^6+1\cdot 2^5+0\cdot 2^4+0\cdot 2^3+1\cdot 2^2+1\cdot 2^1+1\cdot 2^0=-89$\\
 \subsubsection{Zahlendarstellung mit beliebiger Basis}
 \begin{itemize}
-\item bin\"ar (2): Zahlen, die mit \Bold{0b} beginnen
-\item octal (8): Zahlen, die mit \Bold{0} beginnen
-\item dezimal (10): Zahlen, die \Bold{nicht mit 0} beginnen
-\item  hexadezimal (16): Zahlen, die mit \Bold{0x} beginnen
+\item bin\"ar (2): Ganzzahlen, die mit \Bold{0b} beginnen
+\item octal (8): Ganzzahlen, die mit \Bold{0} beginnen
+\item dezimal (10): Ganzzahlen, die \Bold{nicht mit 0} beginnen
+\item  hexadezimal (16): Ganzzahlen, die mit \Bold{0x} beginnen
 \end{itemize}
 
 \subsection{Datentypen in JAVA}
@@ -329,7 +329,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 	\item \Bold {Linksschiebe-Operator}
 		\begin{itemize}
 			\item kann Vorzeichen ver\"andern:  $a << b$
-			\item $y=3<<2\Ra y=00001100_2=12$ (F\"ur jeden linksschiebeoperator wird $\cdot 2$ gerechnet.
+			\item $y=3<<2\Ra y=00001100_2=12$ (F\"ur jeden linksschiebeoperator wird $\cdot 2$ gerechnet.)
 		\end{itemize}
 \end{itemize}
 
@@ -441,7 +441,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \section{Zeichen und Strings}
 \subsection{Zeichen in Java}
 \begin{itemize}
-\item int: 32-Bit im Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0; eine int-Variablel kann jeden m\"oglichen Zeichencode (code point) des Unicodes aufnehmen
+\item int: 32-Bit im Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0; eine int-Variable kann jeden m\"oglichen Zeichencode (code point) des Unicodes aufnehmen
 \item char: 16 Bit; eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes aufnehmen; alle anderen Zeichencodes werden durch char-Paare codiert (surrogate character mechanism)
 \item Interface CharSequence: Sequenz von Zeichencodes im UTF-16 Format; bekannte Implementierung$\ra$ String, StringBuffer, StringBuilder, CharBuffer \ldots
 \end{itemize}
@@ -1043,12 +1043,12 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$(\forall x F \wedge \forall x G) $&$\equiv$&$ \forall x (F \wedge G)$ \\
 		$\neg \exists x F $&$\equiv$&$ \forall x \neg F$ \\		
 		$\exists x \exists y F $&$\equiv$&$ \exists y \exists x F$ \\
-		$(\exists F \vee \exists x G) $&$\equiv$&$ \exists x (F \vee G)$ \\ \\
+		$(\exists x F \vee \exists x G) $&$\equiv$&$ \exists x (F \vee G)$ \\ \\
 		falls x in G nicht frei vorkommt, gilt: \\
 		$(\forall x F \wedge G) $&$\equiv$&$ \forall x (F \wedge G)$ \\
 		$(\forall x F \vee G) $&$\equiv$&$ \forall x (F \vee G)$ \\
 		$(\exists x F \wedge G) $&$\equiv$&$ \exists x (F \wedge G)$ \\
-		$(\exists x F \vee G) $&$\equiv$&$ \exists (F \vee G)$ \\
+		$(\exists x F \vee G) $&$\equiv$&$ \exists x (F \vee G)$ \\
 	\end{tabular}
 \end{description}
 
@@ -1179,11 +1179,11 @@ wp((Anweisung_1; Anweisung_2; ...; Anweisung_{n-1}), wp(Anweisung_n, S))$
 		&$=\textcolor{blue}{b \wedge wp(P_1,S)\vee \neg b \wedge wp(P_2,S)}$
 		\end{tabular}
 	\item[Beispiel] \hfill \\
-		$P = (if~x < 0~then~x' := -x~else~x' := x â€“ 1)$ \\
+		$P = (if~x < 0~then~x' := -x~else~x' := x -€“ 1)$ \\
 		$S = (x' > 0)$ \\
-		$WP = wp((if~x < 0~then~x' := -x~else~x' := x â€“ 1), x' > 0)$ \\
-		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x â€“ 1 > 0)}$ \\
-		$= (x â‰¥ 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
+		$WP = wp((if~x < 0~then~x' := -x~else~x' := x -€“ 1), x' > 0)$ \\
+		$=\textcolor{red}{(x \geq 0 \vee -x > 0) \wedge (x < 0 \vee x -€“ 1 > 0)}$ \\
+		$= (x \geq 0 \vee x < 0) \wedge (x < 0 \vee x > 1)$ \\
 		$= true \wedge (x \notin [0, 1])$ \\
 		$= x \notin [0, 1]$ \\
 		$=\textcolor{blue}{(x < 0 \wedge -x > 0) \vee (x \ge 0 \wedge x - 1 > 0)}$ \\
