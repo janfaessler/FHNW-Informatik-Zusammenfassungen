@@ -344,6 +344,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 
 \subsection{Beispiele}
 \lstinputlisting[label=OneBitCounter,caption=OneBitCounter]{OneBitCounter.java}
+\pagebreak
 \lstinputlisting[label=Addition,caption=Addition]{Addition.java}
 \lstinputlisting[label=Multiplication,caption=Multiplication]{Multiplication.java}
 
@@ -424,7 +425,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 
 (int) Double.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
 (int) (float) Integer.MAX\_VALUE & Integer.MAX\_VALUE \\\hline
-(int) (float) Integer.MAX\_VALUE - 1 & Integer.MAX\_VALUE (Genauigkeit ist nicht gegeben!)\\\hline
+(int) (float) (Integer.MAX\_VALUE - 1) & Integer.MAX\_VALUE (Genauigkeit ist nicht gegeben!)\\\hline
 (int) Long.MAX\_VALUE & -1\\\hline
 (int) Long.MIN\_VALUE & 0 \\\hline
 
@@ -440,9 +441,9 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \section{Zeichen und Strings}
 \subsection{Zeichen in Java}
 \begin{itemize}
-\item int: 32-Bit im Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0; eine int-Variablel kann jeden m\"oglichen Zeichencode des Unicodes aufnehmen
-\item char: 16 Bit; eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes aufnehmen; alle anderen Zeichencodes werden durch char-Paare codiert
-\item Interface CharSequence: Sequenz von Zeichencodes im UTF-16 Format; bekannte Implementierung$\ra$ String, StringBuffer, StringBuilder
+\item int: 32-Bit im Format: nur die unteren 21 Bits werden benutzt, die oberen sind alle 0; eine int-Variablel kann jeden m\"oglichen Zeichencode (code point) des Unicodes aufnehmen
+\item char: 16 Bit; eine char-Variable kann nur einen der ersten $2^{16}$ Zeichencodes des Unicodes aufnehmen; alle anderen Zeichencodes werden durch char-Paare codiert (surrogate character mechanism)
+\item Interface CharSequence: Sequenz von Zeichencodes im UTF-16 Format; bekannte Implementierung$\ra$ String, StringBuffer, StringBuilder, CharBuffer \ldots
 \end{itemize}
 
 \subsection{Standardisierte Zeichencodierungen}
@@ -499,7 +500,7 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \item einfachste Umsetzung: die 21 Bits werden in einem (vorzeichnlosen) 32-Bit-Integer abgespeichert; die h\"oherwertigen 11 Bits sind immer null
 \item Vorteile: einfache Umsetzung; einheitliche Codierungsl\"ange
 \item Nachteil: hohe Speicherverschwendung
-\item Bsp: \\ A: U+0041 $\to$ 0000'0041; \\ $\Gamma$: U+03A9 $\to$ 0000'03A9
+\item Bsp: \\ A: U+0041 $\to$ 0000'0041 \\ $\Omega$: U+03A9 $\to$ 0000'03A9
 \end{itemize}
 
 \subsubsection{UTF-16}
@@ -514,7 +515,9 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \item Bekannte Umsetzung: popul\"are Verwendung in XML; Zeichencodes brauchen zwischen 1 und 4 Bytes
 \item Vorteile: speichereffizient f\"ur h\"aufig verwendete Zeichen; kompatibel mit ASCII
 \item Nachteile: speicherineffizient f\"ur seltene Zeichen, jedoch nicht schlimmer als UTF-32; komplizierte Handhabung, weil unterschiedliche Anzahl von Bytes pro Zeichen beachtet werden muss; nicht kompatibel mit ISO-Latin-1, d.h. Umlaute brauchen bereits 2 Bytes
-\item Bsp: \\ A: U+0041 $\to$ 41; \\ $\Omega$: U+03A9 $\to$ CE, A9; \\ U+10384 $\to$ F0, 90, 8E, 84
+\item Bsp: \\ A: U+0041 $\to$ 41; \\ 
+$\Omega$: U+03A9 $\to$ CE, A9; \\ 
+Ugaritic Delta: U+10384 $\to$ F0, 90, 8E, 84
 \end{itemize}
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -768,7 +771,7 @@ Durchlaufe t und schreibe jeweils fortlaufend t[p] mal den wert u  in das Array 
 \end{itemize}
 \subsubsection{Implementierung}
 \lstinputlisting[label=Quicksort,caption=Quicksort]{quicksort.java}
-\subsubsection{Aufwand}
+\subsubsection{Aufwand Quicksort}
 \begin{description}
 	\item[Worstcase: Es wird immer das Element ganz links (bzw. ganz rechts) genommen]
 	\begin{align*}
@@ -783,7 +786,7 @@ Durchlaufe t und schreibe jeweils fortlaufend t[p] mal den wert u  in das Array 
 		&\Ra \T{ sei nun }i=n-1\\
 		&= c_1 * (n-1) + c_2 * (n * (n-1) - \frac{(n-2) * (n-1)}{2}) + T(1) \\
 		&= c_1 * (n-1) + c_2 * (n^2-n-\frac{n^2}{2} + \frac{3*n}{2} -1) \\
-		&= c_1 * (n-1) + c_15:362 * (\frac{n^2}{2} + \frac{n}{2} -1) \\
+		&= c_1 * (n-1) + c_{15}:362 * (\frac{n^2}{2} + \frac{n}{2} -1) \\
 		T(n) &\in O(n^2)
 	\end{align*}
 	\item[Bestcase: Das Array nimmt immer das Element, dass in der Mitte des Arrays ist]
@@ -801,7 +804,7 @@ Durchlaufe t und schreibe jeweils fortlaufend t[p] mal den wert u  in das Array 
 		&=c_2 * n * ld(n) + c_1 *(2^{ld(n)} -1) \\
 		&=c_2 * n * ld(n) + c_1 * (n-1) \\
 		&= n * (c_2 * ld(n) + c_1) - c_1  \\
-		T(n) &\in O( n log n)
+		T(n) &\in O( n \cdot log~n)
 	\end{align*}
 \end{description}
 
@@ -1005,7 +1008,7 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 \subsubsection{Semantik}
 \begin{itemize}
 	\item Struktur $S = (U_s, I_s)$ \\
-		$U_s$ ist eine nicht-leere Grundmenge und IS eine Abbildung
+		$U_s$ ist eine nicht-leere Grundmenge und $I_s$ eine Abbildung
 		\begin{itemize}
 			\item der Pr\"adikate \"uber $U_s$
 			\item der Funktionen auf $U_s$
@@ -1018,12 +1021,12 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 			\item[S(Formel)] die aussagenlogische Verkn\"upfung der Wahrheitswerte der Pr\"adikate
 			\item[S($\forall$x F)] F ist eine Formel 
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ $U_s$ gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 			\item[S($\exists$x F)] F ist eine Formel
 				\begin{itemize}
-					\item ist true, falls f\"ur alle d $\in$ US gilt: $S_{[x/d]}(F) = true$
+					\item ist true, falls f\"ur alle d $\in$ $U_s$ gilt: $S_{[x/d]}(F) = true$
 					\item ist false, sonst
 				\end{itemize}
 		\end{itemize}
@@ -1129,18 +1132,18 @@ $(F \wedge G)$                  & $\equiv$ F, falls F unerf\"ullbar             
 		$S = (n' = n), P = (n' := n-1), WP = (n = n-1) = false$
 \end{description}
 \subsubsection{Weakest Precondition herausfinden (Beispiel)}
-$S=(r'=x\cdot y)$, $P=(\T{if }x=2\cdot k\cdot y\T{ else }s':=2\cdot k\cdot y;r':=s'+y)$, $B=(x=2\cdot k)$
+$S=(r'=x\cdot y)$, $P=(\T{if }x=2\cdot k ~then~ r' := 2\cdot k\cdot y\T{ else }s':=2\cdot k\cdot y;r':=s'+y)$, $B=(x=2\cdot k)$
 \begin{align*}
 S1&=wp((r':=2ky),S)=(2ky=xy)=(2k=x)=B\\
 S2&=wp((s':=2ky;r':=s'+y),S)=wp(s':=2ky,s'+y=xy)=(2ky+y=xy)=(2k+1=x)\\
 R&=wp(P,S)=(B\to S1\wedge\neg B\to S2)\\
 &=(\neg B\vee S1)\wedge(B\vee S2)=\neg B\wedge B\vee\neg B\wedge S2\vee S1\wedge B\vee S1\wedge S2\\
-&=\neg B\wedge S2\vee S1\wedge \vee S1\wedge S2\\
+&=\neg B\wedge S2\vee S1\wedge B \vee S1\wedge S2\\
 &=B\wedge S1\vee\neg B\wedge S2\\
 &=(x=2k\wedge x=2k)\vee(x\neq 2k\wedge 2k+1=x)\\
 &=(x=2k)\vee(2k+1\neq 2k\wedge 2k+1=x)\\
 &=(x=2k)\vee(true\wedge 2k+1=x)\\
-&=(x=2k)\wedge(x=2k+1)
+&=(x=2k)\vee(x=2k+1)
 \end{align*}
 \subsubsection{Sequenz}
 \begin{description}
@@ -1319,7 +1322,7 @@ Rekursive Methoden m\"ussen eine Fallunterscheidung enthalten
 \begin{itemize}
 \item zuerst einfachen Fall ohne Rekursion abhandeln
 \item dann der aufwendigere Fall mit dem rekursiven Aufruf
-\item Sicherstellen, dass der aufwändigere Fall durch Rekursion irgendwann im einfachen Fall endet.
+\item Sicherstellen, dass der aufw\"andigere Fall durch Rekursion irgendwann im einfachen Fall endet.
 \end{itemize}
 \lstinputlisting[label=Rekursionsschema,caption=Rekursionsschema]{rek.java}
 \lstinputlisting[label=Rekursionsschema Beispiel,caption=Rekursionsschema Beispiel - Fakult\"at]{rek2.java}
@@ -1409,7 +1412,7 @@ T(n) &= 2T(\frac{n}{2})+\sqrt{n}\\
 &= 4(2T(\frac{n}{8})+\sqrt{\frac{n}{4}})+2\sqrt{\frac{n}{2}}+\sqrt{n}\\
 &= 8T(\frac{n}{8})+4\sqrt{\frac{n}{4}}+2\sqrt{\frac{n}{2}}+\sqrt{n}\\
 &\dots\\
-&=2^iT(\frac{n}{2^i})+\Sum{k=0}{i-1}2^k\sqrt{\frac{n}{2^k}}=2^T(\frac{n}{2^i})+\Sum{k=0}{i-1}\sqrt{2^k}\sqrt{n}\\
+&=2^iT(\frac{n}{2^i})+\Sum{k=0}{i-1}2^k\sqrt{\frac{n}{2^k}}=2^i T(\frac{n}{2^i})+\Sum{k=0}{i-1}\sqrt{2^k}\sqrt{n}\\
 &=2^iT(\frac{n}{2^i})+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}\\
 &\T{mit }T(1)=1\T{ und }n=2^i\\
 &=n\cdot T(1)+\sqrt{n}\Sum{k=0}{i-1}2^\frac{k}{2}=n+\sqrt{n}\Sum{k=0}{i-1}\sqrt{2}^k\\
