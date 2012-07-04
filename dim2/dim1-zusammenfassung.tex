@@ -402,7 +402,7 @@ $fib(n+2)-1 + fib(n+1) $  \\ $<Rekursion>$ \\
 			\item[(3)] $1 \Teilt b$
 			\item[(4)] $c \Teilt 1 \Ra c=1 \vee c=-1$
 			\item[(5)] $d \Teilt c \wedge c \Teilt b \Ra d \Teilt b$ (transitiv)
-			\item[(6)] $b \Teilt c \wedge c \Teilt b \Ra b=c \vee b=-c$ (antisymmetrie f\"ur Zahlen $>0$)
+			\item[(6)] $b \Teilt c \wedge c \Teilt b \Ra (b = c) \vee ( b=-c)$ (antisymmetrie f\"ur Zahlen $>0$)
 			\item[(7)] $b \Teilt c \Ra b \Teilt (c*b)$
 			\item[(8)] $b \Teilt c \Ra (b*d) \Teilt (c*d)$
 			\item[(9)] $1 < b \wedge b \Teilt c \Ra \neg (b \Teilt (c+1))$
@@ -470,7 +470,7 @@ $fib(n+2)-1 + fib(n+1) $  \\ $<Rekursion>$ \\
 \end{description}
 
 \subsection{Greatest Common Divisor (GCD)}
-$y \uparrow y \Ra$ if x $\geq y$ then x else y (max) \\
+$x \uparrow y \Ra$ if x $\geq y$ then x else y (max) \\
 $x \downarrow y \Ra$ if x $\leq y$ then x else y (min) \\ 
 \\ß
 Sei $M \subseteq \ZN, M \neq \varnothing,$ M endlich \\
@@ -517,7 +517,7 @@ gcd(0,0) = 0 gcd 0 = 0
 		\\
 		\Bold {2. Fall}: \\
 		$b \neq 0 \vee c \neq 0$ \\
-		Wur zeigen $D_{b,c} = D_{c,d}$. Damit folgt b gcd = max($D_{b,c}$) = max($D_{c,d}$) = c gcd d. \\
+		Wir zeigen $D_{b,c} = D_{c,d}$. Damit folgt b gcd = max($D_{b,c}$) = max($D_{c,d}$) = c gcd d. \\
 		\\
 		zu zeigen: $D_{b,c}$ = $D_{c,d}$ also $t \in D_{b,c} \Leftrightarrow t \in D_{c,d}$ \\
 \\		
@@ -528,10 +528,10 @@ gcd(0,0) = 0 gcd 0 = 0
 	$\Ra < Def \cap>$ \\
 	$t \in D_b \wedge t \in D_c$ \\
 	$\Ra <Def D_m>$ \\
-	$t\backslash \wedge t \backslash c$ \\
+	$t\backslash b \wedge t \backslash c$ \\
 	$\Ra < Def$ $\backslash$ mit $k_1,k_2:\ZN>$ \\
 	$b = k_1 * t \wedge c = k_2 * t$ \\
-	$\Ra < d= b- a*c,$ nach Ahnnahme$>$ \\
+	$\Ra < d= b- a*c,$ nach Annahme$>$ \\
 	$d = k_1*t - a*(k_2*t)$ \\
 	$\Ra <Arith>$ \\
 	$d = t*(k_1 - a*k_2)$ \\
@@ -539,7 +539,7 @@ gcd(0,0) = 0 gcd 0 = 0
 	$t \backslash d \wedge t \backslash c$ \\
 	$\Ra <Def D_m>$ \\
 	$t \in D_d \wedge t\in D_c$ \\
-	$\Ra <Dev \cap>$ \\
+	$\Ra <Def \cap>$ \\
 	$t \in D_d \cap D_c$ \\
 	$\Ra <Def D_{d,c}>$ \\
 	$t \in D_{d,c}$ \\
@@ -547,7 +547,9 @@ gcd(0,0) = 0 gcd 0 = 0
 	\Bold {Teil 2} ($t \in D_{b,c} \La t \in D_{c,d}$) \\
 	tbd
 \end{description}
-
+\begin{tabular}{l l}
+	
+\end{tabular}
 \subsection{Euklid ged(27,10)} 
 \includegraphics[scale=0.4]{euklid.png} \\
 \\
@@ -697,7 +699,7 @@ Invarianten f\"ur alle $i : 0 \leq i \leq n+1$
 
 \subsubsection{Restklasse modulo n}
 \begin{description}
-	\item[Def.] $[a]_n=\{h:\ZN|:a+k*n\}$ \\
+	\item[Def.] $[a]_n=\{n:\ZN|:a+k*n\}$ \\
 		Jedes $a' \in [a]_n$ ist ein Repr\"asentant von $[a]_n$
 	\item[Satz] Sei $a {\equiv}_n a'$ Dann $[a]=[a']$
 	\item[Bsp.] $[3]_7 = \{k:\ZN|3+k*7:\} = \{ ..., -11, -4, 3, 10, 17, ...\}$ \\
@@ -725,7 +727,7 @@ Invarianten f\"ur alle $i : 0 \leq i \leq n+1$
 \end{description}
 
 \subsubsection{Gruppe}
-Eine Gruppe $(S,\oplus)$ ist eine Menge S mit einer Operation $\oplus$ aus S mit: $\oplus:SxS \ra a'$
+Eine Gruppe $(S,\oplus)$ ist eine Menge S mit einer Operation $\oplus$ aus S mit: $\oplus:S \times S \ra a'$
 \begin{description}
 	\item[1. Abgeschlossenheit] \hfill \\
 		$a \oplus b \in S'$ \\ $\forall a,b \in S'$
