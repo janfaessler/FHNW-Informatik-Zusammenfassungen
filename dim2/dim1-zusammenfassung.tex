@@ -817,4 +817,26 @@ Ist S endlich, dann ist $(S, \oplus)$ eine endliche Gruppe.
 	\item[6.] $|Z_n^*|<|Z_n|'$ endlich
 \end{itemize}
 
+\Bold {Berechnung multiplikatives Inverses, am Beispiel 105mod31}
+\begin{itemize}
+	\item [1. ] \"Uberprüfen ob die beiden Werte koPrim sind.\\
+		$105 * _x  - 31 * _y = 1$ \\
+		$105 = 3 * 31 + 12$ \\
+		$31  = 2 * 12 + 7$ \\
+		$12  = 1 *  7 + 5$ \\
+		$ 7  = 1 *  5 + 7$ \\
+		$ 5  = 2 *  2 + 1$ \\
+		$ 2  = 2 *  1 + 0$ \\
+	\item Da diese Abfolge erstellen l\"asst ohne Rest, sind die beiden Zahlen koPrim
+	\item [2. ] R\"ucksubstitution\\
+		$1  = 5 - (2 * 2)$ \\
+		$1  = 5 - 2*(7 - 5) = 3 * 5 - 2 * 7 - 1$ \\
+		$1  = 5 - 2*(7 - 5) = 3 * 5 - 2 * 7 - 1$ \\
+		$1  = 3*(12 - 7) - 5* (31 - 2*12) = -5*31 + 13 *12$ \\
+		$1  = 13 *12 - 5 * 31$ \\
+		$1  = 13* (105- 3*31)- 5 * 31$ \\
+		$1  = 13* 105 - 39 * 31 - 5* 31 $ \\
+		$1  = \underbrace{13} * 105- 44*31$ \\
+		gesuchter Wert f\"ur $105^-1 =_{31}13$
+\end{itemize}
 \end{document}
