@@ -699,4 +699,95 @@ Logging provides information about the state of a program or a data structure ov
 	\item[DEBUG] Log requests that are relevant to debug the application.
 	\item[TRACE] Log on an extremely fined grained level to trace control flow.
 \end{description}
+
+\section{GUI- Testing}
+\subsection{What does GUI Tests test?}
+\subsubsection{Behavior of the GUI}
+\begin{itemize}
+\item Are the correct actions executed?
+\item Are the actions correctly executed?
+\item Is the navigation flow correct?
+\item Does the GUI handle the data correctly?
+\end{itemize}
+\subsubsection{The state of the GUI}
+\begin{itemize}
+\item Does the GUI show the correct data?
+\item Are the controls in the correct state ?
+\end{itemize}
+
+\subsection{How to do GUI-Testing}
+\subsubsection{Manually}
+\begin{itemize}
+\item Done by manually stepping through many pages of test procedures.
+(requires written test specs)
+\item Very labor intensive, highly error prone.
+\item Needs to be redone each time regression testing is required.
+\item Very expensive
+\end{itemize}
+It is very hard to do manually tests systematically.
+
+\subsubsection{Capture / Replay}
+A capture replay tool is a set of software programs that captures user inputs and stores it into a format suitable to be used at a later time to replay the user inputs.\\
+
+Major Drawback: If the GUI changes,you have to record a new set of user inputs.
+
+\subsubsection{Scripting - In a seperate scripting language}
+\textbf{\Bold Workflow:} $Writing Script \Longrightarrow SCRIPT \Longrightarrow REPLAY TOOL \Longrightarrow Execute Tests Automatically$
+
+\begin{itemize}
+\item Another programming language.
+\item Needs to be subjected to some form of formal verification.
+\item Eliminates human error during execution of the test.
+\item Can be used (sometimes with modifications) for regression testing.
+\item Different approaches for testing:
+\item Spy gui controls
+\item Image processing
+\end{itemize}
+
+\subsubsection{Integrated Test Framework (Unit Test Programming Style)}
+\begin{itemize}
+\item Scripting using the programming language of the productive code
+\item Fully integrated into IDE
+\item Easy and fast adaption of scripts
+\item Typically runs with unit tests
+\end{itemize}
+
+\subsection{Writing testable GUI's}
+An important aspect of test-driven development is writing software that is designed to be tested.\\
+\\
+Apply the guidelines for writing testable GUIs:
+\begin{itemize}
+\item Separate model (functionality) from view, moving as much code as possible away from the GUI.
+\item Use a unique name for each GUI component to guarantee reliable component lookup.
+\item Do not test default component behavior; for example, do not test that a button reacts to a mouse click -- that is the job of Oracle’s Swing team!
+\item Concentrate on testing the expected behavior/state of your GUIs.
+\end{itemize}
+
+\subsection{FEST (GUI-Testing Tool)}
+\begin{itemize}
+\item A Collection of API’s for functional Swing GUI testing
+\item Simulation of user-generated events and reliable GUI component lookup
+\item Easy-to-use and powerful API that simplifies creation and maintenance of Swing GUI functional tests
+\item Runs JUnit or TestNG test
+\end{itemize}
+
+\subsubsection{Workflow}
+\begin{enumerate}
+\item Create a setup method to create your own GUI instance (either frame or dialog)\\
+\includegraphics[scale=0.6]{FEST_Setup.png}
+
+\item Close window and release resources\\
+\includegraphics[scale=0.6]{FEST_CleanUP.png}
+\newpage
+\item Execute the actions on the controls
+\item Verify expected behavior.\\
+\includegraphics[scale=0.6]{FEST_Test.png}
+\end{enumerate}
+
+
+
+
+
+
+
 \end{document}
