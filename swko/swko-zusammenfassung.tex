@@ -784,6 +784,125 @@ Apply the guidelines for writing testable GUIs:
 \includegraphics[scale=0.6]{FEST_Test.png}
 \end{enumerate}
 
+\section{Web und Akzeptanztests}
+\textbf{\Bold Anforderungen sind das Problem Nummer 1 beim Web und Akzeptanztesting}\\
+\subsection{Herausforderungen bei Webtests}
+\begin{itemize}
+\item Teile der Applikation laufen im Browser ab
+\item Wenig(er) Kontrolle über die Laufzeitumgebung
+\item Browser-Inkompatibilit\"aten (IE vs. Firefox vs. Chrome vs. …)
+\item Tools müssen auf verschiedene Browser zugreifen k\"onnen
+\item Eigentlich wird ein verteiltes System getestet, da vom Browser immer auch http(s)-Requests auf den Server stattfinden.
+\end{itemize}
+
+\subsection{Selenium Testing System}
+\subsubsection{Wie ist Selenium aufgebaut?}
+Selenium besteht aus mehreren Teilen, nicht jedes Testprojekt ben\"otigt alle Teile:
+\begin{itemize}
+\item \textbf{\Bold Selenium IDE:} ein Capture/Replay-Plugin für Firefox erlaubt auch das Editieren der aufgenommenen Skripts
+\item \textbf{\Bold Selenium WebDriver:} API um Browser programmatisch anzusteuern (z.B. aus Java, C-Sharp, PHP, Ruby…). Kann auch aufgenommene Skripts gegen andere Browser (≠ Firefox) ausführen
+\item \textbf{\Bold Selenium Server:} Koordiniert mehrere WebDriver um echte Lastszenarien zu simulieren.
+
+\end{itemize}
+
+\subsubsection{Was bietet Selenium?}
+\begin{itemize}
+\item Selenium bietet Capture/Replay Funktionalit\"at
+\item Generiert Skript, das editierbar ist
+\item Da HTML verwendet wird, k\"onnen Events einzelnen Elementen zugeordnet werden
+\item Keine Aufzeichnung von GUI-Koordinaten n\"otig\\
+(ABER: Jedes Element muss eindeutige ID haben!)
+\end{itemize}
+
+\subsection{Die Kundensicht}
+Für den Kunden stehen die Gesch\"aftsprozesse immer im Vordergrund.\\\\
+\textbf{\Bold Definition:} Ein Gesch\"aftsprozess ist eine Folge von koordinierten Aufgaben und Aktivit\"aten, die das Ziel haben ein Gesch\"aftsresultat zu realisieren.
+
+\subsubsection{Eigenschaften eines Gesch\"aftsprozesses}
+\begin{itemize}
+\item Nach Aussen gerichtet (beschreibt beobachtbares Verhalten)
+\item Benutzeranforderung
+\item Wiederholte Durchführung
+\item Unabh\"angig von GUI
+\end{itemize}
+
+\subsubsection{Feedback}
+Ein frühes Feedback gegenüber dem Kunden, hilft eine Software korrekt und wunschgem\"ass zu entwickeln.\\\\
+\textbf{\Bold Problem:} Unittests sind nicht wirklich aussagekr\"aftig und GUI-Test werden erst sp\"at im Projekt gemacht. Daher sollten früh im Projekt mit dem Kunden zusammen Akzeptanztest erstellt und definiert werden.
+
+\subsubsection{Herausforderung beim Erstellen von Akzeptanztests}
+\begin{itemize}
+\item \textbf{\Bold Prozesse}\\ 
+Wie k\"onnen Prozesse als Test beschrieben werden?
+\item \textbf{\Bold Die Sprache}\\
+Entwicklersprache vs. Benutzersprache
+\item \textbf{\Bold Komplexit\"at}\\
+Formalisierung der Anforderungen
+\item \textbf{\Bold Abh\"angigkeiten}\\
+Prozessintern\\
+$\rightarrow$ Teilaktivit\"aten h\"angen von einander ab\\
+Prozessextern\\
+$\rightarrow$ High-Level Prozesse bauen auf Low-Level Komponenten und externen Systemen auf
+\item \textbf{\Bold Infrastruktur ist nicht verfügbar}
+\item \textbf{\Bold Automatisierung}\\
+Essentiell für Regressionstests
+\end{itemize}
+
+\subsection{FIT - Framework for Integrated Testing}
+\subsubsection{Einleitung}
+\textbf{\Bold Ziel:}
+\begin{itemize}
+\item Vermeidung von Anforderungsfehlern durch Einrichtung einer frühen Feedback-Loop zwischen Entwicklern und Benutzern auf Testbasis
+\end{itemize}
+\textbf{\Bold Konzepte:}
+\begin{itemize}
+\item Ausführbare „Use Cases“ und „Workflows“
+\item Für Kunden/Benutzer verst\"andlich und durch diesen erstellbar
+\item Konkrete Beispiele („Testing by Example“)
+\end{itemize}
+
+\subsubsection{Architekturkonzept}
+\includegraphics[scale=0.6]{FIT_Architekturkonzept.png}
+
+\subsubsection{Vorgehenskonzept}
+\includegraphics[scale=0.6]{FIT_Vorgehenskonzept.png}
+
+\subsubsection{Hinweise zur Testspezifikation}
+\begin{itemize}
+\item Auswahl der richtigen Tabellen-Typen
+\item Sprache des Benutzers wählen
+\item Lesbare Testnamen\\
+Statt „Fixtures.TestSearchSubmit“$ \rightarrow$ „Test Search Submit“
+Fit generiert den Klassennamen (CamelCase, Graceful Names)
+\item Initialisierung/Setup und Aufräumen der Testumgebung/TearDown wird unterstützt.
+\item Kunde und Entwickler erarbeiten Tests gemeinsam
+\end{itemize}
+\newpage
+\subsubsection{FIT Fixtures}
+Die Testf\"alle werden bei Fit in HTML-Tabellen definiert. Die Anbindung an das zu testende Programm erfolgt über Java-Klassen, die "Fixtures" genannt werden, und die bestimmte Fit-Fixture-Klassen erweitern.\\
+Es gibt die drei Basis-Fixtures ColumnFixture, RowFixture und ActionFixture. Wenn auf Zusatzbibliotheken (z.B. FitLibrary) zurückgegriffen wird, stehen zus\"atzlich noch viele weitere Fixtures zur Verfügung (z.B. DoFixture).\\
+Die folgende Tabelle beschreibt die drei Basis-Fixture-Typen:\\
+\includegraphics[scale=0.55]{FIT_Fixtures.png}
+
+\subsubsection{Testimplementierung}
+Von den Tabellen zu der Implementierung:\\
+\includegraphics[scale=0.45]{FIT_TestImplementierung.png}
+
+\subsubsection{Hinweise zur Testimplementation}
+\begin{itemize}
+\item Auch Testcode muss gewartet werden
+\item Prozesskontext definieren\\
+Daten\"ubergabe \"uber statics 
+\item Fit Fixtures f\"ur dom\"anenspezifische Bed\"urfnisse verf\"ugbar (z.B. Web, DB…)
+\item Falls notwendig erweiterbar\\
+Neue Befehle durch Ableitung von ActionFixture
+Eigene Fixture-Klassen
+\item Auf Trennung zwischen Businesslogik und Testcode achten\\
+Fit-Tests in separatem Test-Verzeichnis
+\end{itemize}
+
+
+
 
 
 
