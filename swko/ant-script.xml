@@ -1,0 +1,113 @@
+<project name="Software Construction Lab" default="compile" basedir="..">
+    <property file="build/build.properties" />
+	
+    <!-- The application's classpath -->
+    <path id="application.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    
+    <!-- The build tools classpath -->
+    <path id="build.classpath">
+        <fileset dir="${build.lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+        <path refid="application.classpath"/>
+    </path>
+	
+    <target name="clean">
+    	<delete dir="${bin}"/>
+    	<delete dir="${log}"/>
+    </target>
+	
+    <target name="prepare" depends="clean">
+        <mkdir dir="${bin.classes.dir}" />
+        <mkdir dir="${bin.jar.dir}" />
+        <mkdir dir="${log.report.dir}"/>
+    	<mkdir dir="${log.report.test.dir}" />
+    	<mkdir dir="${log.report.checkstyle.dir}"/>
+    </target>
+
+    <target name="compile" depends="prepare" description="Compile the sources">
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.classes.dir}" classpathref="application.classpath" deprecation="on" optimize="off"/>
+        <copy todir="${bin.classes.dir}">
+            <fileset dir="${res.dir}">
+                <include name="**/*.xml" />
+                <include name="**/*.properties" />
+                <include name="**/*.png" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="run" depends="jar" description="Run distributed application from jar file">
+        <java jar="${bin.jar.dir}/${name}-${version}.jar" fork="true" />
+    </target>
+
+    <target name="jar" depends="junit" description="Create jar distribution">
+        <jar jarfile="${bin.jar.dir}/${name}-${version}.jar" basedir="${bin.classes.dir}" excludes="**/*Test.class">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}" />
+                <attribute name="Class-Path" value=".
+                    ../../lib/dbunit-2.2.jar
+                    ../../lib/hsqldb.jar" />  
+            </manifest>
+        </jar>
+    </target>
+	
+	<target name="testcompile" depends="compile" description="Compiles JUnit Tests">
+		<echo message="Compile Tests" />
+		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${bin.classes.dir}" classpathref="build.classpath" deprecation="on" optimize="off"/>
+		<echo message="Copy compiled classes to bin directory" />
+		<copy todir="${bin.classes.dir}">
+            <fileset dir="${res.dir}">
+                <include name="**/*.xml" />
+                <include name="**/*.properties" />
+                <include name="**/*.png" />
+            </fileset>
+            <fileset dir="${test.dir}">
+                <include name="**/*.xml" />
+            </fileset>
+        </copy>
+	</target>
+	
+	<target name="junit" depends="testcompile" description="Runs JUnit Tests">
+       <junit haltonfailure="yes" printsummary="yes">
+        	<classpath>
+        		<path refid="build.classpath"/>
+        		<pathelement location="${bin.classes.dir}" />
+        	</classpath>
+        	<formatter type="xml"/>
+            <batchtest fork="true" todir="${log.report.test.dir}">
+                <fileset dir="${test.dir}" includes="**/*Test.java"/>
+            </batchtest>
+        </junit>
+	</target>
+	
+	<target name="javadoc" depends="prepare" description="Creates the javadoc">
+		<delete dir="${doc.api.dir}"/>
+	  	<javadoc sourcepath="${src.dir}" destdir="${doc.api.dir}" windowtitle="${name} API">
+	    	<doctitle><![CDATA[<h1>${name} API</h1>]]></doctitle>
+	    	<bottom><![CDATA[<i>Copyright &#169; 2012 Dummy Corp. All Rights Reserved.</i>]]></bottom>
+		    <tag name="todo" scope="all" description="To do:"/>
+		    <link offline="true" href="http://download.oracle.com/javase/6/docs/api/" packagelistLoc="C:\tmp"/>
+	    	<link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+	  	</javadoc>
+	</target>
+	
+	<taskdef resource="checkstyletask.properties" classpath="${build.lib.dir}/checkstyle-5.5-all.jar" />
+	<target name="checkstyle" depends="compile" description="Generates a report of code convention violations.">
+		<checkstyle config="${build.dir}/swc_checks.xml">
+			<fileset dir="${src.dir}" includes="**/*.java"/>
+			<classpath>
+				<pathelement location="${bin.classes.dir}"/>
+			</classpath>
+	  		<formatter type="xml" tofile="${log.report.checkstyle.dir}/checkstyle_report.xml"/>
+	  		<formatter type="plain" tofile="${log.report.checkstyle.dir}/checkstyle_report.txt"/>
+	  		<formatter type="plain" />
+		</checkstyle>
+	</target>
+	
+	<target name="all" depends="checkstyle,javadoc,jar"/>
+
+</project>

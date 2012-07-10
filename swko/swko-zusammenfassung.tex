@@ -82,27 +82,48 @@
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
- 
-\lstset{ %
-  language=Octave,                % the language of the code
-  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
-  numbers=left,                   % where to put the line-numbers
-  numberstyle=\tiny\color{black},  % the style that is used for the line-numbers
-  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
-                                  % will be numbered
-  numbersep=5pt,                  % how far the line-numbers are from the code
-  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
-  showspaces=false,               % show spaces adding particular underscores
-  showstringspaces=false,         % underline spaces within strings
-  showtabs=false,                 % show tabs within strings adding particular underscores
-  tabsize=2,                      % sets default tabsize to 2 spaces
-  captionpos=b,                   % sets the caption-position to bottom
-  breaklines=true,                % sets automatic line breaking
-  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-  keywordstyle=\color{blue},          % keyword style
-  commentstyle=\color{black},       % comment style
-  stringstyle=\color{mauve},         % string literal style
-  morekeywords={int,long,float,public,static,class}               % if you want to add more keywords to the set
+
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\usepackage{listings}
+\usepackage{courier}
+ \lstset{
+         basicstyle=\footnotesize\ttfamily, % Standardschrift
+         numbers=left,               % Ort der Zeilennummern
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         %stepnumber=2,               % Abstand zwischen den Zeilennummern
+         numbersep=5pt,              % Abstand der Nummern zum Text
+         tabsize=2,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen
+         keywordstyle=\color{red},
+    	 frame=b,         
+         stringstyle=\color{white}\ttfamily, % Farbe der String
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         %backgroundcolor=\color{lightgray},
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+ }
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         %C++
+         XML,
+         %HTML
+         Java
 }
 
 %Config
@@ -112,7 +133,7 @@
 
 %Metadata
 \title{Software-Konstruktion}
-\author{Jan F\"assler}
+\author{Jan F\"assler \& Fabian Stebler}
 \date{2. Semester (FS 2012)}
 \fancyfoot[C]{Jan F\"assler}
 
@@ -125,130 +146,17 @@
 \includegraphics[scale=0.6]{build_automation.png}
 
 \subsection{CRISP Builds}
-\begin{description}
-	\item[Complete] recipe lists all ingredients
-	\item[Repeatable] version control time machine
-	\item[Informative] radiate valuable information
-	\item[Schedulable] complete and repeatable
-	\item[Portable] machine-independent
-\end{description}
+Automatisierungen m\"ussen folgende eigendschaften erf\"ullen:
+\begin{itemize}
+	\item[\Bold {Complete}] recipe lists all ingredients
+	\item[\Bold {Repeatable}] version control time machine
+	\item[\Bold {Informative}] radiate valuable information
+	\item[\Bold {Schedulable}] complete and repeatable
+	\item[\Bold {Portable}] machine-independent
+\end{itemize}
 
 \subsection{Ant-Script}
-\begin{lstlisting}
-<project name="Software Construction Lab" default="compile" basedir="..">
-    <property file="build/build.properties" />
-	
-    <!-- The application's classpath -->
-    <path id="application.classpath">
-        <fileset dir="${lib.dir}">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
-    
-    <!-- The build tools classpath -->
-    <path id="build.classpath">
-        <fileset dir="${build.lib.dir}">
-            <include name="*.jar" />
-        </fileset>
-        <path refid="application.classpath"/>
-    </path>
-	
-    <target name="clean">
-    	<delete dir="${bin}"/>
-    	<delete dir="${log}"/>
-    </target>
-	
-    <target name="prepare" depends="clean">
-        <mkdir dir="${bin.classes.dir}" />
-        <mkdir dir="${bin.jar.dir}" />
-        <mkdir dir="${log.report.dir}"/>
-    	<mkdir dir="${log.report.test.dir}" />
-    	<mkdir dir="${log.report.checkstyle.dir}"/>
-    </target>
-
-    <target name="compile" depends="prepare" description="Compile the sources">
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${bin.classes.dir}" classpathref="application.classpath" deprecation="on" optimize="off"/>
-        <copy todir="${bin.classes.dir}">
-            <fileset dir="${res.dir}">
-                <include name="**/*.xml" />
-                <include name="**/*.properties" />
-                <include name="**/*.png" />
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="run" depends="jar" description="Run distributed application from jar file">
-        <java jar="${bin.jar.dir}/${name}-${version}.jar" fork="true" />
-    </target>
-
-    <target name="jar" depends="junit" description="Create jar distribution">
-        <jar jarfile="${bin.jar.dir}/${name}-${version}.jar" basedir="${bin.classes.dir}" excludes="**/*Test.class">
-            <manifest>
-                <attribute name="Main-Class" value="${main.class}" />
-                <attribute name="Class-Path" value=".
-                    ../../lib/dbunit-2.2.jar
-                    ../../lib/hsqldb.jar" />  
-            </manifest>
-        </jar>
-    </target>
-	
-	<target name="testcompile" depends="compile" description="Compiles JUnit Tests">
-		<echo message="Compile Tests" />
-		<javac includeantruntime="false" srcdir="${test.dir}" destdir="${bin.classes.dir}" classpathref="build.classpath" deprecation="on" optimize="off"/>
-		<echo message="Copy compiled classes to bin directory" />
-		<copy todir="${bin.classes.dir}">
-            <fileset dir="${res.dir}">
-                <include name="**/*.xml" />
-                <include name="**/*.properties" />
-                <include name="**/*.png" />
-            </fileset>
-            <fileset dir="${test.dir}">
-                <include name="**/*.xml" />
-            </fileset>
-        </copy>
-	</target>
-	
-	<target name="junit" depends="testcompile" description="Runs JUnit Tests">
-       <junit haltonfailure="yes" printsummary="yes">
-        	<classpath>
-        		<path refid="build.classpath"/>
-        		<pathelement location="${bin.classes.dir}" />
-        	</classpath>
-        	<formatter type="xml"/>
-            <batchtest fork="true" todir="${log.report.test.dir}">
-                <fileset dir="${test.dir}" includes="**/*Test.java"/>
-            </batchtest>
-        </junit>
-	</target>
-	
-	<target name="javadoc" depends="prepare" description="Creates the javadoc">
-		<delete dir="${doc.api.dir}"/>
-	  	<javadoc sourcepath="${src.dir}" destdir="${doc.api.dir}" windowtitle="${name} API">
-	    	<doctitle><![CDATA[<h1>${name} API</h1>]]></doctitle>
-	    	<bottom><![CDATA[<i>Copyright &#169; 2012 Dummy Corp. All Rights Reserved.</i>]]></bottom>
-		    <tag name="todo" scope="all" description="To do:"/>
-		    <link offline="true" href="http://download.oracle.com/javase/6/docs/api/" packagelistLoc="C:\tmp"/>
-	    	<link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
-	  	</javadoc>
-	</target>
-	
-	<taskdef resource="checkstyletask.properties" classpath="${build.lib.dir}/checkstyle-5.5-all.jar" />
-	<target name="checkstyle" depends="compile" description="Generates a report of code convention violations.">
-		<checkstyle config="${build.dir}/swc_checks.xml">
-			<fileset dir="${src.dir}" includes="**/*.java"/>
-			<classpath>
-				<pathelement location="${bin.classes.dir}"/>
-			</classpath>
-	  		<formatter type="xml" tofile="${log.report.checkstyle.dir}/checkstyle_report.xml"/>
-	  		<formatter type="plain" tofile="${log.report.checkstyle.dir}/checkstyle_report.txt"/>
-	  		<formatter type="plain" />
-		</checkstyle>
-	</target>
-	
-	<target name="all" depends="checkstyle,javadoc,jar"/>
-
-</project>
-\end{lstlisting}
+\lstinputlisting[label=Ant-Script,caption=Ant-Script]{ant-script.xml}
 
 \newpage
 \section{Continuous Integration}
@@ -375,17 +283,20 @@ Exceptions can also be tested. If only one exception is expected:
 	\item @Test(expected=IllegalArgumentException.class)
 \end{itemize}
 
+\subsection{Beispiel}
+\lstinputlisting[label=Unit-Test,caption=Unit-Testt]{unit-test.java}
+
 \newpage
 \section{Isolated Testing}
 
 \subsection{Test doubles in Unit Testing}
 \includegraphics[scale=0.8]{test_doubles.png}
 \begin{description}
-	\item[Dummy] objects are passed around but never actually used. Usually they are just used to fill parameter lists.
-	\item[Stubs] are minimal implementations of interfaces or base classes. Methods returning void will typically contain no implementation at all, while methods returning values will typically return hard-coded values.
-	\item[Spys] similar to a stub, but a spy will also record which members were invoked so that unit tests can verify that members were invoked as expected.
-	\item[Fakes] contain more complex implementations, typically handling interactions between different members of the type it's inheriting.
-	\item[Mocks] objects pre-programmed with expectations which form a specification of the calls they are expected to receive.￼
+	\item[Dummy] \hfill \\ objects are passed around but never actually used. Usually they are just used to fill parameter lists.
+	\item[Stubs] \hfill \\ are minimal implementations of interfaces or base classes. Methods returning void will typically contain no implementation at all, while methods returning values will typically return hard-coded values.
+	\item[Spys] \hfill \\ similar to a stub, but a spy will also record which members were invoked so that unit tests can verify that members were invoked as expected.
+	\item[Fakes] \hfill \\ contain more complex implementations, typically handling interactions between different members of the type it's inheriting.
+	\item[Mocks] \hfill \\ objects pre-programmed with expectations which form a specification of the calls they are expected to receive.￼
 \end{description}
 
 \subsection{Mock Testing}
@@ -413,8 +324,35 @@ Use Mock Tests when:
 		\end{itemize}
 \end{description}
 
-\subsubsection{EasyMock}
+\subsubsection{Ablauf}
 \includegraphics[scale=0.6]{easymock.png}
+
+\subsubsection{Befehle}
+\begin{description}
+	\item[createMock(Class$<T>$ toMock)] \hfill \\
+		Creates a mock object that implements the given interface, order checking is disabled by default.
+	\item[createStrictMock(Class$<T>$ toMock)] \hfill \\
+		Creates a mock object that implements the given interface, order checking is enabled by default.
+	\item[createNiceMock(Class$<T>$ toMock)] \hfill \\
+		Creates a mock object that implements the given interface, order checking is disabled by default, and the mock object will return 0, null or false for unexpected invocations.
+	\item[expect$<T>$(T value)] \hfill \\
+		Returns the expectation setter for the last expected invocation in the current thread.
+	\item[expectLastCall()] \hfill \\
+		Returns the expectation setter for the last expected invocation in the current thread. This method is used for expected invocations on void methods. 
+	\item[reset()] \hfill \\
+		Resets the given mock objects (more exactly: the controls of the mock objects).
+	\item[replay()] \hfill \\
+		 Switches the given mock objects (more exactly: the controls of the mock objects) to replay mode.
+	\item[verify()] \hfill \\
+		Verifies the given mock objects (more exactly: the controls of the mock objects).	 
+	\item[andThrow(jThrowable)] \hfill \\
+		Sets a throwable that will be thrown for the expected invocation.
+	\item[times(count), times(min, max), once(), atLeastOnce() \& anyTimes()] \hfill \\
+		Those defines number of expected calls.
+\end{description}
+
+\subsubsection{Beispiel}
+\lstinputlisting[label=Mock-Test,caption=Mock-Testt]{mock-test.java}
 
 \newpage
 \section{Software Quality Metrics}
@@ -461,7 +399,7 @@ Use Mock Tests when:
 \end{description}
 
 \subsection{Cyclomatic Complexity}
-Cyclomatic Complexity is the number of possible execution paths through the code. For a single method the Cyclomatic number N is defined as follows: N = b + 1 whereas b is the number of binary decision points (if, while, for, case ... ) \\
+Cyclomatic Complexity is the number of possible execution paths through the code. For a single method the Cyclomatic number N is defined as follows: \Bold {N = b + 1} whereas b is the number of binary decision points (\Bold {if, while, for, case ...} ) \\
 $N < 10 \Ra $ code well readable \\
 Criticism: switch-statements are well readable but boost the cyclomatic number
 
@@ -681,24 +619,24 @@ Logging provides information about the state of a program or a data structure ov
 	\item supports message caching in order to prevent performance decrease
 \end{itemize}
 
-\subsection{Concepts}
-\begin{description}
-	\item[Priority] Determines what is logged.
-	\item[Level] Determines whether something is logged.
-	\item[Appender] Determines where it is logged.
-	\item[Layout] Determines how it is logged.
-	\item[Logger] Writes a log entry to an appender in a given layout if the appropriate logging level is met by the priority of the log- instruction.
-\end{description}
+\subsection{Elemente}
+\begin{itemize}
+	\item[\Bold {Priority}] Determines what is logged.
+	\item[\Bold {Level}] Determines whether something is logged.
+	\item[\Bold {Appender}] Determines where it is logged.
+	\item[\Bold {Layout}] Determines how it is logged.
+	\item[\Bold {Logger}] Writes a log entry to an appender in a given layout if the appropriate logging level is met by the priority of the log- instruction.
+\end{itemize}
 
 \subsection{Logging Levels}
-\begin{description}
-	\item[FATAL] In case of very severe errors from which your application cannot recover.
-	\item[ERROR] When an error is encountered (but you application can still run).
-	\item[WARN] Log requests to alert about harmful situations.
-	\item[INFO] Logs to inform about progress of the application at a coarse grained level.
-	\item[DEBUG] Log requests that are relevant to debug the application.
-	\item[TRACE] Log on an extremely fined grained level to trace control flow.
-\end{description}
+\begin{itemize}
+	\item[\Bold {FATAL}] In case of very severe errors from which your application cannot recover.
+	\item[\Bold {ERROR}] When an error is encountered (but you application can still run).
+	\item[\Bold {WARN}] Log requests to alert about harmful situations.
+	\item[\Bold {INFO}] Logs to inform about progress of the application at a coarse grained level.
+	\item[\Bold {DEBUG}] Log requests that are relevant to debug the application.
+	\item[\Bold {TRACE}] Log on an extremely fined grained level to trace control flow.
+\end{itemize}
 
 \section{GUI- Testing}
 \subsection{What does GUI Tests test?}
@@ -778,12 +716,12 @@ Apply the guidelines for writing testable GUIs:
 
 \item Close window and release resources\\
 \includegraphics[scale=0.6]{FEST_CleanUP.png}
-\newpage
 \item Execute the actions on the controls
 \item Verify expected behavior.\\
 \includegraphics[scale=0.6]{FEST_Test.png}
 \end{enumerate}
 
+\newpage
 \section{Web und Akzeptanztests}
 \textbf{\Bold Anforderungen sind das Problem Nummer 1 beim Web und Akzeptanztesting}\\
 \subsection{Herausforderungen bei Webtests}
@@ -886,27 +824,24 @@ Die folgende Tabelle beschreibt die drei Basis-Fixture-Typen:\\
 
 \subsubsection{Testimplementierung}
 Von den Tabellen zu der Implementierung:\\
-\includegraphics[scale=0.45]{FIT_TestImplementierung.png}
+\includegraphics[scale=0.7]{FIT_TestImplementierung.png}
 
 \subsubsection{Hinweise zur Testimplementation}
 \begin{itemize}
 \item Auch Testcode muss gewartet werden
-\item Prozesskontext definieren\\
-Daten\"ubergabe \"uber statics 
+\item Prozesskontext definieren
+	\begin{itemize}
+		\item Daten\"ubergabe \"uber statics 
+	\end{itemize}
 \item Fit Fixtures f\"ur dom\"anenspezifische Bed\"urfnisse verf\"ugbar (z.B. Web, DB…)
-\item Falls notwendig erweiterbar\\
-Neue Befehle durch Ableitung von ActionFixture
-Eigene Fixture-Klassen
-\item Auf Trennung zwischen Businesslogik und Testcode achten\\
-Fit-Tests in separatem Test-Verzeichnis
+\item Falls notwendig erweiterbar
+	\begin{itemize}
+		\item Neue Befehle durch Ableitung von ActionFixture
+		\item Eigene Fixture-Klassen
+	\end{itemize}
+\item Auf Trennung zwischen Businesslogik und Testcode achten
+	\begin{itemize}
+		\item Fit-Tests in separatem Test-Verzeichnis
+	\end{itemize}
 \end{itemize}
-
-
-
-
-
-
-
-
-
 \end{document}
