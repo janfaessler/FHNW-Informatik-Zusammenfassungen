@@ -135,12 +135,13 @@
 \title{Software-Konstruktion}
 \author{Jan F\"assler \& Fabian Stebler}
 \date{2. Semester (FS 2012)}
-\fancyfoot[C]{Jan F\"assler}
+\fancyfoot[C]{FHNW Brugg/Windisch}
 
 \begin{document}
 \maketitle
-\newpage
 \thispagestyle{fancy} %f\UTF{00FC}r Header
+\newpage
+
 
 \section{Build Automation}
 \includegraphics[scale=0.6]{build_automation.png}
