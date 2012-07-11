@@ -1,4 +1,4 @@
-import org.apache.log4j.Logger;
+﻿import org.apache.log4j.Logger;
 
     /** declare the movie-logger. **/
     private static Logger logger = Logger.getLogger(Movie.class);

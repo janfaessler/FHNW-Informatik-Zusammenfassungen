@@ -348,15 +348,15 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
 \newpage
 \section{Continuous Integration}
 \includegraphics[scale=0.8]{continuous_integration.png}
-\subsection{Vorteile}
+\subsection{Nutzen}
 \begin{itemize}
- \item Teamzusammenarbeit
- \item Komplexe Systeme werden managebar
+ \item Vereinfachte Zusammenarbeit im Team
+ \item Komplexe Systeme werden besser kontrollier und verwaltbar
  \item Reduziertes Risiko
  \item Module werden gezwungen, zusammenzuarbeiten
  \item Automatisches compile, run, testing und deploy
  \item Frühes Identifizieren von Problemen
- \item Immer einen deploy-fähigen Build haben
+ \item Immer einen auslieferbaren Build haben
  \item Immer Klarheit über den Status des Projekts haben
  \item Weniger Zeit in Anspruch genommen um Fehler zu finden
  \item Weniger Zeit verschwendet wegen 'broken code'
@@ -364,9 +364,9 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
  \item Potenzielle Deploymentprobleme frühzeitig feststellen
 \end{itemize}
 
-\subsection{Nachteile}
+\subsection{Hindernisse}
 \begin{itemize}
- \item Schwierig ein bereits vorhandenes Projekt in ein CI zu importieren
+ \item Potenziell ein bereits vorhandenes Projekt in ein CI zu importieren
  \item Systeme die Serverkomponenten benutzen
  \item DB-basierte Systeme müssen up-to-date sein
 \end{itemize}
@@ -374,11 +374,11 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
 
 \subsection{Integration ist defekt wenn...}
 \begin{itemize}
- \item Build nicht erfolgreich
- \item Gesharte Komponenten funktionieren nicht überall gleich
- \item Unit-Tests nicht erfolgreich
- \item Code-Qualität schlecht (Conventions, Metrics)
- \item Deployment nicht erfolgreich
+ \item Der Build nicht erfolgreich ist
+ \item Gesharte Komponenten nicht überall gleich funktionieren 
+ \item Unit-Tests nicht erfolgreich sind
+ \item Die Code-Qualität schlecht (Conventions, Metrics) ist
+ \item Das Deployment nicht erfolgreich ist
 \end{itemize}
 
 \subsection{Anwendung von CI}
@@ -392,7 +392,7 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
  \item Jeder hat den Überblick
  \item Automatisches Deployment
  \item Keep the build fast
- \item Jeder kann die neuste Version leicht erhalten
+ \item Jeder kann die neueste Version leicht erhalten
 \end{itemize}
 
 \subsection{Agiler Prozess}
@@ -408,7 +408,7 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
 \subsection{Jenkins}
 \begin{itemize}
  \item Continuous Integration Server
- \item Building, testing, Code Coverage, Analyse, ...
+ \item Building, Testing, Code Coverage, Analyse, ...
  \item Detaillierter Output
  \item Schneller Überblick über Builds
  \item Dashboard praktisch für mehre Projekte
@@ -421,7 +421,7 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
 \subsection{Aspekte des Testings}
 \begin{itemize}
  \item[\Bold {Validation:}] 			Ist das Produkt überhaupt das, was gewünscht wurde? 
- \item[\Bold {Verifikation:}]			Ist das Produkt korrekt programmiert
+ \item[\Bold {Verifikation:}]			Ist das Produkt korrekt programmiert?
  \item[\Bold {Regression:}]				Iteratives Wiederholen von Tests 
  \item[\Bold {Software Fault:}]		Bug im Code
  \item[\Bold {Software Error:}]		Zustand der beim Ausführen von verbuggtem Code auftritt (z.B. nicht abgefangene Exception)
@@ -453,7 +453,7 @@ Auch immer wichtig: Werte wie MAX\_$ $VALUE und MIN\_$ $VALUE nicht ausser Acht 
 \begin{description}
 \item [Right] Sind die Resultate richtig?
 \item [B] Sind Randbedingungen (Boundaries) eingehalten worden?
-\item [I] Können inverse Beziehungen überprüft werden?
+\item [I] Können inverse Beziehungen überprüft werden? (Funktion mit Gegenfunktion überprüfen, z.B. INSERT und DELETE)
 \item [C] Sind die Resultate mit anderen Mittel cross-checked?
 \item [E] Ist es möglich, Error Conditions zu erzwingen?
 \item [P] Stimmt die Performance?
@@ -507,12 +507,12 @@ public void testY() {
 }
 \end{lstlisting}
 
-\subsubsection{Tear Down}
-Nach jeder Testmethode wird eine Teardown Methode aufgerufen
+\subsubsection{Teardown}
+Nach jeder Testmethode wird eine Teardown-Methode aufgerufen
 \begin{itemize}
-	\item Die Teardown Methode bringt alles wieder auf den Ursprungszustand
+	\item Die Teardown-Methode bringt alles wieder auf den Ursprungszustand
 	\item So sind alle Resultate separat und werden nicht von anderen Tests verfälscht
-	\item Eine Test Methode muss 'public void' und mit @After notiert sein
+	\item Eine Testmethode muss 'public void' und mit @After notiert sein
 \end{itemize}
 \begin{lstlisting}[language=Java,caption=Unit Test (After), style=MyJavaStyle]
 @After
@@ -527,7 +527,7 @@ Assertions werden zum Vergleichen von erwarteten Resultaten genutzt.
 	\item[assertEquals($<Type>$ expected, $<Type>$ actual)] \hfill
 		\begin{itemize}
 			\item Vergleicht primitive Typen am Wert
-			\item Vergleicht Klassen Typen mit dem Aufruf equals
+			\item Vergleicht Klassen-basierte Typen mit dem Aufruf equals
 			\item Überladen mit allen primitiven Typen, Objekten und Strings.
 		\end{itemize}
 	\item[assertSame(Object expected, Object actual)] \hfill \\
@@ -574,11 +574,11 @@ Mock-Objekte simulieren Teile des Verhaltens von Domain-Objekten. Klassen können
 \subsubsection{Einsatzbereich von Mock-Objekten}
 \begin{itemize}
 	\item Verhalten von realem Objekt ist nicht-deterministisch
-	\item Reales Objekt schwierig aufzusetzen
+	\item Reales Objekt schwierig aufzusetzen (z.B. komplette Server-Umgebung)
 	\item Reales Objekt ist langsam
 	\item Reales Objekt verfügt über GUI
-	\item Der Test muss das Orginalobjekt fragen wie es war
-	\item Reales Objekt existiert nicht nicht
+	\item Der Test hängt von vorhergehenden Zuständen ab
+	\item Reales Objekt existiert noch nicht
 \end{itemize}
 \begin{description}
 	\item[Pros] \hfill
@@ -607,7 +607,7 @@ Generiert Mock Objekte dynamisch, es ist nicht nötig, sie selbst zu schreiben un
 
 \subsubsection{Spezielle Vorteile von EasyMock}
 \begin{itemize}
-\item Selber-kodieren von Mock Objekten fällt weg
+\item Selber-Programmiern von Mock Objekten fällt weg
 \item Sind Refactoring-Safe, wird also eine Methode umbenannt ist das kein Problem
 \item Return Werte \& Exceptions sind unterstützt
 \item Erlaubt Überprüfung der Reihenfolge in welcher Methoden vom Mock Objekt aufgerufen werden 
@@ -703,18 +703,18 @@ Generiert Mock Objekte dynamisch, es ist nicht nötig, sie selbst zu schreiben un
 \end{description}
 
 \subsection{Cyclomatic Complexity}
-Anzahl von m\"{o}glichen verschiedenen Pfaden durch den Code. So wird gerechnet:
-Cyc. Complex. $= b + 1$, wobei $b =$ bin\"{a}re Entscheidungen wie \Bold {if, while, for, case,} ...\\
+Anzahl von möglichen verschiedenen Pfaden durch den Code. So wird gerechnet:
+Cyc. Complex. $= b + 1$, wobei $b =$ binäre Entscheidungen wie \Bold {if, while, for, case,} ...\\
 $N < 10 \Ra $ code ist gut lesbar\\
-Kritik: switch ist gut lesbar aber treibt die Cyclomatic Complexity nach oben
+Kritik: Switch-Statements sind gut lesbar aber treiben die Cyclomatic Complexity nach oben
 
 \subsection{Cohesion and Coupling Metrics}
 \begin{description}
 	\item[Cohesion] \hfill \\
 		Misst, wie nahe sich die Klassen sind
 	\item[Coupling / Dependency] \hfill \\
-		Misst den Grad, wie fest Klasse von anderen abh\"{a}ngig
-	\item Tiefe coupling normalerweise korreliert mit hoher cohesion
+		Misst den Grad, wie stark eine Klasse von anderen abhängig ist
+	\item Tiefes Coupling geht oft einher mit hoher Cohesion
 	\item Metrics: LCOM (Lack of Cohesion in Method)
 \end{description}
 
@@ -740,17 +740,17 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 \subsubsection{Emma Features (Java-Code-Coverage Instrument)}
 \begin{itemize}
 \item Byte Code und Offline and on-the-fly
-\item \"{u}berpr\"{u}ft Klassen, Methoden, Linien und Standardbl\"{o}cke
-\item Reportet in TXT, HTML, XML
-\item Statistik m\"{o}glich \"{u}ber Methode, Klasse, Package oder alle Klassen
-\item Ausf\"{u}hrbar via ANT, CMD, Eclipse Plugin
+\item Überprüft Klassen, Methoden, Linien und Standardblöcke
+\item Erstellt Reports in TXT, HTML, XML
+\item Statistik möglich zu einzelnen Methoden, Klassen und Packages sowie für alle Klassen gemeinsam
+\item Ausführbar via ANT, CMD, Eclipse Plugin
 \end{itemize}
 
 \subsubsection{Warum Metrics verwenden?}
 \begin{itemize}
-\item Wichtiges Tool f\"{u}r Qualit\"{a}tsmessung
-\item „You can't manage what you can't control, and you can't control what you don't measure”
-\item Jedoch nicht \"{u}bertreiben mit Messen, ein sinnvolles Mass soll gefunden werden
+\item Wichtiges Tool für Qualitätsmessung
+\item 'You can't manage what you can't control, and you can't control what you don't measure'
+\item Jedoch nicht übertreiben mit Messen, ein sinnvolles Mass soll gefunden werden
 \end{itemize}
 
 
@@ -761,14 +761,14 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 	\item Refactoring macht Ihre Software einfacher zu verstehen
 	\item Refactoring hilft Ihnen, Fehler zu finden
 \end{itemize}
-\Bold {Versuche nicht, Features hinzuzuf\"{u}gen, wenn man den  Refactoring-Hut tr\"{a}gt.} \\ \\
+\Bold {Versuche nicht, Features hinzuzufügen, wenn man den  Refactoring-Hut trägt.} \\ \\
 \includegraphics[scale=0.4]{refactoring_workflow.png}
 
 \subsection{Problems}
 \begin{itemize}
-	\item Zu weit getrieben, kann Refactoring zu unaufh\"{o}rliche Bastelei mit dem Code f\"{u}hren, damit es perfekt wird.
-	\item Datenbanken k\"{o}nnen schwierig sein zu refactoren sein
-	\item Refactoring ver\"{o}ffentlicht Schnittstellen k\"{o}nnen Probleme f\"{u}r den Code bringen, die diese Schnittstellen ben\"{u}tzen
+	\item Zu weit getrieben, kann Refactoring zu einer unaufhörliche Bastelei mit dem Code führen, damit er perfekt wird.
+	\item Bei Datenbanken kann Refactoring schwierig werden.
+	\item Refactoring veröffentlichter Schnittstellen kann Probleme für die Entwickler bedeuten, die diese Schnittstellen benützen
 \end{itemize}
 
 \subsection{Code Smells}
@@ -783,7 +783,7 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 			\item Switch Statements
 			\item Parallele Vererbungshierarchie
 		\end{itemize}
-	\item[Not enough Code Smells] \hfill 
+	\item[Not Enough Code Smells] \hfill 
 		\begin{itemize}
 			\item Leere Catch clause
 		\end{itemize}
@@ -801,10 +801,10 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 
 \subsection{How To}
 \subsubsection{Extract Method}
-Code-Fragmente in eigene Methoden fassen. Grosse Methoden in kleine aufteilen.\\
+Code-Fragmente in eigene Methoden fassen. Grosse Methoden in Kleine aufteilen.\\
 \includegraphics[scale=.6]{refactoring_1.png}
 \subsubsection{Self Encapsulate Field}
-Getter- und Setter-Methoden einsetzen. Damit ist ein einheitlicher Zugriff von aussen sichergestellt, unabh\"{a}ngig ob das Resultat aus einer Variable oder Berechnung stammt.\\
+Getter- und Setter-Methoden einsetzen. Damit ist ein einheitlicher Zugriff von Aussen sichergestellt, unabhängig ob das Resultat aus einer Variable oder Berechnung stammt.\\
 \includegraphics[scale=.6]{refactoring_2.png}
 \subsubsection{Move Method}
 Wenn eine Methode mehr auf Daten einer fremden Klasse als auf die der eigenen Klasse zugreift, ist sie ein guter Kandidat um in die andere Klasse verschoben zu werden.\\
@@ -813,7 +813,7 @@ Wenn eine Methode mehr auf Daten einer fremden Klasse als auf die der eigenen Kl
 Komplizierte Berechnungen in eigene Methoden verschieben, anstatt deren Resultat in Variablen zu speichern.\\
 \includegraphics[scale=.6]{refactoring_4.png}
 \subsubsection{Replace Type Code with State/Strategy}
-Eine Klasse hat verschiedene Verhaltensweisen abh\"{a}ngig von einer Typ- oder Statusvariable. Verwendung des Strategy- oder State-Patterns (Aggregation einer abstrakten Klasse mit entsprechenden Unterklassen) um verschiedene F\"{a}lle mit Polymorphie abzufangen.\\
+Eine Klasse hat verschiedene Verhaltensweisen abhängig von einer Typ- oder Statusvariable. Verwendung des Strategy- oder State-Patterns (Aggregation einer abstrakten Klasse mit entsprechenden Unterklassen) um verschiedene Fälle mit Polymorphie abzufangen.\\
 \includegraphics[scale=.6]{refactoring_5.png}
 \subsubsection{Replace Conditional with Polymorphism}
 Ebenfalls Verwendung von Polymorphie. Jeder Fall eines Case-Statements wird in eine eigene Unterklasse verschoben.\\
@@ -837,63 +837,63 @@ Code conventions denkt die folgenden Themen ab:
 			\item Ordnerstruktur eines Projekts
 			\item Struktur der Codedateien
 		\end{itemize}
-	\item[Einr\"{u}ckung] \hfill
+	\item[Einrückung] \hfill
 		\begin{itemize}
-			\item Tabs vs. Leerschl\"{a}ge
-			\item Linienl\"{a}nge
+			\item Tabs vs. Leerschläge
+			\item Linienlänge
 			\item Linienumbruch, Zeilenumbruch Regeln
 		\end{itemize}
 	\item[Namenskonventionen] \hfill
 		\begin{itemize}
-			\item Namenskonventionen machen Programme verst\"{a}ndlicher, so dass sie leichter zu lesen, zu verbessern und um Fehler zu erkennen
+			\item Namenskonventionen machen Programme verständlicher, so dass sie leichter zu lesen, zu verbessern und um Fehler zu erkennen
 		\end{itemize}
-	\item[Erkl\"{a}rungen, \"{a}usserungen und White Spaces] \hfill 
+	\item[Erklärungen, Äusserungen und White Spaces] \hfill 
 		\begin{itemize}
 			\item Wie viele Variablendeklarationen pro Linie?
 			\item Wo sollen Variablen deklariert werden?
-			\item Wo sollen die \}\} Klammern sein?
+			\item Wo sollen die \{\} Klammern sein?
 			\item Wo sollen leere Linien sein?
 		\end{itemize}
 \end{description}
 
 \subsection{API Documentation}
-API-Dokumentation ist ein Vertrag zwischen Ihnen und den Kunden von Ihrem Code. Es gibt den Zweck der Klasse / Interface und die Funktionalit\"{a}t der Methoden. Biete was wirklich gebraucht wird.
+API-Dokumentation ist ein Vertrag zwischen Ihnen und den Kunden von Ihrem Code. Es gibt den Zweck der Klasse / Interface und die Funktionalität der Methoden. Biete was wirklich gebraucht wird.
 
 \subsection{Klassen/Interface Dokumentation}
 \begin{itemize}
-	\item Spezifiziert Sinn und Zust\"{a}ndigkeit von Klasse, wenn m\"{o}glich in 1 Satz
-	\item Spezifiziert wichtige Eigenschaften, die nicht durch Code ausgedr\"{u}ckt sind
-	\item Klasse: Erkl\"{a}rt Eigenschaft verwendete Algorithmen (Performance, Speicher, …)
-	\item Interface: Erkl\"{a}rt, was gemacht wurde und nicht wie es gemacht werden soll
+	\item Spezifiziert Sinn und Zuständigkeit von Klasse, wenn möglich in 1 Satz
+	\item Spezifiziert wichtige Eigenschaften, die nicht durch Code ausgedrückt sind
+	\item Klasse: Erklärt Eigenschaft verwendeter Algorithmen (Performance, Speicher, ...)
+	\item Interface: Erklärt, was gemacht wurde und nicht wie es gemacht werden soll
 \end{itemize}
 
 \subsection{Methoden Dokumentation}
 \begin{itemize}
 	\item Spezifiziert was man vom Aufrufer erwartet (Percond., Parameter)
-	\item Spezifiziert was man dem Aufrufer zur\"{u}ckgibt (Postcond., Invariante., Return-Wert)
+	\item Spezifiziert was man dem Aufrufer zurückgibt (Postcond., Invariante., Return-Wert)
 \end{itemize}
 
 \subsection{Wichtig zu beachten}
 \begin{itemize}
 \item Selbstsprechende Namen sind sehr wichtig und sollen gebraucht werden
-\item Mittels TODO, FIXME (Bug) und XXX (Nochmals \"{u}berdenken) k\"{o}nnen Marker gesetzt werden, Eclipse unterst\"{u}tzt dies und zeigt diese an
+\item Mittels TODO, FIXME (Bug) und XXX (Nochmals überdenken) können Marker gesetzt werden, Eclipse unterstützt dies und zeigt diese im UI an
 \end{itemize}
 
-\subsection{JavaDoc}
-Javadoc ist ein separates Programm, das mit dem JDK mitgeliefertwird. Es liest das Programm, macht Listen aller Klassen, Interfaces, Methoden und Variablen, und erzeugt HTML-Seiten auf der die Ergebnisse angezeigt werden. \\
-Schreibe Kommentare f\"{u}r den Programmierer der die Klasse ben\"{u}tzt: 
+\subsection{Javadoc}
+Javadoc ist ein separates Programm, das mit dem JDK mitgeliefert wird. Es liest das Programm, macht Listen aller Klassen, Interfaces, Methoden und Variablen, und erzeugt HTML-Seiten auf der die Ergebnisse angezeigt werden. \\
+Schreibe Kommentare für den Programmierer der die Klasse benützt: 
 \begin{itemize}
-	\item Alles, was man ausserhalb der Klasse zur Verf\"{u}gung stellen will, sollten dokumentiert werden
-	\item Es ist eine gute Idee, private Elemente  ,f\"{u}r den eigenen Gebrauch, zu beschreiben
+	\item Alles, was man ausserhalb der Klasse zur Verfügung stellen will, sollte dokumentiert werden
+	\item Es ist eine gute Idee, private Elemente, auch für den eigenen Gebrauch, zu beschreiben
 \end{itemize}
-javadoc kann Dokumentation erzeugen f\"{u}r:
+Javadoc kann Dokumentation erzeugen für:
 \begin{itemize}
 	\item nur public Elemente
 	\item public und protected Elemente
 	\item public, protected, und package Elemente
-	\item alle die public, protected, package, and private Elemente sind
+	\item public, protected, package, und private Elemente
 \end{itemize}
-JavaDoc ist m\"{o}glich bei:
+Javadoc ist möglich bei:
 \begin{itemize}
 	\item Package
 	\item Klasse
@@ -903,29 +903,29 @@ JavaDoc ist m\"{o}glich bei:
 	\item Feld
 \end{itemize}
 
-\subsubsection{Tags In javadoc Comments}
+\subsubsection{Tags in Javadoc Comments}
 \begin{description}
-	\item[@param p] Beschreibung von Parameter p.
-	\item[@return] Beschreibung des return values (ausser die Method returns void).
-	\item[@exception e] Beschreibe eine beliebige Exception.
-	\item[@see] F\"{u}gt ein "See Also" hinzu mit einem Link oder text das auf eine Referenz zeigt
-	\item[@author] dein Name
-	\item[@version] eine Versionsnummer oder -datum
+	\item[@param p]			Beschreibung des Parameters p.
+	\item[@return] 			Beschreibung des return-Werts (es sei denn, die Metohde gibt void zurück).
+	\item[@exception e] Exceptions welche von der Methode geworfen werden.
+	\item[@see] 				Fügt ein 'See Also' hinzu mit einem Link oder text das auf eine Referenz zeigt
+	\item[@author]			Dein Name
+	\item[@version] 		Eine Versionsnummer oder -datum
 \end{description}
 
 \subsection{Programming Practices}
 \begin{itemize}
-\item Keine „magischen Zahlen“ wie 4.352, viel besser Konstanten verwenden
-\item Run-Time Performance verbessern sollte man dem Compiler \"{u}berlassen
+\item Keine 'magischen Zahlen' wie 4.352, viel besser Konstanten verwenden, d.h. Werte nicht mitten im Code erstellen, sondern gesammelt an einem Ort
+\item Run-Time Performance verbessern sollte man dem Compiler überlassen
 \item Kein if (value == true) { return true; } else { return false; } $\to$ return value;
-\item In einer Methode nur etwas machen und nicht mehre Sachen
+\item In einer Methode nur Etwas machen und nicht mehrere Sachen
 \item If (!value) ist nicht so gut lesbar wie if (value)
 \end{itemize}
 
 \subsection{Checkstyle}
 \begin{itemize}
-\item \"{u}berpr\"{u}ft Code nach vorgegebenen Regeln
-\item Eigene Tests k\"{o}nnen geschrieben werden
+\item Überprüft Code nach vorgegebenen Regeln
+\item Eigene Tests können geschrieben werden
 \item XML-Konfigurationsdatei wird verwendet
 \end{itemize}
 
@@ -978,27 +978,27 @@ public class Stock {
 \pagebreak
 \section{Logging}
 \begin{itemize}
-	\item Wichtig f\"{u}r Monitoring und Debugging Applikationen
-\item Debugging: Interessiert den Status des Programmes  im Zeitpunkt des Ausf\"{u}hrens
-\item Logging: Stellt Logging-Daten \"{u}ber ein Programm \"{u}ber eine Zeitspanne bereit
-\item Wichtig bei Echtzeit-Systemen, verteilten Systemen und gleichzeitige Systeme
+	\item Wichtig für Monitoring und Debugging Applikationen
+\item Debugging: Betrifft den Status des Programmes im Zeitpunkt des Ausführens
+\item Logging: Stellt Logging-Daten über ein Programm über eine Zeitspanne bereit
+\item Wichtig bei Echtzeit-Systemen, verteilten Systemen und gleichzeitigen Systemen
 \end{itemize}
 
 \subsection{Vorteile}
 \begin{itemize}
 	\item Die Konfiguration der Logging-Funktionen wird ausgelagert
-	\item Log Nachrichten k\"{o}nnen priorisiert werden
-	\item Logging unterst\"{u}tzt verschiedene Nachrichtsformatierungen
-	\item An und Abschalten w\"{a}hrend das Programm l\"{a}uft
-	\item Unterst\"{u}tzt verschiedene Ausgabe Ziele
-	\item Verschiedene Ausgabe Stufen
-	\item Unterst\"{u}tzt Nachtrichten abfangen um Performanz hoch zu halten
+	\item Lognachrichten können priorisiert werden
+	\item Logging unterstützt verschiedene Nachrichtenformatierungen
+	\item An- und Abschalten während das Programm läuft
+	\item Unterstützt verschiedene Ausgabeziele
+	\item Verschiedene Ausgabestufen
+	\item Unterstützt Nachrichten abzufangen um Performanz hoch zu halten
 \end{itemize}
 
 \subsection{Log4j}
 \begin{itemize}
-\item Soll verwendet werden und nicht System.out.println
-\item Output kann extern ausgegeben werden, Priorisierung, versch. Ausgabeformate, zur Laufzeit aktiviert bzw. deaktiviert werden, verschiedene Logstufen, Message-Caching wird unterst\"{u}tzt, um Performance-Einbusse zu verhindern
+\item Soll verwendet werden anstelle von System.out.println
+\item Output kann extern ausgegeben werden, Priorisierung, versch. Ausgabeformate, zur Laufzeit aktiviert bzw. deaktiviert werden, verschiedene Logstufen, Message-Caching wird unterstützt, um Performance-Einbusse zu verhindern
 \end{itemize}
 
 \subsection{Konzept}
@@ -1007,16 +1007,16 @@ public class Stock {
 	\item[\Bold {Level}] Bestimmt, ob etwas geloggt wird.
 	\item[\Bold {Appender}] Bestimmt, wo etwas geloggt wird.
 	\item[\Bold {Layout}] Bestimmt, wie das Layout aussieht.
-	\item[\Bold {Logger}] Schreibt einen Log-Eintrag zu einem Appender in einem bestimmten Layout falls das Logginglevel angemessen ist.
+	\item[\Bold {Logger}] Schreibt einen Log-Eintrag zu einem Appender in einem bestimmten Layout falls das Logging-Level angemessen ist.
 \end{itemize}
 
 \subsection{Logging Levels}
 \begin{itemize}
 	\item[\Bold {FATAL}] Fehler, bei dem die Applikation sich nicht mehr erholen kann
-	\item[\Bold {ERROR}] Fehler, die Applikation ist jedoch nicht lauff\"{a}hig
-	\item[\Bold {WARN}] Informiert \"{u}ber „schlimmes“ Ereignis
-	\item[\Bold {INFO}] Informiert z.B. \"{u}ber Fortschritt der Applikation
-	\item[\Bold {DEBUG}] Stellt Informationen f\"{u}r Debug bereit 
+	\item[\Bold {ERROR}] Fehler, die Applikation ist jedoch nicht lauffähig
+	\item[\Bold {WARN}] Informiert über 'schlimmes' Ereignis
+	\item[\Bold {INFO}] Informiert z.B. über Fortschritt der Applikation
+	\item[\Bold {DEBUG}] Stellt Informationen für Debug bereit 
 	\item[\Bold {TRACE}] Sehr detaillierte Informationen um Informationsfluss zu verfolgen
 Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwable] ); oder log(Priority level, Object message,Throwable throwable);
 \end{itemize}
@@ -1027,14 +1027,14 @@ Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwabl
 \subsection{Verschiedene Appender}
 \begin{itemize}
 \item ConsoleAppender - Write log to System.out or System.err
-\item FileAppender – Write to a log file
-\item SocketAppender – Dumps log output to a socket
-\item SyslogAppender – Write to the syslog.
-\item NTEventLogAppender – Write the logs to the NT Event Log system.
-\item RollingFileAppender – After a certain size is reached it will rename the old file and start with a new one.
-\item SocketAppender – Dumps log output to a socket
-\item SMTPAppender – Send Messages to email
-\item JMSAppender – Sends messages using Java Messaging Service
+\item FileAppender - Write to a log file
+\item SocketAppender - Dumps log output to a socket
+\item SyslogAppender - Write to the syslog.
+\item NTEventLogAppender - Write the logs to the NT Event Log system.
+\item RollingFileAppender - After a certain size is reached it will rename the old file and start with a new one.
+\item SocketAppender - Dumps log output to a socket
+\item SMTPAppender - Send Messages to email
+\item JMSAppender - Sends messages using Java Messaging Service
 \end{itemize}
 
 \subsection{PatternLayout Platzhalter}
@@ -1045,8 +1045,8 @@ Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwabl
 \item[\Bold{\%L:}] Code-Linie vom Logevent
 \item[\Bold{\%m:}] Message
 \item[\Bold{\%M:}] Methode
-\item[\Bold{\%n:}] Neue Linie wie „$\backslash$n“
-\item[\Bold{\%p:}] Priorit\"{a}t
+\item[\Bold{\%n:}] Neue Linie wie '$\backslash$n'
+\item[\Bold{\%p:}] Priorität
 \item[\Bold{\%r:}] Zeitmessung Logevent
 \item[\Bold{\%t:}] Thread
 \end{itemize}
@@ -1055,7 +1055,7 @@ Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwabl
 \begin{itemize}
 \item e.printStackTrace() nicht verwenden sondern log.error("Exception message", e)
 \item Keine Exception loggen und sie dann trotzdem werfen
-\item Wenn m\"{o}glich immer Stack Trace anh\"{a}ngen mit \} catch(SQLException e)\{ 
+\item Wenn möglich immer Stack Trace anhängen mit \} catch(SQLException e)\{ 
 throw new RuntimeException("DB exception", e); \}
 \end{itemize}
 
@@ -1067,8 +1067,8 @@ throw new RuntimeException("DB exception", e); \}
 \section{GUI- Testing}
 \subsection{Zweck von GUI Tests test?}
 \begin{itemize}
-\item Werden richtige Funktionen ausgef\"{u}hrt?
-\item Wird die Funktion korrekt ausgef\"{u}hrt?
+\item Werden richtige Funktionen ausgeführt?
+\item Wird die Funktion korrekt ausgeführt?
 \item Ist der Navigationsfluss korrekt?
 \item Stellt das GUI die Daten korrekt dar?
 \item Zeigt das GUI die richtigen Daten?
@@ -1076,20 +1076,20 @@ throw new RuntimeException("DB exception", e); \}
 \end{itemize}
 
 \subsection{How to GUI-Testing}
-\subsubsection{Manuall}
+\subsubsection{Manual}
 \begin{itemize}
-\item Jeder Schritt wird von Hand ausgef\"{u}hrt.
-\item Sehr arbeitsintensiv, sehr fehleranf\"{a}llig.
-\item Muss jedes Mal erneuert werden, falls ein Regressionstests erforderlich ist.
+\item Jeder Schritt wird von Hand ausgeführt.
+\item Sehr arbeitsintensiv, sehr fehleranfällig.
+\item Muss jedes Mal erneuert werden, falls ein Regressionstest erforderlich ist.
 \item Sehr teuer
 \end{itemize}
-Es ist schwierig ein manueller Test systematisch zu handhaben.
+Es ist schwierig einen manuellen Test systematisch zu handhaben.
 
 \subsubsection{Capture / Replay}
 \begin{itemize}
 \item Meist mehrere Prorgamme, die Benutzereingaben aufzeichnen
 \item Umfasst meistens Scripting
-\item Grosser Nachteil: \"{a}ndert GUI muss auch Test neu gemacht werden
+\item Grosser Nachteil: ändert das GUI muss auch der Test neu gemacht werden
 \end{itemize}
 
 
@@ -1099,9 +1099,9 @@ Es ist schwierig ein manueller Test systematisch zu handhaben.
 \begin{itemize}
 \item Weitere Programmiersprache
 \item Muss an irgendeiner Form der formalen Verifikation unterzogen werden.
-\item Eliminiert menschliche Fehler w\"{a}hrend der Ausf\"{u}hrung des Tests.
-\item Kann f\"{u}r Regressionstests benutzt werden (manchmal auch mit Modifikationen).
-\item Verschiedene Ans\"{a}tze zum Testen.
+\item Eliminiert menschliche Fehler während der Ausführung des Tests.
+\item Kann für Regressionstests benutzt werden (manchmal auch mit Modifikationen).
+\item Verschiedene Ansätze zum Testen.
 \item Spion GUI Steuerung.
 \item Bildverarbeitung
 \end{itemize}
@@ -1109,14 +1109,14 @@ Es ist schwierig ein manueller Test systematisch zu handhaben.
 \subsubsection{Integrated Test Framework (Unit Test Programming Style)}
 \begin{itemize}
 \item Scripting braucht selbe Programmiersprache wie prod. Code
-\item Scripts einfach/schnell anpassbar und vollst\"{a}ndig in DIE integriert
-\item Wird meistens gleichzeitig wie Unit-Tests ausgef\"{u}hrt
-\item Wichtige Aspekte f\"{u}r Test-Driven Development
+\item Scripts einfach/schnell anpassbar und vollständig in IDE integriert
+\item Wird meistens gleichzeitig wie Unit-Tests ausgeführt
+\item Wichtige Aspekte für Test-Driven Development
 \begin{itemize}
 \item Model von der View trennen (siehe MVC-Modell)
-\item Eindeutige Namen f\"{u}r jedes GUI-Element
-\item Nicht zu „tief“ testen, wie z.B. Verhalten von Standardkomponenten
-\item Fokus auf Pr\"{u}fung des Verhaltens/Zustandes des GUIs
+\item Eindeutige Namen für jedes GUI-Element
+\item Nicht zu 'tief' testen, wie z.B. Verhalten von Standardkomponenten
+\item Fokus auf Prüfung des Verhaltens/Zustandes des GUIs
 \end{itemize}
 \end{itemize}
 
@@ -1235,76 +1235,76 @@ public class HelloTest {
 \subsection{Herausforderungen bei Webtests}
 \begin{itemize}
 \item Teile der Applikation laufen im Browser ab
-\item Wenig(er) Kontrolle Ã¼ber die Laufzeitumgebung
-\item Browser-Inkompatibilit\"aten (IE vs. Firefox vs. Chrome vs. â€¦)
-\item Tools mÃ¼ssen auf verschiedene Browser zugreifen k\"onnen
+\item Wenig(er) Kontrolle über die Laufzeitumgebung
+\item Browser-Inkompatibilitäten (IE vs. Firefox vs. Chrome vs. Opera vs. Safari)
+\item Tools müssen auf verschiedene Browser zugreifen können
 \item Eigentlich wird ein verteiltes System getestet, da vom Browser immer auch http(s)-Requests auf den Server stattfinden.
 \end{itemize}
 
 \subsection{Selenium Testing System}
 \subsubsection{Wie ist Selenium aufgebaut?}
-Selenium besteht aus mehreren Teilen, nicht jedes Testprojekt ben\"otigt alle Teile:
+Selenium besteht aus mehreren Teilen, nicht jedes Testprojekt benötigt alle Teile:
 \begin{itemize}
-\item \textbf{\Bold Selenium IDE:} ein Capture/Replay-Plugin fÃ¼r Firefox erlaubt auch das Editieren der aufgenommenen Skripts
-\item \textbf{\Bold Selenium WebDriver:} API um Browser programmatisch anzusteuern (z.B. aus Java, C-Sharp, PHP, Rubyâ€¦). Kann auch aufgenommene Skripts gegen andere Browser (â‰  Firefox) ausfÃ¼hren
+\item \textbf{\Bold Selenium IDE:} ein Capture/Replay-Plugin für Firefox erlaubt auch das Editieren der aufgenommenen Skripts
+\item \textbf{\Bold Selenium WebDriver:} API um Browser programmatisch anzusteuern (z.B. aus Java, C-Sharp, PHP, Ruby). Kann auch aufgenommene Skripts gegen andere Browser (Firefox) ausführen
 \item \textbf{\Bold Selenium Server:} Koordiniert mehrere WebDriver um echte Lastszenarien zu simulieren.
 
 \end{itemize}
 
 \subsubsection{Was bietet Selenium?}
 \begin{itemize}
-\item Selenium bietet Capture/Replay Funktionalit\"at
+\item Selenium bietet Capture/Replay Funktionalität
 \item Generiert Skript, das editierbar ist
-\item Da HTML verwendet wird, k\"onnen Events einzelnen Elementen zugeordnet werden
-\item Keine Aufzeichnung von GUI-Koordinaten n\"otig\\
+\item Da HTML verwendet wird, können Events einzelnen Elementen zugeordnet werden
+\item Keine Aufzeichnung von GUI-Koordinaten nötig\\
 (ABER: Jedes Element muss eindeutige ID haben!)
 \end{itemize}
 
 \subsection{Die Kundensicht}
-FÃ¼r den Kunden stehen die Gesch\"aftsprozesse immer im Vordergrund.\\\\
-\textbf{\Bold Definition:} Ein Gesch\"aftsprozess ist eine Folge von koordinierten Aufgaben und Aktivit\"aten, die das Ziel haben ein Gesch\"aftsresultat zu realisieren.
+Für den Kunden stehen die Geschäftsprozesse immer im Vordergrund.\\\\
+\textbf{\Bold Definition:} Ein Geschäftsprozess ist eine Folge von koordinierten Aufgaben und Aktivitäten, die das Ziel haben ein Geschäftsresultat zu realisieren.
 
-\subsubsection{Eigenschaften eines Gesch\"aftsprozesses}
+\subsubsection{Eigenschaften eines Geschäftsprozesses}
 \begin{itemize}
 \item Nach Aussen gerichtet (beschreibt beobachtbares Verhalten)
 \item Benutzeranforderung
-\item Wiederholte Durchf\"uhrung
-\item Unabh\"angig von GUI
+\item Wiederholte Durchführung
+\item Unabhängig von GUI
 \end{itemize}
 
 \subsubsection{Feedback}
-Ein fr\"uhes Feedback gegen\"uber dem Kunden, hilft eine Software korrekt und wunschgem\"ass zu entwickeln.\\\\
-\textbf{\Bold Problem:} Unittests sind nicht wirklich aussagekr\"aftig und GUI-Test werden erst sp\"at im Projekt gemacht. Daher sollten fr\"uh im Projekt mit dem Kunden zusammen Akzeptanztest erstellt und definiert werden.
+Ein frühes Feedback gegenüber dem Kunden, hilft eine Software korrekt und wunschgemäass zu entwickeln.\\\\
+\textbf{\Bold Problem:} Unittests sind nicht wirklich aussagekräftig und GUI-Test werden erst spät im Projekt gemacht. Daher sollten früh im Projekt mit dem Kunden zusammen Akzeptanztest erstellt und definiert werden.
 
 \subsubsection{Herausforderung beim Erstellen von Akzeptanztests}
 \begin{description}
 \item[\Bold {Prozesse}] \hfill \\ 
-	Wie k\"onnen Prozesse als Test beschrieben werden?
+	Wie können Prozesse als Test beschrieben werden?
 \item[\Bold {Die Sprache}] \hfill \\
 	Entwicklersprache vs. Benutzersprache
-\item[\Bold{Komplexit\"at}] \hfill \\
+\item[\Bold{Komplexität}] \hfill \\
 	Formalisierung der Anforderungen
-\item[\Bold{Abh\"angigkeiten}] \hfill \\
+\item[\Bold{Abhängigkeiten}] \hfill \\
 	Prozessintern\\
-	$\rightarrow$ Teilaktivit\"aten h\"angen von einander ab\\
+	$\rightarrow$ Teilaktivitäten hängen von einander ab\\
 	Prozessextern\\
 	$\rightarrow$ High-Level Prozesse bauen auf Low-Level Komponenten und externen Systemen auf
-\item \Bold {Infrastruktur ist nicht verf\"ugbar}
+\item \Bold {Infrastruktur ist nicht verfügbar}
 \item[\Bold {Automatisierung}] \hfill \\ 
-	Essentiell f\"ur Regressionstests
+	Essentiell für Regressionstests
 \end{description}
 
 \subsection{FIT - Framework for Integrated Testing}
 \subsubsection{Einleitung}
 \Bold {Ziel:}
 \begin{itemize}
-\item Vermeidung von Anforderungsfehlern durch Einrichtung einer fr\"uhen Feedback-Loop zwischen Entwicklern und Benutzern auf Testbasis
+\item Vermeidung von Anforderungsfehlern durch Einrichtung einer frühen Feedback-Loop zwischen Entwicklern und Benutzern auf Testbasis
 \end{itemize}
 \Bold {Konzepte:}
 \begin{itemize}
-\item Ausf\"uhrbare Use Cases und Workflowsœ
-\item F\"ur Kunden/Benutzer verst\"andlich und durch diesen erstellbar
-\item Konkrete Beispiele (Testing by Exampleœ)
+\item Ausführbare Use Cases und Workflows
+\item Für Kunden/Benutzer verständlich und durch diesen erstellbar
+\item Konkrete Beispiele (Testing by Example)
 \end{itemize}
 
 \subsubsection{Architekturkonzept}
@@ -1316,17 +1316,17 @@ Ein fr\"uhes Feedback gegen\"uber dem Kunden, hilft eine Software korrekt und wu
 \subsubsection{Hinweise zur Testspezifikation}
 \begin{itemize}
 \item Auswahl der richtigen Tabellen-Typen
-\item Sprache des Benutzers w\"ahlen
+\item Sprache des Benutzers wählen
 \item Lesbare Testnamen\\
-Statt Fixtures.TestSearchSubmit$ \rightarrow$ žTest Search Submit
+Statt Fixtures.TestSearchSubmit$ \rightarrow$ Test Search Submit
 Fit generiert den Klassennamen (CamelCase, Graceful Names)
-\item Initialisierung/Setup und Aufr\"aumen der Testumgebung/TearDown wird unterst\"utzt.
+\item Initialisierung/Setup und Aufräumen der Testumgebung/TearDown wird unterstüzt.
 \item Kunde und Entwickler erarbeiten Tests gemeinsam
 \end{itemize}
 
 \subsubsection{FIT Fixtures}
-Die Testf\"alle werden bei Fit in HTML-Tabellen definiert. Die Anbindung an das zu testende Programm erfolgt Ã¼ber Java-Klassen, die "Fixtures" genannt werden, und die bestimmte Fit-Fixture-Klassen erweitern.\\
-Es gibt die drei Basis-Fixtures ColumnFixture, RowFixture und ActionFixture. Wenn auf Zusatzbibliotheken (z.B. FitLibrary) zurÃ¼ckgegriffen wird, stehen zus\"atzlich noch viele weitere Fixtures zur VerfÃ¼gung (z.B. DoFixture).\\
+Die Testfälle werden bei Fit in HTML-Tabellen definiert. Die Anbindung an das zu testende Programm erfolgt über Java-Klassen, die "Fixtures" genannt werden, und die bestimmte Fit-Fixture-Klassen erweitern.\\
+Es gibt die drei Basis-Fixtures ColumnFixture, RowFixture und ActionFixture. Wenn auf Zusatzbibliotheken (z.B. FitLibrary) zurückgegriffen wird, stehen zusätzlich noch viele weitere Fixtures zur Verfügung (z.B. DoFixture).\\
 Die folgende Tabelle beschreibt die drei Basis-Fixture-Typen:\\
 \includegraphics[scale=0.55]{FIT_Fixtures.png}
 
@@ -1339,9 +1339,9 @@ Von den Tabellen zu der Implementierung:\\
 \item Auch Testcode muss gewartet werden
 \item Prozesskontext definieren
 	\begin{itemize}
-		\item Daten\"ubergabe \"uber statics 
+		\item Datenübergabe über statics 
 	\end{itemize}
-\item Fit Fixtures f\"ur dom\"anenspezifische Bed\"urfnisse verf\"ugbar (z.B. Web, DBâ€¦)
+\item Fit Fixtures für domänenspezifische Bedürfnisse verfügbar (z.B. Web, DB)
 \item Falls notwendig erweiterbar
 	\begin{itemize}
 		\item Neue Befehle durch Ableitung von ActionFixture
@@ -1354,7 +1354,7 @@ Von den Tabellen zu der Implementierung:\\
 \end{itemize}
 
 \newpage
-\section{Zus\"{a}tzlicher Sourcecode}
+\section{Zusätzlicher Sourcecode}
 \begin{lstlisting}[language=Java,caption=JUnit-Test mit Javadoc, style=MyJavaStyle]
   /**
    * Test method for {@link ch.fhnw.edu.rental.model.Movie#Movie(java.lang.String, 
