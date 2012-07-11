@@ -146,7 +146,7 @@
 
 %Metadata
 \title{Software-Konstruktion}
-\author{Jan F\"assler, Fabio Oesch \& Fabian Stebler}
+\author{Jan F\"assler, Fabio Oesch, Luzi Bruder \& Fabian Stebler}
 \date{2. Semester (FS 2012)}
 \fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
 
@@ -757,7 +757,7 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 \subsubsection{Warum Metrics verwenden?}
 \begin{itemize}
 \item Wichtiges Tool f\"{u}r Qualit\"{a}tsmessung
-\item ÑYou can't manage what you can't control, and you can't control what you don't measureî
+\item ÔøΩYou can't manage what you can't control, and you can't control what you don't measureÔøΩ
 \item Jedoch nicht \"{u}bertreiben mit Messen, ein sinnvolles Mass soll gefunden werden
 \end{itemize}
 
@@ -791,7 +791,7 @@ $LCOM^{HS} = \frac{m-avg(r(f))}{m}$
 			\item Switch Statements
 			\item Parallele Vererbungshierarchie
 		\end{itemize}
-	\item[Not enoughù Code Smells] \hfill 
+	\item[Not enoughÔøΩ Code Smells] \hfill 
 		\begin{itemize}
 			\item Leere Catch clause
 		\end{itemize}
@@ -871,7 +871,7 @@ API-Dokumentation ist ein Vertrag zwischen Ihnen und den Kunden von Ihrem Code. 
 \begin{itemize}
 	\item Spezifiziert Sinn und Zust\"{a}ndigkeit von Klasse, wenn m\"{o}glich in 1 Satz
 	\item Spezifiziert wichtige Eigenschaften, die nicht durch Code ausgedr\"{u}ckt sind
-	\item Klasse: Erkl\"{a}rt Eigenschaft verwendete Algorithmen (Performance, Speicher, Ö)
+	\item Klasse: Erkl\"{a}rt Eigenschaft verwendete Algorithmen (Performance, Speicher, ÔøΩ)
 	\item Interface: Erkl\"{a}rt, was gemacht wurde und nicht wie es gemacht werden soll
 \end{itemize}
 
@@ -923,7 +923,7 @@ JavaDoc ist m\"{o}glich bei:
 
 \subsection{Programming Practices}
 \begin{itemize}
-\item Keine Ñmagischen Zahlenì wie 4.352, viel besser Konstanten verwenden
+\item Keine ÔøΩmagischen ZahlenÔøΩ wie 4.352, viel besser Konstanten verwenden
 \item Run-Time Performance verbessern sollte man dem Compiler \"{u}berlassen
 \item Kein if (value == true) { return true; } else { return false; } $\to$ return value;
 \item In einer Methode nur etwas machen und nicht mehre Sachen
@@ -1022,7 +1022,7 @@ public class Stock {
 \begin{itemize}
 	\item[\Bold {FATAL}] Fehler, bei dem die Applikation sich nicht mehr erholen kann
 	\item[\Bold {ERROR}] Fehler, die Applikation ist jedoch nicht lauff\"{a}hig
-	\item[\Bold {WARN}] Informiert \"{u}ber Ñschlimmesì Ereignis
+	\item[\Bold {WARN}] Informiert \"{u}ber ÔøΩschlimmesÔøΩ Ereignis
 	\item[\Bold {INFO}] Informiert z.B. \"{u}ber Fortschritt der Applikation
 	\item[\Bold {DEBUG}] Stellt Informationen f\"{u}r Debug bereit 
 	\item[\Bold {TRACE}] Sehr detaillierte Informationen um Informationsfluss zu verfolgen
@@ -1035,14 +1035,14 @@ Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwabl
 \subsection{Verschiedene Appender}
 \begin{itemize}
 \item ConsoleAppender - Write log to System.out or System.err
-\item FileAppender ñ Write to a log file
-\item SocketAppender ñ Dumps log output to a socket
-\item SyslogAppender ñ Write to the syslog.
-\item NTEventLogAppender ñ Write the logs to the NT Event Log system.
-\item RollingFileAppender ñ After a certain size is reached it will rename the old file and start with a new one.
-\item SocketAppender ñ Dumps log output to a socket
-\item SMTPAppender ñ Send Messages to email
-\item JMSAppender ñ Sends messages using Java Messaging Service
+\item FileAppender ÔøΩ Write to a log file
+\item SocketAppender ÔøΩ Dumps log output to a socket
+\item SyslogAppender ÔøΩ Write to the syslog.
+\item NTEventLogAppender ÔøΩ Write the logs to the NT Event Log system.
+\item RollingFileAppender ÔøΩ After a certain size is reached it will rename the old file and start with a new one.
+\item SocketAppender ÔøΩ Dumps log output to a socket
+\item SMTPAppender ÔøΩ Send Messages to email
+\item JMSAppender ÔøΩ Sends messages using Java Messaging Service
 \end{itemize}
 
 \subsection{PatternLayout Platzhalter}
@@ -1053,7 +1053,7 @@ Werden direkt auch so aufgerufen $\to$ info(Object message [, Throwable throwabl
 \item[\Bold{\%L:}] Code-Linie vom Logevent
 \item[\Bold{\%m:}] Message
 \item[\Bold{\%M:}] Methode
-\item[\Bold{\%n:}] Neue Linie wie Ñ$\backslash$nì
+\item[\Bold{\%n:}] Neue Linie wie ÔøΩ$\backslash$nÔøΩ
 \item[\Bold{\%p:}] Priorit\"{a}t
 \item[\Bold{\%r:}] Zeitmessung Logevent
 \item[\Bold{\%t:}] Thread
@@ -1123,7 +1123,7 @@ Es ist schwierig ein manueller Test systematisch zu handhaben.
 \begin{itemize}
 \item Model von der View trennen (siehe MVC-Modell)
 \item Eindeutige Namen f\"{u}r jedes GUI-Element
-\item Nicht zu Ñtiefì testen, wie z.B. Verhalten von Standardkomponenten
+\item Nicht zu ÔøΩtiefÔøΩ testen, wie z.B. Verhalten von Standardkomponenten
 \item Fokus auf Pr\"{u}fung des Verhaltens/Zustandes des GUIs
 \end{itemize}
 \end{itemize}
@@ -1254,7 +1254,7 @@ public class HelloTest {
 Selenium besteht aus mehreren Teilen, nicht jedes Testprojekt ben\"otigt alle Teile:
 \begin{itemize}
 \item \textbf{\Bold Selenium IDE:} ein Capture/Replay-Plugin f√ºr Firefox erlaubt auch das Editieren der aufgenommenen Skripts
-\item \textbf{\Bold Selenium WebDriver:} API um Browser programmatisch anzusteuern (z.B. aus Java, C-Sharp, PHP, Ruby‚Ä¶). Kann auch aufgenommene Skripts gegen andere Browser (‚â  Firefox) ausf√ºhren
+\item \textbf{\Bold Selenium WebDriver:} API um Browser programmatisch anzusteuern (z.B. aus Java, C-Sharp, PHP, Ruby‚Ä¶). Kann auch aufgenommene Skripts gegen andere Browser (ÔøΩÔøΩ  Firefox) ausf√ºhren
 \item \textbf{\Bold Selenium Server:} Koordiniert mehrere WebDriver um echte Lastszenarien zu simulieren.
 
 \end{itemize}
@@ -1310,9 +1310,9 @@ Ein fr\"uhes Feedback gegen\"uber dem Kunden, hilft eine Software korrekt und wu
 \end{itemize}
 \Bold {Konzepte:}
 \begin{itemize}
-\item Ausf\"uhrbare Use Cases und Workflowsú
+\item Ausf\"uhrbare Use Cases und WorkflowsÔøΩ
 \item F\"ur Kunden/Benutzer verst\"andlich und durch diesen erstellbar
-\item Konkrete Beispiele (Testing by Exampleú)
+\item Konkrete Beispiele (Testing by ExampleÔøΩ)
 \end{itemize}
 
 \subsubsection{Architekturkonzept}
@@ -1326,7 +1326,7 @@ Ein fr\"uhes Feedback gegen\"uber dem Kunden, hilft eine Software korrekt und wu
 \item Auswahl der richtigen Tabellen-Typen
 \item Sprache des Benutzers w\"ahlen
 \item Lesbare Testnamen\\
-Statt Fixtures.TestSearchSubmit$ \rightarrow$ ûTest Search Submit
+Statt Fixtures.TestSearchSubmit$ \rightarrow$ ÔøΩTest Search Submit
 Fit generiert den Klassennamen (CamelCase, Graceful Names)
 \item Initialisierung/Setup und Aufr\"aumen der Testumgebung/TearDown wird unterst\"utzt.
 \item Kunde und Entwickler erarbeiten Tests gemeinsam
