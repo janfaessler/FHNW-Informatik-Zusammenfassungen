@@ -1,5 +1,6 @@
 \documentclass[a4paper,10pt]{article}
 
+
 %Math
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -154,6 +155,14 @@
 \thispagestyle{fancy} %f\UTF{00FC}r Header
 
 \newpage
+
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\addtocontents{toc}{\protect\enlargethispage{\baselineskip}}
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1} 
 \section{Grundlagen der SW-Konstruktion}
 \subsection{Grundlagende Komponenten:}
 \begin{itemize}
@@ -439,15 +448,6 @@ Fundamentaler Akt des Software-Engineerings: Das Erstellen von funktionalem und 
 	\item[\Bold {Professional}] gleicher professioneller Standard wie f\"ur den Code ben\"utzen
 \end{itemize}
 
-\subsection{Testdaten}
-\subsubsection{Bestimmen von Testwerten:}
-F\"{u}r die Rechnung $\sqrt{(X-1)\cdot(X+2)}\to$ Testet man die folgenden F\"{a}lle:
-\begin{description}
-\item[EC1] $X<=-2\to$ Valid
-\item[EC2] $-2<X<1\to$ Invalid
-\item[EC3] $X>=1\to$ Valid
-\end{description}
-Auch immer wichtig: Werte wie MAX\_$ $VALUE und MIN\_$ $VALUE nicht ausser Acht lassen
 \subsubsection{Right-BICEP Testliste f\"{u}r Tests}
 \begin{description}
 \item [Right] Sind die Resultate richtig?
@@ -457,6 +457,15 @@ Auch immer wichtig: Werte wie MAX\_$ $VALUE und MIN\_$ $VALUE nicht ausser Acht 
 \item [E] Ist es m\"{o}glich, Error Conditions zu erzwingen?
 \item [P]Stimmt die Performance?
 \end{description}
+
+\subsection{Bestimmen von Testwerten:}
+F\"{u}r die Rechnung $\sqrt{(X-1)\cdot(X+2)}\to$ Testet man die folgenden F\"{a}lle:
+\begin{description}
+\item[EC1] $X<=-2\to$ Valid
+\item[EC2] $-2<X<1\to$ Invalid
+\item[EC3] $X>=1\to$ Valid
+\end{description}
+Auch immer wichtig: Werte wie MAX\_$ $VALUE und MIN\_$ $VALUE nicht ausser Acht lassen
 
 \subsection{Test Klasse}
 Die Test Klasse ist f\"{u}r das testen eines Elements verantwortlich
