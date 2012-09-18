@@ -1,0 +1,78 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{platzh1rsch}
+\title{Datennetze 1}
+
+\begin{document}
+
+\section{Datennetze}
+\subsection{Das Netz als eine Plattform}
+Das Telefonnetz wurde für Sprachübermittlung (analog) konstruiert. In den 60er- und 0er-Jahren wurde es immer mehr digitalisiert. Parallel dazu enstanden in den 70er- und 80er-Jahren Computernetze. \linebreak
+In den 90er-Jahren hat sich unter den Datennetzen das Internet für die breite Öffentlichkeit als Datennetz durchgesetzt.
+\subsubsection{Was ist eigentlich "Internet"?}
+Internet ist ein Netz das viele verschiedenartige lokale Netze miteinander verbindet. Es gibt standardisierte Kommunikationsregeln (TCP/IP).\linebreak
+Datennetze werden in folgende 4 Elemente unterteilt:\linebreak
+\begin{itemize}
+\item Regeln
+\item Nachrichten
+\item Kommunikationskanal
+\item Netzgeräte
+\end{itemize}
+\subsection{Dedizierte / Konvergierte Netze}
+\subsubsection{Dedizierte Netze}
+Früher baute man dedizierte (d.h. spezifische) Netze für eine Anwendung. Diese waren i.d.R. nicht miteinander kompatibel.
+\subsubsection{Konvergierte Netze}
+Mit der Zeit wurde es möglich verschiedene Dienste über ein Universalnetz zu transportieren. Diese Universalnetze nennt man konvergierte Netze.
+
+\subsection{Architektur des Internets}
+\subsubsection{Netzwerkarchitektur}
+\begin{itemize}
+\item Fehlertoleranz
+\item Skalierbarkeit
+\end{itemize}
+\subsubsection{Vermittlung}
+\begin{itemize}
+\item Leitungsvermittlung
+    \begin{itemize}
+    \item konstant. und hohe Qualität
+    \item schlechte Ausnutzung der Bandbreite
+    \item limitierte Teilnehmerzahl
+    \item Kosten
+    \item limitierte Bandbreite
+    \item Sicherheit
+    \end{itemize}
+\item Multiplexierung (TDM - Time Division Multiplex)
+\item Paketvermittlung
+    \begin{itemize}
+    \item statistisch Multiplexen -> bessere Ausnutzung des Kanals
+    \item günstiger
+    \item mehr Overhead
+    \item Verzögerung ist ein Problem -> kein QoS (Quality of Service)
+    \item Sicherheit muss separat gewährleistet werden
+    \end{itemize}
+\end{itemize}
+
+\section{Schichtenmodell}
+Jedes Paket hat folgende Informationen:
+\begin{itemize}
+\item Absender
+\item Ziel
+\item zugehörige Anwendung
+\item Nummer des Blocks
+\end{itemize}
+OSI - Open System Interconnection\linebreak
+ISO - Standard Behörde (USA)\linebreak
+MTU - Maximum Transmission Unit\linebreak
+PDU - Protocol Data Unit (Header + Payload)\linebreak
+\subsection{Protokolle}
+Regelsammlung wie 2 Gegenüber kommunizieren sollen. Im Internet arbeiten verschiedene Protokolle zusammen und bilden so einen Protokoll-Stack
+\section{PacketTracer}
+- Switches arbeiten mit MAC-Adressen nicht mit IPs
+\section{Cisco}
+Cisco Networking Academy: 
+http://www.cisco.com/web/learning/netacad/index.html
+CCNA
+\end{document}

@@ -526,10 +526,10 @@ public static long mult(int a, int b) {
 \end{description}
 
 \subsubsection{UTF-32}
-Dies ist die einfachste Umsetzung, es werden 21 Bits in einem (vorzeichenlosen) 32-Bit-Integer abgespeichert. Dabei sind die h\"oherwertigen 11 Bits immer null. Dies bedeutet jedoch eine grosse Speicherverschwendung
+Dies ist die einfachste Umsetzung, es werden 21 Bits in einem (vorzeichenlosen) 32-Bit-Integer abgespeichert. Dabei sind die h\"oherwertigen 11 Bits immer null. Dies bedeutet jedoch eine grosse Speicherverschwendung.
 
 \subsubsection{UTF-16}
-Dies ist ein guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung. In diesem Standard werden Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert. Die Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten (Ersatzpaare) gespeichert. \\
+Dies ist ein guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung. In diesem Standard werden Zeichencodes der BMP durch eine einzelne 16-Bit Codierungseinheit gespeichert. Die Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten (Ersatzpaare) gespeichert. \\
 Die beiden Zeichen eines Ersatzpaares stammen aus der Surrogates Area im BMP. Das erste Zeichen jeweils aus dem Bereich \Bold {U+D800 bis U+DBFF}. Das zweite Zeichen jeweils aus dem Bereich \Bold {U+DC00 bis U+DFFF}. Das ergiebt 2 mal 10 Bit Nutzdaten.
 
 \subsubsection{UTF-8}
