@@ -1,0 +1,3 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Listen}{1}
+\contentsline {subsection}{\numberline {1.1}Stack}{2}
