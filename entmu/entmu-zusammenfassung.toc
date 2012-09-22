@@ -1,0 +1,5 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Java Collection Framework}{1}
+\contentsline {subsection}{\numberline {1.1}Die Interfaces}{1}
+\contentsline {subsection}{\numberline {1.2}Der Iterator}{1}
+\contentsline {subsection}{\numberline {1.3}Die Implementierung}{1}

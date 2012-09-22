@@ -1,0 +1,106 @@
+\documentclass[a4paper, 11pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx} %for header/footer
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+
+% Listings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+
+% Code listenings
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+ 
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ %stepnumber=2,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ stringstyle=\color{white}\ttfamily, % Farbe der String
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+%Metadata
+\title{Entwurfsmuster}
+\author{Jan Fässler}
+\date{3. Semester (HS 2012)}
+\fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
+
+% hier beginnt das Dokument
+\begin{document}
+
+% Titelbild
+\maketitle
+\thispagestyle{fancy}
+
+\newpage
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman}
+\tableofcontents	  	
+
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% Inhalt Start
+
+\section{Java Collection Framework}
+\subsection{Die Interfaces}
+\begin{center}
+\includegraphics[scale=0.3]{jcf-interfaces.png}
+\end{center}
+
+\subsection{Der Iterator}
+Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection mit n Elementen, n + 1 mögliche Positionen an denen der Iterator stehen kann.
+\lstinputlisting[language=java,caption=Iterator,style=JavaStyle]{iterator-interface.java}
+
+\subsection{Die Implementierung}
+\includegraphics[scale=0.46]{jcf-implementations.png} 
+\begin{description}
+	\item[ArrayList] \hfill \\ Eine Implementierung welche ein Array darstellt bei dem man die grösse verändern kann.
+	\item[LinkedList] \hfill \\ Eine doppelt verkettete Liste.
+	\item[HashSet] \hfill \\ Die Elemente werden in einer Hash-Tabelle gespeichert.
+	\item[TreeSet] \hfill \\ Die Elemente werden in einer Baumstruktur gespeichert.
+	\item[Maps] \hfill \\ Eine Map ist wie ein Wörterbuch aufgebaut. Jeder Eintrag besteht aus einem Schlüssel (key) und dem zugehörigen Wert (value). Jeder Schlüssel darf in einer Map nur genau einmal vorhanden sein.
+\end{description}
+Wenn eine Klasse ein Interface implementiert, müssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse können alle Funktionen bis auf zwei realisiert werden. Für das Hinzufügen und für den Iterator benötigt es Kentnisse über die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
+\lstinputlisting[language=java,caption=Abstract Collection,style=JavaStyle]{abstract-collection.java}
+
+% Inhalt Ende
+\end{document}
