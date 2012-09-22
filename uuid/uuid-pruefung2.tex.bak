@@ -115,12 +115,26 @@
 \title{Usability \& User Interface Design}
 \author{Jan F\"assler}
 \date{Test 2  (FS 2012)}
-\fancyfoot[C]{Jan F\"assler}
+\fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
+
+\pagestyle{plain}
 
 \begin{document}
+% Titelbild
 \maketitle
+\thispagestyle{fancy}
+
 \newpage
-\thispagestyle{fancy} %f\UTF{00FC}r Header
+
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman}
+\tableofcontents	  	
+
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
 
 \section{Low- \& Hi-Fi Prototyping}
 

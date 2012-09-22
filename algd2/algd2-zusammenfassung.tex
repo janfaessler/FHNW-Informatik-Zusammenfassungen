@@ -23,6 +23,7 @@
 \usepackage{listings}
 \usepackage{caption}
 
+% Code listenings
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
@@ -48,6 +49,10 @@
  showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
 }
 
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
 
 %Metadata
 \title{Algorithmen \& Datenstrukturen 2}
