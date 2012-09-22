@@ -1,0 +1,113 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Grundlagen der SW-Konstruktion}{1}
+\contentsline {subsection}{\numberline {1.1}Grundlagende Komponenten:}{1}
+\contentsline {subsection}{\numberline {1.2}SW-Konstruktion (Def)}{1}
+\contentsline {subsection}{\numberline {1.3}Qualit\"at einer Software}{1}
+\contentsline {subsection}{\numberline {1.4}Aufbau einer Umgebung f\"ur SW-Konstruktion}{1}
+\contentsline {section}{\numberline {2}Konfigurations- und Versionsmanagement}{2}
+\contentsline {subsection}{\numberline {2.1}Symptome von einem schlechten Versionsmanagement}{2}
+\contentsline {subsection}{\numberline {2.2}Versionsmanagement der Dateien}{2}
+\contentsline {subsection}{\numberline {2.3}Versionsmanagement}{2}
+\contentsline {subsection}{\numberline {2.4}Bestandteile eines Konfigurationsmanagement}{2}
+\contentsline {subsection}{\numberline {2.5}Nummerierung von Revisionen}{3}
+\contentsline {subsection}{\numberline {2.6}Merging}{3}
+\contentsline {section}{\numberline {3}Build Automation}{4}
+\contentsline {subsection}{\numberline {3.1}Anforderungen f\"ur Build-Automation}{4}
+\contentsline {subsection}{\numberline {3.2}Visualisierung Build-Automation}{4}
+\contentsline {subsection}{\numberline {3.3}CRISP Builds}{4}
+\contentsline {subsection}{\numberline {3.4}Ant-Script}{5}
+\contentsline {section}{\numberline {4}Continuous Integration}{8}
+\contentsline {subsection}{\numberline {4.1}Vorteile}{8}
+\contentsline {subsection}{\numberline {4.2}Nachteile}{8}
+\contentsline {subsection}{\numberline {4.3}Integration ist defekt wenn...}{8}
+\contentsline {subsection}{\numberline {4.4}Anwendung von CI}{9}
+\contentsline {subsection}{\numberline {4.5}Agiler Prozess}{9}
+\contentsline {subsection}{\numberline {4.6}Jenkins}{9}
+\contentsline {section}{\numberline {5}Unit Testing}{10}
+\contentsline {subsection}{\numberline {5.1}Aspekte des Testings}{10}
+\contentsline {subsection}{\numberline {5.2}Der Testprozess}{10}
+\contentsline {subsection}{\numberline {5.3}Gute Tests}{10}
+\contentsline {subsubsection}{\numberline {5.3.1}Right-BICEP Testliste f\"{u}r Tests}{10}
+\contentsline {subsection}{\numberline {5.4}Bestimmen von Testwerten:}{10}
+\contentsline {subsection}{\numberline {5.5}Test Klasse}{11}
+\contentsline {subsection}{\numberline {5.6}Begriffserkl\"{a}rung}{11}
+\contentsline {subsection}{\numberline {5.7}HowTo}{11}
+\contentsline {subsubsection}{\numberline {5.7.1}Set Up}{11}
+\contentsline {subsubsection}{\numberline {5.7.2}Test Methode}{12}
+\contentsline {subsubsection}{\numberline {5.7.3}Tear Down}{12}
+\contentsline {subsubsection}{\numberline {5.7.4}Assertions}{12}
+\contentsline {subsubsection}{\numberline {5.7.5}Exception}{12}
+\contentsline {subsection}{\numberline {5.8}Beispiele}{13}
+\contentsline {section}{\numberline {6}Isolated Testing}{14}
+\contentsline {subsection}{\numberline {6.1}Test doubles in Unit Testing}{14}
+\contentsline {subsection}{\numberline {6.2}Mock Testing}{14}
+\contentsline {subsubsection}{\numberline {6.2.1}Einsatzbereich von Mock-Objekten}{14}
+\contentsline {subsection}{\numberline {6.3}EasyMock}{15}
+\contentsline {subsubsection}{\numberline {6.3.1}Spezielle Vorteile von EasyMock}{15}
+\contentsline {subsubsection}{\numberline {6.3.2}Ablauf}{16}
+\contentsline {subsubsection}{\numberline {6.3.3}Befehle}{16}
+\contentsline {subsubsection}{\numberline {6.3.4}Beispiel}{17}
+\contentsline {section}{\numberline {7}Software Quality Metrics}{19}
+\contentsline {subsection}{\numberline {7.1}Was ist Software Qualit\"{a}t?}{19}
+\contentsline {subsection}{\numberline {7.2}Metric (Def)}{19}
+\contentsline {subsection}{\numberline {7.3}Cyclomatic Complexity}{20}
+\contentsline {subsection}{\numberline {7.4}Cohesion and Coupling Metrics}{20}
+\contentsline {subsubsection}{\numberline {7.4.1}LCOM}{20}
+\contentsline {subsubsection}{\numberline {7.4.2}Emma Features (Java-Code-Coverage Instrument)}{21}
+\contentsline {subsubsection}{\numberline {7.4.3}Warum Metrics verwenden?}{21}
+\contentsline {section}{\numberline {8}Refactoring}{22}
+\contentsline {subsection}{\numberline {8.1}Problems}{22}
+\contentsline {subsection}{\numberline {8.2}Code Smells}{22}
+\contentsline {subsection}{\numberline {8.3}How To}{23}
+\contentsline {subsubsection}{\numberline {8.3.1}Extract Method}{23}
+\contentsline {subsubsection}{\numberline {8.3.2}Self Encapsulate Field}{23}
+\contentsline {subsubsection}{\numberline {8.3.3}Move Method}{23}
+\contentsline {subsubsection}{\numberline {8.3.4}Replace Temp with Query}{23}
+\contentsline {subsubsection}{\numberline {8.3.5}Replace Type Code with State/Strategy}{24}
+\contentsline {subsubsection}{\numberline {8.3.6}Replace Conditional with Polymorphism}{24}
+\contentsline {section}{\numberline {9}Coding Style \& Clean Code}{25}
+\contentsline {subsection}{\numberline {9.1}Warum soll man Code Conventions befolgen?}{25}
+\contentsline {subsection}{\numberline {9.2}API Documentation}{25}
+\contentsline {subsection}{\numberline {9.3}Klassen/Interface Dokumentation}{25}
+\contentsline {subsection}{\numberline {9.4}Methoden Dokumentation}{26}
+\contentsline {subsection}{\numberline {9.5}Wichtig zu beachten}{26}
+\contentsline {subsection}{\numberline {9.6}JavaDoc}{26}
+\contentsline {subsubsection}{\numberline {9.6.1}Tags In javadoc Comments}{26}
+\contentsline {subsection}{\numberline {9.7}Programming Practices}{27}
+\contentsline {subsection}{\numberline {9.8}Checkstyle}{27}
+\contentsline {section}{\numberline {10}Logging}{28}
+\contentsline {subsection}{\numberline {10.1}Vorteile}{28}
+\contentsline {subsection}{\numberline {10.2}Log4j}{28}
+\contentsline {subsection}{\numberline {10.3}Konzept}{28}
+\contentsline {subsection}{\numberline {10.4}Logging Levels}{28}
+\contentsline {subsection}{\numberline {10.5}Aufbau des Loggers}{29}
+\contentsline {subsection}{\numberline {10.6}Verschiedene Appender}{29}
+\contentsline {subsection}{\numberline {10.7}PatternLayout Platzhalter}{29}
+\contentsline {subsection}{\numberline {10.8}Best Practices}{30}
+\contentsline {section}{\numberline {11}GUI- Testing}{32}
+\contentsline {subsection}{\numberline {11.1}Zweck von GUI Tests test?}{32}
+\contentsline {subsection}{\numberline {11.2}How to GUI-Testing}{32}
+\contentsline {subsubsection}{\numberline {11.2.1}Manuall}{32}
+\contentsline {subsubsection}{\numberline {11.2.2}Capture / Replay}{32}
+\contentsline {subsubsection}{\numberline {11.2.3}Scripting - In a seperate scripting language}{32}
+\contentsline {subsubsection}{\numberline {11.2.4}Integrated Test Framework (Unit Test Programming Style)}{33}
+\contentsline {subsection}{\numberline {11.3}FEST (GUI-Testing Tool)}{33}
+\contentsline {subsubsection}{\numberline {11.3.1}Workflow}{33}
+\contentsline {section}{\numberline {12}Web und Akzeptanztests}{36}
+\contentsline {subsection}{\numberline {12.1}Herausforderungen bei Webtests}{36}
+\contentsline {subsection}{\numberline {12.2}Selenium Testing System}{36}
+\contentsline {subsubsection}{\numberline {12.2.1}Wie ist Selenium aufgebaut?}{36}
+\contentsline {subsubsection}{\numberline {12.2.2}Was bietet Selenium?}{36}
+\contentsline {subsection}{\numberline {12.3}Die Kundensicht}{36}
+\contentsline {subsubsection}{\numberline {12.3.1}Eigenschaften eines Gesch\"aftsprozesses}{36}
+\contentsline {subsubsection}{\numberline {12.3.2}Feedback}{37}
+\contentsline {subsubsection}{\numberline {12.3.3}Herausforderung beim Erstellen von Akzeptanztests}{37}
+\contentsline {subsection}{\numberline {12.4}FIT - Framework for Integrated Testing}{37}
+\contentsline {subsubsection}{\numberline {12.4.1}Einleitung}{37}
+\contentsline {subsubsection}{\numberline {12.4.2}Architekturkonzept}{37}
+\contentsline {subsubsection}{\numberline {12.4.3}Vorgehenskonzept}{38}
+\contentsline {subsubsection}{\numberline {12.4.4}Hinweise zur Testspezifikation}{38}
+\contentsline {subsubsection}{\numberline {12.4.5}FIT Fixtures}{38}
+\contentsline {subsubsection}{\numberline {12.4.6}Testimplementierung}{39}
+\contentsline {subsubsection}{\numberline {12.4.7}Hinweise zur Testimplementation}{39}
+\contentsline {section}{\numberline {13}Zus\"{a}tzlicher Sourcecode}{40}
