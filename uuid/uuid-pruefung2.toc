@@ -1,0 +1,21 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Low- \& Hi-Fi Prototyping}{1}
+\contentsline {subsection}{\numberline {1.1}Low Fidelity Prototype (Low-FI)}{1}
+\contentsline {subsubsection}{\numberline {1.1.1}Sketching}{1}
+\contentsline {subsubsection}{\numberline {1.1.2}Balsamiq Mockups}{1}
+\contentsline {subsubsection}{\numberline {1.1.3}Papier-Prototypen}{2}
+\contentsline {subsection}{\numberline {1.2}Mid Fidelity Prototype (Mid-FI)}{2}
+\contentsline {subsubsection}{\numberline {1.2.1}Wizard of OZ}{2}
+\contentsline {subsection}{\numberline {1.3}High Fidelity Prototype (HI-FI)}{2}
+\contentsline {section}{\numberline {2}Horizontale und vertikale Prototypen}{3}
+\contentsline {subsection}{\numberline {2.1}Horizontaler Prototyp}{3}
+\contentsline {subsubsection}{\numberline {2.1.1}Evaluation}{3}
+\contentsline {subsubsection}{\numberline {2.1.2}Verwendung}{3}
+\contentsline {subsection}{\numberline {2.2}Vertikaler Prototyp}{3}
+\contentsline {subsubsection}{\numberline {2.2.1}Evaluation}{3}
+\contentsline {subsubsection}{\numberline {2.2.2}Verwendung}{3}
+\contentsline {section}{\numberline {3}UI Builder}{4}
+\contentsline {subsection}{\numberline {3.1}Vorteile}{4}
+\contentsline {subsection}{\numberline {3.2}Nachteile}{4}
+\contentsline {section}{\numberline {4}Qualit\"atskriterien}{4}
+\contentsline {section}{\numberline {5}Grunds\"atze der Dialoggestaltung}{5}

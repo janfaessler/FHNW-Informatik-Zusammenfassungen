@@ -1,0 +1,62 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Einleitung}{1}
+\contentsline {subsection}{\numberline {1.1}Anforderungen an ein Betriebssystem}{1}
+\contentsline {subsection}{\numberline {1.2}Definition}{1}
+\contentsline {subsection}{\numberline {1.3}Bestandteile}{1}
+\contentsline {subsection}{\numberline {1.4}Varianten von Betriebssystemen}{1}
+\contentsline {subsection}{\numberline {1.5}Geschichte}{2}
+\contentsline {subsection}{\numberline {1.6}Lessons learned}{2}
+\contentsline {section}{\numberline {2}Blockstruktur eines Betriebssystems}{3}
+\contentsline {subsection}{\numberline {2.1}Aufgaben des Betriebssystems}{3}
+\contentsline {subsection}{\numberline {2.2}Grapische Darstellung}{3}
+\contentsline {subsection}{\numberline {2.3}Aufgabenteilung der Bl\"ocke}{3}
+\contentsline {subsubsection}{\numberline {2.3.1}Dateisystem}{3}
+\contentsline {subsubsection}{\numberline {2.3.2}Prozesssteuersystem}{4}
+\contentsline {subsubsection}{\numberline {2.3.3}System Call Interface}{4}
+\contentsline {subsubsection}{\numberline {2.3.4}Programmierung}{4}
+\contentsline {subsubsection}{\numberline {2.3.5}Benutzerschnittstelle}{4}
+\contentsline {subsubsection}{\numberline {2.3.6}I/O Management}{5}
+\contentsline {subsubsection}{\numberline {2.3.7}File System als generelle Schnittstelle}{5}
+\contentsline {section}{\numberline {3}Filesystem}{6}
+\contentsline {subsection}{\numberline {3.1}Partition auf der Disk}{6}
+\contentsline {subsection}{\numberline {3.2}Blockallokationen}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}Zusammenh\"angende Belegung}{6}
+\contentsline {subsubsection}{\numberline {3.2.2}Verlinkte Bl\"ocke}{7}
+\contentsline {subsubsection}{\numberline {3.2.3}Filemap (Landkarte)}{7}
+\contentsline {subsubsection}{\numberline {3.2.4}Index Allokation}{8}
+\contentsline {subsection}{\numberline {3.3}Struktur von Inodes}{8}
+\contentsline {subsubsection}{\numberline {3.3.1}Informatione Inode}{9}
+\contentsline {subsection}{\numberline {3.4}Designvorgaben f\"ur Filesystem}{9}
+\contentsline {section}{\numberline {4}Prozesse}{10}
+\contentsline {subsection}{\numberline {4.1}Einleitung}{10}
+\contentsline {subsubsection}{\numberline {4.1.1}Was ist ein Prozess?}{10}
+\contentsline {subsubsection}{\numberline {4.1.2}Anforderungen an ein Prozess-Steuersystem}{10}
+\contentsline {subsubsection}{\numberline {4.1.3}Unix-Prozess Segmente}{10}
+\contentsline {subsection}{\numberline {4.2}Kernel und User Mode}{10}
+\contentsline {subsubsection}{\numberline {4.2.1}Prozess-/Kontext- Wechsel}{11}
+\contentsline {subsubsection}{\numberline {4.2.2}Kernel-Datenstrukturen für das Prozess-Management}{11}
+\contentsline {subsection}{\numberline {4.3}Sichern des Prozess Kontexts}{11}
+\contentsline {subsection}{\numberline {4.4}Prozess Zust\"ande}{12}
+\contentsline {subsection}{\numberline {4.5}Prozess-bezogene System Calls}{12}
+\contentsline {subsection}{\numberline {4.6}Prozesse versus Threads}{12}
+\contentsline {subsubsection}{\numberline {4.6.1}Basismodell für Threads}{13}
+\contentsline {subsubsection}{\numberline {4.6.2}Benutzungs- und Administrationssicht auf ein Prozess-Steuersystem}{13}
+\contentsline {section}{\numberline {5}Hauptspeicherverwaltung}{14}
+\contentsline {subsection}{\numberline {5.1}Virtual Memory}{14}
+\contentsline {subsection}{\numberline {5.2}Swapping}{14}
+\contentsline {subsection}{\numberline {5.3}Demand Paging}{14}
+\contentsline {section}{\numberline {6}I/O, Peripherie}{15}
+\contentsline {subsection}{\numberline {6.1}Anforderungen von Peripheriegeräten}{15}
+\contentsline {subsection}{\numberline {6.2}Aufgaben und Funktionsweise des I/O-Subsystems}{15}
+\contentsline {subsection}{\numberline {6.3}Buffer-Cache}{15}
+\contentsline {subsubsection}{\numberline {6.3.1}Der klassische Buffer Cache}{15}
+\contentsline {subsubsection}{\numberline {6.3.2}Der neue Buffer Cache}{16}
+\contentsline {subsection}{\numberline {6.4}Basisfunktionen des Datei I/O}{16}
+\contentsline {subsection}{\numberline {6.5}Einbindung und Verwaltung von Peripherie-Geräten}{16}
+\contentsline {subsection}{\numberline {6.6}Gerätetreiber}{16}
+\contentsline {subsubsection}{\numberline {6.6.1}Interrupt Behandlung}{16}
+\contentsline {subsubsection}{\numberline {6.6.2}Block-orientierte Gerätetreiber}{17}
+\contentsline {subsubsection}{\numberline {6.6.3}Zeichen-orientierte Gerätetreiber}{17}
+\contentsline {section}{\numberline {7}Sheduling Strategien}{18}
+\contentsline {subsection}{\numberline {7.1}Scheduling in Unix}{18}
+\contentsline {section}{\numberline {8}System\"uberwachung}{19}

@@ -1,0 +1,34 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Parallelit\"at - Nebenl\"aufigkeit}{1}
+\contentsline {subsection}{\numberline {1.1}Einleitung}{1}
+\contentsline {subsection}{\numberline {1.2}Der Sheduler}{1}
+\contentsline {subsection}{\numberline {1.3}Pre-emption}{1}
+\contentsline {subsection}{\numberline {1.4}Synchronisation}{1}
+\contentsline {subsubsection}{\numberline {1.4.1}Das Problem der Synchronisierung}{1}
+\contentsline {subsubsection}{\numberline {1.4.2}Synchronisation}{1}
+\contentsline {subsection}{\numberline {1.5}Synchronisationsmittel}{2}
+\contentsline {subsubsection}{\numberline {1.5.1}Benachrichtigung \& Warten}{2}
+\contentsline {subsubsection}{\numberline {1.5.2}Locks/Schlossvariablen}{2}
+\contentsline {subsubsection}{\numberline {1.5.3}Ereignisz\"ahler}{2}
+\contentsline {subsubsection}{\numberline {1.5.4}Petri-Netze}{2}
+\contentsline {subsubsection}{\numberline {1.5.5}Dijkstra Semaphore}{2}
+\contentsline {subsubsection}{\numberline {1.5.6}Barrier}{3}
+\contentsline {subsubsection}{\numberline {1.5.7}Rendezvous}{3}
+\contentsline {subsection}{\numberline {1.6}Deadlock Erkennung und Vermeidung/Behebung}{3}
+\contentsline {section}{\numberline {2}Verteilte vs. monolithische Betriebssysteme}{4}
+\contentsline {subsection}{\numberline {2.1}Strategien / Varianten}{4}
+\contentsline {subsection}{\numberline {2.2}Vorteile \& Risiken}{4}
+\contentsline {subsubsection}{\numberline {2.2.1}Vorteile}{4}
+\contentsline {subsubsection}{\numberline {2.2.2}Risiken}{4}
+\contentsline {subsection}{\numberline {2.3}Anforderungen an verteilte Betriebssysteme}{5}
+\contentsline {subsubsection}{\numberline {2.3.1}Transparenz}{5}
+\contentsline {subsubsection}{\numberline {2.3.2}Flexibilit\"at}{5}
+\contentsline {subsubsection}{\numberline {2.3.3}Zuverl\"assigkeit}{5}
+\contentsline {subsubsection}{\numberline {2.3.4}Performance}{6}
+\contentsline {subsubsection}{\numberline {2.3.5}Skalierbarkeit}{6}
+\contentsline {subsection}{\numberline {2.4}Synchronisation in verteilten Systemen}{6}
+\contentsline {section}{\numberline {3}Sicherheitsaspekte im Betriebssystem}{7}
+\contentsline {subsection}{\numberline {3.1}Typische Schwachstellen}{7}
+\contentsline {subsection}{\numberline {3.2}Ursachen}{7}
+\contentsline {subsection}{\numberline {3.3}Sicherheits-Management}{8}
+\contentsline {subsection}{\numberline {3.4}Risiko-Management}{8}

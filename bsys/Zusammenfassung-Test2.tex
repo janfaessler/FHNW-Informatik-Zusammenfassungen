@@ -29,11 +29,27 @@
 \title{Betriebssysteme Test 2}
 \author{Jan F\"assler}
 \date{2. Semester (FS 2012)}
+\fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
 
+\pagestyle{plain}
 
 \begin{document}
+% Titelbild
 \maketitle
+\thispagestyle{fancy}
+
 \newpage
+
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman}
+\tableofcontents	  	
+
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
 \section{Parallelit\"at - Nebenl\"aufigkeit}
 \subsection{Einleitung}
 Falls ein Rechner mehrere Prozesse parallel verarbeiten kann (Multi-Tasking), so f\"uhrt er jeden Prozess als separate Aktivit\"at aus. Diese Prozesse können unabh\"angig voneinander ablaufen (Nebenl\"aufigkeit), m\"ussen jedoch synchronisiert werden, da bestimmte Ressourcen (insbesondere die CPU) gemeinsam genutzt werden. Stehen mehrere CPUs zur Verf\"ugung, können Prozesse parallel ablaufen, jedoch weiterhin mit Synchronisation und Wartezust\"anden bei gemeinsam genutzten Ressourcen. Werden Threads innerhalb eines Prozess-Adressraums eingesetzt, gilt diese Aussage sinngem\"ass auch f\"ur jeden Thread innerhalb eines Prozesskontexts.
