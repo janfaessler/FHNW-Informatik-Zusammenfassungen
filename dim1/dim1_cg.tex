@@ -14,10 +14,10 @@
 - Georg Cantor 1845 -1918 \\
 Menge: "Sammlung" von Objekten\\
 Diese Objekte heissen Elemente.\\
-Notation: X $  $ M || X ist Element von M\\
+Notation: X $ /in $ M $\rightarrow$ X ist Element von M\\
 Eine Menge ist durch ihre Elemente eindeutig bestimmt.\\
 \\
-Bsp: M = {1,2,3}, M = N --> N = {3,1,2}\\
+Bsp: M = {1,2,3}, M = N $\rightarrow$ N = {3,1,2}\\
 \\
 Beschreibung von Mengen\\
 1. Durch Aufzählung: M = { 1,2,3 }\\
@@ -33,7 +33,6 @@ Beispiele:\\
    A := {1,2}\\
    B := {3,4}\\
 $   A B = \emptyset$\\
-2. 
 
 \subsubsection{Satz 1}
 1. G Grundmenge \\
@@ -47,5 +46,30 @@ Die Menge aller Teilmengen von M\\
 a) $ M:={1} \rightarrow P(M) = {\emptyset,{1}}$\\
 b) $ M:= {1,2,3} \rightarrow P(M) = {\emptyset, {1},{2},{3},{1,2},{2,3},{1,3},{1,2,3}}$\\
 c) $ M:= \emptyset \rightarrow P(M) = {\emptyset}$
+
+\subsubsection{das kartesische Produkt}
+Seien A, B Mengen, $a \in A$, $b \in B$\\
+\textbf{Definition:} Das Symbol (a,b) heisst das geordnete Paar von a und b.\\
+\textbf{Bemerkung:} (a,b) = (c,d) $\rightarrow$ a=c und b=d\\\\
+
+\textbf{Definition:} Seien A,B Mengen\\
+$AxB := { (x,y) | x \in A, y \in B }$ heisst das kartesische Produkt von A und B.\\\\
+
+\textbf{Beispiel:} \\
+a) ${1,2,3} x {4,5}$ // i.a. $AxB \neq BxA$\\
+= { (1,4),(1,5),(2,4),(2,5),(3,4),(3,5) } \\
+b) {1,2}x{1,2} = {(1,1),(1,2),(2,1),(2,2)}\\
+c) A = {a,b}\\
+$Ax\emptyset$ = {(a,$\emptyset$),(b,$\emptyset$)}\\
+
+\subsubsection{Partitionen}
+Gegeben eine Menge M\\
+\textbf{Definition:} Eine Partition von M ist eine Menge $\pi$\\
+$\pi := {Ai | i \in I } $\\
+mit \\
+1.) $Ai \neq \emptyset$\\
+2.) Ai $\subset$ M \\
+3.) Ai $\cap$ AJ = $\emptyset$\\
+4.) $\cup$ Ai = M = $ A1 \cup A2 \cup A3 ... $
 
 \end{document}

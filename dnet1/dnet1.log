@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.6.11)  17 SEP 2012 10:49
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.6.11)  24 SEP 2012 08:43
 entering extended mode
 **dnet1.tex
 
@@ -385,8 +385,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--70
 
  []
 
-[2]
-Overfull \hbox (49.89546pt too wide) in paragraph at lines 75--78
+LaTeX Font Info:    Try loading font information for U+msa on input line 74.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 74.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [2]
+Overfull \hbox (49.89546pt too wide) in paragraph at lines 87--90
 \OT1/cmr/m/n/10.95 Cisco Net-work-ing Academy: http://www.cisco.com/web/learnin
 g/netacad/index.html
  []
@@ -395,18 +403,18 @@ g/netacad/index.html
 (C:\Users\chregi\Documents\GitHub\FHNW-Informatik-Zusammenfassungen\dnet1\dnet1
 .aux) ) 
 Here is how much of TeX's memory you used:
- 1300 strings out of 494045
- 14469 string characters out of 3145966
+ 1340 strings out of 494045
+ 15087 string characters out of 3145966
  65974 words of memory out of 3000000
- 4633 multiletter control sequences out of 15000+200000
- 5715 words of font info for 21 fonts, out of 3000000 for 9000
+ 4655 multiletter control sequences out of 15000+200000
+ 9806 words of font info for 37 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 27i,4n,22p,231b,234s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,22p,231b,234s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10
 .pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.p
 fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on dnet1.pdf (3 pages, 64867 bytes).
+Output written on dnet1.pdf (3 pages, 66006 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
