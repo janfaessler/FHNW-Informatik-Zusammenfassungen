@@ -39,7 +39,7 @@
  extendedchars=true,         %
  breaklines=true,            % Zeilen werden Umgebrochen
  frame=b,         
- stringstyle=\color{white}\ttfamily, % Farbe der String
+ stringstyle=\color{blue}\ttfamily, % Farbe der String
  showspaces=false,           % Leerzeichen anzeigen ?
  showtabs=false,             % Tabs anzeigen ?
  xleftmargin=17pt,
@@ -56,7 +56,7 @@
 
 %Metadata
 \title{Entwurfsmuster}
-\author{Jan Fässler}
+\author{Jan Fï¿½ssler}
 \date{3. Semester (HS 2012)}
 \fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
 
@@ -87,23 +87,23 @@
 \end{center}
 
 \subsection{Der Iterator}
-Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection mit n Elementen, n + 1 mögliche Positionen an denen der Iterator stehen kann.
+Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection mit n Elementen, n + 1 mï¿½gliche Positionen an denen der Iterator stehen kann.
 \lstinputlisting[language=java,caption=Iterator,style=JavaStyle]{iterator-interface.java}
 
 \subsection{Die Implementierung}
 \includegraphics[scale=0.46]{jcf-implementations.png} 
 \begin{description}
-	\item[ArrayList] \hfill \\ Eine Implementierung welche ein Array darstellt bei dem man die grösse verändern kann.
+	\item[ArrayList] \hfill \\ Eine Implementierung welche ein Array darstellt bei dem man die grï¿½sse verï¿½ndern kann.
 	\item[LinkedList] \hfill \\ Eine doppelt verkettete Liste.
 	\item[HashSet] \hfill \\ Die Elemente werden in einer Hash-Tabelle gespeichert.
 	\item[TreeSet] \hfill \\ Die Elemente werden in einer Baumstruktur gespeichert.
-	\item[Maps] \hfill \\ Eine Map ist wie ein Wörterbuch aufgebaut. Jeder Eintrag besteht aus einem Schlüssel (key) und dem zugehörigen Wert (value). Jeder Schlüssel darf in einer Map nur genau einmal vorhanden sein.
+	\item[Maps] \hfill \\ Eine Map ist wie ein Wï¿½rterbuch aufgebaut. Jeder Eintrag besteht aus einem Schlï¿½ssel (key) und dem zugehï¿½rigen Wert (value). Jeder Schlï¿½ssel darf in einer Map nur genau einmal vorhanden sein.
 \end{description}
-Wenn eine Klasse ein Interface implementiert, müssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse können alle Funktionen bis auf zwei realisiert werden. Für das Hinzufügen und für den Iterator benötigt es Kentnisse über die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
+Wenn eine Klasse ein Interface implementiert, mï¿½ssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse kï¿½nnen alle Funktionen bis auf zwei realisiert werden. Fï¿½r das Hinzufï¿½gen und fï¿½r den Iterator benï¿½tigt es Kentnisse ï¿½ber die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
 \lstinputlisting[language=java,caption=Abstract Collection,style=JavaStyle]{abstract-collection.java}
 
 \section{Design Pattern}
-Entwurfsmuster (englisch design patterns) sind bewährte Lösungsschablonen für wiederkehrende Entwurfsprobleme sowohl in der Architektur als auch in der Softwarearchitektur und -entwicklung. Sie stellen damit eine wiederverwendbare Vorlage zur Problemlösung dar, die in einem bestimmten Zusammenhang einsetzbar ist.
+Entwurfsmuster (englisch design patterns) sind bewï¿½hrte Lï¿½sungsschablonen fï¿½r wiederkehrende Entwurfsprobleme sowohl in der Architektur als auch in der Softwarearchitektur und -entwicklung. Sie stellen damit eine wiederverwendbare Vorlage zur Problemlï¿½sung dar, die in einem bestimmten Zusammenhang einsetzbar ist.
 
 \subsection{Types of Patterns}
 \begin{description}
