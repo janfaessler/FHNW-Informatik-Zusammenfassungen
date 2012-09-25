@@ -102,5 +102,110 @@ Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection 
 Wenn eine Klasse ein Interface implementiert, müssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse können alle Funktionen bis auf zwei realisiert werden. Für das Hinzufügen und für den Iterator benötigt es Kentnisse über die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
 \lstinputlisting[language=java,caption=Abstract Collection,style=JavaStyle]{abstract-collection.java}
 
+\section{Design Pattern}
+Entwurfsmuster (englisch design patterns) sind bewährte Lösungsschablonen für wiederkehrende Entwurfsprobleme sowohl in der Architektur als auch in der Softwarearchitektur und -entwicklung. Sie stellen damit eine wiederverwendbare Vorlage zur Problemlösung dar, die in einem bestimmten Zusammenhang einsetzbar ist.
+
+\subsection{Types of Patterns}
+\begin{description}
+	\item[Software Pattern] \hfill
+		\begin{itemize}
+			\item Architectural Pattern (system design)
+			\item Design Pattern (micro architectures)
+			\item Coding Pattern / Idioms (low level)
+		\end{itemize}
+	\item[Analysis Pattern] \hfill
+		\begin{itemize}
+			\item Recurring \& reusable analysis models used in requirements engineering
+		\end{itemize}
+	\item[Organizational Patterns] \hfill
+		\begin{itemize}
+			\item Structure of organizations \& projects: XP, SCRUM
+		\end{itemize}
+	\item[Domain-Specific patterns] \hfill
+		\begin{itemize}
+			\item UI patterns, security patterns
+		\end{itemize}
+	\item[Anti-Patterns] \hfill
+		\begin{itemize}
+			\item Refactoring
+		\end{itemize}
+\end{description}
+
+\subsection{Pattern Classification}
+
+\includegraphics[scale=0.5]{pattern-classification.png}
+
+\newpage
+\section{Observer Pattern}
+Also Known As \textbf{Publish-Subscribe} or \textbf{Listener Pattern}.
+
+\subsection{Intent}
+\begin{itemize}
+	\item 1:*-Relation between objects which allows to inform the dependent objects about state changes
+	\item Consistency assurance between cooperating objects without connecting them too much
+	\item Notification of a dependent object without knowing it
+\end{itemize}
+
+\subsection{Motivation}
+\begin{center}
+	\includegraphics[scale=0.4]{observer-motivation.png}
+\end{center}
+
+\subsection{Structure}
+\begin{center}
+	\includegraphics[scale=0.5]{observer-structure.png}
+\end{center}
+
+\subsection{Participants}
+\begin{description}
+	\item[Subject] \hfill
+		\begin{itemize}
+			\item Knows its observers only through the Observer interface
+			\item Offers methods to attach or detach an observer
+		\end{itemize}
+	\item[Observer] \hfill
+		\begin{itemize}
+			\item Defines interface to publish notifications
+		\end{itemize}
+	\item[Concrete Subject] \hfill
+		\begin{itemize}
+			\item Stores state of interest to concrete observer objects
+			\item Notifies its observers when its state changes
+		\end{itemize}
+	\item[Concrete Observer] \hfill
+		\begin{itemize}
+			\item Implements Observer interface to keep its state consistent with the subject
+			\item May maintain a reference to a concrete subject
+		\end{itemize}
+\end{description}
+
+\subsection{Collaborations}
+\begin{center}
+	\includegraphics[scale=0.3]{observer-collaborations.png}
+\end{center}
+
+\subsection{Consequences}
+\begin{description}
+	\item[Decoupling] \hfill
+		\begin{itemize}
+			\item Subject only knows Observer interface, no concrete observers
+			\item Update = dynamically bound => up-calls
+			\item Subject and observer may belong to different abstraction layers
+		\end{itemize}
+	\item[Support for broadcast communication] \hfill
+		\begin{itemize}
+			\item Notification is broadcast, subject does not care about number of observers
+			\item It is up to the observer to handle or ignore notifications
+		\end{itemize}
+	\item[Unexpected updates] \hfill
+		\begin{itemize}
+			\item A simple operation on a subject may cause a cascade of updates
+		\end{itemize}
+\end{description}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Observer Pattern,style=JavaStyle]{observer.java}
+
+
 % Inhalt Ende
 \end{document}
