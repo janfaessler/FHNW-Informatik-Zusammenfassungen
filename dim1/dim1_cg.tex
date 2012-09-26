@@ -1,0 +1,142 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{platzh1rsch}
+\title{Diskrete Mathematik 1}
+\begin{document}
+
+
+
+\section{Mengen und Relationen}
+\subsection{Naive Mengenlehre}
+- Georg Cantor 1845 -1918 \\
+Menge: "Sammlung" von Objekten\\
+Diese Objekte heissen Elemente.\\
+Notation: X $ /in $ M $\rightarrow$ X ist Element von M\\
+Eine Menge ist durch ihre Elemente eindeutig bestimmt.\\
+\\
+Bsp: M = {1,2,3}, M = N $\rightarrow$ N = {3,1,2}\\
+\\
+Beschreibung von Mengen\\
+1. Durch Aufzählung: M = { 1,2,3 }\\
+2. Durch Prädikate:  M = ${x | P(x)}$  "Menge aller x, die das Prädikat P erfüllen"
+3. grafische Darstellung (Venn-Diagramme)\\
+Bsp. $a \in A, d \in B, c \in A, c \in B$\\
+
+\subsubsection{Notation}
+$\forall x \in G: $   "Für alle x aus der Menge G ..."\\
+$\exists x \in G: $   "Es existiert ein Element x in der Menge G ..."\\\\
+Beispiele:\\
+1. G := N = {0,1,2,3...}\\
+   A := {1,2}\\
+   B := {3,4}\\
+$   A B = \emptyset$\\
+
+\subsubsection{Satz 1}
+1. G Grundmenge \\
+2. A, B, C Teilmengen von G \\
+
+\subsection{weitere Mengen-Konstruktionen}
+\subsubsection{Potenzmenge}
+\textbf{Definition:} $ P(M) := { x | x M } $ Potenzmenge von M\\
+Die Menge aller Teilmengen von M\\
+\textbf{Beispiele}\\
+a) $ M:={1} \rightarrow P(M) = {\emptyset,{1}}$\\
+b) $ M:= {1,2,3} \rightarrow P(M) = {\emptyset, {1},{2},{3},{1,2},{2,3},{1,3},{1,2,3}}$\\
+c) $ M:= \emptyset \rightarrow P(M) = {\emptyset}$
+
+\subsubsection{das kartesische Produkt}
+Seien A, B Mengen, $a \in A$, $b \in B$\\
+\textbf{Definition:} Das Symbol (a,b) heisst das geordnete Paar von a und b.\\
+\textbf{Bemerkung:} (a,b) = (c,d) $\rightarrow$ a=c und b=d\\\\
+
+\textbf{Definition:} Seien A,B Mengen\\
+$AxB := { (x,y) | x \in A, y \in B }$ heisst das kartesische Produkt von A und B.\\\\
+
+\textbf{Beispiel:} \\
+a) ${1,2,3} x {4,5}$ // i.a. $AxB \neq BxA$\\
+= { (1,4),(1,5),(2,4),(2,5),(3,4),(3,5) } \\
+b) {1,2}x{1,2} = {(1,1),(1,2),(2,1),(2,2)}\\
+c) A = {a,b}\\
+$Ax\emptyset$ = {(a,$\emptyset$),(b,$\emptyset$)}\\
+
+\subsubsection{Partitionen}
+Gegeben eine Menge M\\
+\textbf{Definition:} Eine Partition von M ist eine Menge $\pi$\\
+$\pi := \{ A_i | i \in I \}$ \\
+(I = Indexmenge) mit \\
+1.) $A_i \neq \emptyset$\\
+2.) $A_i \subset$ M \\
+3.) $A_i \cap A_J$ = $\emptyset$\\
+4.) $\cup A_i$ = M = $ A_1 \cup A_2 \cup A_3 ... $\\\\
+
+\textbf{Beispiel:}\\
+a) M:= N* = {1,2,3,..} \\
+$A_1 := ${1},$ A_2 := ${2},$ A_3 := ${$x \in N* | x \geq 3$} \\
+$\pi$ = {$A_1,A_2,A_3$} ist eine Partition von M.\\
+b) M := RxR \\
+$A_a$ = {(x,y) | x=a, y $\in$ R }\\
+
+$\pi$ = { $A_a $ | $a \in R $}
+
+\section{Relationen}
+Durch Relationen werden Beziehungen zwischen Objekten ausgedrückt.\\
+Eine Relation ist stets eine Teilmenge des kartesischen Produktes.
+Seien $M_1,...,M_n$ Mengen\\\\
+
+\textbf{Definition}\\
+Eine Teilmenge $ R \subset M_1 x M_2 x ... x M_n$\\
+heisst eine n-stellige Relation auf $M_1, M_2,...,M_n$\\\\
+
+\textbf{Beispiel 1:}\\
+M = { Einwohner von Brugg }\\
+$R_1 \subset MxMxM // M^3 $\\
+(a,b,c) $ \in R_1 : <==> $ "a ist Vater von c", "b ist Mutter von c"\\\\
+
+\textbf{Beispiel 2:}\\
+$R_2 \subset R^2 = RyR$\\
+$R_2 = {(x,y) | x^2+y^2=1} \subset RxR$\\\\
+
+\textbf{Beispiel 3:}\\
+$R_3 \subset R^2 = RyR$\\
+$R_2 = {(x,y) | y=e^x}$\\\\
+
+\textbf{Beispiel 4:}\\
+Sei A eine beliebige Menge.\\
+$R_4 := {(B,C) | B \subset C \subset C \subset A} P(A)x(PaA)$\\
+
+\subsection{Beschränkung auf binäre Relationen: R $\subset M_1xM_2$}
+\textbf{Notation:} $ xRy : <==> (x,y) \in R \subset M_1 x M_2$ \\
+\subsection{Darstellung von binären Relationen auf endlichen Mengen}
+Sei {R} $\subset M^2$ = MxM // Relation "auf" der Menge M \\
+1) Matrizen\\
+M:= {$m_1,m_2,m_3$} Wir nummerieren die Elemente
+$A_R$ := 3x3 Matrix, $a_ij$ = {0, falls ($m_i$,$,_j$) $\not\in R$, 1, sonst }\\
+2) (gerichtete Graphen) \\
+M:= {$a_y,a_2,a_3,a_4$}\\
+$R\subset M^2$ : R = {($a_1,a_4$),($a_4,a_3$),($a_2,a_3$)}\\
+$G_R$ Punkte = Elemente der Menge M
+
+\subsection{Spezielle Eigenschaften von Relationen}
+\textbf{Definition}\\
+1) $R \subset M^2$ reflexiv $: <==> \forall x \in M : (x,x) \in R$ \\
+2) $R \subset M^2$ irreflexiv $: <==> \forall x \in M : (x,x) \not\in R$ \\
+3) $R \subset M^2$ symmetrisch $: <==> \forall x,y \in M : (y,x) \in R \rightarrow (y,x) \in R$ \\
+4) $R \subset M^2$ antisymmetrisch $: <==> \forall x,y \in M : (y,x) \in R \rightarrow x=y $\\
+5) $R \subset M^2$ transitiv $: <==> \forall x,y,z \in M : (x,y),(y,z) \in R \rightarrow (x,z)\in R$ \\
+
+\textbf{Beispiel} M := {1,2,3,4}\\
+1) $R_1 = \{ (1,1),(2,2),(1,2),(3,3),(4,4)\} \subset M^2$\\
+- reflexiv, antisymmetrisch, transitiv\\
+2) $R_2 = \{ (1,2),(2,1),(2,3),(3,2),(1,1)\} \subset M^2$\\
+- nur symmetrisch\\
+3) $R_3 = \{ (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4),(4,4)\} \subset M^2$\\
+- transitiv \\
+4) $R_4 = \{ (1,2),(2,3),(2,4),(3,3)\} \subset M^2$\\
+- keine speziellen Eigenschaften\\
+5) $R_5 = \emptyset $\\
+- alles ausser reflexiv
+
+\end{document}
