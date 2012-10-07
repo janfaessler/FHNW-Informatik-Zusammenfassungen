@@ -17,10 +17,10 @@ Diese Objekte heissen Elemente.\\
 Notation: X $ /in $ M $\rightarrow$ X ist Element von M\\
 Eine Menge ist durch ihre Elemente eindeutig bestimmt.\\
 \\
-Bsp: M = {1,2,3}, M = N $\rightarrow$ N = {3,1,2}\\
+Bsp: M = {1,2,3}, M = N $\rightarrow$ N = \{3,1,2\}\\
 \\
 Beschreibung von Mengen\\
-1. Durch Aufzählung: M = { 1,2,3 }\\
+1. Durch Aufzählung: M = \{ 1,2,3 \}\\
 2. Durch Prädikate:  M = ${x | P(x)}$  "Menge aller x, die das Prädikat P erfüllen"
 3. grafische Darstellung (Venn-Diagramme)\\
 Bsp. $a \in A, d \in B, c \in A, c \in B$\\
@@ -29,9 +29,9 @@ Bsp. $a \in A, d \in B, c \in A, c \in B$\\
 $\forall x \in G: $   "Für alle x aus der Menge G ..."\\
 $\exists x \in G: $   "Es existiert ein Element x in der Menge G ..."\\\\
 Beispiele:\\
-1. G := N = {0,1,2,3...}\\
-   A := {1,2}\\
-   B := {3,4}\\
+1. G := N = \{0,1,2,3...\}\\
+   A := \{1,2\}\\
+   B := \{3,4\}\\
 $   A B = \emptyset$\\
 
 \subsubsection{Satz 1}
@@ -40,12 +40,12 @@ $   A B = \emptyset$\\
 
 \subsection{weitere Mengen-Konstruktionen}
 \subsubsection{Potenzmenge}
-\textbf{Definition:} $ P(M) := { x | x M } $ Potenzmenge von M\\
+\textbf{Definition:} $ P(M) := \{ x | x M \} $ Potenzmenge von M\\
 Die Menge aller Teilmengen von M\\
 \textbf{Beispiele}\\
-a) $ M:={1} \rightarrow P(M) = {\emptyset,{1}}$\\
-b) $ M:= {1,2,3} \rightarrow P(M) = {\emptyset, {1},{2},{3},{1,2},{2,3},{1,3},{1,2,3}}$\\
-c) $ M:= \emptyset \rightarrow P(M) = {\emptyset}$
+a) $ M:=\{1\} \rightarrow P(M) = \{\emptyset,\{1\}\}$\\
+b) $ M:= \{1,2,3\} \rightarrow P(M) = \{\emptyset, \{1\},\{2\},\{3\},\{1,2\},\{2,3\},\{1,3\},\{1,2,3\}\}$\\
+c) $ M:= \emptyset \rightarrow P(M) = \{\emptyset \}$
 
 \subsubsection{das kartesische Produkt}
 Seien A, B Mengen, $a \in A$, $b \in B$\\
@@ -53,14 +53,14 @@ Seien A, B Mengen, $a \in A$, $b \in B$\\
 \textbf{Bemerkung:} (a,b) = (c,d) $\rightarrow$ a=c und b=d\\\\
 
 \textbf{Definition:} Seien A,B Mengen\\
-$AxB := { (x,y) | x \in A, y \in B }$ heisst das kartesische Produkt von A und B.\\\\
+$AxB := \{ (x,y) | x \in A, y \in B \}$ heisst das kartesische Produkt von A und B.\\\\
 
 \textbf{Beispiel:} \\
-a) ${1,2,3} x {4,5}$ // i.a. $AxB \neq BxA$\\
-= { (1,4),(1,5),(2,4),(2,5),(3,4),(3,5) } \\
-b) {1,2}x{1,2} = {(1,1),(1,2),(2,1),(2,2)}\\
-c) A = {a,b}\\
-$Ax\emptyset$ = {(a,$\emptyset$),(b,$\emptyset$)}\\
+a) $\{1,2,3\} x \{4,5\}$ // i.a. $AxB \neq BxA$\\
+= \{ (1,4),(1,5),(2,4),(2,5),(3,4),(3,5) \} \\
+b) \{1,2\}x\{1,2\} = \{(1,1),(1,2),(2,1),(2,2)\}\\
+c) A = \{a,b\}\\
+$Ax\emptyset$ = \{(a,$\emptyset$),(b,$\emptyset$)\}\\
 
 \subsubsection{Partitionen}
 Gegeben eine Menge M\\
@@ -73,13 +73,13 @@ $\pi := \{ A_i | i \in I \}$ \\
 4.) $\cup A_i$ = M = $ A_1 \cup A_2 \cup A_3 ... $\\\\
 
 \textbf{Beispiel:}\\
-a) M:= N* = {1,2,3,..} \\
-$A_1 := ${1},$ A_2 := ${2},$ A_3 := ${$x \in N* | x \geq 3$} \\
-$\pi$ = {$A_1,A_2,A_3$} ist eine Partition von M.\\
+a) M:= N* = \{1,2,3,..\} \\
+$A_1 := $\{1\},$ A_2 := $\{2\},$ A_3 := $\{$x \in N* | x \geq 3$\} \\
+$\pi$ = \{$A_1,A_2,A_3$\} ist eine Partition von M.\\
 b) M := RxR \\
-$A_a$ = {(x,y) | x=a, y $\in$ R }\\
+$A_a$ = \{(x,y) | x=a, y $\in$ R \}\\
 
-$\pi$ = { $A_a $ | $a \in R $}
+$\pi$ = \{ $A_a $ | $a \in R $\}
 
 \section{Relationen}
 Durch Relationen werden Beziehungen zwischen Objekten ausgedrückt.\\
@@ -97,26 +97,26 @@ $R_1 \subset MxMxM // M^3 $\\
 
 \textbf{Beispiel 2:}\\
 $R_2 \subset R^2 = RyR$\\
-$R_2 = {(x,y) | x^2+y^2=1} \subset RxR$\\\\
+$R_2 = \{(x,y) | x^2+y^2=1\} \subset RxR$\\\\
 
 \textbf{Beispiel 3:}\\
 $R_3 \subset R^2 = RyR$\\
-$R_2 = {(x,y) | y=e^x}$\\\\
+$R_2 = \{(x,y) | y=e^x\}$\\\\
 
 \textbf{Beispiel 4:}\\
 Sei A eine beliebige Menge.\\
-$R_4 := {(B,C) | B \subset C \subset C \subset A} P(A)x(PaA)$\\
+$R_4 := \{(B,C) | B \subset C \subset C \subset A\} P(A)x(PaA)$\\
 
 \subsection{Beschränkung auf binäre Relationen: R $\subset M_1xM_2$}
 \textbf{Notation:} $ xRy : <==> (x,y) \in R \subset M_1 x M_2$ \\
 \subsection{Darstellung von binären Relationen auf endlichen Mengen}
 Sei {R} $\subset M^2$ = MxM // Relation "auf" der Menge M \\
 1) Matrizen\\
-M:= {$m_1,m_2,m_3$} Wir nummerieren die Elemente
-$A_R$ := 3x3 Matrix, $a_ij$ = {0, falls ($m_i$,$,_j$) $\not\in R$, 1, sonst }\\
+M:= \{$m_1,m_2,m_3$\} Wir nummerieren die Elemente
+$A_R$ := 3x3 Matrix, $a_ij$ = \{0, falls ($m_i$,$,_j$) $\not\in R$, 1, sonst \}\\
 2) (gerichtete Graphen) \\
-M:= {$a_y,a_2,a_3,a_4$}\\
-$R\subset M^2$ : R = {($a_1,a_4$),($a_4,a_3$),($a_2,a_3$)}\\
+M:= \{$a_y,a_2,a_3,a_4$\}\\
+$R\subset M^2$ : R = \{($a_1,a_4$),($a_4,a_3$),($a_2,a_3$)\}\\
 $G_R$ Punkte = Elemente der Menge M
 
 \subsection{Spezielle Eigenschaften von Relationen}
@@ -138,5 +138,48 @@ $G_R$ Punkte = Elemente der Menge M
 - keine speziellen Eigenschaften\\
 5) $R_5 = \emptyset $\\
 - alles ausser reflexiv
+
+\subsection{Äquivalenzrelationen}
+\textbf{Definition}\\
+R $\subset$ M x M heisst Äquivalenzrelation \\
+1) R ist reflexiv\\
+2) R ist symmetrisch\\
+3) R ist transitiv\\\\
+\textbf{Beispiel}
+M := \{1,2,3,4,5\}\\
+R = \{(1,1)(2,2),(3,3),(4,4),(5,5),(1,2),(2,1),(1,3),(3,1),(2,3),(3,2),(4,5),(5,4)\}\\
+Sei R eine Äquivalenzrelation auf M und a $\in$ M.\\
+$\textbf{Definition}$\\
+$\lbrack a \rbrack := \{x \in M | (x,a) \in R \}$\\
+$\lbrack a \rbrack $ist die Äquivalenzklasse von a bzgl. R (in M.).\\
+
+\textbf{Beispiel}\\
+$\lbrack 1 \rbrack = \{1,2,3\} \subset $ M\\
+$\lbrack 2 \rbrack = \{2,1,3\} $\\
+$\lbrack 3 \rbrack = \{3,2,1\} $\\
+$\lbrack 4 \rbrack = \{4,5\} $\\
+$\lbrack 5 \rbrack = \{5,4\} $\\
+
+
+\textbf{Satz 2} \\
+Voraussetzung: R ist Äquivalenzrelation auf M\\
+Behauptung: $\Pi := \{\lbrack a \rbrack | a \in M\}$ ist eine Partition von M.\\
+Beweis: 1) $\forall a \in M : a \in \lbrack a \rbrack , weil R reflexiv : \forall x \in M : (x,x) \in R$\\
+d.h. $\lbrack a \rbrack \not$= $\emptyset$ und U $\lbrack$a$\rbrack$ = M (x), a $\in$ M\\
+$M = U{a} \subset a \in \lbrack a \rbrack \rightarrow {a} \subset \lbrack a \rbrack $\\
+2) $\lbrack a \rbrack \cap \lbrack b \rbrack \not$= $\emptyset \rightarrow \lbrack a \rbrack = \lbrack b \rbrack$ \\
+Sei $\lbrack a \rbrack \cap \lbrack \not$=$\emptyset \rightarrow \exists c \in M : c \in \lbrack a \rbrack \cap \lbrack b \rbrack, d.h. c \in \lbrack a \rbrack und c \in \lbrack b \rbrack $\\
+$\rightarrow (c,a) \in R und (c,b) \in R$ \\
+R symmetrisch: (c,a)$\in$ R $\rightarrow (a,c) \in$ R \\
+R transitiv: (a,c) $\in$ R und (c,b) $\in$ R $\rightarrow$ (a,b) $\in$ R\\
+
+Wir zeigen: $\lbrack a \rbrack \subset \lbrack b \rbrack (und \lbrack b \rbrack \subset \lbrack a \rbrack$\\
+z.Z. d $\in \lbrack a \rbrack \rightarrow d \in \lbrack b \rbrack$ \\
+
+d $\in \lbrack a \rbrack , d.h. (d,a) \in R, und (a,b) \in R (R ist transitiv)$\\
+(d,b) $\in R,d.h. d \in \lbrack b \rbrack$
+
+
+
 
 \end{document}
