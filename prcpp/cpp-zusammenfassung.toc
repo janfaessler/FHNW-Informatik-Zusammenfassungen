@@ -1,0 +1,21 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Einleitung}{1}
+\contentsline {subsection}{\numberline {1.1}C++ verglichen mit Java}{1}
+\contentsline {subsubsection}{\numberline {1.1.1}Gemeinsamkeiten}{1}
+\contentsline {subsubsection}{\numberline {1.1.2}Unterschiede}{1}
+\contentsline {subsection}{\numberline {1.2}C++-Dateien}{1}
+\contentsline {subsection}{\numberline {1.3}Programmerzeugung}{1}
+\contentsline {subsubsection}{\numberline {1.3.1}Pr\"aprozessor}{1}
+\contentsline {subsubsection}{\numberline {1.3.2}Compiler}{2}
+\contentsline {subsubsection}{\numberline {1.3.3}Linker (Binder)}{2}
+\contentsline {section}{\numberline {2}Variablen und Methoden}{3}
+\contentsline {subsection}{\numberline {2.1}Global}{3}
+\contentsline {subsection}{\numberline {2.2}Modular}{3}
+\contentsline {subsection}{\numberline {2.3}Einfache Datentypen}{3}
+\contentsline {subsection}{\numberline {2.4}Schl\"usselw\"orter}{3}
+\contentsline {subsection}{\numberline {2.5}Initialisierungslisten}{4}
+\contentsline {section}{\numberline {3}Zeiger \& Referenzen}{5}
+\contentsline {subsection}{\numberline {3.1}Zeiger und Adressoperator}{5}
+\contentsline {section}{\numberline {4}Klassen}{6}
+\contentsline {subsection}{\numberline {4.1}Deklaration}{6}
+\contentsline {subsection}{\numberline {4.2}Instanzen}{6}

@@ -1,0 +1,278 @@
+\documentclass[a4paper, 11pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx} %for header/footer
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+
+% Listings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+
+% Code listenings
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+ 
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+%Metadata
+\title{C++}
+\author{Jan Fässler}
+\date{3. Semester (HS 2012)}
+\fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
+
+% hier beginnt das Dokument
+\begin{document}
+
+% Titelbild
+\maketitle
+\thispagestyle{fancy}
+
+\newpage
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman}
+\tableofcontents	  	
+
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% Inhalt Start
+
+\section{Einleitung}
+
+\subsection{C++ verglichen mit Java}
+\subsubsection{Gemeinsamkeiten}
+\begin{itemize}
+	\item typisierte, objektorientierte Sprache
+	\item sehr ähnliche Syntax (Java-Syntax wurde an C++ angelehnt)
+	\item ähnliche Grundtypen, Operatoren und Klassenkonzept
+\end{itemize}
+\subsubsection{Unterschiede}
+\begin{itemize}
+	\item C++-Programm muss nicht objektorientiert sein
+	\item plattformabhängiger Maschinencode anstatt Bytecode für die VM
+	\item C++-Programme ko?nnen aufs unterliegende System zugreifen
+	\item Flexibleres Speichermanagement
+	\item Flexiblerer Polymorphismus
+	\item Effizienz vor Sicherheit
+	\item Unterscheidung zwischen Referenzen und Zeigern
+	\item keine strikt geschachtelten Namensräume
+	\item Trennung zwischen Schnittstelle und Implementierung
+\end{itemize}
+
+\subsection{C++-Dateien}
+\begin{description}
+	\item[*.c] \hfill \\
+		Dateien, die mit dem C-Compiler kompiliert werden
+	\item[*.cpp] \hfill \\
+		Dateien, die mit dem C++-Compiler kompiliert werden
+	\item[Header-Datei (*.h)] \hfill \\
+		enthält oft mehrfach benötigte Definitionen und wird nicht direkt kompiliert, sondern in eine oder mehrere cpp-Dateien importiert
+	\item[*.hpp] \hfill \\
+		ursprünglich als reine C++-Header-Dateien gedacht, werden aber selten verwendet
+\end{description}
+
+\subsection{Programmerzeugung}
+\subsubsection{Präprozessor}
+\begin{itemize}
+	\item Programmcode darf Makros enthalten
+	\item Makros werden unmittelbar vor der Kompilation evaluiert
+	\item Bsp. Substitution von Konstanten, bedingte Kompilation
+	\item Verwendung: 
+		\begin{description}
+			\item[\#define] \hfill \\ 
+				definiert ein Symbol/Makro mit oder ohne Parameter
+			\item[\#undef] \hfill \\ 
+				löscht eine Definition eiens Symbols/Makros, bzw ist danach nicht mehr definiert
+			\item[\#ifdef und \#endif] \hfill \\ 
+				bedingte Kompilation: die Kompilation eines Textblocks ist abha?ngig von der Definition eines Symbols
+		\end{description}
+\end{itemize}
+\subsubsection{Compiler}
+\begin{itemize}
+	\item Syntaxüberprüfung des Quellcodes
+	\item Erzeugung von Objektdateien (Maschinencode mit unaufgelösten Verknüpfungen zu anderen Objektdateien)
+	\item Der C++-Compiler ist ein One-Pass-Compiler. Das bedeuted bevor ein Bezeichner (Variable, Klasse usw.) verwendet werden darf, muss er deklariert bzw. definiert werden. Die Deklaration bzw. Definition eines Bezeichners muss vor seiner Benutzung kompiliert werden.
+\end{itemize}
+\subsubsection{Linker (Binder)}
+\begin{itemize}
+	\item Erzeugung von Bibliotheken oder ausführbaren Programmen aus einzelnen Objektdateien
+	\item Verknüpfungen zwischen Objektdateien werden aufgelöst
+	\item Optimierungen (z.B. Entfernung nicht verwendeter Prozeduren) sind möglich
+\end{itemize}
+
+\newpage
+\section{Variablen und Methoden}
+\subsection{Global}
+\begin{description}
+	\item[Java] \hfill
+		\begin{itemize}
+			\item Main-Methode ist eine Klassenmethode, also Teil einer Klasse
+			\item Klassen sind Teil eines Packages (evtl. unbenanntes Package)
+			\item Klassenvariablen geho?ren zum Namensraum einer Klasse
+		\end{itemize}
+	\item[C++] \hfill
+		\begin{itemize}
+			\item Main-Funktion ist global (Teil des globalen Namensraums)
+			\item Klassen, Methoden, Variablen sind Teil eines Namensraums (benannt oder global)
+			\item uneingeschränkte Sichtbarkeit: aus allen Programmteilen ko?nnen sie verwendet werden (Sichtbarkeit u?ber die Objektdateigrenze hinweg)
+			\item Verwendung: wenn immer möglich vermeiden, da das Information Hiding Prinzip stark unterwandert wird
+		\end{itemize}
+\end{description}
+
+\subsection{Modular}
+\begin{description}
+	\item[Sichtbarkeitsbereich] \hfill \\
+		... ist beschränkt auf die Objektdatei, jedoch über Methoden- und Klassengrenzen hinweg
+	\item[Einsatzgebiet] \hfill \\
+		bei nicht-objektorientierter Programmierung als Ersatz von Klassenvariablen und -methoden (in OO: Einsatz vermeiden)
+\end{description} 
+
+\subsection{Einfache Datentypen}
+Speicherbedarf der einfachen Datentypen ist Compiler spezifisch. Alle ganzzahligen Datentypen (inkl. char) gibt es vorzeichenlos (unsigned) und vorzeichenbehaftet (signed) in der Zweierkomplementdarstellung.
+
+\subsection{Schlüsselwörter}
+\begin{description}
+	\item[typedef] \hfill \\
+		Es dient der Festlegung eigener Typenbezeichner.\\ 
+		Bsp.: \\ typedef int INT32; \\ typedef unsigned long long int UINT64;
+	\item[using (C++11)] \hfill \\
+		Dieses kann auch fu?r eigene Typenbezeichner verwendet werden. \\ 
+		Bsp.: \\ using INT32 = int; \\ using UINT64 = unsigned long long int;
+	\item[auto (C++11)] \hfill \\
+		Bei Variablendefinitionen, wo aus dem Initialisierungswert der Variable der Typ der Variable fu?r den Compiler automatisch ersichtlich ist, kann das Schlu?sselwort auto anstatt des konkreten Typs hingeschrieben werden. \\ 
+		Bsp.: \\ auto x = 7; \\ double f(); \\ auto g = f();
+	\item[decltype (C++11)] \hfill \\
+		decltype(x) ist eine Funktion, welche den Deklarationstyp des Ausdruckes x zuru?ckgibt. \\
+		Bsp.: \\ decltype(8) y = 8; \\ decltype(g) h = 5.5;
+	\item[const] \hfill \\
+		Im Gegensatz zu Java wo dieses Wort reserviert aber nicht verwendet wird, hat es in C++ vielfältiger Einsatz mit unterschiedlicher Semantik. Die hier verwendete Semantik: nach Initialisierung nur noch lesender Zugriff. \\
+		Beispiele: \\
+		const unsigned int SIZE = 1000; \\ const auto LENGTH = 500; \\ const char GRADES[] = { 'A', 'B', 'C', 'D', 'E', 'F' };  \\ const char NOTEN[] = { 1, 2, 3, 4, 5, 6 }; \\ double const PI = 3.141596; \\ auto const PID2 = PI/2;
+	\item[constexpr (C++11)] \hfill \\
+	Verallgemeinerung des Schlüsselwort const fu?r konstante Ausdrücke, welche auch Funktionsaufrufe und als Spezialfall auch Konstruktoren enthalten dürfen und stellt statische Initialisierung zur Kompilationszeit sicher. \\
+	Beispiel: \\ constexpr int getFive() { return 2 + 3; } \\ int array[getFive() + 7];
+\end{description}
+
+\subsection{Initialisierungslisten}
+\begin{lstlisting}[language=Java, label=Initialisierungsliste, caption=Initialisierungsliste, style=JavaStyle]
+#include <initializer_list> struct Tuple {
+int value[];
+Tuple(initializer_list<int> v);
+Tuple(int a, int b, int c); Tuple(initializer_list<int>v,size_tcap); //#3
+};
+Tuple t1{1, 2, 3};    // Konstruktor #1 wird verwendet
+Tuple t2{2, 4, 6, 8}; // Konstruktor #1 wird verwendet
+Tuple t3(4, 5, 6};    // Konstruktor #2 wird verwendet
+\end{lstlisting}
+Die Initialisierungslisten sind ein neuer C++ Typ. Wenn die Initialisierungsliste der einzige Parameter ist, kann wie oben gezeigt vorgegangen werden. Wenn noch weitere Parameter vorhanden sind, dann müssen die geschweiften Klammern verschachtelt werden Tuple: \\ t4 = \{\{1, 2, 3, 4\}, 4\};
+
+\newpage
+\section{Zeiger \& Referenzen}
+
+\subsection{Zeiger und Adressoperator}
+Ein Zeiger zeigt auf eine Speicherstelle des (virtuellen) Adressraums. Zeigen können im Quellcode Typinformationen mitführen. Von jeder Variable und jedem Objekt kann mit dem Adressoperator \& zur Laufzeit die Adresse (Speicherstelle) abgefragt werden. \\ \\
+Zeigervariablen bzw. Zeiger zeigen auf gültige Speicheradressen (zB. dynamische Objekte, aufs erste Element von Arrays oder auf statische Variablen und Objekte). Sie können aber auch auf ungültige Speicheradressen zeigen. Sie  haben einen Typ \"{}Zeiger auf ...\"{}. Soll eine Zeigervariable auf eine Instanz der Klasse C zeigen, so muss der Typ der Zeigervariablen zur Klasse C zuweisungskompatibel sein
+\begin{lstlisting}[language=Java, caption=Zeigerbeispiele, style=JavaStyle]
+typedef unsigned int * PUInt32;
+char text[] = "test";
+unsigned int i = 2;
+char c = text[i + 1];
+char *p = text, *q = text + 1, *r = &text[i], *s = &c, *t = nullptr, *u = 0;
+PUInt32 x = &i;
+void *y = x;
+\end{lstlisting}
+
+\newpage
+\section{Klassen}
+\subsection{Deklaration}
+In C++ kann man Klassen auf zwei Arten erzeugen:
+\begin{description}
+	\item[struct] \hfill \\
+		in C: Verbund (Record) von verschiedenen Datenfeldern \\
+		in C++: öffentliche Klasse (alle Members sind public per Default)
+		\begin{lstlisting}[language=Java, caption=struct-Klasse, style=JavaStyle]
+struct Point {
+	int m_x, m_y;
+	void setY(int y) { m_y = y; }
+};
+		\end{lstlisting}
+	\item[class] \hfill \\
+		nur in C++: alle Members sind private per Default
+		\begin{lstlisting}[language=Java, caption=class-Klasse, style=JavaStyle]
+class Person {
+		char m_name[20];
+		int m_alter; 
+	public:
+		char * getName() { return m_name; }
+};
+		\end{lstlisting}
+\end{description}
+
+\subsection{Instanzen}
+\begin{lstlisting}[language=Java, caption=Erzeugen von Instanzen, style=JavaStyle]
+Point pnt1;                   // auf Stack
+Point *pnt2 = new Point();    // auf Heap
+Person pers1;                 // auf Stack
+Person *pers2 = new Person(); // auf Heap
+Person& refP = pers1;
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption=Zugriff auf Instanzvariablen und Instanzmethoden, style=JavaStyle]
+pnt1.m_x = 3; 
+pnt1.setY(pnt1.m_x);
+pnt2->m_x = 4; 
+pnt2->setY(pnt2->m_x); 
+char *name = pers1.getName();
+name = pers2->getName();
+name = refP.getName();
+\end{lstlisting}
+% Inhalt Ende
+\end{document}
