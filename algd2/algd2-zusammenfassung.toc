@@ -1,3 +1,6 @@
 \select@language {ngerman}
 \contentsline {section}{\numberline {1}Listen}{1}
 \contentsline {subsection}{\numberline {1.1}Stack}{2}
+\contentsline {subsection}{\numberline {1.2}Erweiterte Liste}{2}
+\contentsline {subsubsection}{\numberline {1.2.1}Iterators}{4}
+\contentsline {subsubsection}{\numberline {1.2.2}Merge Sort}{5}

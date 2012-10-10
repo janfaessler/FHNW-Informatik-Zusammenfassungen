@@ -33,13 +33,18 @@
  basicstyle=\footnotesize\ttfamily, % Standardschrift
  numbers=left,               % Ort der Zeilennummern
  numberstyle=\tiny,          % Stil der Zeilennummern
- %stepnumber=2,              % Abstand zwischen den Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
  numbersep=5pt,              % Abstand der Nummern zum Text
  tabsize=2,                  % Groesse von Tabs
  extendedchars=true,         %
  breaklines=true,            % Zeilen werden Umgebrochen
  frame=b,         
- stringstyle=\color{white}\ttfamily, % Farbe der String
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
  showspaces=false,           % Leerzeichen anzeigen ?
  showtabs=false,             % Tabs anzeigen ?
  xleftmargin=17pt,
@@ -87,15 +92,24 @@ Es gibt drei verschiedene Arten von Listen:\\
 \includegraphics[scale=0.4]{listen.png}
 \end{center}
 
-\lstinputlisting[language=java,caption=Einfache verkettete Liste,style=JavaStyle]{linked_list.java}
+\lstinputlisting[language=java,caption=einfache Linked List,style=JavaStyle]{linked_list.java}
+
 
 \subsection{Stack}
 Der Stack ist eine dynamische Datanstruktur bei der man nur auf das oberste Element des Stabels zugreifen (top), ein neues Element auf den Stabel legen (push) oder das oberste Element des Stapels entfernen (pop) kann.
 \lstinputlisting[language=java,caption=Implementierung eines Stacks,style=JavaStyle]{stack.java}
 
+\subsection{Erweiterte Liste}
+Dies ist mal eine mögliche und vor allem nur teilweise Implementierung einer doppelt verlinkten Liste. Die Implementierung des Iterators und der sortierung sind ausgeklammert in Unterkapitel.
+\lstinputlisting[language=java,caption=Liste mit Iterator,style=JavaStyle]{advanced_list.java}
 
+\subsubsection{Iterators}
+Die Schnittstelle java.util.Iterator, erlaubt das Iterieren von Containerklassen. Jeder Iterator stellt Funktionen namens next(), hasNext() sowie eine optionale Funktion namens remove() zur Verfügung. Der folgende ListIterator stellt auch noch Funktionen für rückwertsiterieren zur Verfügung, sowie die Möglichkeit den aktuellen Index abzufragen. Zudem kann damit noch direkt über den Iterator Elemente eingefügt oder ersetzt werden.
 
+\lstinputlisting[language=java,caption=Iterators,style=JavaStyle]{linked_list_iterators.java}
 
+\subsubsection{Merge Sort}
+\lstinputlisting[language=java,caption=Merge Sort,style=JavaStyle]{linked_list_mergesort.java}
 
 % Inhalt Ende
 \end{document}
