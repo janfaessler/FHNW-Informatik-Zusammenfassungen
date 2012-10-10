@@ -121,11 +121,11 @@ $G_R$ Punkte = Elemente der Menge M
 
 \subsection{Spezielle Eigenschaften von Relationen}
 \textbf{Definition}\\
-1) $R \subset M^2$ reflexiv $: <==> \forall x \in M : (x,x) \in R$ \\
-2) $R \subset M^2$ irreflexiv $: <==> \forall x \in M : (x,x) \not\in R$ \\
-3) $R \subset M^2$ symmetrisch $: <==> \forall x,y \in M : (x,y) \in R \rightarrow (y,x) \in R$ \\
-4) $R \subset M^2$ antisymmetrisch $: <==> \forall x,y \in M : (y,x) \in R \and (x,y) \in R \rightarrow x=y $\\
-5) $R \subset M^2$ transitiv $: <==> \forall x,y,z \in M : (x,y),(y,z) \in R \rightarrow (x,z)\in R$ \\
+1) $R \subset M^2$ reflexiv: $<==> \forall x \in M : (x,x) \in R$ - alle Loops\\
+2) $R \subset M^2$ irreflexiv: $<==> \forall x \in M : (x,x) \not\in R$ - keine Loops\\
+3) $R \subset M^2$ symmetrisch: $<==> \forall x,y \in M : (x,x) \in R \rightarrow (y,x) \in R$ - nur Doppelpfeile\\
+4) $R \subset M^2$ antisymmetrisch: $<==> \forall x,y \in M : (x,y) \in \wedge (y,x) \in R \rightarrow x=y $ - keine Doppelpfeile\\
+5) $R \subset M^2$ transitiv: $<==> \forall x,y,z \in M : (x,y),(y,z) \in R \rightarrow (x,z)\in R$ - Abkürzungen \\
 
 \textbf{Beispiel} M := {1,2,3,4}\\
 1) $R_1 = \{ (1,1),(2,2),(1,2),(3,3),(4,4)\} \subset M^2$\\
@@ -179,7 +179,65 @@ z.Z. d $\in \lbrack a \rbrack \rightarrow d \in \lbrack b \rbrack$ \\
 d $\in \lbrack a \rbrack , d.h. (d,a) \in R, und (a,b) \in R (R ist transitiv)$\\
 (d,b) $\in R,d.h. d \in \lbrack b \rbrack$
 
+\subsection{Relationsoperationen}
+Sei M eine Menge.\\
+Wir betrachten binäre Relationen auf M: R $\subset$ MxM.\\
+Seien $R_{1}, R_{2} \subset$ MxM, $R_{1}, R_{2}$ sind Mengen.\\
+Wir können die Operationen $\cap$, $\cup$ auf $R_{1}, R_{2}$ anwenden:\\
+\\
+\textbf{Beispiel:}\\
+Sei M = \{1,2,3\}\\
+$R_{1}$: (1,1),(1,2),(2,2),(2,1),(2,3),(3,2)\\
+$R_{2}$: (1,2),(2,1),(3,3)\\
+$R_{1} \cap R_{2}$: (1,2),(2,1)\\
+\\
+Nun betrachten wir Operationen, die ausnutzen, dass R eine Teilmenge eines kart. Produktes ist:\\
+Seien R,S Relationen auf M, d.h. R,S $\subset$ MxM\\
+\textbf{Definition:}\\
+$R^{T}$:= \{(x,y) | (y,x) $\in$ R \} heisst die transponierte Relation zu R.\\
+\textbf{Bemerkung:} Falls $A_{R}$ die Matrix der Relation R ist, dann ist$ A_{R}^{T}$ die Matrix von $R^{T}$.\\
+\textbf{Definition:}\\
+S $\circ$ R := \{(x,z) | $\exists y \in$ M:(x,y)$\in$ R und (y,z | $\in$ S\}\\
+heisst das Produkt von R und S\\
+\\
+\textbf{Beispiel}\\
+1) M = \{1,2,3\}\\
+R = \{(1,1),(1,2),(1,3),(2,3)\}\\
+%
+% TODO: Graph & Matrix
+%
+$R^{T}$ = \{(1,2),(2,1),(3,1),(3,2)\}\\
+\\
+%
+% TODO: Graph & Matrix
+%
+2) M = \{1,2,3,4\}\\
+R = \{(1,3),(1,4)\}\\
+S = \{(3,3),(3,2),(3,4),(4,2)\}\\
+\\
+%
+% TODO: Graph & Matrix für R und S
+%
+S $\circ$ R: \{(1,2),(1,2),(1,4),(1,3)\}\\
+%
+% TODO: Graph & Matrix für R°S
+%
+\\
+\textbf{Definition:} I := \{(x,x) | x $\in$M\}\\
+\textbf{Bemerkung:} $A_{I}$= 
+\[ \left(\begin{array}{ccc}
+1 & .. & 0 \\
+0 & 1 & 0\\
+0 & 0 & 1\\
+\end{array}\right).\]
+\\
+\textbf{Satz 3}\\
+Voraussetzung: Q,R,S $\in$ P(MxM)\\
+Behauptung:\\
+1) (Q$\circ$S)$\circ$R = Q$\circ$(S$\circ$R)\\
+2) I$\circ$R = R$\circ$I=R
 
+\subsection{Funktionen}
 
 
 \end{document}
