@@ -111,5 +111,17 @@ Die Schnittstelle java.util.Iterator, erlaubt das Iterieren von Containerklassen
 \subsubsection{Merge Sort}
 \lstinputlisting[language=java,caption=Merge Sort,style=JavaStyle]{linked_list_mergesort.java}
 
+\subsection{Skip-Liste}
+Die Skip-Liste ist eine sortierte, einfach verkettete Liste, die uns aber ein schnelleres Suchen von Elementen in der Datenstruktur erlaubt. In einer sortierten, verketteten Liste müssen wir jedes Element einzeln durchlaufen bis wir das gewünschten Element gefunden haben. Wenn wir nun aber in der sortierten Liste auf jedem zweiten Element eine zusätzliche Referenz auf zwei Elemente weiter hinten setzen, dann reduziert sich die Anzahl zu besuchender Elemente auf einen Schlag um rund die Hälfte. Genau betrachtet mu?ssen wir nie mehr als $(n/2) + 1$ Elemente besuchen (n ist die Länge der Liste). 
+\begin{center}
+\includegraphics[scale=0.65]{skip_liste.png}
+\end{center}
+\subsubsection{Suchen}
+Um ein Element zu finden, gehen wir so lange auf dem momentanen Level den Referenzen entlang, wie das zu suchende Element immer noch grösser ist als das gerade aktuelle. Geht es auf dem momentanen Level nicht mehr weiter, gehen wir einfach einen Level tiefer und suchen wie beschrieben weiter. Wenn wir auf Level 0 nicht mehr weiterkommen, müssen wir gerade vor dem gesuchten Element sein, oder es gibt dieses Element gar nicht.
+\subsubsection{Einfügen}
+Um ein Element einzufügen, gehen wir genau gleich wie beim Suchen vor. Zusätzlich führen wir aber noch ein Array update mit, in dem all jene Elemente gespeichert werden, auf denen wir einen Level- Wechsel vorgenommen haben. Endet die Suche, haben wir entweder ein Element mit gleichem key gefunden und ersetzen es, oder wir haben den Ort gefunden, wo wir unser Element einfügen wollen. Beim Einfügen bestimmen wir zuerst den zufälligen Level des neuen Elementes. Danach setzen wir alle Referenzen des neuen Elementes so, dass sie dorthin zeigen, wo die Elemente in unserem update-Array hinzeigen. Zum Schluss mu?ssen wir bloss noch die Referenzen der Elemente im update-Array auf das neue Element umbiegen.
+\subsubsection{Entfernen}
+Wiederum gehen wir genau gleich wie beim Suchen vor. Auch diesmal führen wir zusa?tzlich noch ein Array update mit, in dem all jene Elemente gespeichert werden, auf denen wir einen Level-Wechsel vorgenommen haben. Da wir in der Skip-Liste einen MaxLevel haben, ist die Länge des Arrays MaxLevel + 1. Ist das zu entfernende Element gefunden, müssen wir alle Referenzen umbiegen, die auf dieses Element gerichtet sind. Dazu gehen wir unser update-Array durch und biegen alle Referenzen so um, dass sie dorthin zeigen, wo unser zu entfernendes Element hinzeigt. Danach können wir das zu entfernende Element einfach aus der Liste entnehmen.
+
 % Inhalt Ende
 \end{document}

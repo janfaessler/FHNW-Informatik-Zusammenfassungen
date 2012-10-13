@@ -4,3 +4,7 @@
 \contentsline {subsection}{\numberline {1.2}Erweiterte Liste}{2}
 \contentsline {subsubsection}{\numberline {1.2.1}Iterators}{4}
 \contentsline {subsubsection}{\numberline {1.2.2}Merge Sort}{5}
+\contentsline {subsection}{\numberline {1.3}Skip-Liste}{5}
+\contentsline {subsubsection}{\numberline {1.3.1}Suchen}{5}
+\contentsline {subsubsection}{\numberline {1.3.2}Einf\"ugen}{6}
+\contentsline {subsubsection}{\numberline {1.3.3}Entfernen}{6}
