@@ -97,23 +97,24 @@
 \end{center}
 
 \subsection{Der Iterator}
-Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection mit n Elementen, n + 1 mÃ¶gliche Positionen an denen der Iterator stehen kann.
+Ein Iterator ist immer zwischen zwei Elemente. Es gibt also in einer Collection mit n Elementen, n + 1 mögliche Positionen an denen der Iterator stehen kann.
 \lstinputlisting[language=java,caption=Iterator,style=JavaStyle]{iterator-interface.java}
 
 \subsection{Die Implementierung}
 \includegraphics[scale=0.46]{jcf-implementations.png} 
 \begin{description}
-	\item[ArrayList] \hfill \\ Eine Implementierung welche ein Array darstellt bei dem man die grÃ¶sse verÃ¤ndern kann.
+	\item[ArrayList] \hfill \\ Eine Implementierung welche ein Array darstellt bei dem man die Grösse verändern kann.
 	\item[LinkedList] \hfill \\ Eine doppelt verkettete Liste.
 	\item[HashSet] \hfill \\ Die Elemente werden in einer Hash-Tabelle gespeichert.
 	\item[TreeSet] \hfill \\ Die Elemente werden in einer Baumstruktur gespeichert.
-	\item[Maps] \hfill \\ Eine Map ist wie ein WÃ¶rterbuch aufgebaut. Jeder Eintrag besteht aus einem SchlÃ¼ssel (key) und dem zugehÃ¶rigen Wert (value). Jeder SchlÃ¼ssel darf in einer Map nur genau einmal vorhanden sein.
+	\item[Maps] \hfill \\ Eine Map ist wie ein Wörterbuch aufgebaut. Jeder Eintrag besteht aus einem Schlüssel (key) und dem zugehörigen Wert (value). Jeder Schlüssel darf in einer Map nur genau einmal vorhanden sein.
 \end{description}
-Wenn eine Klasse ein Interface implementiert, mÃ¼ssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse kÃ¶nnen alle Funktionen bis auf zwei realisiert werden. FÃ¼r das HinzufÃ¼gen und fÃ¼r den Iterator benÃ¶tigt es Kentnisse Ã¼ber die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
+Wenn eine Klasse ein Interface implementiert, müssen immer alle Funktionen des Interface implementiert werden. In einer abstrakten Collection-Klasse können alle Funktionen bis auf zwei realisiert werden. Für das Hinzufügen und für den Iterator benötigt es Kentnisse über die Datenstruktur. Hier das ein Beispiel einer Abstrakten Klasse:
 \lstinputlisting[language=java,caption=Abstract Collection,style=JavaStyle]{abstract-collection.java}
 
+\newpage
 \section{Design Pattern}
-Entwurfsmuster (englisch design patterns) sind bewÃ¤hrte LÃ¶sungsschablonen fÃ¼r wiederkehrende Entwurfsprobleme sowohl in der Architektur als auch in der Softwarearchitektur und -entwicklung. Sie stellen damit eine wiederverwendbare Vorlage zur ProblemlÃ¶sung dar, die in einem bestimmten Zusammenhang einsetzbar ist.
+Entwurfsmuster (englisch design patterns) sind bewährte Lösungsschablonen für wiederkehrende Entwurfsprobleme sowohl in der Architektur als auch in der Softwarearchitektur und -entwicklung. Sie stellen damit eine wiederverwendbare Vorlage zur Problemlösung dar, die in einem bestimmten Zusammenhang einsetzbar ist.
 
 \subsection{Types of Patterns}
 \begin{description}
@@ -149,7 +150,7 @@ Entwurfsmuster (englisch design patterns) sind bewÃ¤hrte LÃ¶sungsschablonen fÃ¼r
 \section{Observer Pattern}
 Also Known As \textbf{Publish-Subscribe} or \textbf{Listener Pattern}.
 
-\subsection{Intent}
+\subsection{Ziel}
 \begin{itemize}
 	\item 1:*-Relation between objects which allows to inform the dependent objects about state changes
 	\item Consistency assurance between cooperating objects without connecting them too much
@@ -161,61 +162,35 @@ Also Known As \textbf{Publish-Subscribe} or \textbf{Listener Pattern}.
 	\includegraphics[scale=0.4]{observer-motivation.png}
 \end{center}
 
-\subsection{Structure}
+\subsection{Struktur}
 \begin{center}
-	\includegraphics[scale=0.5]{observer-structure.png}
+	\includegraphics[scale=0.9]{observer-structure.png}
 \end{center}
-
-\subsection{Participants}
-\begin{description}
-	\item[Subject] \hfill
-		\begin{itemize}
-			\item Knows its observers only through the Observer interface
-			\item Offers methods to attach or detach an observer
-		\end{itemize}
-	\item[Observer] \hfill
-		\begin{itemize}
-			\item Defines interface to publish notifications
-		\end{itemize}
-	\item[Concrete Subject] \hfill
-		\begin{itemize}
-			\item Stores state of interest to concrete observer objects
-			\item Notifies its observers when its state changes
-		\end{itemize}
-	\item[Concrete Observer] \hfill
-		\begin{itemize}
-			\item Implements Observer interface to keep its state consistent with the subject
-			\item May maintain a reference to a concrete subject
-		\end{itemize}
-\end{description}
-
-\subsection{Collaborations}
-\begin{center}
-	\includegraphics[scale=0.3]{observer-collaborations.png}
-\end{center}
-
-\subsection{Consequences}
-\begin{description}
-	\item[Decoupling] \hfill
-		\begin{itemize}
-			\item Subject only knows Observer interface, no concrete observers
-			\item Update = dynamically bound => up-calls
-			\item Subject and observer may belong to different abstraction layers
-		\end{itemize}
-	\item[Support for broadcast communication] \hfill
-		\begin{itemize}
-			\item Notification is broadcast, subject does not care about number of observers
-			\item It is up to the observer to handle or ignore notifications
-		\end{itemize}
-	\item[Unexpected updates] \hfill
-		\begin{itemize}
-			\item A simple operation on a subject may cause a cascade of updates
-		\end{itemize}
-\end{description}
 
 \subsection{Beispiel}
 \lstinputlisting[language=java,caption=Beispiel Observer Pattern,style=JavaStyle]{observer.java}
 
+\newpage
+\section{State Pattern}
+
+\subsection{Ziel}
+Die Auslagerung von zustandsspezifischem Verhalten in einer Klasse. Ermöglicht mit dem Wechsel des Zustandes eines Objektes auch leicht das Verhalten zu ändern.
+
+\subsection{Motivation}
+Die View des Grafikeditors hat eine Referenz auf ein abstraktes Tool-Interface. Diese Referenz definiert:
+\begin{itemize}
+	\item[a.] Der aktuelle Zeichenmodus
+	\item[b.] Verhalten wenn Maus gedru?ckt wird
+\end{itemize}
+
+\subsection{Struktur}
+Das zustandsabhängige Verhalten des Objekts wird in separate Klassen ausgelagert, wobei für jeden möglichen Zustand eine eigene Klasse eingeführt wird, die das Verhalten des Objekts in diesem Zustand definiert. Damit der Kontext die separaten Zustandsklassen einheitlich behandeln kann, wird eine gemeinsame Abstrahierung dieser Klassen definiert. Bei einem Zustandsübergang tauscht der Kontext das von ihm verwendete Zustandsobjekt aus.
+\begin{center}
+	\includegraphics[scale=0.6]{state-structure.png}
+\end{center}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel State Pattern,style=JavaStyle]{state.java}
 
 % Inhalt Ende
 \end{document}

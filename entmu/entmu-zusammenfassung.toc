@@ -7,10 +7,12 @@
 \contentsline {subsection}{\numberline {2.1}Types of Patterns}{3}
 \contentsline {subsection}{\numberline {2.2}Pattern Classification}{3}
 \contentsline {section}{\numberline {3}Observer Pattern}{4}
-\contentsline {subsection}{\numberline {3.1}Intent}{4}
+\contentsline {subsection}{\numberline {3.1}Ziel}{4}
 \contentsline {subsection}{\numberline {3.2}Motivation}{4}
-\contentsline {subsection}{\numberline {3.3}Structure}{4}
-\contentsline {subsection}{\numberline {3.4}Participants}{5}
-\contentsline {subsection}{\numberline {3.5}Collaborations}{5}
-\contentsline {subsection}{\numberline {3.6}Consequences}{5}
-\contentsline {subsection}{\numberline {3.7}Beispiel}{6}
+\contentsline {subsection}{\numberline {3.3}Struktur}{4}
+\contentsline {subsection}{\numberline {3.4}Beispiel}{5}
+\contentsline {section}{\numberline {4}State Pattern}{6}
+\contentsline {subsection}{\numberline {4.1}Ziel}{6}
+\contentsline {subsection}{\numberline {4.2}Motivation}{6}
+\contentsline {subsection}{\numberline {4.3}Struktur}{6}
+\contentsline {subsection}{\numberline {4.4}Beispiel}{6}
