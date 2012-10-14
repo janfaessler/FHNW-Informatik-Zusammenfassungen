@@ -116,12 +116,32 @@ Die Skip-Liste ist eine sortierte, einfach verkettete Liste, die uns aber ein sc
 \begin{center}
 \includegraphics[scale=0.65]{skip_liste.png}
 \end{center}
-\subsubsection{Suchen}
-Um ein Element zu finden, gehen wir so lange auf dem momentanen Level den Referenzen entlang, wie das zu suchende Element immer noch grösser ist als das gerade aktuelle. Geht es auf dem momentanen Level nicht mehr weiter, gehen wir einfach einen Level tiefer und suchen wie beschrieben weiter. Wenn wir auf Level 0 nicht mehr weiterkommen, müssen wir gerade vor dem gesuchten Element sein, oder es gibt dieses Element gar nicht.
-\subsubsection{Einfügen}
-Um ein Element einzufügen, gehen wir genau gleich wie beim Suchen vor. Zusätzlich führen wir aber noch ein Array update mit, in dem all jene Elemente gespeichert werden, auf denen wir einen Level- Wechsel vorgenommen haben. Endet die Suche, haben wir entweder ein Element mit gleichem key gefunden und ersetzen es, oder wir haben den Ort gefunden, wo wir unser Element einfügen wollen. Beim Einfügen bestimmen wir zuerst den zufälligen Level des neuen Elementes. Danach setzen wir alle Referenzen des neuen Elementes so, dass sie dorthin zeigen, wo die Elemente in unserem update-Array hinzeigen. Zum Schluss mu?ssen wir bloss noch die Referenzen der Elemente im update-Array auf das neue Element umbiegen.
-\subsubsection{Entfernen}
-Wiederum gehen wir genau gleich wie beim Suchen vor. Auch diesmal führen wir zusa?tzlich noch ein Array update mit, in dem all jene Elemente gespeichert werden, auf denen wir einen Level-Wechsel vorgenommen haben. Da wir in der Skip-Liste einen MaxLevel haben, ist die Länge des Arrays MaxLevel + 1. Ist das zu entfernende Element gefunden, müssen wir alle Referenzen umbiegen, die auf dieses Element gerichtet sind. Dazu gehen wir unser update-Array durch und biegen alle Referenzen so um, dass sie dorthin zeigen, wo unser zu entfernendes Element hinzeigt. Danach können wir das zu entfernende Element einfach aus der Liste entnehmen.
 
+\subsubsection{Beispiel}
+\lstinputlisting[language=java,caption=Skip List,style=JavaStyle]{skip_liste.java}
+
+\newpage
+\section{Bäume}
+Ba?ume sind verallgemeinerte Listenstrukturen. Ein Element, üblicherweise spricht man von Knoten (node), hat nicht, wie im Falle linearer Listen, nur einen Nachfolger, sondern eine endliche, begrenzte Anzahl von Söhnen. In der Regel ist einer der Knoten als Wurzel (root) des Baumes ausgeprägt. Das ist zugleich der einzige Knoten ohne Vorgänger. Jeder andere Knoten hat einen (unmittelbaren) Vorgänger, der auch Vater des Knotens genannt wird. Eine Folge $p_0$, ..., $p_k$ von Knoten eines Baumes, die die Bedingung erfüllt, dass $p_i+1$ Sohn von $p_i$ ist für $0 \leq i <$ k, heisst Pfad (path) mit Länge k, der $p_0$ mit $p_k$ verbindet. Jeder von der Wurzel verschiedene Knoten eines Baumes ist durch genau einen Pfad mit der Wurzel verbunden.
+\begin{center}
+\includegraphics[scale=0.65]{tree.png}
+\end{center}
+
+\subsection{Binäre Suchbäume}
+Ein binärer Suchbaum ist ein geordneter Baum mit Ordnung d = 2. In jedem Knoten wird ein Suchschlüssel so abgespeichert, dass alle Suchschlüssel des linken Teilbaums des Knotens kleiner und alle Suchschlüssel des rechten Teilbaums des Knotens grösser sind. Das heisst, dass an jedem Knoten alle kleineren Suchschlüssel über den linken Sohn und alle gro?sseren Suchschlüssel über den rechten Sohn erreicht werden.\\
+Die so geordneten Knoten in einem balancierten binären Suchbaum erlauben ein schnelles Suchen. Der maximale Suchaufwand hängt direkt von der Höhe des Baumes ab und wächst nur logarithmisch mit der Anzahl der Knoten im Baum.
+	
+\subsubsection{Traversieren}
+Das Durchlaufen kann auf mindestens drei verschiedene Arten erfolgen: Preorder, Inorder, Postorder.
+\begin{description}
+	\item[Inorder] \hfill \\
+		1. traversiere den linken Teilbaum des Knotens v; 2. besuche den Knoten v; 3. traversiere den rechten Teilbaum des Knotens v.
+	\item[Preorder] \hfill \\
+		Bei Preorder wird zuerst Knoten v besucht, dann erst 99 der linke Teilbaum von v in Preorder und anschliessend noch der rechte Teilbaum von v in Preorder durchlaufen.
+	\item[Postorder] \hfill \\
+		Hier wird zuerst der linke Teilbaum von v, dann der rechte Teilbaum von v und erst zum Schluss der Knoten v besucht.
+\end{description}
+
+\subsection{Balancierte Bäume}
 % Inhalt Ende
 \end{document}
