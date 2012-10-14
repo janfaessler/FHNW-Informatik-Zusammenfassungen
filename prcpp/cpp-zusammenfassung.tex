@@ -151,21 +151,14 @@
 \newpage
 \section{Variablen und Methoden}
 \subsection{Global}
-\begin{description}
-	\item[Java] \hfill
-		\begin{itemize}
-			\item Main-Methode ist eine Klassenmethode, also Teil einer Klasse
-			\item Klassen sind Teil eines Packages (evtl. unbenanntes Package)
-			\item Klassenvariablen geho?ren zum Namensraum einer Klasse
-		\end{itemize}
-	\item[C++] \hfill
+
 		\begin{itemize}
 			\item Main-Funktion ist global (Teil des globalen Namensraums)
 			\item Klassen, Methoden, Variablen sind Teil eines Namensraums (benannt oder global)
-			\item uneingeschränkte Sichtbarkeit: aus allen Programmteilen ko?nnen sie verwendet werden (Sichtbarkeit u?ber die Objektdateigrenze hinweg)
+			\item uneingeschränkte Sichtbarkeit: aus allen Programmteilen können sie verwendet werden (Sichtbarkeit über die Objektdateigrenze hinweg)
 			\item Verwendung: wenn immer möglich vermeiden, da das Information Hiding Prinzip stark unterwandert wird
 		\end{itemize}
-\end{description}
+
 
 \subsection{Modular}
 \begin{description}
@@ -177,6 +170,26 @@
 
 \subsection{Einfache Datentypen}
 Speicherbedarf der einfachen Datentypen ist Compiler spezifisch. Alle ganzzahligen Datentypen (inkl. char) gibt es vorzeichenlos (unsigned) und vorzeichenbehaftet (signed) in der Zweierkomplementdarstellung.
+
+\subsection{Neue Zeichentypen}
+\begin{description}
+	\item[bisher] \hfill
+		\begin{description}
+			\item[8-Bit String] const char *s = "{}abcd"{};
+			\item[16-Bit String] const wchar\_t *s = L"{}abcd"{};
+		\end{description}
+	\item[neu] \hfill
+		\begin{description}
+			\item[UTF8 String] const char *s = u8"{}abcd"{};
+			\item[UTF16 String] const char16\_t *s = u"{}abcd"{};
+			\item[UTF32 String] const char32\_t *s = U"{}abcd"{};
+		\end{description}
+	\item[Unicode-Codepoints] \hfill
+		\begin{description}
+			\item[16 Bit Unicode-Codepoints] \textbackslash u1234 (4-stelliger Hex-Code)
+			\item[32 Bit Unicode-Codepoints] \textbackslash u123456 (6-stelliger Hex-Code)
+		\end{description}
+\end{description}
 
 \subsection{Schlüsselwörter}
 \begin{description}
@@ -212,14 +225,15 @@ Tuple t1{1, 2, 3};    // Konstruktor #1 wird verwendet
 Tuple t2{2, 4, 6, 8}; // Konstruktor #1 wird verwendet
 Tuple t3(4, 5, 6};    // Konstruktor #2 wird verwendet
 \end{lstlisting}
-Die Initialisierungslisten sind ein neuer C++ Typ. Wenn die Initialisierungsliste der einzige Parameter ist, kann wie oben gezeigt vorgegangen werden. Wenn noch weitere Parameter vorhanden sind, dann müssen die geschweiften Klammern verschachtelt werden Tuple: \\ t4 = \{\{1, 2, 3, 4\}, 4\};
+Die Initialisierungslisten sind ein neuer C++ Typ. Wenn die Initialisierungsliste der einzige Parameter ist, kann wie oben gezeigt vorgegangen werden. Wenn noch weitere Parameter vorhanden sind, dann müssen die geschweiften Klammern verschachtelt werden Tuple: \\ t4 = \{\{1, 2, 3, 4\}, 4\}; \\
+
+
 
 \newpage
 \section{Zeiger \& Referenzen}
 
 \subsection{Zeiger und Adressoperator}
-Ein Zeiger zeigt auf eine Speicherstelle des (virtuellen) Adressraums. Zeigen können im Quellcode Typinformationen mitführen. Von jeder Variable und jedem Objekt kann mit dem Adressoperator \& zur Laufzeit die Adresse (Speicherstelle) abgefragt werden. \\ \\
-Zeigervariablen bzw. Zeiger zeigen auf gültige Speicheradressen (zB. dynamische Objekte, aufs erste Element von Arrays oder auf statische Variablen und Objekte). Sie können aber auch auf ungültige Speicheradressen zeigen. Sie  haben einen Typ \"{}Zeiger auf ...\"{}. Soll eine Zeigervariable auf eine Instanz der Klasse C zeigen, so muss der Typ der Zeigervariablen zur Klasse C zuweisungskompatibel sein
+Ein Zeiger zeigt auf eine Speicherstelle des (virtuellen) Adressraums. Zeigen können im Quellcode Typinformationen mitführen. Von jeder Variable und jedem Objekt kann mit dem Adressoperator \& zur Laufzeit die Adresse (Speicherstelle) abgefragt werden. 
 \begin{lstlisting}[language=Java, caption=Zeigerbeispiele, style=JavaStyle]
 typedef unsigned int * PUInt32;
 char text[] = "test";
@@ -228,6 +242,218 @@ char c = text[i + 1];
 char *p = text, *q = text + 1, *r = &text[i], *s = &c, *t = nullptr, *u = 0;
 PUInt32 x = &i;
 void *y = x;
+\end{lstlisting}
+
+\subsection{Zeiger und Konstanten}
+\begin{description}
+	\item[int *p = \&x] \hfill \\ 
+		nichts ist konstant
+	\item[const int *p = \&x] \hfill \\ 
+		nur Ziel ist konstant: p ist ein Zeiger auf einen konstanten Integer
+	\item[int *const p = \&x] \hfill \\ 
+		nur Zeiger ist konstant: p ist ein konstanter Zeiger auf einen Integer
+	\item[const int *const p = \&x] \hfill \\ 
+		Ziel und Zeiger sind beide konstant
+\end{description}
+
+\subsection{Referenzen}
+\begin{itemize}
+	\item eine Referenz ist ein Alias für eine andere Variable eine Referenz wird durch ein \& gekennzeichnet
+	\item eine Referenz kann nicht uninitialisiert sein
+	\item eine Neuinitialisierung ist nicht möglich
+	\item hinter der Kulisse ist eine Referenz nichts Anderes als ein Zeiger
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Beispiele, style=JavaStyle]
+int k = 2;
+int& ref = k;     // ref ist ein Alias fu?r k
+ref = 3;          // die Variable k hat nun den Wert 3
+int *pk = &k;
+int*& ref2 = pk;  // ref2 ist ein Alias fu?r den Zeiger pk
+*ref2 = 4;        // die Variable k hat nun den Wert 4
+\end{lstlisting}
+
+\subsection{Zugriff}
+\begin{lstlisting}[language=Java, caption=Zugriff auf Instanzvariablen und Instanzmethoden, style=JavaStyle]
+Person *pers = new Person(); // Pointer
+Person& refP = pers;         // Referenz
+name = pers->getName();
+name = refP.getName();
+\end{lstlisting}
+
+\subsection{Smart Pointers}
+\subsubsection{Grundlegendes}
+\begin{description}
+	\item[Prinzip] \hfill
+		\begin{itemize}
+			\item spezielle Zeigerobjekte verwalten Heap-Adressen
+			\item mittels Referenzzähler wird festgehalten, wie viele Zeigerobjekte auf das gleiche Objekt auf dem Heap zeigen
+			\item im Destruktor des Zeigerobjektes wird der Referenzzähler u?berprüft und das Objekt auf dem Heap automatisch gelöscht, wenn keine weiteren Zeigerobjekte mehr auf das gleiche Objekt zeigen
+		\end{itemize}
+	\item[Ziel] \hfill 
+		\begin{itemize}
+			\item der Umgang mit den Zeigerobjekten muss annähernd so einfach sein, wie der Umgang mit gewöhnlichen Zeigern, d.h. der Benutzer soll nichts mit dem Referenzzähler zu tun haben
+		\end{itemize}
+\end{description}
+\subsubsection{Zeigerobjekte}
+\begin{description}
+	\item[std::unique\_ptr$<T>$] \hfill
+		\begin{itemize}
+			\item Zeigerobjekt ist der Besitzer des Objektes, auf welches verwiesen wird
+			\item pro Objekt existiert ho?chstens ein einziger unique\_ptr
+			\item das Objekt wird beim Aufruf des Destruktors des Zeigerobjekts zerstört
+		\end{itemize}
+	\item[std::shared\_ptr$<T>$] \hfill
+		\begin{itemize}
+			\item Zeigerobjekt beinhaltet einen Referenzzähler
+			\item mehrere Zeigerobjekte ko?nnen auf das gleiche Objekt zeigen
+			\item das Objekt wird beim Aufruf des Destruktors des Zeigerobjekts nur dann zerstört, wenn keine weiteren Zeigerobjekte aufs gleiche Objekt zeigen
+		\end{itemize}
+	\item[std::weak\_ptr$<T>$] \hfill
+		\begin{itemize}
+			\item zum Aufbrechen von zyklischen Abhängigkeiten
+		\end{itemize}
+\end{description}
+
+\newpage
+\section{Arrays}
+\subsection{C-Arrays}
+Die Länge des Arrays wird nicht abgespeichert in C++. Die Länge ist nur im Sichtbarkeitsbereich der Definition des Arrays bekannt. Sehr grosse Arrays sollen auf dem Heap (dynamisch) angelegt werden.
+\begin{description}
+	\item[statische Erzeugung] \hfill
+		\begin{itemize}
+			\item Die Länge ist konstant und zur Kompilationszeit bekannt
+			\item Array kann auf dem Stack angelegt werden
+			\item Beispiel: char text[100];
+		\end{itemize}
+	\item[statische Erzeugung] \hfill
+		\begin{itemize}
+			\item Array wird zur Laufzeit auf dem Heap angelegt
+			\item Beispiel:
+				\begin{lstlisting}[language=Java, style=JavaStyle]
+const int len = 100; // len kann, aber muss nicht konstant sein 
+char *text = new char[len];
+delete[] text;
+				\end{lstlisting}
+		\end{itemize}
+\end{description}
+
+\subsubsection{C-Array als Funktionsparameter}
+Funktion liegt ausserhalb des Sichtbarkeitsbereichs der Definition des Arrays.
+\begin{itemize}
+	\item Länge des Arrays ist nicht bekannt und sollte als Parameter mitgegeben werden
+	\item sizeof kann nur die Anzahl Bytes des Zeigers ermitteln
+	\item 2 gleichwertige Schreibweisen:
+		\begin{itemize}
+			\item void print(char *s) \{ ... \}
+			\item void print(char s[]) \{ ... \}
+		\end{itemize}
+\end{itemize}
+
+\subsection{C-Strings}
+Ein C-String ist ein ein eindimensionales Character-Array. Das Ende der gu?ltigen Zeichenkette ist durch ein 0-Character gekennzeichnet. \\
+Der Unterschied zu anderen Arrays:
+\begin{description}
+	\item[vereinfachte Initialisierung erlaubt] \hfill 
+		\begin{itemize}
+			\item char s[] = \"{}Das ist ein Test.\"{}; // String-Schreibweise anstatt Initialisierungsliste
+			\item s zeigt auf eine Kopie des konstanten Strings \"{}Das ist ein Test.\"{}
+			\item sizeof(s) gibt den Speicherbedarf der Kopie zurück (im Sichtbereich der Def.)
+		\end{itemize}
+	\item[implizite Konstante] \hfill
+		\begin{itemize}
+			\item const char *t = \"{}Das ist ein Test.\"{};
+			\item t zeigt direkt auf den konstanten String der Länge 18!
+			\item sizeof(t) gibt die Anzahl Bytes des Zeigers t zurück
+		\end{itemize}
+\end{description}
+
+\subsection{Mehrdimensionale C-Arrays}
+\subsubsection{Grundsätze}
+\begin{itemize}
+	\item mehrdimensionale C-Arrays werden im Hintergrund als eindimensionale Arrays abgespeichert
+	\item die Länge der ersten Dimensionen ist nur im Sichtbarkeitsbereich der Definition des Arrays bekannt
+	\item die Längen der weiteren Dimensionen gehen mit in den Typ ein
+	\item sehr grosse Arrays sollen auf dem Heap (dynamisch) angelegt werden
+\end{itemize}
+\subsubsection{Statische Erzeugung}
+\begin{itemize}
+	\item Anzahl Dimensionen ist fix und zur Kompilationszeit bekannt
+	\item Längen der Dimensionen sind konstant und zur Kompilationszeit bekannt
+	\item Syntax: Type Variable [dim1][dim2] .. [dimN];
+	\item Beispiele: \\
+		int matrix[2][3]; // matrix ist nicht initialisiert \\
+		int matrix2[2][3] = \{\{ 1, 2, 3 \}, \{ 4, 5, 6 \}\};
+\end{itemize}
+\subsubsection{Dynamische Erzeugung}
+\begin{itemize}
+	\item Anzahl Dimensionen ist fix und zur Kompilationszeit bekannt
+	\item Längen der Dimensionen sind konstant und mit Ausnahme der ersten zur Kompilationszeit bekannt
+	\item Array erzeugen mit new und löschen mit delete[]
+	\item Syntax: Type (* const Variable)[dim2] .. [dimN] = new Type [dim1][dim2] .. [dimN];
+	\item Beispiele: \\
+		int (* const pMatrix)[7] = new int[5][7]; \\
+		int (* const pMatrix)[7] = new int[5][7]; \\
+		delete[] pMatrix; delete[] pFloats;
+\end{itemize}
+\subsubsection{nD-Array als Funktionsparameter}
+\begin{itemize}
+	\item Die Länge der ersten Dimension muss als Parameter zusa?tzlich übergeben werden
+	\item alle Dimensionen bis auf die erste gehen in den Typ mit ein
+	\item Interpretation als Folge von Arrays möglich
+	\item Beispiel:
+		\begin{lstlisting}[language=Java, style=JavaStyle]
+void print(int m[][dim2], int dim1) { ... }
+		\end{lstlisting}
+\end{itemize}
+\subsection{C++ Arrays}
+\begin{itemize}
+	\item Array mit fester Grösse
+	\item generische Klasse aus der STL
+	\item kapselt ein C-Array fixer Länge und bietet ein Set nützlicher Array- Methoden
+	\item Beispiele:
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=C++ Array, style=JavaStyle]
+#include <array>
+string s[] = { "ab", "cd", "ef", "gh" }; 
+const int slen = sizeof(s)/sizeof(string);
+
+array<string, slen> a;
+
+for(int i=0; i < slen; i++) {
+	cout << "a[" << i << "] = " << a[i] << endl;
+	a[i] = s[i]; // copy by value (deep copy)
+	cout << "a[" << i << "] = " << a[i] << endl;
+}
+\end{lstlisting}
+\subsection{C++ Vektoren}
+Ein Vektor ist eine generische Klasse aus der STL, sie entspricht der ArrayList aus Java. \\
+Beispiele:
+\begin{lstlisting}[language=Java, caption=C++ Vekotr, style=JavaStyle]
+#include <vector>
+string s[] = { "ab", "cd", "ef", "gh" }; 
+const int slen = sizeof(s)/sizeof(string);
+
+vector<string> v1; 
+vector<string*> v2; 
+vector<shared_ptr<string>> v3;   // C++11
+
+for(const string &t: s) {    // C++11: neue for-Schleife wie in Java
+// for(const auto& t: s) {   // wäre auch möglich
+	v1.emplace_back(t);      // copy by value (deep copy)
+	v2.push_back(new string(t));
+	v3.push_back(make_shared<string>(t));
+}
+// Iteration im alten Stiel
+for(vector<string*>::iterator i = v2.begin(); i != v2.end(); ++i) {
+	delete *i;
+}
+// Iteration im neuen Stil mit Lambda-Ausdruck (C++11)
+cout << "v3 = ";
+for_each(begin(v3), end(v3), [&](const shared_ptr<string>& s) {
+	cout << s << " (" << *s << "), ";
+});
+cout << endl;
+// Ausgabe: v3 = 003AF70C (ab), 003AF7CC (cd), 003AF764 (ef), 003AF864 (gh),
 \end{lstlisting}
 
 \newpage
@@ -255,24 +481,169 @@ class Person {
 };
 		\end{lstlisting}
 \end{description}
+\subsection{Instanztypen}
+\subsubsection{statisch}
+\begin{itemize}
+	\item Syntax: Punkt p;
+	\item Compiler hat aus der Definition der Klasse Punkt berechnet, wie viel Speicher eine Instanz der Klasse Punkt benötigt
+	\item auf dem Stack wird entsprechend Platz reserviert, so dass alle vier Attribute des Punktes abgespeichert werden können
+	\item die Variable p repräsentiert die Punktinstanz auf dem Stack
+\end{itemize}
+\subsubsection{dynamisch}
+\begin{itemize}
+	\item Syntax: Punkt *p; p = new Punkt();
+	\item Ein neues Objekt wird erzeugt und auf dem Heap angelegt
+	\item Ein Zeiger auf das neue Objekt wird zurückgegeben und in der Zeigervariablen p abgespeichert
+\end{itemize}
 
-\subsection{Instanzen}
-\begin{lstlisting}[language=Java, caption=Erzeugen von Instanzen, style=JavaStyle]
-Point pnt1;                   // auf Stack
-Point *pnt2 = new Point();    // auf Heap
-Person pers1;                 // auf Stack
-Person *pers2 = new Person(); // auf Heap
-Person& refP = pers1;
+\subsection{Vorgabeparameter}
+\begin{itemize}
+	\item Parameter in Methoden du?rfen mit Standardwerten belegt werden
+	\item für Default-Parameter müssen beim Methodenaufruf keine Werte angegeben werden (es dürfen aber)
+	\item in der Parameterliste einer Methode müssen zuerst alle Parameter ohne Default-Wert und dann alle Parameter mit Default-Wert aufgelistet werden
+	\item Beispiel:
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Vorgabeparameter, style=JavaStyle]
+Punkt(double x, double y, double z, Color color = 0){ ... }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Java, caption=Zugriff auf Instanzvariablen und Instanzmethoden, style=JavaStyle]
-pnt1.m_x = 3; 
-pnt1.setY(pnt1.m_x);
-pnt2->m_x = 4; 
-pnt2->setY(pnt2->m_x); 
-char *name = pers1.getName();
-name = pers2->getName();
-name = refP.getName();
+\subsection{Klassenvariablen und -methoden}
+\subsubsection{Klassenvariablen}
+\begin{itemize}
+	\item werden pro Klasse und nicht pro Instanz angelegt
+	\item alle Instanzen einer Klasse haben Zugriff auf die gemeinsamen Klassenvariablen dieser Klasse
+	\item Modifikator static vor dem Typ der Variable
+\end{itemize}
+\subsubsection{Klassenmethoden}
+\begin{itemize}
+	\item können ohne Instanz einer Klasse aufgerufen werden
+	\item werden über den Klassennamen aufgerufen
+	\item dürfen nur auf Klassenvariablen zugreifen
+	\item Modifikator static vor der Methoden-Deklaration
+\end{itemize}
+
+\subsection{Default-Methoden}
+\subsubsection{Konstruktor}
+\begin{itemize}
+	\item Konstruktoren heissen gleich wie die Klasse und initialisieren die Attribute eines Objekts
+	\item können nur bei der Erzeugung von Objekten mit gleichzeitiger Initialisierung
+	\item wenn kein Konstruktor definiert ist, dann stellt der Compiler einen vordefinierten Standard-Konstruktor bereit. Dieser hat keine U?bergabeparameter.
+	\item Beispiele:
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Konstruktor, style=JavaStyle]
+class Punkt {
+	Punkt(double x, double y, double z, int color) { 
+		m_x = x;
+		m_y = y;
+		m_z = z; m_color = color;
+	}
+}
+// Verwendung von Initialisierungslisten:
+class Punkt {
+	Punkt(double x, double y, double z, int color) : m_x(x), m_y(y), m_z(z), m_color(color) { ... } }
+// Anwendung:
+Punkt p2(1, 2, 3, 5);
+Punkt *p1 = new Punkt(4, 5, 6, 8);
 \end{lstlisting}
+\subsubsection{Typkonvertierungs-Konstruktor}
+\begin{itemize}
+	\item wird zur impliziten Konvertierung herangezogen
+	\item enthält u?blicherweise nur ein Argument (wird mit nur einem Argument aufgerufen)
+	\item soll ein Konstruktor mit einem Argument nicht als impliziter Typkonvertierungs- Konstruktor missbraucht werden können, so muss vor dem Konstruktor das Schlüsselwort explicit geschrieben werden
+	\item Beispiel:
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Typkonvertierungs-Konstruktor, style=JavaStyle]
+class Punkt {
+	Punkt(double d[4]) : m_x(d[0]), m_y(d[1]) , m_z(d[2]), m_color(static_cast<int>(d[3])) { ... }
+}
+double array[4] = { 4.4, 3.3, 2.2, 5.0 };
+Punkt p = array;
+\end{lstlisting}
+\subsubsection{Kopierkonstruktor}
+\begin{itemize}
+	\item swenn Sie keinen eigenen Kopierkonstruktor und keine Verschiebeoperation definieren, dann stellt der Compiler einen vordefinierten Kopierkonstruktor fu?r eine flache Kopie bereit
+	\item wird ein eigener Kopierkonstruktor angeboten, so sollte auch der Zuweisungsoperator angeboten werden
+	\item Beispiel:
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Typkonvertierungs-Konstruktor, style=JavaStyle]
+class Punkt {
+	Punkt(const Punkt& p)
+		: m_x(p.m_x), m_y(p.m_y), m_z(p.m_z), m_color(p.m_color) { ... }
+}
+\end{lstlisting}
+\subsubsection{Destruktor}
+\begin{itemize}
+	\item wird automatisch aufgerufen, kurz bevor ein Objekt seine Gültigkeit verliert (unmittelbar vor der Zerstörung)
+	\item trägt den gleichen Namen wie die Klasse, mit einem Tilde davor
+	\item wenn Sie keinen eigenen Destruktor definieren, dann stellt der Compiler
+einen vordefinierten Standard-Destruktor bereit
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Destruktor, style=JavaStyle]
+class Punkt {
+	~Punkt() {
+		cout << "Objekt ist nicht länger gültig" << endl;
+	}
+}
+\end{lstlisting}
+
+\subsection{Resource Allocation is Initialization}
+\begin{itemize}
+	\item beim Erzeugen eines Objekts muss das Objekt initialisiert werden (im Konstruktor)
+	\item beim ordentlichen Verlassen des Konstruktors immer ein gültiges Objekt zurücklassen
+	\item im Fehlerfall sollte der Konstruktor mit einer Exception beendet werden, das bedeutet, dass bereits angeforderte Ressourcen wieder freigegeben werden müssen
+	\item wird ein Objekt infolge einer Exception nicht vollständig initialisiert, so müssen die einzelnen Teile des Objektes sich selbsta?ndig abbauen
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=RAII-Lösungsansatz, style=JavaStyle]
+#include <memory> // unique_ptr in C++11 
+struct StereoImage {
+	std::unique_ptr<Image> left, right;
+	StereoImage() : left(new Image), right(new Image) {} 
+	~StereoImage() { delete left; delete right; }
+};
+\end{lstlisting}
+
+\subsection{Verschiebeoperationen (C++11)}
+\begin{itemize}
+	\item werden zum Verschieben eines Objektes verwendet (Move-Semantik)
+	\item verwenden einen Parameter: Rechtswert-Referenz auf Objekt
+	\item wenn Sie keinen eigenen Verschiebekonstruktor und keine Kopieroperation definieren, dann stellt der Compiler einen vordefinierten Verschiebekonstruktor bereit
+	\item wird ein eigener Verschiebekonstruktor angeboten, so sollte auch der Verschiebeoperator angeboten werden
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Verschiebeoperationen, style=JavaStyle]
+class Vector { 
+	Punkt *m_array; 
+	int m_size;
+public:
+	// benötigt eigenen Standardkonstruktor und Destruktor
+	Vector(Vector&& v) : m_array(v.m_array), m_size(v.m_size) { 
+		v.m_array = nullptr; 
+		v.m_size = 0;
+	}
+	Vector& operator=(Vector&& v) {
+		m_size = v.m_size; 
+		v.m_size = 0;
+		delete[] m_array; 
+		m_array = v.m_array; 
+		v.m_array = nullptr; 
+		return *this;
+	}
+};
+Vector createVector() {
+		Vector v;
+		v.add(Punkt(1,2,3)); 
+		v.add(Punkt(4,5,6)); 
+		Vector v2;
+		v2 = move(v);                // ruft den Verschiebeoperator auf
+		// v enthält keine Punkt-Objekte mehr
+		return move(v2);	
+}
+int main() {
+		Vector v1(createVector());  // ruft den Verschiebekonstruktor auf
+		Vector v2 = createVector(); // ruft den Verschiebekonstruktor auf
+		Vector v3;                  // ruft den Standardkonstruktor auf
+		v3 = createVector();        // ruft den Verschiebeoperator auf
+};
+\end{lstlisting}
+
 % Inhalt Ende
 \end{document}

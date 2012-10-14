@@ -12,10 +12,41 @@
 \contentsline {subsection}{\numberline {2.1}Global}{3}
 \contentsline {subsection}{\numberline {2.2}Modular}{3}
 \contentsline {subsection}{\numberline {2.3}Einfache Datentypen}{3}
-\contentsline {subsection}{\numberline {2.4}Schl\"usselw\"orter}{3}
-\contentsline {subsection}{\numberline {2.5}Initialisierungslisten}{4}
-\contentsline {section}{\numberline {3}Zeiger \& Referenzen}{5}
-\contentsline {subsection}{\numberline {3.1}Zeiger und Adressoperator}{5}
-\contentsline {section}{\numberline {4}Klassen}{6}
-\contentsline {subsection}{\numberline {4.1}Deklaration}{6}
-\contentsline {subsection}{\numberline {4.2}Instanzen}{6}
+\contentsline {subsection}{\numberline {2.4}Neue Zeichentypen}{3}
+\contentsline {subsection}{\numberline {2.5}Schl\"usselw\"orter}{4}
+\contentsline {subsection}{\numberline {2.6}Initialisierungslisten}{4}
+\contentsline {section}{\numberline {3}Zeiger \& Referenzen}{6}
+\contentsline {subsection}{\numberline {3.1}Zeiger und Adressoperator}{6}
+\contentsline {subsection}{\numberline {3.2}Zeiger und Konstanten}{6}
+\contentsline {subsection}{\numberline {3.3}Referenzen}{6}
+\contentsline {subsection}{\numberline {3.4}Zugriff}{7}
+\contentsline {subsection}{\numberline {3.5}Smart Pointers}{7}
+\contentsline {subsubsection}{\numberline {3.5.1}Grundlegendes}{7}
+\contentsline {subsubsection}{\numberline {3.5.2}Zeigerobjekte}{7}
+\contentsline {section}{\numberline {4}Arrays}{8}
+\contentsline {subsection}{\numberline {4.1}C-Arrays}{8}
+\contentsline {subsubsection}{\numberline {4.1.1}C-Array als Funktionsparameter}{8}
+\contentsline {subsection}{\numberline {4.2}C-Strings}{8}
+\contentsline {subsection}{\numberline {4.3}Mehrdimensionale C-Arrays}{9}
+\contentsline {subsubsection}{\numberline {4.3.1}Grunds\"atze}{9}
+\contentsline {subsubsection}{\numberline {4.3.2}Statische Erzeugung}{9}
+\contentsline {subsubsection}{\numberline {4.3.3}Dynamische Erzeugung}{9}
+\contentsline {subsubsection}{\numberline {4.3.4}nD-Array als Funktionsparameter}{9}
+\contentsline {subsection}{\numberline {4.4}C++ Arrays}{10}
+\contentsline {subsection}{\numberline {4.5}C++ Vektoren}{10}
+\contentsline {section}{\numberline {5}Klassen}{11}
+\contentsline {subsection}{\numberline {5.1}Deklaration}{11}
+\contentsline {subsection}{\numberline {5.2}Instanztypen}{11}
+\contentsline {subsubsection}{\numberline {5.2.1}statisch}{11}
+\contentsline {subsubsection}{\numberline {5.2.2}dynamisch}{11}
+\contentsline {subsection}{\numberline {5.3}Vorgabeparameter}{12}
+\contentsline {subsection}{\numberline {5.4}Klassenvariablen und -methoden}{12}
+\contentsline {subsubsection}{\numberline {5.4.1}Klassenvariablen}{12}
+\contentsline {subsubsection}{\numberline {5.4.2}Klassenmethoden}{12}
+\contentsline {subsection}{\numberline {5.5}Default-Methoden}{12}
+\contentsline {subsubsection}{\numberline {5.5.1}Konstruktor}{12}
+\contentsline {subsubsection}{\numberline {5.5.2}Typkonvertierungs-Konstruktor}{13}
+\contentsline {subsubsection}{\numberline {5.5.3}Kopierkonstruktor}{13}
+\contentsline {subsubsection}{\numberline {5.5.4}Destruktor}{14}
+\contentsline {subsection}{\numberline {5.6}Resource Allocation is Initialization}{14}
+\contentsline {subsection}{\numberline {5.7}Verschiebeoperationen (C++11)}{14}
