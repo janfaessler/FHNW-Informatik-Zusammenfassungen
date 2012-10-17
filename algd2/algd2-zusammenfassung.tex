@@ -140,7 +140,7 @@ Die Skip-Liste ist eine sortierte, einfach verkettete Liste, die uns aber ein sc
 
 \newpage
 \section{Bäume}
-Ba?ume sind verallgemeinerte Listenstrukturen. Ein Element, üblicherweise spricht man von Knoten (node), hat nicht, wie im Falle linearer Listen, nur einen Nachfolger, sondern eine endliche, begrenzte Anzahl von Söhnen. In der Regel ist einer der Knoten als Wurzel (root) des Baumes ausgeprägt. Das ist zugleich der einzige Knoten ohne Vorgänger. Jeder andere Knoten hat einen (unmittelbaren) Vorgänger, der auch Vater des Knotens genannt wird. Eine Folge $p_0$, ..., $p_k$ von Knoten eines Baumes, die die Bedingung erfüllt, dass $p_i+1$ Sohn von $p_i$ ist für $0 \leq i <$ k, heisst Pfad (path) mit Länge k, der $p_0$ mit $p_k$ verbindet. Jeder von der Wurzel verschiedene Knoten eines Baumes ist durch genau einen Pfad mit der Wurzel verbunden.
+Bäume sind verallgemeinerte Listenstrukturen. Ein Element, üblicherweise spricht man von Knoten (node), hat nicht, wie im Falle linearer Listen, nur einen Nachfolger, sondern eine endliche, begrenzte Anzahl von Söhnen. In der Regel ist einer der Knoten als Wurzel (root) des Baumes ausgeprägt. Das ist zugleich der einzige Knoten ohne Vorgänger. Jeder andere Knoten hat einen (unmittelbaren) Vorgänger, der auch Vater des Knotens genannt wird. Eine Folge $p_0$, ..., $p_k$ von Knoten eines Baumes, die die Bedingung erfüllt, dass $p_i+1$ Sohn von $p_i$ ist für $0 \leq i <$ k, heisst Pfad (path) mit Länge k, der $p_0$ mit $p_k$ verbindet. Jeder von der Wurzel verschiedene Knoten eines Baumes ist durch genau einen Pfad mit der Wurzel verbunden.
 \begin{center}
 \includegraphics[scale=0.65]{tree.png}
 \end{center}
@@ -177,14 +177,17 @@ Schieflage: ++$h(p)$
 \begin{description}
 	\item[Variante a.)] \hfill \\
 		$bal(v) \neq 0$ / p ist kürzerer Ast \\
-		$\Ra bal(v)=0$ \& $h(v)=const$ \\
+		$\Ra bal(v)=0$ \\
+		\& $h(v)=const$ \\
 		$\Ra$ \Bold{fertig}
 	\item[Variante b.)] \hfill \\
 		$bal(v) = 0$ \\
-		$\Ra bal(v)=\pm1$ \& ++$h(v)$ \\
+		$\Ra bal(v)=\pm1$ \\
+		\& ++$h(v)$ \\
 		$\Ra$ \Bold{weiter testen mit Vater/Opa/...}
 	\item[Variante c.)] \hfill \\
-		$bal(v) \neq 0$ / p ist längerer Ast \\
+		$bal(v) \neq 0$ \\
+		\& p ist längerer Ast \\
 		$\Ra bal(v)=\pm2! \Ra$ \Bold{es muss balaciert werden:} \\
 \end{description}
 \begin{tabular}{|l|l|}
@@ -194,6 +197,22 @@ Schieflage: ++$h(p)$
 	& \\
 	\includegraphics[scale=0.5]{rotation_right.png} & \includegraphics[scale=0.45]{rotation_left_right.png} \\
 	\hline
+\end{tabular}
+
+\subsection{Löschen}
+Bei einem nicht ALV Baum ist der Aufwand für das löschen eines Elementes überschaubar:
+\begin{description}
+	\item[I) p hat keinen Sohn] \hfill \\
+		p entfernen
+	\item[II) p hat einen Sohn] \hfill \\
+		p entfernen und Sohn nachziehen
+	\item[III) p hat zwei Söhne] \hfill \\
+		p entfernen, durch nächstkleineres oder nächstgrösseres Element ersetzen \\
+		(dies kann eventuell zu einer weiteren Löschoperation vom Typ II weiter unten führen)
+\end{description}
+Bei einem ALV Baum muss nach dem löschen noch balanciert werden:
+\begin{tabular}{|l{l|}
+	\hline 
 \end{tabular}
 
 
