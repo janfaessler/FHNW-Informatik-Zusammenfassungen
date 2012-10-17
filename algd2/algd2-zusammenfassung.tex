@@ -23,6 +23,24 @@
 \usepackage{listings}
 \usepackage{caption}
 
+% Commands
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+
 % Code listenings
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
@@ -143,5 +161,41 @@ Das Durchlaufen kann auf mindestens drei verschiedene Arten erfolgen: Preorder, 
 \end{description}
 
 \subsection{Balancierte Bäume}
+Ein binärer Suchbaum ist AVL-ausgeglichen oder höhenbalanciert oder eben ein AVL- Baum, wenn für jeden Knoten v des Baumes gilt, dass sich die Höhe des linken Teilbaumes von der Höhe des rechten Teilbaumes von v höchstens um eins unterscheidet. \\
+
+\subsubsection{Einfügen}
+\Bold{Fall 1: p hat 1 Sohn}, einfügen an der leeren Stelle: \\
+einf. Links: $bal(p) =+ 1 \rightarrow bal(p) = 0$\\
+einf. Rechts: $bal(p) =- 1 \rightarrow bal(p) = 0$ \\
+Höhe des Sohnes: $h(p) = const$ \\
+Balance des Vater: $bal(v) = const$ \\
+$\Ra$ \Bold{fertig} \\
+\\
+\Bold{Fall 2: p hat keine Söhne}, einfügen links/rechts \\
+einf. links/rechts:$ bal(p) =\pm 1$ \\
+Schieflage: ++$h(p)$ 
+\begin{description}
+	\item[Variante a.)] \hfill \\
+		$bal(v) \neq 0$ / p ist kürzerer Ast \\
+		$\Ra bal(v)=0$ \& $h(v)=const$ \\
+		$\Ra$ \Bold{fertig}
+	\item[Variante b.)] \hfill \\
+		$bal(v) = 0$ \\
+		$\Ra bal(v)=\pm1$ \& ++$h(v)$ \\
+		$\Ra$ \Bold{weiter testen mit Vater/Opa/...}
+	\item[Variante c.)] \hfill \\
+		$bal(v) \neq 0$ / p ist längerer Ast \\
+		$\Ra bal(v)=\pm2! \Ra$ \Bold{es muss balaciert werden:} \\
+\end{description}
+\begin{tabular}{|l|l|}
+	\hline 
+	$sgn(bal(v))=sgn(bal(p))$ & $sgn(bal(v)) \neq sgn(bal(p))$ \\
+	\hline 
+	& \\
+	\includegraphics[scale=0.5]{rotation_right.png} & \includegraphics[scale=0.45]{rotation_left_right.png} \\
+	\hline
+\end{tabular}
+
+
 % Inhalt Ende
 \end{document}
