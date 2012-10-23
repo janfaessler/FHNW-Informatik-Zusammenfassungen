@@ -16,3 +16,10 @@
 \contentsline {subsection}{\numberline {4.2}Motivation}{6}
 \contentsline {subsection}{\numberline {4.3}Struktur}{6}
 \contentsline {subsection}{\numberline {4.4}Beispiel}{6}
+\contentsline {section}{\numberline {5}Strategy Pattern}{8}
+\contentsline {subsection}{\numberline {5.1}Ziel}{8}
+\contentsline {subsection}{\numberline {5.2}Struktur}{8}
+\contentsline {subsection}{\numberline {5.3}Beispiel}{8}
+\contentsline {section}{\numberline {6}Null Object Pattern}{10}
+\contentsline {subsection}{\numberline {6.1}Beschreibung}{10}
+\contentsline {subsection}{\numberline {6.2}Beispiel}{10}

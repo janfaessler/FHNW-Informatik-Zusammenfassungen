@@ -54,8 +54,8 @@
  showtabs=false,             % Tabs anzeigen ?
  xleftmargin=17pt,
  framexleftmargin=17pt,
- framexrightmargin=5pt,
- framexbottommargin=4pt,
+ framexrightmargin=3pt,
+ framexbottommargin=2pt,
  showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
 }
 
@@ -66,7 +66,7 @@
 
 %Metadata
 \title{Entwurfsmuster}
-\author{Jan FÃ¤ssler}
+\author{Jan Fässler}
 \date{3. Semester (HS 2012)}
 \fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
 
@@ -180,7 +180,7 @@ Die Auslagerung von zustandsspezifischem Verhalten in einer Klasse. Ermöglicht m
 Die View des Grafikeditors hat eine Referenz auf ein abstraktes Tool-Interface. Diese Referenz definiert:
 \begin{itemize}
 	\item[a.] Der aktuelle Zeichenmodus
-	\item[b.] Verhalten wenn Maus gedru?ckt wird
+	\item[b.] Verhalten wenn Maus gedrückt wird
 \end{itemize}
 
 \subsection{Struktur}
@@ -191,6 +191,30 @@ Das zustandsabhängige Verhalten des Objekts wird in separate Klassen ausgelagert
 
 \subsection{Beispiel}
 \lstinputlisting[language=java,caption=Beispiel State Pattern,style=JavaStyle]{state.java}
+
+\newpage
+\section{Strategy Pattern}
+
+\subsection{Ziel}
+Eine Familie von Algorithmen definieren, von dem restlichen Programmcode abtrennen. Diese ermöglicht die Auswahl aus verschiedenen Implementierungen und dadurch erhöht sich die Flexibilität und die Wiederverwendbarkeit.
+
+
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.7]{strategy-structure.png}
+\end{center}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Strategy Pattern,style=JavaStyle]{strategy.java}
+
+\newpage
+\section{Null Object Pattern}
+
+\subsection{Beschreibung}
+Das Entwurfsmuster Nullobjekt findet Anwendung bei der Deaktivierung von Referenzen auf Variablen und besteht darin, der Referenz ein Objekt zuzuweisen, das keine Aktion ausführt, anstatt die Referenz zu invalidieren. Dadurch wird erreicht, dass die Referenz auf die Variable zu jedem Zeitpunkt auf ein gültiges Objekt verweist, was Behandlungen von Sonderfällen (das Nichtvorhandensein) erübrigt.
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Null Object Pattern,style=JavaStyle]{null.java}
 
 % Inhalt Ende
 \end{document}
