@@ -1,3 +1,10 @@
+% Kann vielleicht mal jemand angeben, ob das ISO 8859-1 oder ISO 8859-15 oder vielleicht Windows-1252 sein soll?!
+% Klar ist, dass es nicht UTF-8 ist, also bitte aufhören sowas einzufügen! 
+% Die Frage ist z.B. wie das Euro-Zeichen eingefügt werden soll. 
+% Ist es 0x80? ==> Windows-1252
+% Ist es 0xA4? ==> ISO 8859-15 / Latin9
+% Nicht vorhanden? ==> ISO 8859-1 / Latin1
+
 \documentclass[a4paper, 11pt]{article}
 
 %Math
@@ -130,7 +137,7 @@ Die Schnittstelle java.util.Iterator, erlaubt das Iterieren von Containerklassen
 \lstinputlisting[language=java,caption=Merge Sort,style=JavaStyle]{linked_list_mergesort.java}
 
 \subsection{Skip-Liste}
-Die Skip-Liste ist eine sortierte, einfach verkettete Liste, die uns aber ein schnelleres Suchen von Elementen in der Datenstruktur erlaubt. In einer sortierten, verketteten Liste müssen wir jedes Element einzeln durchlaufen bis wir das gewünschten Element gefunden haben. Wenn wir nun aber in der sortierten Liste auf jedem zweiten Element eine zusätzliche Referenz auf zwei Elemente weiter hinten setzen, dann reduziert sich die Anzahl zu besuchender Elemente auf einen Schlag um rund die Hälfte. Genau betrachtet mu?ssen wir nie mehr als $(n/2) + 1$ Elemente besuchen (n ist die Länge der Liste). 
+Die Skip-Liste ist eine sortierte, einfach verkettete Liste, die uns aber ein schnelleres Suchen von Elementen in der Datenstruktur erlaubt. In einer sortierten, verketteten Liste müssen wir jedes Element einzeln durchlaufen bis wir das gewünschten Element gefunden haben. Wenn wir nun aber in der sortierten Liste auf jedem zweiten Element eine zusätzliche Referenz auf zwei Elemente weiter hinten setzen, dann reduziert sich die Anzahl zu besuchender Elemente auf einen Schlag um rund die Hälfte. Genau betrachtet müssen wir nie mehr als $(n/2) + 1$ Elemente besuchen (n ist die Länge der Liste). 
 \begin{center}
 \includegraphics[scale=0.65]{skip_liste.png}
 \end{center}
@@ -146,7 +153,7 @@ Bäume sind verallgemeinerte Listenstrukturen. Ein Element, üblicherweise spricht
 \end{center}
 
 \subsection{Binäre Suchbäume}
-Ein binärer Suchbaum ist ein geordneter Baum mit Ordnung d = 2. In jedem Knoten wird ein Suchschlüssel so abgespeichert, dass alle Suchschlüssel des linken Teilbaums des Knotens kleiner und alle Suchschlüssel des rechten Teilbaums des Knotens grösser sind. Das heisst, dass an jedem Knoten alle kleineren Suchschlüssel über den linken Sohn und alle gro?sseren Suchschlüssel über den rechten Sohn erreicht werden.\\
+Ein binärer Suchbaum ist ein geordneter Baum mit Ordnung d = 2. In jedem Knoten wird ein Suchschlüssel so abgespeichert, dass alle Suchschlüssel des linken Teilbaums des Knotens kleiner und alle Suchschlüssel des rechten Teilbaums des Knotens grösser sind. Das heisst, dass an jedem Knoten alle kleineren Suchschlüssel über den linken Sohn und alle grösseren Suchschlüssel über den rechten Sohn erreicht werden.\\
 Die so geordneten Knoten in einem balancierten binären Suchbaum erlauben ein schnelles Suchen. Der maximale Suchaufwand hängt direkt von der Höhe des Baumes ab und wächst nur logarithmisch mit der Anzahl der Knoten im Baum.
 	
 \subsubsection{Traversieren}
