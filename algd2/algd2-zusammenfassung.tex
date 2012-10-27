@@ -163,6 +163,16 @@ Das Durchlaufen kann auf mindestens drei verschiedene Arten erfolgen: Preorder, 
 \subsection{Balancierte Bäume}
 Ein binärer Suchbaum ist AVL-ausgeglichen oder höhenbalanciert oder eben ein AVL- Baum, wenn für jeden Knoten v des Baumes gilt, dass sich die Höhe des linken Teilbaumes von der Höhe des rechten Teilbaumes von v höchstens um eins unterscheidet. \\
 
+\subsubsection{Berechnungen}
+
+$h := Höhe = Maximal auftretende Tiefe$\\
+$bal(t) := h(t_r) - h(t_l) ~// \in [-1,0,1] \Ra $ AVL-Baum\\
+
+{\color{red} TODO: wird hier etwa balance anders berechnet?
+Mir scheint dass beim Einfügen von $bal=h(t_l)-h(t_r)$ ausgegangen ist, denn wenn links eingefügt wird muss rechts etwas sein und dann wäre bal 1 und +1 wäre dann 2 und nicht 0.
+üblicherweise (also in Wikipedia etc) wird aber anders rum gerechnet.
+}
+
 \subsubsection{Einfügen}
 \Bold{Fall 1: p hat 1 Sohn}, einfügen an der leeren Stelle: \\
 einf. Links: $bal(p) =+ 1 \rightarrow bal(p) = 0$\\
