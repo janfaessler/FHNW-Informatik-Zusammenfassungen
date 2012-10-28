@@ -1,10 +1,14 @@
 package ch.fhnw.claudemartin.algd2;
+// DIESE DATEI IST UTF-8! A-Umlaut : Ä
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -25,7 +29,7 @@ import java.util.TreeMap;
  * @param <T>
  *          Typ der Elemente, die vom Baum gemapped werden werden. Schlüssel sind aber immer <code>int</code>.
  */
-public final class AVLTree<T> {
+public final class AVLTree<T> implements Map<Integer, T> {
 
   private Node<T> root = null;
   private int size = 0;
@@ -52,85 +56,94 @@ public final class AVLTree<T> {
     return size;
   }
 
-  public void insert(int key, T value) {
+  public T insert(int key, T value) {
     final Node<T> n = new Node<T>(key, value, null);
-    insert(this.root, n);
+    return insert(this.root, n);
   }
 
-  public void insert(Node<T> r, Node<T> n) {
-    if (r == null) {
+  public T insert(Node<T> r, Node<T> n) {
+    if (r == null) { //als root einfügen:
       assert size == 0;
       size = 1;
       this.root = n;
-    } else {
+    } else { // Stelle finden:
       if (n.key < r.key) {
         if (r.left == null) {
+          // links anfügen:
           r.left = n;
           n.parent = r;
           size++;
           balance(r);
-        } else {
-          insert(r.left, n);
+        } else { //weiter links suchen:
+          return insert(r.left, n);
         }
       } else if (n.key > r.key) {
         if (r.right == null) {
+          // rechts anfügen:
           r.right = n;
           n.parent = r;
           size++;
           balance(r);
-        } else {
-          insert(r.right, n);
+        } else { // weiter rechts suchen:
+          return insert(r.right, n);
         }
       } else {// node.key==root.key
         // Schon vorhanden -> Wert ersetzen:
+        T oldValue = r.value;
         r.value = n.value;
+        return oldValue;
       }
     }
+    return null;
   }
 
-  public void remove(int k) {
-    remove(k, root);
+  public T remove(int k) {
+    return remove(k, root);
   }
 
-  private void remove(int key, Node<T> t) {
+  private T remove(int key, Node<T> t) {
     if (t == null) {
-      return;// das ist kein Baum...
-    } else {
+      return null;// das ist kein Baum...
+    } else {//Schlüssel suchen:
       if (t.key > key) {
-        remove(key, t.left);
+        return remove(key, t.left);
       } else if (t.key < key) {
-        remove(key, t.right);
-      } else if (t.key == key) {
-        remove(t);
+        return remove(key, t.right);
+      } else {
+        assert t.key == key; 
+        return remove(t);
       }
     }
   }
 
-  private void remove(Node<T> t) {
+  private T remove(Node<T> t) {
+    T oldValue = null;
     size--;
     Node<T> r;
+    // Einzige Node (= root) entfernen:
     if (t.left == null || t.right == null) {
       if (t.parent == null) {
         assert this.root == t;
         this.root = null;
-        return;
+        return oldValue;
       }
       r = t;
     } else {
+      // Mit "Vorfahre" ersetzen:
       r = successor(t);
       t.key = r.key;
+      oldValue = t.value;
+      t.value = r.value;
     }
 
+    // Angehängte Elemente verschieben:
     Node<T> p;
-    if (r.left != null) {
+    if (r.left != null)
       p = r.left;
-    } else {
+    else 
       p = r.right;
-    }
-
-    if (p != null) {
+    if (p != null) 
       p.parent = r.parent;
-    }
 
     if (r.parent == null) {
       this.root = p;
@@ -142,6 +155,7 @@ public final class AVLTree<T> {
       }
       balance(r.parent);
     }
+    return oldValue;
   }
 
   private void balance(Node<T> node) {
@@ -165,6 +179,7 @@ public final class AVLTree<T> {
       this.root = node;
   }
 
+  //"Vorgänger" finden. Wird für remove() benötigt.
   private Node<T> successor(Node<T> predec) {
     if (predec.right != null) {
       Node<T> r = predec.right;
@@ -242,7 +257,7 @@ public final class AVLTree<T> {
     }
   }
 
-  /** RIGHT ROTATION */
+  /** RIGHT ROTATION (Nach Wikipedia) */
   private static <X> Node<X> rotateRight(final Node<X> r) {
     // root will be right child of pivot
     // pivot will be the new root
@@ -276,7 +291,7 @@ public final class AVLTree<T> {
     return pivot;
   }
 
-  /** LEFT ROTATION */
+  /** LEFT ROTATION (Nach Wikipedia) */
   private static <X> Node<X> rotateLeft(final Node<X> r) {
     // root will be left child of pivot
     // pivot will be the new root
@@ -310,30 +325,31 @@ public final class AVLTree<T> {
     return pivot;
   }
 
-  /** LEFT RIGHT CASE */
+  /** LEFT RIGHT CASE (Nach Wikipedia) */
   private static <X> Node<X> rotateLeftRight(Node<X> node) {
     node.left = rotateLeft(node.left);
     return rotateRight(node);
   }
 
-  /** RIGHT LEFT CASE */
+  /** RIGHT LEFT CASE (Nach Wikipedia) */
   private static <X> Node<X> rotateRightLeft(Node<X> node) {
     node.right = rotateRight(node.right);
     return rotateLeft(node);
   }
 
-  public List<Integer> toKeyList() {
-    List<Integer> list = new LinkedList<>();
-    klist(root, list);
-    return list;
+  @Override
+  public Set<Integer> keySet() {
+    Set<Integer> set = new HashSet<>();
+    kSet(root, set);
+    return set;
   }
 
-  private void klist(Node<T> node, List<Integer> list) {
+  private void kSet(Node<T> node, Set<Integer> set) {
     if (node == null)
       return;
-    klist(node.left, list);
-    list.add(node.key);
-    klist(node.right, list);
+    kSet(node.left, set);
+    set.add(node.key);
+    kSet(node.right, set);
   }
 
   public List<T> toList() {
@@ -402,9 +418,68 @@ public final class AVLTree<T> {
     }
 
     private static int height(Node<?> node, int height) {
-      if (node == null || height > 2)
+      if (node == null)
         return height;
       return Math.max(height(node.left, height + 1), height(node.right, height + 1));
     }
+  }
+
+  /** Methoden für das Map-Interface: */
+  @Override
+  public boolean containsKey(Object key) {
+    if(key instanceof Integer)
+        return find((Integer)key) != null;
+    return false;
+  }
+
+  @Override
+  public boolean containsValue(Object value) {
+    if (root == null)
+      return false;
+    return toList().contains(value);
+  }
+
+  @Override
+  public T get(Object key) {
+    if(key instanceof Integer)
+      return find((Integer)key);
+    return null;
+  }
+
+  @Override
+  public T put(Integer key, T value) {
+    return insert(key, value);
+  }
+
+  @Override
+  public T remove(Object key) {
+    if (key instanceof Integer)
+      return remove((Integer) key);
+    return null;
+  }
+
+  @Override
+  public void putAll(Map<? extends Integer, ? extends T> m) {
+    for (java.util.Map.Entry<? extends Integer, ? extends T> e : m.entrySet())
+      this.put(e.getKey(), e.getValue());
+  }
+
+  @Override
+  public void clear() {
+    root = null;
+    size = 0;
+    // Garbage Collector soll den Rest erledigen!
+  }
+
+// keySet() ist weiter oben!
+  
+  @Override
+  public Collection<T> values() {
+    return toList();
+  }
+
+  @Override
+  public Set<java.util.Map.Entry<Integer, T>> entrySet() {
+    throw new RuntimeException("Leider nicht implementiert. Sorry!");
   }
 }

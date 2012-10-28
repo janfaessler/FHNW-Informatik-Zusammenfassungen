@@ -1,9 +1,14 @@
 package ch.fhnw.claudemartin.algd2;
+//DIESE DATEI IST UTF-8! A-Umlaut : Ä
 
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import ch.fhnw.claudemartin.algd2.AVLTree.Node;
 
 public class AVLTreeTest {
 
@@ -152,20 +157,47 @@ public class AVLTreeTest {
 
   @Test
   public void testRandom() throws Exception {
-    AVLTree<Object> tree = new AVLTree<>();
-    final int N = 100;
-    Random rng = new Random();
+    final int N = 1000;
+    final AVLTree<String> avlTree = new AVLTree<>();
+    final Map<Integer, String> javaTree = new TreeMap<>();
+    final Random rng = new Random();
+    
+    // Auffüllen bis N: 
+    while (avlTree.size()<N) {
+      final int key = rng.nextInt(2*N)-N;
+      final String val = String.valueOf(key);
+      avlTree.insert(key, val);
+      javaTree.put(key, val);
+      testTree(avlTree);
+      Assert.assertArrayEquals(javaTree.values().toArray(), avlTree.toArray(Object.class));
+    }
+    
+    // Manipulationen:
     for (int i = 0; i < N; i++) {
-      final int rnd = rng.nextInt(N)-(N/2);
-      final String val = String.valueOf(rnd);
-      tree.insert(rnd, val);
-      testTree(tree);
+      int key = rng.nextInt(2*N)-N;
+      final String val = String.valueOf(key);
+      avlTree.insert(key, val);
+      javaTree.put(key, val);
+      testTree(avlTree);
+      key = rng.nextInt(2*N)-N;
+      avlTree.remove(key);
+      javaTree.remove(key);
+      testTree(avlTree);
+      Assert.assertArrayEquals(javaTree.values().toArray(), avlTree.toArray(Object.class));
     }
   }
   
+  final static double phi = 1.6180339887498948482d;// ~= Goldener Schnitt
   static void testTree(AVLTree<?> tree) {
-    testTree(tree.getRoot());
+    final Node<?> root = tree.getRoot();
+    testTree(root);
     Assert.assertEquals(tree.toList().size(), tree.size());
+    {// Höhe darf nicht zu hoch sein:
+      //Siehe http://en.wikipedia.org/wiki/AVL_tree#Comparison_to_other_structures
+      final double actual = root.height();
+      double max =  (Math.log(Math.sqrt(5d) * (tree.size()+2d)) / Math.log(phi)) - 2d;
+      Assert.assertTrue(actual < max);
+    }
   }
 
   static void testTree(AVLTree.Node<?> root) {
