@@ -2,9 +2,11 @@ package ch.fhnw.claudemartin.algd2;
 // DIESE DATEI IST UTF-8! A-Umlaut : Ä
 
 import java.lang.reflect.Array;
+import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +131,7 @@ public final class AVLTree<T> implements Map<Integer, T> {
       }
       r = t;
     } else {
-      // Mit "Vorfahre" ersetzen:
+      // Mit "Nachfahre" ersetzen:
       r = successor(t);
       t.key = r.key;
       oldValue = t.value;
@@ -179,7 +181,7 @@ public final class AVLTree<T> implements Map<Integer, T> {
       this.root = node;
   }
 
-  //"Vorgänger" finden. Wird für remove() benötigt.
+  //"Nachfahre" finden. Wird für remove() benötigt.
   private Node<T> successor(Node<T> predec) {
     if (predec.right != null) {
       Node<T> r = predec.right;
@@ -193,6 +195,18 @@ public final class AVLTree<T> implements Map<Integer, T> {
         p = predec.parent;
       }
       return p;
+    }
+  }
+  
+  //"Vorfahre" finden.
+  private Node<T> predecessor(Node<T> predec) {
+    if (predec.left != null) {
+      Node<T> r = predec.left;
+      while (r.right != null)
+        r = r.right;
+      return r;
+    } else {
+      return predec.parent;
     }
   }
 
@@ -339,6 +353,9 @@ public final class AVLTree<T> implements Map<Integer, T> {
 
   @Override
   public Set<Integer> keySet() {
+    // Dies ist eigentlcih falsch, da eine "View" der Keys erstellt werden sollte.
+    // Änderungen würden dann direkt übernommen werden.
+    // entrySet() macht dies korrekt.
     Set<Integer> set = new HashSet<>();
     kSet(root, set);
     return set;
@@ -474,12 +491,45 @@ public final class AVLTree<T> implements Map<Integer, T> {
 // keySet() ist weiter oben!
   
   @Override
-  public Collection<T> values() {
-    return toList();
-  }
+  public Collection<T> values() { return toList(); }
 
+  // Nicht getestet! Nur zum zeigen wie's in etwa gehen würde.
   @Override
   public Set<java.util.Map.Entry<Integer, T>> entrySet() {
-    throw new RuntimeException("Leider nicht implementiert. Sorry!");
+    return new AbstractSet<Map.Entry<Integer, T>>() {
+      public Iterator<Map.Entry<Integer, T>> iterator() {
+        return new Iterator<Map.Entry<Integer, T>>() {
+          Node<T> current = null;
+          @Override public boolean hasNext() {
+            return !AVLTree.this.isEmpty() && current != AVLTree.this.last();
+          }
+          @Override public Map.Entry<Integer, T> next() {
+            if (current == null)
+              current = AVLTree.first(AVLTree.this.root);
+            else
+              current = AVLTree.this.successor(current);
+            final Node<T> c = current;
+            return new Map.Entry<Integer, T>() {
+              @Override public Integer getKey() { return c.key; }
+              @Override public T getValue() { return c.value; }
+              @Override public T setValue(T value) {
+                T old = c.value;
+                c.value = value;
+                return old;
+              }
+            };
+          }
+          @Override public void remove() {
+            final Node<T> c = current;
+            current = AVLTree.this.predecessor(c);
+            AVLTree.this.remove(c);
+          }
+        };
+      }
+      // AbstractCollection: public boolean contains(Object o)
+      // AbstractCollection: public boolean remove(Object o) 
+      public int size() { return AVLTree.this.size(); }
+      public void clear() { AVLTree.this.clear(); }
+    };
   }
 }
