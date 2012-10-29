@@ -3,19 +3,19 @@
     return insert(this.root, n);
   }
   public T insert(Node<T> r, Node<T> n) {
-    if (r == null) { //als root einfÃ¼gen:
+    if (r == null) { //als root einfügen:
       size = 1;
       this.root = n;
     } else { // Stelle finden:
       if (n.key < r.key) {
-        if (r.left == null) { // links anfÃ¼gen:
+        if (r.left == null) { // links anfügen:
           r.left = n;
           n.parent = r;
           size++;
           balance(r);
         } else return insert(r.left, n); //weiter links suchen
       } else if (n.key > r.key) {
-        if (r.right == null) { // rechts anfÃ¼gen:
+        if (r.right == null) { // rechts anfügen:
           r.right = n;
           n.parent = r;
           size++;
@@ -55,7 +55,7 @@
       oldValue = t.value;
       t.value = r.value;
     }
-    Node<T> p; // AngehÃ¤ngte Elemente verschieben:
+    Node<T> p; // Angehängte Elemente verschieben:
     if (r.left != null) p = r.left;
     else                p = r.right;
     if (p != null) p.parent = r.parent;
