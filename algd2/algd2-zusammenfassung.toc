@@ -10,5 +10,6 @@
 \contentsline {subsection}{\numberline {2.1}Bin\"are Suchb\"aume}{7}
 \contentsline {subsubsection}{\numberline {2.1.1}Traversieren}{7}
 \contentsline {subsection}{\numberline {2.2}Balancierte B\"aume}{8}
-\contentsline {subsubsection}{\numberline {2.2.1}Einf\"ugen}{8}
+\contentsline {subsubsection}{\numberline {2.2.1}Berechnungen}{8}
+\contentsline {subsubsection}{\numberline {2.2.2}Einf\"ugen}{8}
 \contentsline {subsection}{\numberline {2.3}L\"oschen}{9}
