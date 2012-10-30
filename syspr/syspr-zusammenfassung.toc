@@ -17,3 +17,22 @@
 \contentsline {subsection}{\numberline {2.3}Directory Handling}{5}
 \contentsline {subsection}{\numberline {2.4}Speicherverwaltung}{5}
 \contentsline {subsection}{\numberline {2.5}Weitere}{5}
+\contentsline {section}{\numberline {3}Dateisystem}{6}
+\contentsline {subsection}{\numberline {3.1}\"Ubersicht}{6}
+\contentsline {subsection}{\numberline {3.2}Relevante Dateisystem Algorithmen}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}Pfadnahme zu inode}{6}
+\contentsline {subsubsection}{\numberline {3.2.2}Gemeinsame Nutzung von Dateien}{6}
+\contentsline {subsubsection}{\numberline {3.2.3}Datei Locking}{6}
+\contentsline {subsubsection}{\numberline {3.2.4}Mount / Unmount}{6}
+\contentsline {subsection}{\numberline {3.3}Allokation}{7}
+\contentsline {subsubsection}{\numberline {3.3.1}inode}{7}
+\contentsline {subsubsection}{\numberline {3.3.2}Datenblock}{7}
+\contentsline {subsection}{\numberline {3.4}Synchronisation von Zugriffen auf das Dateisystem}{7}
+\contentsline {subsection}{\numberline {3.5}Ger\"ate}{7}
+\contentsline {subsubsection}{\numberline {3.5.1}Einbindung}{7}
+\contentsline {subsubsection}{\numberline {3.5.2}Ger\"atetreiber}{7}
+\contentsline {subsubsection}{\numberline {3.5.3}Ger\"atespezialdateien}{8}
+\contentsline {subsection}{\numberline {3.6}Beispiele}{8}
+\contentsline {subsubsection}{\numberline {3.6.1}Verzeichnismanipulation}{8}
+\contentsline {subsubsection}{\numberline {3.6.2}Dateimanipulation}{9}
+\contentsline {subsubsection}{\numberline {3.6.3}Dateisystem-Baum}{10}
