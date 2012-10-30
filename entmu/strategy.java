@@ -7,33 +7,19 @@ class Klient {
                 k.arbeite();    // "Weg B"
         }
 }
- 
- 
 class Kontext {
         private Strategie strategie = null;
- 
         public void setStrategie(final Strategie STRATEGIE) {
                 strategie = STRATEGIE;
         }
- 
         public void arbeite() {
-                if (strategie != null)
-                        strategie.algorithmus();
+                if (strategie != null) strategie.algorithmus();
         }
 }
- 
-interface Strategie {
-        void algorithmus();
-}
- 
+interface Strategie { void algorithmus(); }
 class KonkreteStrategieA implements Strategie {
-        public void algorithmus() {
-                System.out.println("Weg A");
-        }
+        public void algorithmus() { System.out.println("Weg A"); }
 }
- 
 class KonkreteStrategieB implements Strategie {
-        public void algorithmus() {
-                System.out.println("Weg B");
-        }
+        public void algorithmus() { System.out.println("Weg B"); }
 }

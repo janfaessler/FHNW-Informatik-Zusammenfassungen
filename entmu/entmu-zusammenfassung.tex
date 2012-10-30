@@ -216,5 +216,23 @@ Das Entwurfsmuster Nullobjekt findet Anwendung bei der Deaktivierung von Referen
 \subsection{Beispiel}
 \lstinputlisting[language=java,caption=Beispiel Null Object Pattern,style=JavaStyle]{null.java}
 
+
+\newpage
+\section{Composite Pattern}
+\subsection{Ziel}
+Das Kompositionsmuster wird angewendet, um Teil-Ganzes-Hierarchien zu repräsentieren, indem Objekte zu Baumstrukturen zusammengefügt werden.Die Grundidee des Kompositionsmusters ist, in einer abstrakten Klasse sowohl primitive Objekte als auch ihre Behälter zu repräsentieren. Somit können sowohl einzelne Objekte, als auch ihre Kompositionen einheitlich behandelt werden. 
+
+\subsection{Motivation}
+Ein klassisches Beispiel sind hierarchische Dateisysteme, bzw ihre Repräsentation innerhalb von Dateimanagern oder Filebrowsern als Verzeichnisse und Dateien. \\
+Ein modernes Beispiel sind die Klassendefinitionen der grafischen Benutzeroberfläche von Java. Alle Elemente wie Schaltflächen und Textfelder sind Spezialisierungen der Klasse Component. Die Behälter für diese Elemente sind aber ebenfalls Spezialisierungen derselben Klasse.
+
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.3]{composite-structure.png}
+\end{center}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Composite Pattern,style=JavaStyle]{composite.java}
+
 % Inhalt Ende
 \end{document}

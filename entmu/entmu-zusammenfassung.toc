@@ -20,6 +20,11 @@
 \contentsline {subsection}{\numberline {5.1}Ziel}{8}
 \contentsline {subsection}{\numberline {5.2}Struktur}{8}
 \contentsline {subsection}{\numberline {5.3}Beispiel}{8}
-\contentsline {section}{\numberline {6}Null Object Pattern}{10}
-\contentsline {subsection}{\numberline {6.1}Beschreibung}{10}
-\contentsline {subsection}{\numberline {6.2}Beispiel}{10}
+\contentsline {section}{\numberline {6}Null Object Pattern}{9}
+\contentsline {subsection}{\numberline {6.1}Beschreibung}{9}
+\contentsline {subsection}{\numberline {6.2}Beispiel}{9}
+\contentsline {section}{\numberline {7}Composite Pattern}{10}
+\contentsline {subsection}{\numberline {7.1}Ziel}{10}
+\contentsline {subsection}{\numberline {7.2}Motivation}{10}
+\contentsline {subsection}{\numberline {7.3}Struktur}{10}
+\contentsline {subsection}{\numberline {7.4}Beispiel}{10}
