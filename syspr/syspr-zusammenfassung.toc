@@ -1,0 +1,19 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Unix/Linux}{1}
+\contentsline {subsection}{\numberline {1.1}Aufbau}{1}
+\contentsline {subsection}{\numberline {1.2}Prozesse}{1}
+\contentsline {subsubsection}{\numberline {1.2.1}Steuerungssystem}{1}
+\contentsline {subsubsection}{\numberline {1.2.2}Aufbau}{1}
+\contentsline {subsubsection}{\numberline {1.2.3}Kernel und User Mode}{2}
+\contentsline {subsubsection}{\numberline {1.2.4}Zust\"ande}{2}
+\contentsline {subsection}{\numberline {1.3}Memory}{2}
+\contentsline {subsubsection}{\numberline {1.3.1}Virtual Memory}{2}
+\contentsline {subsubsection}{\numberline {1.3.2}Swapping}{3}
+\contentsline {subsubsection}{\numberline {1.3.3}Paged Memory}{3}
+\contentsline {subsubsection}{\numberline {1.3.4}Fehlerzust\"ande}{3}
+\contentsline {section}{\numberline {2}System Call Schnittstelle}{4}
+\contentsline {subsection}{\numberline {2.1}Prozess-System}{4}
+\contentsline {subsection}{\numberline {2.2}Datei-System}{4}
+\contentsline {subsection}{\numberline {2.3}Directory Handling}{5}
+\contentsline {subsection}{\numberline {2.4}Speicherverwaltung}{5}
+\contentsline {subsection}{\numberline {2.5}Weitere}{5}
