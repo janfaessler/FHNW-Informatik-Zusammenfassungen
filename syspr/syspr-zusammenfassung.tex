@@ -202,5 +202,61 @@ Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwal
 	\item[pipe()] Basis-Interprozesskommunikation
 	\item[socket()] Interprozesskommunikation lokal oder u?ber Netzwerke
 \end{description}
+
+\newpage
+\section{Dateisystem}
+
+\subsection{Übersicht}
+\begin{center}
+	\includegraphics[scale=0.5]{filesystem-overview.png}
+\end{center}
+
+\subsection{Relevante Dateisystem Algorithmen}
+\subsubsection{Pfadnahme zu inode}
+\textit{namei()} öffnet das aktuelle oder Root Verzeichnis . Navigiert rekursiv und basierend auf den Pfadkomponenten durch den Dateisystem- Baum bis ein Fehler auftritt oder die Datei gefunden wird. Umfasst eine Cache Struktur von kürzlich benutzten Namen und der zugehörigen inode-Nummer.
+\subsubsection{Gemeinsame Nutzung von Dateien}
+Zwei Prozesse können die selbe Datei für Lese- oder Schreibzugriff öffnen. Beide haben separate Lese-/Schreib-Indices und es gibt keine Konsistenzwahrung durch den Kernel, ausser für einzelne \textit{read()} und \textit{write()} Operationen, die atomar ausgeführt werden. Nach einem \textit{fork()} eines Prozesses mit offenen Dateien teilen sich beide Prozesse den Lese-/Schreib-Index in der Dateitabelle.
+\subsubsection{Datei Locking}
+Eine Schwachstelle in Unix. Einige Unix- Varianten und Linux erlauben das Locking von Dateien pro read/write-Operation auf einem inode mittels Semaphoren. Der POSIX Standard verlangt sogar das Locken von Teilen einer Datei, aber dies wurde nur selten implementiert. Die meisten Unix Varianten unterstützen advisory locks (flock) oder Lock Dateien, die andere Prozesse jedoch ggf. Ignorieren können.
+\subsubsection{Mount / Unmount}
+Ein Directory kann als mount point diesen - das Directory muss dafür nicht leer sein, aber die enthaltenen Dateien sind nicht sichtbar, solange das Verzeichnis als Mount Point aktiv ist. Eine Mount-Tabelle entha?lt alle aktuell gemounteten Dateisysteme. Der automounter-Prozess kann zudem Dateisysteme bei Bedarf mounten/unmounten.
+
+\subsection{Allokation}
+\subsubsection{inode}
+Dateisystem feststellen, Superblock locken (Schlafen wenn besetzt), nächsten inode aus der free list holen - wenn Liste leer, auffüllen, wenn danach inode verfügbar return inode, sonst return.
+\subsubsection{Datenblock}
+Dateisystem feststellen, Superblock locken (Schlafen wenn besetzt), nächsten freien Datenblock aus der free list (meist Bitmap) holen, wenn kein Datenblock frei ist, Schlafen bis Datenblock verfügbar wird).
+
+\subsection{Synchronisation von Zugriffen auf das Dateisystem}
+Der Superblock jedes Dateisystems enthält Lock Bits, um Prozessen bei schreibendem Zugriff (inode oder Datenblock holen) atomaren Zugriff auf die Datenstrukturen im Superblock zu erlauben. Dennoch kann es zu race conditions kommen, da die Locks nur sehr kurzlebig sein dürfen (Performance!) der Prozess jederzeit preempted werden kann. Es gibt Replikate des Superblocks im Dateisystem, diese werde jedoch nicht aktualisiert.
+
+\subsection{Geräte}
+\subsubsection{Einbindung}
+\begin{itemize}
+	\item Zentrales Element: Gerätespezialdateien im /dev bzw. /devices Dateisystem als einheitliche Schnittstelle, Dateideskriptor im Prozess.
+	\item Major / Minor Device Number zur Identifikation
+	\item Zugriffsrechte auf die Gerätespezialdateien sind relevant
+	\item Geräte in verschiedenen Betriebs-Modi: block- oder zeichenweiser Zugriff
+	\item Echte Geräte und Pseudo-Geräte (z.B. virtuelle Terminals, Netzwerkprotokolle oder /dev/null)
+\end{itemize}
+\subsubsection{Gerätetreiber}
+Gerätetreiber sind die einzige Schnittstelle, über die ein Prozess mit Geräten kommunizieren kann. Sie sind Teil des kernel-Codes des Systems, und werden entweder statisch beim Systemstart oder zur Laufzeit (in Linux: insmod/rmmod) geladen.
+In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in anderen Betriebssystemen sind sie nur speziellen Kommunikationsprozessen zugänglich über die die anderen Prozesse dann mit Geräten kommunizieren müssen.
+\subsubsection{Gerätespezialdateien}
+\begin{center}
+	\includegraphics[scale=0.5]{special-files-devices.png}
+\end{center}
 % Inhalt Ende
+
+\subsection{Beispiele}
+\subsubsection{Verzeichnismanipulation}
+\lstinputlisting[language=java,caption=Verzeichnismanipulation,style=JavaStyle]{dir_handling.c}
+\newpage
+\subsubsection{Dateimanipulation}
+\lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
+
+\newpage
+\subsubsection{Dateisystem-Baum}
+\lstinputlisting[language=java,caption=Dateisystem-Baum,style=JavaStyle]{fs_handling.c}
+
 \end{document}
