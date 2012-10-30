@@ -2,7 +2,9 @@ package ch.fhnw.claudemartin.algd2;
 //DIESE DATEI IST UTF-8! A-Umlaut : Ä
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.junit.Assert;
@@ -188,8 +190,8 @@ public class AVLTreeTest {
   }
   
   final static double phi = 1.6180339887498948482d;// ~= Goldener Schnitt
-  static void testTree(AVLTree<?> tree) {
-    final Node<?> root = tree.getRoot();
+  static <T> void testTree(AVLTree<T> tree) {
+    final Node<T> root = tree.getRoot();
     testTree(root);
     Assert.assertEquals(tree.toList().size(), tree.size());
     {// Höhe darf nicht zu hoch sein:
@@ -197,6 +199,15 @@ public class AVLTreeTest {
       final double actual = root.height();
       double max =  (Math.log(Math.sqrt(5d) * (tree.size()+2d)) / Math.log(phi)) - 2d;
       Assert.assertTrue(actual < max);
+    }
+    {//Iteration
+      Set<Entry<Integer, T>> entrySet = tree.entrySet();
+      Entry<Integer, T> prev = null;
+      for (Entry<Integer, T> entry : entrySet) {
+        if(prev != null && entry != null)
+          Assert.assertTrue(prev.getKey()<entry.getKey());
+        prev = entry;
+      }
     }
   }
 

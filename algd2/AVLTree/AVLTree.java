@@ -184,11 +184,13 @@ public final class AVLTree<T> implements Map<Integer, T> {
   //"Nachfahre" finden. Wird für remove() benötigt.
   private Node<T> successor(Node<T> predec) {
     if (predec.right != null) {
+      // einmal rechts runter, dann ganz nach links.
       Node<T> r = predec.right;
       while (r.left != null)
         r = r.left;
       return r;
     } else {
+      // rauf, bis einmal rechts rauf gegangen wurde.
       Node<T> p = predec.parent;
       while (p != null && predec == p.right) {
         predec = p;
@@ -199,14 +201,21 @@ public final class AVLTree<T> implements Map<Integer, T> {
   }
   
   //"Vorfahre" finden.
-  private Node<T> predecessor(Node<T> predec) {
-    if (predec.left != null) {
-      Node<T> r = predec.left;
+  private Node<T> predecessor(Node<T> successor) {
+    if (successor.left != null) {
+      // einmal links runter, dann ganz nach rechts.
+      Node<T> r = successor.left;
       while (r.right != null)
         r = r.right;
       return r;
     } else {
-      return predec.parent;
+      // rauf, bis einmal links rauf gegangen wurde.
+      Node<T> p = successor.parent;
+      while (p != null && successor == p.left) {
+        successor = p;
+        p = successor.parent;
+      }
+      return p;
     }
   }
 
@@ -501,7 +510,7 @@ public final class AVLTree<T> implements Map<Integer, T> {
         return new Iterator<Map.Entry<Integer, T>>() {
           Node<T> current = null;
           @Override public boolean hasNext() {
-            return !AVLTree.this.isEmpty() && current != AVLTree.this.last();
+            return !AVLTree.this.isEmpty() && current != AVLTree.this.last(AVLTree.this.getRoot());
           }
           @Override public Map.Entry<Integer, T> next() {
             if (current == null)
@@ -509,7 +518,7 @@ public final class AVLTree<T> implements Map<Integer, T> {
             else
               current = AVLTree.this.successor(current);
             final Node<T> c = current;
-            return new Map.Entry<Integer, T>() {
+            return c == null ? null : new Map.Entry<Integer, T>() {
               @Override public Integer getKey() { return c.key; }
               @Override public T getValue() { return c.value; }
               @Override public T setValue(T value) {
