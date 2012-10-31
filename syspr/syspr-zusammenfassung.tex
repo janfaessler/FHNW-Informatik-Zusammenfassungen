@@ -259,4 +259,216 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 \subsubsection{Dateisystem-Baum}
 \lstinputlisting[language=java,caption=Dateisystem-Baum,style=JavaStyle]{fs_handling.c}
 
+
+\newpage
+\section{Prozess-Steuersystem}
+
+\subsection{Process-System Calls}
+\subsubsection{exec()}
+Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
+\begin{lstlisting}[language=Java, caption=exec() Beispiel, style=JavaStyle]
+	(void) printf ("process started\n");
+	execl ("/bin/date", "/bin/date", (char *) 0);
+	(void) printf ("This should not happen\n");
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=exec() Pseudocode, style=JavaStyle]
+algorithm exec
+input: (1) file name 
+       (2) parameter list
+       (3) environment variables list
+output: none {
+get file inode (algorithm namei);
+verify file executable, user has permission to execute;
+read file headers, check that it is a load module;
+copy exec parameters from old address space to system space; for (every region attached to process)
+detach all old regions (algorithm detachreg);
+for (every region attached to process)
+	detach all old regions (algorithm detachreg);
+for (every region specified in load module) {
+	allocate new regions (algorithm allocreg);
+	attach the regions (algorithm attachreg);
+	load region into memory if appropriate (algorithm loadreg);
+}
+copy exec parameters into new user stack region;
+special processing for setuid programs, tracing;
+initialize user register save area for return to user mode; 
+release inode of file (algorithm iput);
+}
+\end{lstlisting}
+\subsubsection{fork()}
+Der Aufruf \textit{fork()} erstellt einen neuen Prozess als Seiten- effekt und gibt einen numerischen Return-Code zurück:
+\begin{itemize}
+	\item Der neue Prozess (Kind) erhält eine 0.
+	\item Der aufrufende Prozess (Eltern) erhält entweder -1  im Fehlerfall oder einen Wert $> 0$, der der Prozess-ID des Kindprozesses entspricht.
+\end{itemize}
+Der Kindprozess ist eine identische Kopie des Elternprozesses (inkl. offenen Dateien, Speicher etc.), mit Ausnahme der Prozess- ID, der parent process ID und der Ressourcenverbrauchszähler. \textit{fork()} hat im Unterschied zur Prozesserzeugung in anderen Betriebssystemen keine Parameter.
+\begin{lstlisting}[language=Java, caption=fork() Beispiel, style=JavaStyle]
+
+switch (fork()) {
+	case -1:(void) printf ("fork failed\n");
+		break;
+	case 0: (void) printf ("child executing\n");
+		break;
+	default: (void) printf ("parent executing\n");
+	break;
+} 
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=fork() Pseudocode, style=JavaStyle]
+algorithm fork 
+input: none 
+output: to parent process, child PID number; to child, 0 {
+	check for available kernel resources;
+	get free proc table slot, unique PID number;
+	check that user not running too many processes;
+	mark child state "being created";
+	copy data from parent proc table slot to new child slot;
+	incr. counts on curr. directory inode and changed root (if appl.);
+	increment open 	file counts in file table;
+	make copy of parent context (u_area, text, data, stack) in memory;
+	push dummy system level context layer on child system level context; 
+		dummy context contains data allowing child process to recognize 
+		itself, and start running from here when scheduled;
+	if (executing process is parent process) {
+		change child state to "ready to run";
+		return (child ID); /* from system to user */
+	} else { /* executing process is the child process */ 
+		initialize u_area timing fields;
+		return (0); /* to user */
+	}
+}
+\end{lstlisting}
+\subsubsection{exit()}
+Der Aufruf von \textit{exit()} terminiert einen Prozess. Alle Ressourcen (Speicher, offene Dateien, ...) werden freigegeben, nur der Eintrag in der Prozesstabelle bleibt bestehen (Zombie-Prozess), bis der Elternprozess den Rückgabewert abruft. \\
+Ein Prozess kann \textit{exit()} selbst aufrufen, oder das Betriebssystem ruft \textit{\underline{ }exit()} auf, wenn ein Prozess zwangsweise terminiert werden muss.
+\begin{lstlisting}[language=Java, caption=exit() Pseudocode, style=JavaStyle]
+algorithm exit 
+input: return code for parent proc 
+output: to parent process, child PID number; to child, 0 {
+	ignore all signals;
+	if (process group leader with associated control terminal) {
+		send hangup signal to all members of process group;
+		reset process group for all members to 0;
+	}
+	close all open files (internal version of algorithm iclose); 
+	release current directory (algorithm iput);
+	release current (changed) root, if exists (algorithm iput);
+	free regions, memory associated with process (algorithm freereg); 
+	write accounting record;
+	make process state zombie;
+	assign parent proc ID of all child processes to be init proc (1); 
+	if any children were zombie, send death of child signal to init; 
+	send death of child signal to parent process;
+	context switch;
+}
+\end{lstlisting}
+\subsubsection{wait()}
+Der Aufruf von \textit{wait()} suspendiert einen Prozess von der CPU (Kontextwechsel) bis ein Kindprozess terminiert oder eine Ausnahme (z.B. stoppen) signalisiert. \\
+\textit{wait()} liefert dem Elternprozess dann den Exit Code des Kind- prozesses zurück, oder einen Indikator, warum der Kindprozess vom Betriebssystem terminiert wurde. \\
+Wenn der Prozess beim Aufruf von \textit{wait()} keine Kindprozesse hat, wird er nicht schlafen gelegt. \\
+In einigen Unix-Varianten liefert der Aufruf von \textit{wait()} den Exit Code des ersten terminierten Kindprozesses zurück (d.h. \textit{wait()} muss mehrfach aufgerufen werden, wenn mehrere Kindprozesse vorhanden sind), in anderen Varianten kehrt \textit{wait()} erst zurück, wenn der letzte Kindprozess terminiert ist, und liefert auch dessen Prozess-ID zuru?ck.
+\begin{lstlisting}[language=Java, caption=wait() Beispiel, style=JavaStyle]
+int main(int argc, char *argv[]) {
+	pid_t cpid, w;
+	int status;
+	cpid = fork();
+	if (cpid == -1) { perror("fork"); exit(EXIT_FAILURE); } 
+	if (cpid == 0) { /* Code executed by child */
+		printf("Child PID is %ld\n", (long) getpid());
+		if (argc == 1) pause(); /* Wait for signals */ 
+		_exit(atoi(argv[1]));
+	} else { do { /* Code executed by parent */ 
+		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
+		if (w == -1) { perror("waitpid"); 
+		exit(EXIT_FAILURE); } 
+		if (WIFEXITED(status)) {
+			printf("exited, status=%d\n", WEXITSTATUS(status)); 
+		} else if (WIFSIGNALED(status)) {
+			printf("killed by signal %d\n", WTERMSIG(status)); 
+		} else if (WIFSTOPPED(status)) {
+			printf("stopped by signal %d\n", WSTOPSIG(status)); 
+		} else if (WIFCONTINUED(status)) {
+			printf("continued\n"); }
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+		exit(EXIT_SUCCESS);
+	}
+}
+\end{lstlisting}
+
+\subsection{Threads}
+\subsubsection{Prozesse versus Threads}
+\begin{itemize}
+	\item Kontextwechsel sind eine schwere Operation mit viel Verarbeitungsaufwand durch den Kernel.
+	\item Da viele Unix-Prozesse I/O-intensiv sind, verbringen sie die meiste Laufzeit mit Warten, dadurch erhöht sich die Anzahl von Kontextwechseln im System.
+	\item Neuere Unix-/Linux-Systeme unterstützten mehr als einen parallellen Ausführungspfad innerhalb eines Prozesses (multi-threading) $\rightarrow$ es muss kein Kontextwechsel vorgenommen werden, um eine andere Aktivität zu starten.
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.5]{process_vs_threads.png}
+\end{center}
+\subsubsection{System Calls}
+\begin{description}
+	\item[pthread\_create()] Erzeugung eines Threads
+	\item[pthread\_exit()] Selbst-Termination eines Threads
+	\item[pthread\_cancel()] Fremd-Termination eines Threads
+	\item[pthread\_join()] Wartena uf Termination und Exit-Code eines Threads
+	\item[pthread\_detach()] Kein Warten auf einen Thread
+	\item[pthread\_self()] Ausgabe der unique thread-ID
+	\item[pthread\_equal()] Vergleich zweier thread-IDs
+	\item[pthread\_once()] Ausführung einer Initialisierungsroutinge
+\end{description}
+\subsubsection{Beispiel}
+\lstinputlisting[language=java,caption=Threads,style=JavaStyle]{threads.c}
+
+\newpage
+\section{Pipes}
+\subsection{Einleitung}
+\begin{itemize}
+	\item Unidirektionaler Kommunikationskanal zwischen verwandten Prozessen (d.h. Prozessen, die eine direkte oder indirekte / vererbte Eltern-Kind- Beziehung nach einem \textit{fork()} haben).
+	\item Direkt nutzbar für Input/Output Umleitung in der Shell.
+	\item Wird innerhalb des Prozesses als 2 Dateideskriptoren repräsentiert, um Kompatibilita?t mit Standard-I/O mit \textit{read()} and \textit{write()} zu erlauben.
+	\item Volatiler Dateninhalt für kleine Datenmengen - d.h. keine permanente Speicherung im Dateisystem - der Inhalt einer Pipe geht verloren, wenn das System herunterfährt.
+	\item Keine Struktur der Daten in der Pipe (Bytestrom).
+	\item Blockierendes, nicht-atomares Schreiben
+	\item Blockierendes, destruktives Lesen
+	\item Sonderform named pipe mit permanenter Repräsentanz im Dateisystem
+\end{itemize}
+\subsection{Nutzung von Pipes}
+\subsubsection{Variante 1:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes1.png}\\
+\end{center} 
+\subsubsection{Variante 2:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes2.png}\\
+\end{center}
+\subsubsection{Variante 3:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes3.png}\\
+\end{center}
+\subsection{Schliessen unbenutzter Pipe-Enden}
+\begin{itemize}
+	\item[1.] Saubere Programmierung
+	\item[2.] Schutz gegen copy/paste Fehler bei der Software-Entwicklung
+	\item[3.] Auf älteren Unix-Systemen begrenzte Anzahl verfügbarer Dateideskriptoren pro Prozess
+	\item[4.] Das Schliessen des letzten Lese- oder Schreib-Endes einer Pipe popen()im Betrieb hat Auswirkungen auf die Prozesssynchronisation.
+\end{itemize}
+\subsection{Pseudocode}
+\begin{lstlisting}[language=Java, caption=pipe() Pseudocode,style=JavaStyle]
+algorithm pipe 
+input: none 
+output: file descriptor, write file descriptor
+{
+	assign new inode from pipe device (algorithm ialloc);
+	/* Since System V R4 dedicated FIFO file system (fifofs) */
+	allocate file table entry for reading, another for writing;
+	initialize file table entries to point to new inode;
+	allocate user file descriptor for reading, another for writing,
+	initialize to point to respective file table entries; 
+	set inode reference count to 2;
+	initialize count of inode readers, writers to 1;
+}
+\end{lstlisting}
+\subsection{Dup Pipe Fork}
+\lstinputlisting[language=java,caption=Dup Pipe Fork,style=JavaStyle]{dup-pipe-fork.c}
+\subsection{popen() Bibliotheks- Funktion}
+\lstinputlisting[language=java,caption=popen() Beispiel,style=JavaStyle]{popen.c}
 \end{document}
