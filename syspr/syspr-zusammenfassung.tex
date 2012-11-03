@@ -85,89 +85,27 @@
 
 % Inhalt Start
 
-\section{Unix/Linux}
+\section{Einleitung}
 
-\subsection{Aufbau}
+\subsection{UNIX-Aufbau}
 \begin{center}
 	\includegraphics[scale=0.3]{aufbau-unix.png}
 \end{center}
 
-\subsection{Prozesse}
-\subsubsection{Steuerungssystem}
-\begin{itemize}
-	\item Prozesse kreieren \& starten
-	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
-	\item Prozesse stoppen / unterbrechen / terminieren
-	\item Prozess-Signalisierung und -kommunikation
-	\item Faire Zuordnung von Hauptspeicher und anderen geteilten Ressourcen
-	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
-	\item Prozesse und ihre Zustände anzeigen
-\end{itemize}
-
-\subsubsection{Aufbau}
-\begin{center}
-	\includegraphics[scale=0.25]{prozess-aufbau.png}
-\end{center}
-
-\subsubsection{Kernel und User Mode}
-\begin{itemize}
-	\item Ein Prozess hat mindestens zwei Ausführungsmodi:
-		\begin{description}
-			\item[User Mode] Es wird der normale Programmcode ausgeführt.
-			\item[Kernl Mode] Es werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
-		\end{description}
-	\item Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation oder durch asynchrone Events 
-	\item Beide Modi haben separate Segmente und sind voneinander abgeschirmt.
-\end{itemize}
-
-\subsubsection{Zustände}
-\begin{center}
-	\includegraphics[scale=0.5]{process-states.png}
-\end{center}
-
-\subsection{Memory}
-\subsubsection{Virtual Memory}
-\begin{itemize}
-	\item Erweiterung des Hauptspeichers pro System (mehr Prozesse im System als Speicher verfügbar), oder pro Prozess (einzelner Prozess grösser als verfu?gbarer Hauptspeicher).
-	\item Systematische Abstraktion fu?r systemspezifische Overlay- Techniken.
-	\item Organisation des Hauptspeichers in gleich grosse, einheitlich adressierbare Einheiten.
-\end{itemize}
-
-\subsubsection{Swapping}
-\begin{center}
-	\includegraphics[scale=0.3]{swapping.png}
-\end{center}
-
-\subsubsection{Paged Memory}
-Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwaltung variieren zwischen Unix- und Linux-Varianten und sind zudem von den Hardware- Eigenschaften abhängig. Linux verwendet zum Beuispiel eine 3-stufige Seitentabelle:
-\begin{itemize}
-	\item Page Directory pro Prozess und für den BS-Kern
-	\item Page Mid-level Directory (für 64 bit CPU-Architekturen) Paged Memory II
-	\item Page Table, enthält Seitenbeschreibungen und Verweise auf den physische Speicheror
-\end{itemize}
-
-\subsubsection{Fehlerzustände}
-\begin{center}
-	\includegraphics[scale=0.3]{memory-error-state.png}
-\end{center}
-
-\newpage
-\section{System Call Schnittstelle}
+\subsection{System Call Schnittstelle}
 \begin{center}
 	\includegraphics[scale=0.5]{system-calls.png}
 \end{center}
-\subsection{Prozess-System}
-\begin{description}
-	\item[fork()] Erzeugung
-	\item[exit()] Beendigung
-	\item[exec()] Überlagerung des Prozesses
-	\item[wait()] Warten auf Prozesstermination (Kindprozesse)
-	\item[sleep()] Freiwilliges schlafen des Prozesses.
-	\item[kill()] Senden eines Signals (32 verschiedene)
-	\item[signal()] Signalbehandlung
-\end{description}
 
-\subsection{Datei-System}
+\newpage
+\section{Dateisystem}
+
+\subsection{Übersicht}
+\begin{center}
+	\includegraphics[scale=0.5]{filesystem-overview.png}
+\end{center}
+
+\subsection{System Calls}
 \begin{description}
 	\item[creat()] Anlegen einer Datei
 	\item[mknod()] Anlegen eines Ordners
@@ -190,26 +128,6 @@ Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwal
 	\item[writedir()] Schreiben eines Verzeichnises
 	\item[closedir()]  Schliessen eines Verzeichnises
 \end{description}
-		
-\subsection{Speicherverwaltung}
-\begin{description}
-	\item[malloc()] Speicher allozieren
-	\item[free()	] Speicher freigeben
-\end{description}
-
-\subsection{Weitere}
-\begin{description}
-	\item[pipe()] Basis-Interprozesskommunikation
-	\item[socket()] Interprozesskommunikation lokal oder u?ber Netzwerke
-\end{description}
-
-\newpage
-\section{Dateisystem}
-
-\subsection{Übersicht}
-\begin{center}
-	\includegraphics[scale=0.5]{filesystem-overview.png}
-\end{center}
 
 \subsection{Relevante Dateisystem Algorithmen}
 \subsubsection{Pfadnahme zu inode}
@@ -251,49 +169,60 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 \subsection{Beispiele}
 \subsubsection{Verzeichnismanipulation}
 \lstinputlisting[language=java,caption=Verzeichnismanipulation,style=JavaStyle]{dir_handling.c}
-\newpage
 \subsubsection{Dateimanipulation}
 \lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
 
-\newpage
-\subsubsection{Dateisystem-Baum}
-\lstinputlisting[language=java,caption=Dateisystem-Baum,style=JavaStyle]{fs_handling.c}
 
 
 \newpage
-\section{Prozess-Steuersystem}
+\section{Prozesse}
 
-\subsection{Process-System Calls}
+\subsection{Einleitung}
+\subsubsection{Aufgaben an ein Prozesssteuerungssystem}
+\begin{itemize}
+	\item Prozesse kreieren, starten, stoppen, unterbrechen \& terminieren
+	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
+	\item Prozess-Signalisierung und -kommunikation
+	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
+	\item Prozesse und ihre Zustände anzeigen
+\end{itemize}
+\subsubsection{Kernel und User Mode}
+\begin{itemize}
+	\item Ein Prozess hat mindestens zwei Ausführungsmodi:
+		\begin{description}
+			\item[User Mode] Es wird der normale Programmcode ausgeführt.
+			\item[Kernl Mode] Es werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
+		\end{description}
+	\item Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation oder durch asynchrone Events.
+\end{itemize}
+\subsubsection{Prozesskontext}
+\begin{description}
+	\item[Benutzer] Daten des Prozesses im zugewiesenen Adressraum
+	\item[Hardware]  Basis- und Grenzregister, Befehlszählregister, Akkumulator \&  Seitentabelle
+	\item[System] Prozessnummer, geöffneten Dateien, Eltern- oder Kindprozesse \& Prioritäten
+\end{description}
+\subsubsection{Zustände}
+\begin{center}
+	\includegraphics[scale=0.4]{process-states.png}
+\end{center}
+
+
+\subsection{System Calls}
+\begin{description}
+	\item[fork()] Erzeugung
+	\item[exit()] Beendigung
+	\item[exec()] Überlagerung des Prozesses
+	\item[wait()] Warten auf Prozesstermination (Kindprozesse)
+	\item[sleep()] Freiwilliges schlafen des Prozesses.
+	\item[kill()] Senden eines Signals (32 verschiedene)
+	\item[signal()] Signalbehandlung
+\end{description}
 \subsubsection{exec()}
 Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
 \begin{lstlisting}[language=Java, caption=exec() Beispiel, style=JavaStyle]
 	(void) printf ("process started\n");
 	execl ("/bin/date", "/bin/date", (char *) 0);
 	(void) printf ("This should not happen\n");
-\end{lstlisting}
-\begin{lstlisting}[language=Java, caption=exec() Pseudocode, style=JavaStyle]
-algorithm exec
-input: (1) file name 
-       (2) parameter list
-       (3) environment variables list
-output: none {
-get file inode (algorithm namei);
-verify file executable, user has permission to execute;
-read file headers, check that it is a load module;
-copy exec parameters from old address space to system space; for (every region attached to process)
-detach all old regions (algorithm detachreg);
-for (every region attached to process)
-	detach all old regions (algorithm detachreg);
-for (every region specified in load module) {
-	allocate new regions (algorithm allocreg);
-	attach the regions (algorithm attachreg);
-	load region into memory if appropriate (algorithm loadreg);
-}
-copy exec parameters into new user stack region;
-special processing for setuid programs, tracing;
-initialize user register save area for return to user mode; 
-release inode of file (algorithm iput);
-}
 \end{lstlisting}
 \subsubsection{fork()}
 Der Aufruf \textit{fork()} erstellt einen neuen Prozess als Seiten- effekt und gibt einen numerischen Return-Code zurück:
@@ -313,57 +242,12 @@ switch (fork()) {
 	break;
 } 
 \end{lstlisting}
-\begin{lstlisting}[language=Java, caption=fork() Pseudocode, style=JavaStyle]
-algorithm fork 
-input: none 
-output: to parent process, child PID number; to child, 0 {
-	check for available kernel resources;
-	get free proc table slot, unique PID number;
-	check that user not running too many processes;
-	mark child state "being created";
-	copy data from parent proc table slot to new child slot;
-	incr. counts on curr. directory inode and changed root (if appl.);
-	increment open 	file counts in file table;
-	make copy of parent context (u_area, text, data, stack) in memory;
-	push dummy system level context layer on child system level context; 
-		dummy context contains data allowing child process to recognize 
-		itself, and start running from here when scheduled;
-	if (executing process is parent process) {
-		change child state to "ready to run";
-		return (child ID); /* from system to user */
-	} else { /* executing process is the child process */ 
-		initialize u_area timing fields;
-		return (0); /* to user */
-	}
-}
-\end{lstlisting}
 \subsubsection{exit()}
 Der Aufruf von \textit{exit()} terminiert einen Prozess. Alle Ressourcen (Speicher, offene Dateien, ...) werden freigegeben, nur der Eintrag in der Prozesstabelle bleibt bestehen (Zombie-Prozess), bis der Elternprozess den Rückgabewert abruft. \\
 Ein Prozess kann \textit{exit()} selbst aufrufen, oder das Betriebssystem ruft \textit{\underline{ }exit()} auf, wenn ein Prozess zwangsweise terminiert werden muss.
-\begin{lstlisting}[language=Java, caption=exit() Pseudocode, style=JavaStyle]
-algorithm exit 
-input: return code for parent proc 
-output: to parent process, child PID number; to child, 0 {
-	ignore all signals;
-	if (process group leader with associated control terminal) {
-		send hangup signal to all members of process group;
-		reset process group for all members to 0;
-	}
-	close all open files (internal version of algorithm iclose); 
-	release current directory (algorithm iput);
-	release current (changed) root, if exists (algorithm iput);
-	free regions, memory associated with process (algorithm freereg); 
-	write accounting record;
-	make process state zombie;
-	assign parent proc ID of all child processes to be init proc (1); 
-	if any children were zombie, send death of child signal to init; 
-	send death of child signal to parent process;
-	context switch;
-}
-\end{lstlisting}
 \subsubsection{wait()}
 Der Aufruf von \textit{wait()} suspendiert einen Prozess von der CPU (Kontextwechsel) bis ein Kindprozess terminiert oder eine Ausnahme (z.B. stoppen) signalisiert. \\
-\textit{wait()} liefert dem Elternprozess dann den Exit Code des Kind- prozesses zurück, oder einen Indikator, warum der Kindprozess vom Betriebssystem terminiert wurde. \\
+\textit{wait()} liefert dem Elternprozess dann den Exit Code des Kindprozesses zurück, oder einen Indikator, warum der Kindprozess vom Betriebssystem terminiert wurde. \\
 Wenn der Prozess beim Aufruf von \textit{wait()} keine Kindprozesse hat, wird er nicht schlafen gelegt. \\
 In einigen Unix-Varianten liefert der Aufruf von \textit{wait()} den Exit Code des ersten terminierten Kindprozesses zurück (d.h. \textit{wait()} muss mehrfach aufgerufen werden, wenn mehrere Kindprozesse vorhanden sind), in anderen Varianten kehrt \textit{wait()} erst zurück, wenn der letzte Kindprozess terminiert ist, und liefert auch dessen Prozess-ID zuru?ck.
 \begin{lstlisting}[language=Java, caption=wait() Beispiel, style=JavaStyle]
@@ -394,8 +278,9 @@ int main(int argc, char *argv[]) {
 }
 \end{lstlisting}
 
-\subsection{Threads}
-\subsubsection{Prozesse versus Threads}
+\newpage
+\section{Threads}
+\subsection{Prozesse versus Threads}
 \begin{itemize}
 	\item Kontextwechsel sind eine schwere Operation mit viel Verarbeitungsaufwand durch den Kernel.
 	\item Da viele Unix-Prozesse I/O-intensiv sind, verbringen sie die meiste Laufzeit mit Warten, dadurch erhöht sich die Anzahl von Kontextwechseln im System.
@@ -404,7 +289,7 @@ int main(int argc, char *argv[]) {
 \begin{center}
 	\includegraphics[scale=0.5]{process_vs_threads.png}
 \end{center}
-\subsubsection{System Calls}
+\subsection{System Calls}
 \begin{description}
 	\item[pthread\_create()] Erzeugung eines Threads
 	\item[pthread\_exit()] Selbst-Termination eines Threads
@@ -415,7 +300,7 @@ int main(int argc, char *argv[]) {
 	\item[pthread\_equal()] Vergleich zweier thread-IDs
 	\item[pthread\_once()] Ausführung einer Initialisierungsroutinge
 \end{description}
-\subsubsection{Beispiel}
+\subsection{Beispiel}
 \lstinputlisting[language=java,caption=Threads,style=JavaStyle]{threads.c}
 
 \newpage
@@ -471,4 +356,7 @@ output: file descriptor, write file descriptor
 \lstinputlisting[language=java,caption=Dup Pipe Fork,style=JavaStyle]{dup-pipe-fork.c}
 \subsection{popen() Bibliotheks- Funktion}
 \lstinputlisting[language=java,caption=popen() Beispiel,style=JavaStyle]{popen.c}
+
+\newpage
+\section{Signale}
 \end{document}

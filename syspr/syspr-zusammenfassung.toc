@@ -1,58 +1,50 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {1}Unix/Linux}{1}
-\contentsline {subsection}{\numberline {1.1}Aufbau}{1}
-\contentsline {subsection}{\numberline {1.2}Prozesse}{1}
-\contentsline {subsubsection}{\numberline {1.2.1}Steuerungssystem}{1}
-\contentsline {subsubsection}{\numberline {1.2.2}Aufbau}{1}
-\contentsline {subsubsection}{\numberline {1.2.3}Kernel und User Mode}{2}
-\contentsline {subsubsection}{\numberline {1.2.4}Zust\"ande}{2}
-\contentsline {subsection}{\numberline {1.3}Memory}{2}
-\contentsline {subsubsection}{\numberline {1.3.1}Virtual Memory}{2}
-\contentsline {subsubsection}{\numberline {1.3.2}Swapping}{3}
-\contentsline {subsubsection}{\numberline {1.3.3}Paged Memory}{3}
-\contentsline {subsubsection}{\numberline {1.3.4}Fehlerzust\"ande}{3}
-\contentsline {section}{\numberline {2}System Call Schnittstelle}{4}
-\contentsline {subsection}{\numberline {2.1}Prozess-System}{4}
-\contentsline {subsection}{\numberline {2.2}Datei-System}{4}
-\contentsline {subsection}{\numberline {2.3}Directory Handling}{5}
-\contentsline {subsection}{\numberline {2.4}Speicherverwaltung}{5}
-\contentsline {subsection}{\numberline {2.5}Weitere}{5}
-\contentsline {section}{\numberline {3}Dateisystem}{6}
-\contentsline {subsection}{\numberline {3.1}\"Ubersicht}{6}
-\contentsline {subsection}{\numberline {3.2}Relevante Dateisystem Algorithmen}{6}
-\contentsline {subsubsection}{\numberline {3.2.1}Pfadnahme zu inode}{6}
-\contentsline {subsubsection}{\numberline {3.2.2}Gemeinsame Nutzung von Dateien}{6}
-\contentsline {subsubsection}{\numberline {3.2.3}Datei Locking}{6}
-\contentsline {subsubsection}{\numberline {3.2.4}Mount / Unmount}{6}
-\contentsline {subsection}{\numberline {3.3}Allokation}{7}
-\contentsline {subsubsection}{\numberline {3.3.1}inode}{7}
-\contentsline {subsubsection}{\numberline {3.3.2}Datenblock}{7}
-\contentsline {subsection}{\numberline {3.4}Synchronisation von Zugriffen auf das Dateisystem}{7}
-\contentsline {subsection}{\numberline {3.5}Ger\"ate}{7}
-\contentsline {subsubsection}{\numberline {3.5.1}Einbindung}{7}
-\contentsline {subsubsection}{\numberline {3.5.2}Ger\"atetreiber}{7}
-\contentsline {subsubsection}{\numberline {3.5.3}Ger\"atespezialdateien}{8}
-\contentsline {subsection}{\numberline {3.6}Beispiele}{8}
-\contentsline {subsubsection}{\numberline {3.6.1}Verzeichnismanipulation}{8}
-\contentsline {subsubsection}{\numberline {3.6.2}Dateimanipulation}{9}
-\contentsline {subsubsection}{\numberline {3.6.3}Dateisystem-Baum}{10}
-\contentsline {section}{\numberline {4}Prozess-Steuersystem}{14}
-\contentsline {subsection}{\numberline {4.1}Process-System Calls}{14}
-\contentsline {subsubsection}{\numberline {4.1.1}exec()}{14}
-\contentsline {subsubsection}{\numberline {4.1.2}fork()}{14}
-\contentsline {subsubsection}{\numberline {4.1.3}exit()}{15}
-\contentsline {subsubsection}{\numberline {4.1.4}wait()}{16}
-\contentsline {subsection}{\numberline {4.2}Threads}{16}
-\contentsline {subsubsection}{\numberline {4.2.1}Prozesse versus Threads}{16}
-\contentsline {subsubsection}{\numberline {4.2.2}System Calls}{17}
-\contentsline {subsubsection}{\numberline {4.2.3}Beispiel}{17}
-\contentsline {section}{\numberline {5}Pipes}{19}
-\contentsline {subsection}{\numberline {5.1}Einleitung}{19}
-\contentsline {subsection}{\numberline {5.2}Nutzung von Pipes}{19}
-\contentsline {subsubsection}{\numberline {5.2.1}Variante 1:}{19}
-\contentsline {subsubsection}{\numberline {5.2.2}Variante 2:}{20}
-\contentsline {subsubsection}{\numberline {5.2.3}Variante 3:}{20}
-\contentsline {subsection}{\numberline {5.3}Schliessen unbenutzter Pipe-Enden}{20}
-\contentsline {subsection}{\numberline {5.4}Pseudocode}{20}
-\contentsline {subsection}{\numberline {5.5}Dup Pipe Fork}{21}
-\contentsline {subsection}{\numberline {5.6}popen() Bibliotheks- Funktion}{21}
+\contentsline {section}{\numberline {1}Einleitung}{1}
+\contentsline {subsection}{\numberline {1.1}UNIX-Aufbau}{1}
+\contentsline {subsection}{\numberline {1.2}System Call Schnittstelle}{1}
+\contentsline {section}{\numberline {2}Dateisystem}{2}
+\contentsline {subsection}{\numberline {2.1}\"Ubersicht}{2}
+\contentsline {subsection}{\numberline {2.2}System Calls}{2}
+\contentsline {subsection}{\numberline {2.3}Directory Handling}{2}
+\contentsline {subsection}{\numberline {2.4}Relevante Dateisystem Algorithmen}{3}
+\contentsline {subsubsection}{\numberline {2.4.1}Pfadnahme zu inode}{3}
+\contentsline {subsubsection}{\numberline {2.4.2}Gemeinsame Nutzung von Dateien}{3}
+\contentsline {subsubsection}{\numberline {2.4.3}Datei Locking}{3}
+\contentsline {subsubsection}{\numberline {2.4.4}Mount / Unmount}{3}
+\contentsline {subsection}{\numberline {2.5}Allokation}{3}
+\contentsline {subsubsection}{\numberline {2.5.1}inode}{3}
+\contentsline {subsubsection}{\numberline {2.5.2}Datenblock}{3}
+\contentsline {subsection}{\numberline {2.6}Synchronisation von Zugriffen auf das Dateisystem}{3}
+\contentsline {subsection}{\numberline {2.7}Ger\"ate}{4}
+\contentsline {subsubsection}{\numberline {2.7.1}Einbindung}{4}
+\contentsline {subsubsection}{\numberline {2.7.2}Ger\"atetreiber}{4}
+\contentsline {subsubsection}{\numberline {2.7.3}Ger\"atespezialdateien}{4}
+\contentsline {subsection}{\numberline {2.8}Beispiele}{4}
+\contentsline {subsubsection}{\numberline {2.8.1}Verzeichnismanipulation}{4}
+\contentsline {subsubsection}{\numberline {2.8.2}Dateimanipulation}{5}
+\contentsline {section}{\numberline {3}Prozesse}{7}
+\contentsline {subsection}{\numberline {3.1}Einleitung}{7}
+\contentsline {subsubsection}{\numberline {3.1.1}Aufgaben an ein Prozesssteuerungssystem}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}Kernel und User Mode}{7}
+\contentsline {subsubsection}{\numberline {3.1.3}Prozesskontext}{7}
+\contentsline {subsubsection}{\numberline {3.1.4}Zust\"ande}{7}
+\contentsline {subsection}{\numberline {3.2}System Calls}{8}
+\contentsline {subsubsection}{\numberline {3.2.1}exec()}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}fork()}{8}
+\contentsline {subsubsection}{\numberline {3.2.3}exit()}{9}
+\contentsline {subsubsection}{\numberline {3.2.4}wait()}{9}
+\contentsline {section}{\numberline {4}Threads}{10}
+\contentsline {subsection}{\numberline {4.1}Prozesse versus Threads}{10}
+\contentsline {subsection}{\numberline {4.2}System Calls}{10}
+\contentsline {subsection}{\numberline {4.3}Beispiel}{10}
+\contentsline {section}{\numberline {5}Pipes}{12}
+\contentsline {subsection}{\numberline {5.1}Einleitung}{12}
+\contentsline {subsection}{\numberline {5.2}Nutzung von Pipes}{12}
+\contentsline {subsubsection}{\numberline {5.2.1}Variante 1:}{12}
+\contentsline {subsubsection}{\numberline {5.2.2}Variante 2:}{13}
+\contentsline {subsubsection}{\numberline {5.2.3}Variante 3:}{13}
+\contentsline {subsection}{\numberline {5.3}Schliessen unbenutzter Pipe-Enden}{13}
+\contentsline {subsection}{\numberline {5.4}Pseudocode}{13}
+\contentsline {subsection}{\numberline {5.5}Dup Pipe Fork}{14}
+\contentsline {subsection}{\numberline {5.6}popen() Bibliotheks- Funktion}{14}
+\contentsline {section}{\numberline {6}Signale}{16}
