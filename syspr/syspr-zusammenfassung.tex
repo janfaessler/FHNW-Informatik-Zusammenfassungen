@@ -94,8 +94,16 @@
 
 \subsection{System Call Schnittstelle}
 \begin{center}
-	\includegraphics[scale=0.5]{system-calls.png}
+	\includegraphics[scale=0.55]{system-calls.png}
 \end{center}
+
+\subsection{Nötige System Calls für Multiuser-Betriebssystem}
+\begin{description}
+ \item[File System:] open(), read(), write(), close(), unlink(), creat()
+ \item[Prozess Steuer:] fork(), sleep(), exec(), kill(), exit(), wait()
+ \item[Inter Prozess Kommunikation:] pipe(), sync(), socket()
+ \item[Memory Management:] malloc(), free()
+\end{description}
 
 \newpage
 \section{Dateisystem}
@@ -216,13 +224,6 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 	\item[sleep()] Freiwilliges schlafen des Prozesses.
 	\item[kill()] Senden eines Signals (32 verschiedene)
 	\item[signal()] Signalbehandlung
-\end{description}
-\subsubsection{nötige System Calls für Multiuser-Betriebssystem}
-\begin{description}
- \item[File System:] open(), read(), write(), close(), unlink(), creat()
- \item[Prozess Steuer:] fork(), sleep(), exec(), kill(), exit(), wait()
- \item[Inter Prozess Kommunikation:] pipe(), sync(), socket()
- \item[Memory Management:] malloc(), free()
 \end{description}
 \subsubsection{exec()}
 Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
