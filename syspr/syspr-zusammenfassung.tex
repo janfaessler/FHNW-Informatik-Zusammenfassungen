@@ -217,6 +217,13 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 	\item[kill()] Senden eines Signals (32 verschiedene)
 	\item[signal()] Signalbehandlung
 \end{description}
+\subsubsection{nötige System Calls für Multiuser-Betriebssystem}
+\begin{description}
+ \item[File System:] open(), read(), write(), close(), unlink(), creat()
+ \item[Prozess Steuer:] fork(), sleep(), exec(), kill(), exit(), wait()
+ \item[Inter Prozess Kommunikation:] pipe(), sync(), socket()
+ \item[Memory Management:] malloc(), free()
+\end{description}
 \subsubsection{exec()}
 Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
 \begin{lstlisting}[language=Java, caption=exec() Beispiel, style=JavaStyle]
@@ -277,6 +284,27 @@ int main(int argc, char *argv[]) {
 	}
 }
 \end{lstlisting}
+\subsection{Swapping}
+\includegraphics[scale=0.4]{swapping.png}
+\subsection{Demand Paging}
+Anforderung: ein einzelner Prozess soll grösser sein dürfen, als der verfügbare Hauptspeicher.\\ 
+Voraussetzungen für “demand paging”:
+\begin{itemize}
+ \item Hardware unterstützt seitenorientieres Speichermanagement ($\frac{1}{2} – 4$ kB / Seite)
+ \item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen über eine Seitengrenze verlaufen)
+\end{itemize}
+Beobachtung: Lokalität des Codes, nur etwa 10-15\% des Programmcodes müssen zu jeder beliebigen Zeit im Hauptspeicher liegen (“working set”).\\
+Zugriff auf eine Seite ausserhalb des “working set” führt zu einem “page fault” (Seitenladefehler), dann wird die Seite nachgeladen $\to$ Balance zwischen der Grösse des “working set” und der Anzahl “page faults”\\
+Optimierung des “demand paging” durch
+\begin{itemize}
+ \item “Reference bit” $\to$ ermöglicht nicht-lineares “working set”
+ \item “Age bits” $\to$ verbleibende Zet einer Seite im “working set”
+\end{itemize}
+$\to$ Zwei Aufgaben für das Paging-Subsystem:
+\begin{itemize}
+ \item Seitenalterung und Auslagerung/Löschung genügend alter Seiten
+ \item Bearbeitung von “page faults”
+\end{itemize}
 
 \newpage
 \section{Threads}

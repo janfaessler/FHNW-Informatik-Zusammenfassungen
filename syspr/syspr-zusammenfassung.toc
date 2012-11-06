@@ -29,10 +29,11 @@
 \contentsline {subsubsection}{\numberline {3.1.3}Prozesskontext}{7}
 \contentsline {subsubsection}{\numberline {3.1.4}Zust\"ande}{7}
 \contentsline {subsection}{\numberline {3.2}System Calls}{8}
-\contentsline {subsubsection}{\numberline {3.2.1}exec()}{8}
-\contentsline {subsubsection}{\numberline {3.2.2}fork()}{8}
-\contentsline {subsubsection}{\numberline {3.2.3}exit()}{9}
-\contentsline {subsubsection}{\numberline {3.2.4}wait()}{9}
+\contentsline {subsubsection}{\numberline {3.2.1}n\"otige System Calls f\"ur Multiuser-Betriebssystem}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}exec()}{8}
+\contentsline {subsubsection}{\numberline {3.2.3}fork()}{8}
+\contentsline {subsubsection}{\numberline {3.2.4}exit()}{9}
+\contentsline {subsubsection}{\numberline {3.2.5}wait()}{9}
 \contentsline {section}{\numberline {4}Threads}{10}
 \contentsline {subsection}{\numberline {4.1}Prozesse versus Threads}{10}
 \contentsline {subsection}{\numberline {4.2}System Calls}{10}
