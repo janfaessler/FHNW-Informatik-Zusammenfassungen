@@ -359,4 +359,22 @@ output: file descriptor, write file descriptor
 
 \newpage
 \section{Signale}
+\subsection{Einleitung}
+Ursprünglich entwickelt, um Ausnahmesituationen und Fehlverhalten von Prozessen anzuzeigen (Division durch Null, Zugriffsschutzverletzungen usw.), die zu einer Prozessbeendigung durch den Kernel führen. Später erweitert, um asynchrone Prozesskommunikation zu erlauben, und um nicht-kritische Bedingungen (z.B. Terminieren eines Kindprozesses, Starten/Stoppen eines Prozesses für das Debugging, I/O auf einem Datei- deskriptor usw.) anzuzeigen. Mechanismus wird benutzt vom Kernel (als Sender), vom Benutzer (als Sender, z.B. Cntl-C) und von Prozessen (als Sender mittels kill() oder als Empfänger).
+\subsection{Signale und Prozesse}
+\begin{center}
+	\includegraphics[scale=0.3]{signale-processes.png}\\
+\end{center} 
+\subsection{System Calls}
+\begin{description}
+	\item[kill(signum)] Sendet ein Signal
+	\item[signal(signum,handler)] Setzt einen neuen Signal Handler und gibt den alten zurück.
+	\item[alarm(seconds)]
+\end{description}
+\subsection{Eltern- / Kind-Prozess Signalisierung}
+Wenn ein Prozess \textit{fork()} aufruft, bleiben alle schon definierten Signalaktionen (Default, Ignore, Handler) im Eltern- und im Kindprozess intakt. Wenn ein Prozess mit pendenten, aber noch nicht behandelten Signalen \textit{fork()} aufruft, erbt der Kindprozess die pendenten Signale (d.h. Signalduplikation). Wenn ein Prozess \textit{exec()} aufruft, werden alle Signal Handler wieder auf ihre Default-Aktion zurückgesetzt, da die Adresse des Signal Handlers im Prozessadressraum auf anderen Code zeigt und der Rumpf der Handling Prozedur im Textsegment dealloziiert / überschrieben wurde.
+\subsection{Alarm Signal}
+\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{sign-alarm.c}
+\subsection{Jumping}
+\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{jumping.c}
 \end{document}
