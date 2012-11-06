@@ -369,7 +369,7 @@ Ursprünglich entwickelt, um Ausnahmesituationen und Fehlverhalten von Prozessen 
 \begin{description}
 	\item[kill(signum)] Sendet ein Signal
 	\item[signal(signum,handler)] Setzt einen neuen Signal Handler und gibt den alten zurück.
-	\item[alarm(seconds)]
+	\item[alarm(seconds)] Setzt ein Alarmsignal nach einer bestimmten Anzahl Sekunden ab.
 \end{description}
 \subsection{Eltern- / Kind-Prozess Signalisierung}
 Wenn ein Prozess \textit{fork()} aufruft, bleiben alle schon definierten Signalaktionen (Default, Ignore, Handler) im Eltern- und im Kindprozess intakt. Wenn ein Prozess mit pendenten, aber noch nicht behandelten Signalen \textit{fork()} aufruft, erbt der Kindprozess die pendenten Signale (d.h. Signalduplikation). Wenn ein Prozess \textit{exec()} aufruft, werden alle Signal Handler wieder auf ihre Default-Aktion zurückgesetzt, da die Adresse des Signal Handlers im Prozessadressraum auf anderen Code zeigt und der Rumpf der Handling Prozedur im Textsegment dealloziiert / überschrieben wurde.
