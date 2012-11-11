@@ -28,3 +28,12 @@
 \contentsline {subsection}{\numberline {7.2}Motivation}{10}
 \contentsline {subsection}{\numberline {7.3}Struktur}{10}
 \contentsline {subsection}{\numberline {7.4}Beispiel}{10}
+\contentsline {section}{\numberline {8}Prototype Pattern}{12}
+\contentsline {subsection}{\numberline {8.1}Ziel}{12}
+\contentsline {subsection}{\numberline {8.2}Motivation}{12}
+\contentsline {subsection}{\numberline {8.3}Struktur}{12}
+\contentsline {subsection}{\numberline {8.4}Beispiel}{12}
+\contentsline {section}{\numberline {9}Immutability Pattern}{13}
+\contentsline {subsection}{\numberline {9.1}Ziel}{13}
+\contentsline {subsection}{\numberline {9.2}Regeln}{13}
+\contentsline {subsection}{\numberline {9.3}Beispiel}{13}
