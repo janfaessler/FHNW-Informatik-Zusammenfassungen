@@ -33,7 +33,8 @@
 \contentsline {subsection}{\numberline {8.2}Motivation}{12}
 \contentsline {subsection}{\numberline {8.3}Struktur}{12}
 \contentsline {subsection}{\numberline {8.4}Beispiel}{12}
-\contentsline {section}{\numberline {9}Immutability Pattern}{13}
-\contentsline {subsection}{\numberline {9.1}Ziel}{13}
-\contentsline {subsection}{\numberline {9.2}Regeln}{13}
-\contentsline {subsection}{\numberline {9.3}Beispiel}{13}
+\contentsline {subsection}{\numberline {8.5}Unterschiedliche Clone Varianten}{13}
+\contentsline {section}{\numberline {9}Immutability Pattern}{14}
+\contentsline {subsection}{\numberline {9.1}Ziel}{14}
+\contentsline {subsection}{\numberline {9.2}Regeln}{14}
+\contentsline {subsection}{\numberline {9.3}Beispiel}{14}
