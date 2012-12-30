@@ -1,0 +1,535 @@
+\documentclass[a4paper, 11pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx} %for header/footer
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+
+% Listings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+
+% Code listenings
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+ 
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+%Metadata
+\title{Systemprogrammierung \\ Test 2}
+\author{Jan Fässler}
+\date{3. Semester (HS 2012)}
+\fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
+
+% hier beginnt das Dokument
+\begin{document}
+
+% Titelbild
+\maketitle
+\thispagestyle{fancy}
+
+\newpage
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman}
+\tableofcontents	  	
+
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+% Inhalt Start
+\section{Sockets}
+\subsection{Design der Socket Schnittstelle}
+Das Ziel der Schnittstelle ist eine offene, generische Programmierschnittstelle fu?r Interprozesskom- munikation (lokal und u?ber verschiedenste Netzwerke) fu?r Unix. Die Anforderungen an die Socket-Schnittstelle sind:
+\begin{description}
+	\item[Transparenz] \hfill \\ bezüglich Netzwerkverhalten
+	\item[Effizienz] \hfill \\ um die Programmierer zu überzeugen
+	\item[Kompatibilität] \hfill \\ mit Unix Standard I/O
+\end{description}
+\subsection{Grundkonzepte}
+\begin{description}
+	\item[communication domains] \hfill \\ Unterstützung verschiedener Netzwerkprotokolle
+	\item[communication types] \hfill \\ Klassifikation von Kommunikationseigenschaften
+	\item[name binding] \hfill \\ Benennung und Adressierung von Kommunikationsendpunkten
+	\item[sockets] \hfill \\ Einheitliche Abstraktion für Kommunikationsendpunkte in einem Programm/Prozess
+\end{description}
+\subsection{Erstellen eine Verbindung}
+\begin{center}
+	\includegraphics[scale=0.3]{socket-verbindungsaufbau.png}\\
+\end{center} 
+\subsection{Senden / Empfangen}
+Damit die Socktet-Schnittstelle möglichst kompatibel ist und und mehrere Domähnen und Protokolle unterstützt werden können gibt es für das Senden und Empfangen mehrere Paare von Systemaufrufen.
+\begin{description}
+	\item[read/write] \hfill
+		\begin{itemize}
+			\item Rückwärtskompatibilität zu Unix Standard I/O 
+			\item Ermöglichen von Pipelining mit dup()
+		\end{itemize}
+	\item[send/recv] \hfill
+		\begin{itemize}
+			\item zusätzliche Funktionalität und Parametrisierung
+			\item für TCP
+		\end{itemize}
+	\item[sento/recvfrom] \hfill
+		\begin{itemize}
+			\item erlaubt das Senden von ganzer Datenportionen ohne Verbindung
+			\item für UDP
+		\end{itemize}
+	\item[sendmsg/recvmsg] \hfill
+		\begin{itemize}
+			\item überträgt/signalisiert eine vollständige Nachricht, anstelle eines unstrukturierten Byte-Stroms
+			\item die Applikation wird erst benarchichtigt, wenn eine ganze Nachricht angekommen ist
+		\end{itemize}
+\end{description}
+\subsection{Warten auf Socket-I/O}
+\begin{description}
+	\item[accept()] \hfill \\
+		Blockiert den aufrufenden Prozess solange, bis ein Verbindungsaufbauwunsch am Socket signalisiert wird.
+	\item[select()] \hfill \\
+		Erlaubt eine nicht blockierendes Warten auf neue Verbindungen bzw. nur kurze Blockaden. (kann zB über SIGALARM realisiert werden)
+\end{description}
+\subsection{Beenden einer Verbindung}
+\begin{description}
+	\item[shutdown] \hfill \\
+		Signalisiert eine Verbindungsabbruch-Anforderung zur anderen Seite und wartet dann auf die Bestätigung. Inzwischen noch ankommende Daten werden noch bestätigt, aber nicht an die Applikation weitergegeben.
+	\item[close] \hfill \\ Dealloziert die lokale Socket Datenstruktur und die zugeordneten Ressourcen (Puffer).
+	\item[exit] \hfill \\ Terminiert das PRogramm ohne explizites shutdown/close, überlässt das Aufräumen dem Betriebssystem und der Gegenpartei.
+	\item[Provider Abort] \hfill \\ überlässt das Aufräumen dem Betriebssystem beider Gegenparteiten.
+\end{description}
+\subsection{Datenstruktur für die Protokollauswahl}
+\begin{center}
+	\includegraphics[scale=0.3]{socket-protokollauswahl.png}\\
+\end{center} 
+\subsection{Datenfluss durch die Schichten}
+\begin{center}
+	\includegraphics[scale=0.3]{socket-datenfluss.png}\\
+\end{center} 
+
+\newpage
+\section{System V IPC}
+\subsection{Zentrale Konzepte}
+Der Kernel verwaltet je eine separate Tabelle für jeden der drei System V IPC Mechanismen:
+\begin{itemize}
+	\item Message Queues
+	\item Shared Memory
+	\item Semaphore
+\end{itemize}
+Für die Verwaltung der drei Mechanismen werden allerdings die \textbf{gleichen Prozeduren} verwendet. Der Zugriff erfolgt über einen \textbf{numerischen Schlüssel}. Es gibt keine Registratur für verwendete/reservierte Schlüssel, was \textbf{Kollisionen ausschliesst}. Die System V IPC Objekte sind \textbf{nicht kompatibel} mit Standard I/O-basierter Prozesskommunikation wie Dateien, Sockets, Pipes oder Geräte.
+\subsection{Verwaltung der Objekte}
+\begin{center}
+	\includegraphics[scale=0.3]{ipc-verwaltung.png}\\
+\end{center} 
+\subsection{Kommandos}
+\begin{description}
+	\item[ipcs] \hfill \\ Listet alle aktiven System V IPC Objekte eines Systems auf
+	\item[iprm] \hfill \\ Löscht ein System V IPC Objekt
+\end{description}
+
+\pagebreak
+\subsection{Shared Memory}
+\subsubsection{Einleitung}
+Shared Memory erlaubt die gemeinsame Nutzung von Hauptspeicher-Seiten zwischen verschiedenen Prozessen. Es wird ein dedizierter Segment-Typ verwendet, der aber auf der normalen Unix-Speicherverwaltung basiert. Ein eNutzung eines Shared Memory's zwischen nicht verwandten PRozessen ist möglich aber limitiert auf ein lokales System. Es gibt keinen Synchronisationsmechanismus für Shared Memory. Als Synchronisation gilt das Gentlemen's Agreement:
+\begin{itemize}
+	\item Signalbit im Shared Memory
+	\item Signale
+	\item Semaphore
+\end{itemize}
+\subsubsection{Beispiel-Adressraum eines Prozesses} 
+\begin{center}
+	\includegraphics[scale=0.3]{sharedmemory-process-adress.png}\\
+\end{center}
+\subsubsection{Erstellen eines Segments}
+Wenn ein Segment alloziert wird, werden folgende Schritte durchgeführt:
+\begin{itemize}
+	\item remove region from linked list of free regions; 
+	\item assign region type;
+	\item assign region inode pointer;
+	\item if (inode pointer not null) increment inode reference count;
+	\item place region on linked list of active regions; 
+	\item return (locked region);
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Erstellen eines Shared Memory Segments, style=JavaStyle]
+#include <sys/types.h> /* supplies key_t */
+#include <sys/ipc.h>   /* supplies ipc_perm */
+#include <sys/shm.h>   /* supplies structures and macros for
+                        * shared mem. data structures etc. */
+int size, permflags, shm_id;
+key_t key;
+...
+shm_id = shmget (key, size, permflags);
+\end{lstlisting}
+\subsubsection{Einbinden eines Segments}
+Wenn ein Segment eingebunden wird, werden folgende Schritte durchgeführt durch den System Call shmat():
+\begin{itemize}
+	\item check validity of descriptor, permissions
+	\item if (user specified virtual address)
+		\begin{itemize}
+			\item round off virtual address, as specified by flags;
+			\item check legality of virtual address, size of region;
+		\end{itemize}
+	\item else 
+		\begin{itemize}
+			\item kernel picks virtual address: error if none available;
+		\end{itemize}
+	\item attach region to process address space (algorithm attachreg);
+	\item if (region being attached for the first time)
+		\begin{itemize}
+			\item allocate page tables, memory for region (algorithm growreg);
+		\end{itemize}
+	\item return (virtual address where attached);
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Einbindung eines Shared Memory Segments, style=JavaStyle]
+#include <sys/types.h> /* supplies key_t */
+#include <sys/ipc.h>   /* supplies ipc_perm */
+#include <sys/shm.h>   /* supplies structures and macros for
+                        * shared mem. data structures etc. */
+int shm_id, shmflags;
+char *memptr, *daddr, *shmat();
+...
+memptr = shmat (shm_id, daddr, shmflags);
+\end{lstlisting}
+\begin{center}
+	\includegraphics[scale=0.5]{sharedmemory-datenstruktur-shmat.png}\\
+\end{center}
+\subsubsection{Entfernen eines Segmentes}
+Wenn ein Segment entfernt wird, werden folgende Schritte durchgeführt durch den System Call detachreg():
+\begin{itemize}
+	\item get auxiliary memory management tables for process,
+	\item release as appropriate;
+	\item decrement process size;
+	\item decrement region reference count;
+	\item if (region count is 0 and region not sticky bit)
+		\begin{itemize}
+			\item free region (algorithm freereg);
+		\end{itemize}
+	\item else \textit{/* either reference count non-0 or region sticky bit on */}
+		\begin{itemize}
+			\item free inode lock, if applicable (inode associated with region);
+			\item free region lock;
+		\end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Entfernen eines Shared Memory Segments, style=JavaStyle]
+int       retval;
+char      *memptr;
+...
+retval = shmdt (memptr);
+\end{lstlisting}
+
+\pagebreak
+\subsection{Message Queues}
+\subsubsection{Einleitung}
+Das eigentliche IPC Objekt ist die Message Queue, nicht die einzelne Nachricht. Die MEssage Queue erlaubt den Austausch beliebig strukturierter Daten. Die Nachrichten können über ein Typenfeld identifiziert werden. Ein Empfänger kann Nachrichten auf unterschiedlichste Arten empfachen (Rheienfolge, Nachrichtentyp, ...). Message Queues erlaubt die Kommunikation zwischen nicht-verwandten Prozessen, ist aber beschränkt auf ein lokales System.
+\subsubsection{Erzeugen einer Message Queue}
+\begin{lstlisting}[language=Java, caption=Erzeugen einer Message Queue, style=JavaStyle]
+#include <sys/types.h> /* supplies key_t */
+#include <sys/ipc.h>   /* supplies ipc_perm */
+#include <sys/msg.h>   /* supplies structures and macros
+                        * for Message Queues, Messages etc. */
+int msg_qid, permflags;
+key_t key;
+...
+msg_qid = msgget (key, permflags);
+\end{lstlisting}
+\subsubsection{Senden einer Nachricht}
+Wenn eine Nachricht versendet wird, werden folgende Schritte durchgeführt durch den System Call msgsnd():
+\begin{itemize}
+	\item check legality of descriptor, permissions;
+	\item while (not enough space to store message) 
+		\begin{itemize}
+			\item if (flags specify not to wait) return;
+			\item sleep (until event enough space is available);
+		\end{itemize}
+	\item get message header;
+	\item read message text from user space to kernel;
+	\item adjust data structures:
+		\begin{itemize}
+			\item enqueue message header,
+			\item message header points to data,
+			\item counts,
+			\item time stamps,
+			\item process ID;
+		\end{itemize}
+	\item wakeup all processes waiting to read message from queue;
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Versenden einer Nachricht, style=JavaStyle]
+#include <sys/types.h> /* supplies key_t */
+#include <sys/ipc.h>   /* supplies ipc_perm */
+#include <sys/msg.h>   /* supplies structures and macros
+                        * for Message Queues, Messages etc. */
+int msg_qid, size, flags, retval;
+struct my_msg {
+	long mtype;
+	char mtext[SOMEVALUE];
+} message;
+...
+retval = msgsnd (msg_qid, &message, size, flags);
+\end{lstlisting}
+\begin{center}
+	\includegraphics[scale=0.4]{messagequeues-datenstruktur.png}\\
+\end{center}
+\subsubsection{Empfang einer Nachricht}
+Wenn eine Nachricht empfangen wird, werden folgende Schritte durchgeführt durch den System Call msgsnd():
+\begin{itemize}
+	\item check permissions;
+	\item \textbf{loop;}
+	\item check legality of message descriptor;
+	\item \textit{/* find message to return to user */}
+	\item if (requested message type $==$ 0)
+		\begin{itemize}
+			\item consider first message on queue;
+		\end{itemize}
+	\item else if (requested message type $>$ 0)
+		\begin{itemize}
+			\item consider first message on queue with given type;
+		\end{itemize}
+	\item else   \textit{/* requested message type $<$ 0 */}
+	\item consider first of the lowest typed messages on queue, such that its type is $<=$ absolute value of requested type;
+	\item if (there is a message )
+		\begin{itemize}
+			\item adjust message size or return error if user size too small;
+			\item copy message type, text from kernel space to user space;
+			\item unlink message from queue;
+			\item return;
+		\end{itemize}
+	\item \textit{/* no message */}
+	\item if (flags specify not to sleep) return with error;
+	\item sleep (event message arrives on queue);
+	\item \textbf{goto loop;}
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Empfangen einer Nachricht, style=JavaStyle]
+#include <sys/types.h> /* supplies key_t */
+#include <sys/ipc.h>   /* supplies ipc_perm */
+#include <sys/msg.h>   /* supplies structures and macros
+                        * for Message Queues, Messages etc. */
+int msg_qid, size, flags, retval;
+struct my_msg {
+	long mtype;
+	char mtext[SOMEVALUE];
+} message;
+long msg_type;
+...
+retval = msgrcv (msg_qid, &message, size, msg_type, flags);
+\end{lstlisting}
+
+\pagebreak
+\subsection{Semaphore}
+\subsubsection{Einleitung}
+Semaphoren erlauben die Synchronisation von nicht-verwandten PRozessen sowie den Schutz von kritischen Abschnitten durch gegenseitigen Ausschluss. In Unix/Linux sind sie additiv und unterstützen Semaphore Sets. Sie sind aber auch begrenzt auf das lokale System.
+\subsubsection{Benutzung für gegenseitigen Ausschluss}
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-benutzung-ausschluss.png}\\
+\end{center}
+\subsubsection{Benutzung für Prozess-Synchronisation}
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-benutzung-synchronisation.png}\\
+\end{center}
+\subsubsection{Additive Semaphore}
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-additive.png}\\
+\end{center}
+\subsubsection{Semaphore in Unix}
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-unix.png}\\
+\end{center}
+\subsubsection{Datenstrukturen}
+\begin{lstlisting}[language=Java, caption=Semctl Command Definitions, style=JavaStyle]
+#define GETNCNT 3  /* get semncnt */
+#define GETPID  4  /* get sempid */
+#define GETVAL  5  /* get semval */
+#define GETALL  6  /* get all semval's */
+#define GETZCNT 7  /* get semzcnt */
+#define SETVAL  8  /* set semval */
+#define SETALL  9  /* set all semval's */
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=set of semaphores, style=JavaStyle]
+struct semid_ds {
+	struct ipc_perm    sem_perm;  /* operation permission struct */
+	struct sem         *sem_base; /* ptr to first semaphore in set */
+	ushort             sem_nsems; /* # of semaphores in set */
+	time_t             sem_otime; /* last semop time */
+	time_t             sem_ctime; /* last change time */
+};
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=one semaphore, style=JavaStyle]
+struct sem {
+	ushort          semval;  /* semaphore text map address */
+	short           sempid;  /* pid of last operation */
+	ushort          semncnt; /* # awaiting semval > cval */
+	ushort          semzcnt; /* # awaiting semval = 0 */
+};
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=template for semctl system calls, style=JavaStyle]
+union semun { 
+    int               val;    /* value for SETVAL */
+    struct semid_ds   *buf;   /* buffer for IPC_STAT & IPC_SET */
+    ushort            *array; /* array for GETALL & SETALL */
+};
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=template for semop system calls, style=JavaStyle]
+union semun { 
+    short   sem_num;  /* semaphore # */
+    short   sem_op;   /* semaphore operation */
+    short   sem_flg;  /* operation flags */
+};
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=There is one undo structure per process, style=JavaStyle]
+union sem_undo { 
+    struct sem_undo *un_np; /* ptr to next active undo structure */
+    short           un_cnt; /* # of active entries */
+    struct undo {
+         short      un_aoe; /* ?adjust on exit?-values */
+         short      un_num; /* semaphore # */
+         int        un_id;  /* semid */
+    }    un_ent[1];         /* (semume) undo entries (one min.) */
+    
+};
+\end{lstlisting}
+\subsubsection{Implementierung \textit{P} and \textit{V}}
+\begin{lstlisting}[language=Java, caption=Programmierbeispiel: Implementierung, style=JavaStyle]
+P (semid) int semid; {
+     struct sembuf p_buf;
+     p_buf.sem_num = 0;
+     p_buf.sem_op = -1;        /* negativer Wert, also Fall 1 = P() */
+     p_buf.sem_flg = SEM_UNDO;
+     if (semop (semid, &p_buf, 1) == -1) {
+          perror (?p(semid) failed?);
+          exit (1);
+     } else return (0);
+}
+V (semid) int semid; {
+     struct sembuf v_buf;
+     v_buf.sem_num = 0;
+     v_buf.sem_op = 1;        /* positiver Wert, also Fall 2 = P() */
+     v_buf.sem_flg = SEM_UNDO;
+     if (semop (semid, &v_buf, 1) == -1) {
+          perror (?v(semid) failed?);
+          exit (1);
+     } else return (0);
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Programmierbeispiel: Benutzung, style=JavaStyle]
+main () {
+     key_t semkey = 0x200;
+     if (fork () == 0) handlesem (semkey);
+     if (fork () == 0) handlesem (semkey);
+     if (fork () == 0) handlesem (semkey);
+}
+handlesem (skey) key_t skey; {
+     int semid, pid = getpid();
+     if ((semid = initsem (skey)) > 0) exit (1);
+     printf (?\nprocess %d before critical section\n?, pid); P (semid);
+     printf (?process %d in critical section\n?, pid);
+     /* in real life do something interesting */
+     sleep (2);
+     printf (?process %d leaving critical section\n?, pid); V (semid);
+     printf (?process %d exiting\n?, pid);
+     exit (0);
+}
+\end{lstlisting}
+
+\newpage
+\section{Remote Procedure Calls}
+\subsection{Genereller Aufbau}
+\begin{center}
+	\includegraphics[scale=0.35]{rpc-aufbau.png}\\
+\end{center}
+\subsection{Server / Client Bindung}
+\begin{itemize}
+	\item Finden eines Servers im Netz
+	\item Finden des gewünschten Service auf dem Server im Netz
+	\item Sun RPC benutzt die Standard-Unix-Methode für das Finden von Servern im Internet (DNS).
+	\item Alle Serverprogramme, Programmversionen und angebotenen Prozeduren werden mit eindeutigen Nummern gekennzeichnet.
+	\item Ein Prozess kann eine oder mehrere Prozeduren anbieten.
+	\item Der protmapper Prozess (Linux: rpcbind) auf Porst 111 auf jedem Serversystem dient als zentrale, lokale Registratur für verfügbare RPC-Dienste.
+\end{itemize}
+\subsection{RPC Portmapping Ablauf}
+\begin{itemize}
+	\item[1.] Der Server erstellt einen Socket und registriert Programmnummer, Versionsnummer und Portnummer beim Portmapper.
+	\item[2.] Ein Client kontaktiert den Portmapper und fragt nach einer Programm-, Versions- und Prozedurnummer. Falls lokal bekannt, sendet der Portmapper die Portnummer zurück.
+	\item[3./4.] Der Client kann nun die gewünschte Prozedur direkt beim Server aufrufen. 
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.35]{rpc-ablauf.png}\\
+\end{center}
+\subsection{Auswahl des Transportprotokolls}
+\begin{itemize}
+	\item RPC ist unabhängig von spezifischen Transportdiensten oder Protokollen. (Sun RPC unterstützt TCP und UDP)
+	\item Es werden Abbildungen auf die üblichen Transportprotokolle angeboten.
+\end{itemize}
+\subsection{Programmierbeispiel}
+\begin{center}
+	\includegraphics[scale=0.35]{rpc-beispiel.png}\\
+\end{center}
+\subsection{Ausnahmebehandlung}
+\begin{itemize}
+	\item Zusätzlich zu lokalen Fehlern können in RPC weitere Fehler auf dem Serversystem und bei der Datenübermittlung durch das Netz auftreten.
+	\item Abbruch von bereits übermittelten oder gestarteten Prozeduraufrufen durch den Klienten beim Server.
+	\item Terminieren des Klienten bevor der Server den Ablauf der entfernten Prozdedur beendet hat.
+	\item Sun RPC verwendet das automatische Neusenden von Anfragen im Fall der Benutzung von UDP, und erkennt verlorene Verbindungen in TCP.
+	\item Sun RPC unterstützt keinen separaten Kontrollkanal.
+\end{itemize}
+\subsection{Aufrufsemantik}
+\begin{itemize}
+	\item Prozedur wird genau einmal ausgeführt
+	\item Prozedur wird höchstens einmal ausgeführt
+	\item Prozedur wird mindestens einmal ausgeführt
+	\item Jeder Server unterhält einen Cache mit kürzlich erhaltenen Prozeduraufrufen und den zurückgesendeten Resultaten, und sendet das gespeicherte Resultat zurück, wenn ein Duplikat eines PRozeduraufrufs entdeckt wird.
+\end{itemize}
+\subsection{Benutzung und Beschränkungen}
+\begin{itemize}
+	\item Die Server sind meist zustandslos:
+		\begin{itemize}
+			\item alle Operationen sind unabhängig voneinander
+			\item Bobustheit gegen Fehler im Klienten, im Server und im Netz
+		\end{itemize}
+	\item Performance (lokale vs. entfernte Prozeduren)
+	\item Service-Strategien (ein Server, ein Server pro Klient, ...)
+	\item Verteilungsstrategien (wo im Netz werden Server plaziert.
+\end{itemize}
+\end{document}
