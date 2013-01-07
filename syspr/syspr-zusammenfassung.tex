@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[10pt]{article}
 
 %Math
 \usepackage{amsmath}
@@ -10,24 +10,44 @@
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
-\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
-\usepackage{fontenc}
-\usepackage{fancyhdr, graphicx} %for header/footer
-\usepackage{wasysym}
-\usepackage{fullpage}
-\usepackage{textcomp}
+\usepackage[utf8]{inputenc} 
+\usepackage{fancyhdr, graphicx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage[a4paper,top=2cm]{geometry}
+\setlength{\textwidth}{17cm}
+\setlength{\oddsidemargin}{-0.5cm}
 
-% Listings
+
+% Shortcommands
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+
+%Arrows
+\newcommand{\lra}{\leftrightarrow} 
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+
+% Code listenings
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{caption}
-
-% Code listenings
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
- 
 \lstdefinestyle{JavaStyle}{
  language=Java,
  basicstyle=\footnotesize\ttfamily, % Standardschrift
@@ -57,13 +77,17 @@
 %Config
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{15.2pt}
-\pagestyle{plain}
 
 %Metadata
-\title{Systemprogrammierung}
-\author{Jan Fässler}
-\date{3. Semester (HS 2012)}
 \fancyfoot[C]{If you use this documentation for a exam, you should offer a beer to the authors!}
+\title{
+	\vspace{5cm}
+	Systemprogrammierung \\
+	Test 2
+}
+\author{Jan FÃ¤ssler}
+\date{3. Semester (HS 2012)}
+
 
 % hier beginnt das Dokument
 \begin{document}
@@ -85,325 +109,378 @@
 
 % Inhalt Start
 
-\section{Einleitung}
-
-\subsection{UNIX-Aufbau}
-\begin{center}
-	\includegraphics[scale=0.3]{aufbau-unix.png}
-\end{center}
-
-\subsection{System Call Schnittstelle}
-\begin{center}
-	\includegraphics[scale=0.55]{system-calls.png}
-\end{center}
-
-\subsection{Nötige System Calls für Multiuser-Betriebssystem}
+\section{Sockets}
+Die Socket Schnittstelle wurde an der University of California entwickelt. Ziel war es eine offene, generische Programmierschnittstelle fÃ¼r die Interprozesskommunikation fÃ¼r UNIX zu realisieren. Sockens erlauben es dem Nutzer sich mit dem Netzwerk zu verbinden. Der Socket ist dabei der Endpunkt einer Kommunikationsverbindung, wie zum Beispiel eine Telefonsteckdose. Die Anforderungen an die Schnittstelle waren:
 \begin{description}
- \item[File System:] open(), read(), write(), close(), unlink(), creat()
- \item[Prozess Steuer:] fork(), sleep(), exec(), kill(), exit(), wait()
- \item[Inter Prozess Kommunikation:] pipe(), sync(), socket()
- \item[Memory Management:] malloc(), free()
+	\item[Transparenz] bezÃ¼glich Netzwerkverhalten
+	\item[Effizienz] um die Programmierer zu Ã¼berzeugen
+	\item[KompatibilitÃ¤t] mit dem UNIX Standard I/O
 \end{description}
 
-\newpage
-\section{Dateisystem}
+\subsection{Grundkonzepte}
+\begin{description}
+	\item[communication domains] \hfill \\ UnterstÃ¼tzung verschiedener Netzwerkprotokolle
+	\item[communication types] \hfill \\ Klassifikation von Eigenschaften
+	\item[name binding] \hfill \\ Bennenung und Adressierung von Endpunkten
+	\item[Sockets] \hfill \\ Einheiltiche Abstraktion von Endpunkten
+\end{description}
 
-\subsection{Übersicht}
+\subsection{Erstellen einer Socket Verbindung}
 \begin{center}
-	\includegraphics[scale=0.5]{filesystem-overview.png}
+	\includegraphics[scale=0.2]{socket-verbindungsaufbau.png}
+\end{center}
+
+\subsection{Senden und Empfangen von Daten}
+Um mÃ¶glichst viele DomÃ¤nen (Unix, Internet, ...) und Protokolle (TCP, UDP, ...) zu unterstÃ¼tzen, gibt es verschiedene Paare von System Calls welche aber in den meisten UNIX Varianten auf einer einzigen internen Funktion abgebildet werden.
+\begin{description}
+	\item[read/write] \hfill \\ RÃ¼ckwÃ¤rtskompatibilitÃ¤t zum UNIX Standard I/O, ermÃ¶glichen von Pipes mit dup()
+	\item[send/recv] \hfill \\ zusÃ¤tzliche FunktionalitÃ¤t und Parametrisierung  nutzt TCP, Packete geordnet
+	\item[sendto/recvfrom] \hfill \\ erlaubt senden ganzer Datagramme ohne Verbindung (UDP), Packete ungeordnet, keine FehlerÃ¼berprÃ¼fung, zwei Buffer nÃ¶tig (Sender/EmpfÃ¤nger)
+	\item[sendmsg/recvmsg] \hfill \\ nicht Bytestrom orientiert, Appl. wird erst benachrichtig wenn die ganze Nachricht angekommen ist.
+\end{description}
+
+\subsection{Blockierendes vs. selektives Warten auf Sockets}
+\begin{description}
+	\item[accept()] \hfill \\ Blockiert den aufrufenden PRozess solange, bis ein Verbindungsaufbauwunsch am Socket signalisiert wird
+	\item[select()] \hfill \\ Erlaubt nicht blockierendes Warten auf eine Verbindung
+\end{description}
+
+\subsection{Beenden einer Verbindung}
+\begin{description}
+	\item[shutdown()] \hfill \\ Signalisiert Verbinungsabbruch der anderen Seite und wartet auf eine BestÃ¤tigung. Vor der BestÃ¤tigung eintreffende Daten werden noch bestÃ¤tigt, jedoch nicht an die Appl. weitergegeben. Ein beenden kann einseitig oder beidseitig erfolgen.
+	\item[close()] \hfill \\ Dealloziert die lokale Socket Datenstruktur und die zugerdneten Ressourcen (Puffer)
+	\item[exit()] \hfill \\ Terminiert das PRogramm ohne explizites shutdown/close. Es Ã¼berlÃ¤sst die AufrÃ¤umarbeiten dem OS und der Gegenpartei.
+	\item[Provider Abort] \hfill \\ Ã¼berlÃ¤sst das AfurÃ¤umen dem OS beider Gegenparteien
+\end{description}
+
+\subsection{Speicherverwaltung auf der Socket Schicht}
+Daten auf einem socket werden in sogenannten mbufs gespeichert, welche jeweils auf den folgenden mbuf verweisen (wie eine LinkedList). Alle mbufs zusammen sind der mbuf Pool.
+\begin{center}
+	\includegraphics[scale=0.2]{socket-datenstruktur.png}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.5]{socket-buffer.png}
+\end{center}
+
+\subsection{Datenfluss duch die Schichten}
+\begin{center}
+	\includegraphics[scale=0.2]{socket-datenfluss.png}
 \end{center}
 
 \subsection{System Calls}
 \begin{description}
-	\item[creat()] Anlegen einer Datei
-	\item[mknod()] Anlegen eines Ordners
-	\item[open()] Öffnen einer Datei
-	\item[close()] Schliessen einer Datei
-	\item[unlink()] Löschen einer Datei
-	\item[read()] Lesen aus einer Datei
-	\item[write()] Schreiben in eine Datei
-	\item[lseek()] Vorwärts-/Rückwertsbewegung
-	\item[ioctl()] Kontrollieren der Eigenschaften
-	\item[dup()] Duplizieren eines Dateideskriptors
-	\item[chown, chmod, umask] Zugriffsrechte
-	\item[chdir()] Navigation im Dateisystem
+	\item[socket(domain, type, prot)] \hfill \\ Socket erstellen
+	\item[bind(sockfd, addr, addlen)] \hfill	\\ Nach dem Erstellen eines Sockets existiert dieser blos als Name aber er hat noch keine Adresse. Bind verknÃ¼pft ihn mit einer Adresse.
+	\item[listen(sockfd, backlog)] \hfill \\ Markiert den Socket als passiven Socket. Das bedeutet als Socket der einkommende Verbindungen mit accept entgegennehmen kann.
+	\item[accept(socketfd, addr, addlen, flags)] \hfill \\ Wird mit Verbindungsbassierten Socket Typen (STREAM, SEQPACKET) verwendet. Entpackt die erste Anfrage au der Queue der zu berarbeitenden Verbindungen fÃ¼r den hÃ¶renden Socket. Kreiert einen neuen verbundenen Socket und gibt einen neuen File Descriptor zurÃ¼ck, welcher auf diesen verweist. Der ursprÃ¼ngliche Socket wird nicht verÃ¤ndert. Der neue ist nicht im listening state.
+	\item[connect(socketfd,addr,addrlen)] \hfill \\ Verbindet den Socket zur Adresse.
 \end{description}
-
-\subsection{Directory Handling}
-\begin{description}
-	\item[opendir()] Öffnen eines Verzeichnises
-	\item[readdir()] Lesen eines Verzeichnises
-	\item[writedir()] Schreiben eines Verzeichnises
-	\item[closedir()]  Schliessen eines Verzeichnises
-\end{description}
-
-\subsection{Relevante Dateisystem Algorithmen}
-\subsubsection{Pfadnahme zu inode}
-\textit{namei()} öffnet das aktuelle oder Root Verzeichnis . Navigiert rekursiv und basierend auf den Pfadkomponenten durch den Dateisystem- Baum bis ein Fehler auftritt oder die Datei gefunden wird. Umfasst eine Cache Struktur von kürzlich benutzten Namen und der zugehörigen inode-Nummer.
-\subsubsection{Gemeinsame Nutzung von Dateien}
-Zwei Prozesse können die selbe Datei für Lese- oder Schreibzugriff öffnen. Beide haben separate Lese-/Schreib-Indices und es gibt keine Konsistenzwahrung durch den Kernel, ausser für einzelne \textit{read()} und \textit{write()} Operationen, die atomar ausgeführt werden. Nach einem \textit{fork()} eines Prozesses mit offenen Dateien teilen sich beide Prozesse den Lese-/Schreib-Index in der Dateitabelle.
-\subsubsection{Datei Locking}
-Eine Schwachstelle in Unix. Einige Unix- Varianten und Linux erlauben das Locking von Dateien pro read/write-Operation auf einem inode mittels Semaphoren. Der POSIX Standard verlangt sogar das Locken von Teilen einer Datei, aber dies wurde nur selten implementiert. Die meisten Unix Varianten unterstützen advisory locks (flock) oder Lock Dateien, die andere Prozesse jedoch ggf. Ignorieren können.
-\subsubsection{Mount / Unmount}
-Ein Directory kann als mount point diesen - das Directory muss dafür nicht leer sein, aber die enthaltenen Dateien sind nicht sichtbar, solange das Verzeichnis als Mount Point aktiv ist. Eine Mount-Tabelle entha?lt alle aktuell gemounteten Dateisysteme. Der automounter-Prozess kann zudem Dateisysteme bei Bedarf mounten/unmounten.
-
-\subsection{Allokation}
-\subsubsection{inode}
-Dateisystem feststellen, Superblock locken (Schlafen wenn besetzt), nächsten inode aus der free list holen - wenn Liste leer, auffüllen, wenn danach inode verfügbar return inode, sonst return.
-\subsubsection{Datenblock}
-Dateisystem feststellen, Superblock locken (Schlafen wenn besetzt), nächsten freien Datenblock aus der free list (meist Bitmap) holen, wenn kein Datenblock frei ist, Schlafen bis Datenblock verfügbar wird).
-
-\subsection{Synchronisation von Zugriffen auf das Dateisystem}
-Der Superblock jedes Dateisystems enthält Lock Bits, um Prozessen bei schreibendem Zugriff (inode oder Datenblock holen) atomaren Zugriff auf die Datenstrukturen im Superblock zu erlauben. Dennoch kann es zu race conditions kommen, da die Locks nur sehr kurzlebig sein dürfen (Performance!) der Prozess jederzeit preempted werden kann. Es gibt Replikate des Superblocks im Dateisystem, diese werde jedoch nicht aktualisiert.
-
-\subsection{Geräte}
-\subsubsection{Einbindung}
-\begin{itemize}
-	\item Zentrales Element: Gerätespezialdateien im /dev bzw. /devices Dateisystem als einheitliche Schnittstelle, Dateideskriptor im Prozess.
-	\item Major / Minor Device Number zur Identifikation
-	\item Zugriffsrechte auf die Gerätespezialdateien sind relevant
-	\item Geräte in verschiedenen Betriebs-Modi: block- oder zeichenweiser Zugriff
-	\item Echte Geräte und Pseudo-Geräte (z.B. virtuelle Terminals, Netzwerkprotokolle oder /dev/null)
-\end{itemize}
-\subsubsection{Gerätetreiber}
-Gerätetreiber sind die einzige Schnittstelle, über die ein Prozess mit Geräten kommunizieren kann. Sie sind Teil des kernel-Codes des Systems, und werden entweder statisch beim Systemstart oder zur Laufzeit (in Linux: insmod/rmmod) geladen.
-In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in anderen Betriebssystemen sind sie nur speziellen Kommunikationsprozessen zugänglich über die die anderen Prozesse dann mit Geräten kommunizieren müssen.
-\subsubsection{Gerätespezialdateien}
-\begin{center}
-	\includegraphics[scale=0.5]{special-files-devices.png}
-\end{center}
-% Inhalt Ende
-
-\subsection{Beispiele}
-\subsubsection{Verzeichnismanipulation}
-\lstinputlisting[language=java,caption=Verzeichnismanipulation,style=JavaStyle]{dir_handling.c}
-\subsubsection{Dateimanipulation}
-\lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
-
 
 
 \newpage
-\section{Prozesse}
+\section{Interprocess Communication (IPC)}
+\subsection{Zentrale Konzepte}
+Es gibt im System drei verschiedene IPC MEchanismen, fÃ¼r deren Verwaltung der Kernel je eine separate Tabelle pflegt: \textbf{Message Queues}, \textbf{Shared Memory} und \textbf{Semaphore}. \\
+FÃ¼r die Verwaltung  aller drei Mechanismen werden \textbf{dieselben Prozeduren} verwendet. Der Zugriff erfolgt Ã¼ber \textbf{einen numerischen SchlÃ¼ssel}. Es gibt keine Registratur fÃ¼r verwendete/reservierte SchlÃ¼ssel. \textbf{Kollisionen sind also mÃ¶glic}h. Die IPC Objekte sind \textbf{nicht kompatibel mit dem Standard I/O} bassierter Prozesskommunikation wie Dateinen, Sockets, Pipes oder GerÃ¤te. Sie sind alle \textbf{limitiert auf ein lokales System}.
 
-\subsection{Einleitung}
-\subsubsection{Aufgaben an ein Prozesssteuerungssystem}
-\begin{itemize}
-	\item Prozesse kreieren, starten, stoppen, unterbrechen \& terminieren
-	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
-	\item Prozess-Signalisierung und -kommunikation
-	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
-	\item Prozesse und ihre Zustände anzeigen
-\end{itemize}
-\subsubsection{Kernel und User Mode}
-\begin{itemize}
-	\item Ein Prozess hat mindestens zwei Ausführungsmodi:
-		\begin{description}
-			\item[User Mode] Es wird der normale Programmcode ausgeführt.
-			\item[Kernl Mode] Es werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
-		\end{description}
-	\item Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation oder durch asynchrone Events.
-\end{itemize}
-\subsubsection{Prozesskontext}
-\begin{description}
-	\item[Benutzer] Daten des Prozesses im zugewiesenen Adressraum
-	\item[Hardware]  Basis- und Grenzregister, Befehlszählregister, Akkumulator \&  Seitentabelle
-	\item[System] Prozessnummer, geöffneten Dateien, Eltern- oder Kindprozesse \& Prioritäten
-\end{description}
-\subsubsection{Zustände}
+\subsection{Verwaltung der Objekte}
 \begin{center}
-	\includegraphics[scale=0.4]{process-states.png}
+	\includegraphics[scale=0.2]{ipc-verwaltung.png}
 \end{center}
 
+\newpage
+\subsection{Shared Memory}
+Shared Memory erlaubt die gemeinsame Nutzung von Hauptspeicher-Seiten zwischen verschidenen (nicht) verwandten Prozessen. Es wird ein dedizierter Segment Typ verwendet, der auf der normalen Speicherverwaltung basiert. Die Synchronisation muss Ã¼ber Semaphore, Signalbits oder allgemeine Signale erfolgen.
+\begin{center}
+	\includegraphics[scale=0.2]{sharedmemory-process-adress.png}
+\end{center}
 
-\subsection{System Calls}
-\begin{description}
-	\item[fork()] Erzeugung
-	\item[exit()] Beendigung
-	\item[exec()] Überlagerung des Prozesses
-	\item[wait()] Warten auf Prozesstermination (Kindprozesse)
-	\item[sleep()] Freiwilliges schlafen des Prozesses.
-	\item[kill()] Senden eines Signals (32 verschiedene)
-	\item[signal()] Signalbehandlung
-\end{description}
-\subsubsection{exec()}
-Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
-\begin{lstlisting}[language=Java, caption=exec() Beispiel, style=JavaStyle]
-	(void) printf ("process started\n");
-	execl ("/bin/date", "/bin/date", (char *) 0);
-	(void) printf ("This should not happen\n");
-\end{lstlisting}
-\subsubsection{fork()}
-Der Aufruf \textit{fork()} erstellt einen neuen Prozess als Seiten- effekt und gibt einen numerischen Return-Code zurück:
+\subsubsection{Erstellen eines Segmentes (shmget)}
 \begin{itemize}
-	\item Der neue Prozess (Kind) erhält eine 0.
-	\item Der aufrufende Prozess (Eltern) erhält entweder -1  im Fehlerfall oder einen Wert $> 0$, der der Prozess-ID des Kindprozesses entspricht.
+	\item Entfernen einer Region von der Liste freier Regionen
+	\item Einen Typ zuweisen
+	\item Einen inode Pointer zuweisen
+	\item Den reference count der inode um eins erhÃ¶hen
+	\item region der Liste von aktiven Regionen hinzufÃ¼gen
+	\item gesperrete Region zurÃ¼ckgeben.
 \end{itemize}
-Der Kindprozess ist eine identische Kopie des Elternprozesses (inkl. offenen Dateien, Speicher etc.), mit Ausnahme der Prozess- ID, der parent process ID und der Ressourcenverbrauchszähler. \textit{fork()} hat im Unterschied zur Prozesserzeugung in anderen Betriebssystemen keine Parameter.
-\begin{lstlisting}[language=Java, caption=fork() Beispiel, style=JavaStyle]
-
-switch (fork()) {
-	case -1:(void) printf ("fork failed\n");
-		break;
-	case 0: (void) printf ("child executing\n");
-		break;
-	default: (void) printf ("parent executing\n");
-	break;
-} 
+\begin{lstlisting}[language=Java, caption=Erstellen eines Shared Memory Segments, style=JavaStyle]
+int size, permflags, shm_id; key_t key;
+shm_id = shmget (key, size, permflags);
 \end{lstlisting}
-\subsubsection{exit()}
-Der Aufruf von \textit{exit()} terminiert einen Prozess. Alle Ressourcen (Speicher, offene Dateien, ...) werden freigegeben, nur der Eintrag in der Prozesstabelle bleibt bestehen (Zombie-Prozess), bis der Elternprozess den Rückgabewert abruft. \\
-Ein Prozess kann \textit{exit()} selbst aufrufen, oder das Betriebssystem ruft \textit{\underline{ }exit()} auf, wenn ein Prozess zwangsweise terminiert werden muss.
-\subsubsection{wait()}
-Der Aufruf von \textit{wait()} suspendiert einen Prozess von der CPU (Kontextwechsel) bis ein Kindprozess terminiert oder eine Ausnahme (z.B. stoppen) signalisiert. \\
-\textit{wait()} liefert dem Elternprozess dann den Exit Code des Kindprozesses zurück, oder einen Indikator, warum der Kindprozess vom Betriebssystem terminiert wurde. \\
-Wenn der Prozess beim Aufruf von \textit{wait()} keine Kindprozesse hat, wird er nicht schlafen gelegt. \\
-In einigen Unix-Varianten liefert der Aufruf von \textit{wait()} den Exit Code des ersten terminierten Kindprozesses zurück (d.h. \textit{wait()} muss mehrfach aufgerufen werden, wenn mehrere Kindprozesse vorhanden sind), in anderen Varianten kehrt \textit{wait()} erst zurück, wenn der letzte Kindprozess terminiert ist, und liefert auch dessen Prozess-ID zuru?ck.
-\begin{lstlisting}[language=Java, caption=wait() Beispiel, style=JavaStyle]
-int main(int argc, char *argv[]) {
-	pid_t cpid, w;
-	int status;
-	cpid = fork();
-	if (cpid == -1) { perror("fork"); exit(EXIT_FAILURE); } 
-	if (cpid == 0) { /* Code executed by child */
-		printf("Child PID is %ld\n", (long) getpid());
-		if (argc == 1) pause(); /* Wait for signals */ 
-		_exit(atoi(argv[1]));
-	} else { do { /* Code executed by parent */ 
-		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
-		if (w == -1) { perror("waitpid"); 
-		exit(EXIT_FAILURE); } 
-		if (WIFEXITED(status)) {
-			printf("exited, status=%d\n", WEXITSTATUS(status)); 
-		} else if (WIFSIGNALED(status)) {
-			printf("killed by signal %d\n", WTERMSIG(status)); 
-		} else if (WIFSTOPPED(status)) {
-			printf("stopped by signal %d\n", WSTOPSIG(status)); 
-		} else if (WIFCONTINUED(status)) {
-			printf("continued\n"); }
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
-		exit(EXIT_SUCCESS);
-	}
+
+\subsubsection{Einbinen eines Segmentes (shmat)}
+\begin{itemize}
+	\item check validity of descriptor, permissions 
+	\item if (user specified virtual address)
+		\begin{itemize}
+			\item round off virtual address, as specified by flags;
+			\item check legality of virtual address, size of region;
+		\end{itemize}
+	\item else - kernel picks virtual address: error if none available;
+	\item attach region to process address space (algorithm attachreg);
+	\item if (region being attached for the first time)
+		\begin{itemize}
+			\item allocate page tables, memory for region (algorithm growreg);
+		\end{itemize}
+	\item return (virtual address where attached);
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Einbindung eines Shared Memory Segments, style=JavaStyle]
+int shm_id, shmflags; char *memptr, *daddr, *shmat();
+memptr = shmat (shm_id, daddr, shmflags);
+\end{lstlisting}
+
+\subsubsection{Entfernen eines Segmentes (shmdt)}
+\begin{itemize}
+	\item get auxiliary memory management tables for process,
+	\item release as appropriate;
+	\item decrement process size;
+	\item decrement region reference count;
+	\item if (region count is 0 and region not sticky bit)
+		\begin{itemize}
+			\item free region (algorithm freereg);
+		\end{itemize}
+	\item else \textit{/* either reference count non-0 or region sticky bit on */}
+		\begin{itemize}
+			\item free inode lock, if applicable (inode associated with region);
+			\item free region lock;
+		\end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Entfernen eines Shared Memory Segments, style=JavaStyle]
+int       retval; char      *memptr;
+retval = shmdt (memptr);
+\end{lstlisting}
+
+\subsubsection{System Calls}
+\begin{description}
+	\item[shmget(key, size, shmflag)] \hfill \\ Gibt ID des Shared Memory Segments entsprechenden
+	\item[shmat(shmid, shmaddr, shmflg)] \hfill \\ Attach: FÃ¼gt das  Segment zum Addressspace des Prozesses hinzu.
+	\item[shmdt(shmaddr)] \hfill \\ Detach: Entfernt das Segemnt vom Addressspace des Prozesses
+	\item[shmctl(shmid,cmd,*buf)] \hfill \\ FÃ¼rht cmd auf dem Segment aus
+\end{description}
+
+\newpage
+\subsection{Message Queues}
+Message Queues dienen zum Versenden von Datenmengen von einem Server an einen Client. Sie ist eine verkettete Liste wobei die Liste vom Listenkopf aus kontrolliert wird. Mit msgsend() werden Elemente an die Schlange angefÃ¼gt und mit msgrcv() gelesen und wieder entfernt. Es kÃ¶nnen beliebige strukturierte Daten ausgetauscht werden zwischen verdandten oder nicht verwandten Prozessen.
+
+\subsubsection{Erzeugen einer Message Queue}
+Durch den Aufruf von msget() besorgt sich ein Prozess den Zugriff auf eine message queue id. Mit msgctl() kann diese gelÃ¶scht, gelesen, modifiziert, gesperrt oder entsperrt werden.
+\begin{lstlisting}[language=Java, caption=Erzeugen einer Message Queue, style=JavaStyle]
+int msg_qid, permflags; key_t key;
+msg_qid = msgget (key, permflags);
+\end{lstlisting}
+
+\subsubsection{Senden einer Nachricht}
+\begin{itemize}
+	\item check legality of descriptor, permissions;
+	\item while (not enough space to store message) 
+		\begin{itemize}
+			\item if (flags specify not to wait) return;
+			\item sleep (until event enough space is available);
+		\end{itemize}
+	\item get message header;
+	\item read message text from user space to kernel;
+	\item adjust data structures:
+		\begin{itemize}
+			\item enqueue message header,
+			\item message header points to data,
+			\item counts,
+			\item time stamps,
+			\item process ID;
+		\end{itemize}
+	\item wakeup all processes waiting to read message from queue;
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Versenden einer Nachricht, style=JavaStyle]
+int msg_qid, size, flags, retval;
+struct my_msg {
+	long mtype;
+	char mtext[SOMEVALUE];
+} message;
+retval = msgsnd (msg_qid, &message, size, flags);
+\end{lstlisting}
+
+\subsubsection{Empfang einer Nachricht}
+\begin{itemize}
+	\item check permissions;
+	\item \textbf{loop;}
+	\item check legality of message descriptor;
+	\item \textit{/* find message to return to user */}
+	\item \textbf{if (requested message type $==$ 0)}
+		\begin{itemize}
+			\item consider first message on queue;
+		\end{itemize}
+	\item \textbf{else if (requested message type $>$ 0)}
+		\begin{itemize}
+			\item consider first message on queue with given type;
+		\end{itemize}
+	\item else   \textbf{/* requested message type $<$ 0 */}
+		\begin{itemize}
+			\item consider first of the lowest typed messages on queue, such that its type is $<=$ absolute value of requested type;
+		\end{itemize}
+	\item if (there is a message )
+		\begin{itemize}
+			\item adjust message size or return error if user size too small;
+			\item copy message type, text from kernel space to user space;
+			\item unlink message from queue;
+			\item return;
+		\end{itemize}
+	\item \textit{/* no message */}
+	\item if (flags specify not to sleep) return with error;
+	\item sleep (event message arrives on queue);
+	\item \textbf{goto loop;}
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Empfangen einer Nachricht, style=JavaStyle]
+int msg_qid, size, flags, retval; long msg_type;
+struct my_msg { 
+	long mtype;
+	char mtext[SOMEVALUE];
+} message;
+
+retval = msgrcv (msg_qid, &message, size, msg_type, flags);
+\end{lstlisting}
+
+\newpage
+\subsection{Semaphore}
+Ein Semaphor ist zwar kein Mechanismus fÃ¼r die DatenÃ¼bertragung, erkann jedoch hilfreich sein fÃ¼r die Synchronisierung der Prozesse.Vereinfacht gesprochen ist ein Semaphor ein ZÃ¤hler, dessen Wert entscheidet, ob eine Ressource eklusiv nutzbar ist oder nicht. Er besteht aus einem ZÃ¤hler und einer Warteschlange fÃ¼r die Aufnahme blockierter Prozesse. Er hat drei Funktionen:
+\begin{description}
+	\item[initsem()] \hfill \\ Initialisierungsfunktion
+	\item[P()] \hfill \\ PrÃ¼fen und dekrementieren des Semaphor. Falls er danach noch grÃ¶sser als null ist, setzt der Prozess seine Arbeit fort, ansonsten wartet er.
+	\item[V()] \hfill \\ Der Semaphor erhÃ¶hen, was eventuell wartende Prozesse wieder freigibt.
+\end{description}
+
+\subsubsection{Benutzung fÃ¼r gegenseitigen Ausschluss}
+In einem kritischen Abschnitt verÃ¤ndert Prozess P1 eine Datenstruktur, die der Prozess gemeinsam mit einem Prozess P2 nutzt. Prozess P2 verÃ¤ndert die Datenstruktur in seinem kritischen Abschnitt. Ein Semaphor in Ausschlussfunktion wird eingesetzt, um zu erreichen, dass sich die Prozesse P1 und P2 niemals gleichzeitig in ihren kritischen Abschnitten befinden. Hierzu wird der Semaphor mit 1 initialisiert
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-benutzung-ausschluss.png}\\
+\end{center}
+
+\subsubsection{Benutzung fÃ¼r Prozess-Synchronisation}
+Der Prozess P1 beginnt mit einem kritischen Abschnit gleich nach der Initialisierung. Der Prozess P2 kann vorerst nur bis zu der P-Funktion laufen, da der Semaphor mit 0 initialisiert wurde. Erst wenn P1 mit der V-Funktion den ZÃ¤hler um eins incrementiert kann der Prozess P2 weiterlaufen.
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-benutzung-synchronisation.png}\\
+\end{center}
+
+\subsubsection{Additive Semaphore}
+\begin{center}
+	\includegraphics[scale=0.25]{semaphore-additive.png}\\
+\end{center}
+
+\subsubsection{Beispiel}
+\begin{lstlisting}[language=Java, caption=Semaphore Beispiel, style=JavaStyle]
+P (semid) int semid; {
+     struct sembuf p_buf;
+     p_buf.sem_num = 0;
+     p_buf.sem_op = -1;        /* negativer Wert, also Fall 1 = P() */
+     p_buf.sem_flg = SEM_UNDO;
+     if (semop (semid, &p_buf, 1) == -1) {
+          perror (?p(semid) failed?);
+          exit (1);
+     } else return (0);
+}
+V (semid) int semid; {
+     struct sembuf v_buf;
+     v_buf.sem_num = 0;
+     v_buf.sem_op = 1;        /* positiver Wert, also Fall 2 = V() */
+     v_buf.sem_flg = SEM_UNDO;
+     if (semop (semid, &v_buf, 1) == -1) {
+          perror (?v(semid) failed?);
+          exit (1);
+     } else return (0);
+}
+
+main () {
+     key_t semkey = 0x200;
+     if (fork () == 0) handlesem (semkey);
+     if (fork () == 0) handlesem (semkey);
+     if (fork () == 0) handlesem (semkey);
+}
+handlesem (skey) key_t skey; {
+     int semid, pid = getpid();
+     if ((semid = initsem (skey)) > 0) exit (1);
+     printf (?\nprocess %d before critical section\n?, pid); 
+     P (semid);
+     printf (?process %d in critical section\n?, pid);
+     sleep (2);
+     printf (?process %d leaving critical section\n?, pid); 
+     V (semid);
+     printf (?process %d exiting\n?, pid);
+     exit (0);
 }
 \end{lstlisting}
-\subsection{Swapping}
-\includegraphics[scale=0.4]{swapping.png}
-\subsection{Demand Paging}
-Anforderung: ein einzelner Prozess soll grösser sein dürfen, als der verfügbare Hauptspeicher.\\ 
-Voraussetzungen für “demand paging”:
-\begin{itemize}
- \item Hardware unterstützt seitenorientieres Speichermanagement ($\frac{1}{2} – 4$ kB / Seite)
- \item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen über eine Seitengrenze verlaufen)
-\end{itemize}
-Beobachtung: Lokalität des Codes, nur etwa 10-15\% des Programmcodes müssen zu jeder beliebigen Zeit im Hauptspeicher liegen (“working set”).\\
-Zugriff auf eine Seite ausserhalb des “working set” führt zu einem “page fault” (Seitenladefehler), dann wird die Seite nachgeladen $\to$ Balance zwischen der Grösse des “working set” und der Anzahl “page faults”\\
-Optimierung des “demand paging” durch
-\begin{itemize}
- \item “Reference bit” $\to$ ermöglicht nicht-lineares “working set”
- \item “Age bits” $\to$ verbleibende Zet einer Seite im “working set”
-\end{itemize}
-$\to$ Zwei Aufgaben für das Paging-Subsystem:
-\begin{itemize}
- \item Seitenalterung und Auslagerung/Löschung genügend alter Seiten
- \item Bearbeitung von “page faults”
-\end{itemize}
 
 \newpage
-\section{Threads}
-\subsection{Prozesse versus Threads}
-\begin{itemize}
-	\item Kontextwechsel sind eine schwere Operation mit viel Verarbeitungsaufwand durch den Kernel.
-	\item Da viele Unix-Prozesse I/O-intensiv sind, verbringen sie die meiste Laufzeit mit Warten, dadurch erhöht sich die Anzahl von Kontextwechseln im System.
-	\item Neuere Unix-/Linux-Systeme unterstützten mehr als einen parallellen Ausführungspfad innerhalb eines Prozesses (multi-threading) $\rightarrow$ es muss kein Kontextwechsel vorgenommen werden, um eine andere Aktivität zu starten.
-\end{itemize}
+\section{Remote Procedure Calls}
+RPC ist eine Technik zur Realisierung von Interprozesskommunikation zwischen verschidenen Rechnern. Es gibt verschiedene Implementierungen welche meist nicht untereinander kompatiebel sind.
 \begin{center}
-	\includegraphics[scale=0.5]{process_vs_threads.png}
+	\includegraphics[scale=0.5]{rpc.png}\\
 \end{center}
-\subsection{System Calls}
-\begin{description}
-	\item[pthread\_create()] Erzeugung eines Threads
-	\item[pthread\_exit()] Selbst-Termination eines Threads
-	\item[pthread\_cancel()] Fremd-Termination eines Threads
-	\item[pthread\_join()] Wartena uf Termination und Exit-Code eines Threads
-	\item[pthread\_detach()] Kein Warten auf einen Thread
-	\item[pthread\_self()] Ausgabe der unique thread-ID
-	\item[pthread\_equal()] Vergleich zweier thread-IDs
-	\item[pthread\_once()] Ausführung einer Initialisierungsroutinge
-\end{description}
-\subsection{Beispiel}
-\lstinputlisting[language=java,caption=Threads,style=JavaStyle]{threads.c}
 
-\newpage
-\section{Pipes}
-\subsection{Einleitung}
-\begin{itemize}
-	\item Unidirektionaler Kommunikationskanal zwischen verwandten Prozessen (d.h. Prozessen, die eine direkte oder indirekte / vererbte Eltern-Kind- Beziehung nach einem \textit{fork()} haben).
-	\item Direkt nutzbar für Input/Output Umleitung in der Shell.
-	\item Wird innerhalb des Prozesses als 2 Dateideskriptoren repräsentiert, um Kompatibilita?t mit Standard-I/O mit \textit{read()} and \textit{write()} zu erlauben.
-	\item Volatiler Dateninhalt für kleine Datenmengen - d.h. keine permanente Speicherung im Dateisystem - der Inhalt einer Pipe geht verloren, wenn das System herunterfährt.
-	\item Keine Struktur der Daten in der Pipe (Bytestrom).
-	\item Blockierendes, nicht-atomares Schreiben
-	\item Blockierendes, destruktives Lesen
-	\item Sonderform named pipe mit permanenter Repräsentanz im Dateisystem
-\end{itemize}
-\subsection{Nutzung von Pipes}
-\subsubsection{Variante 1:}
+\subsection{Funktionsweise}
+Der Client ruft eine entfernte Prozedur auf einem Server auf. Die zur Bearbeitung benÃ¶tigten Parameter werden an die Client-Stub Funktionsstelle des RPC Systems geschickt. Die Stub verpackt alle Funktionsparameter in eine komplexe Datenstruktur â€“ dieser Vorgang wird auch "Marshalling" genannt. \\
+Danach beauftragt die Stub das System mit der Ãœbertragung der Nachricht an den Server. Der Client wartet nun auf eine Antwort vom Server und ist blockiert. Bekommt die Client-Stub eine Nachricht vom Server zurÃ¼ck, wird diese dekodiert ("unmarshalling") und an die Applikation zurÃ¼ckgegeben. \\
+Wenn der Server eine Nachricht erhÃ¤lt, wird diese vom Betriebssystem an die Server-Stub weitergeleitet. Dort werden die Parameter entpackt ("unmarshalling") und die entsprechende Prozedur aufgerufen. Das zurÃ¼cksenden der Ergebnisse ist Ã¤quivalent.
 \begin{center}
-	\includegraphics[scale=0.5]{pipes1.png}\\
-\end{center} 
-\subsubsection{Variante 2:}
-\begin{center}
-	\includegraphics[scale=0.5]{pipes2.png}\\
+	\includegraphics[scale=0.5]{rpc-funktionsweise.png}\\
 \end{center}
-\subsubsection{Variante 3:}
-\begin{center}
-	\includegraphics[scale=0.5]{pipes3.png}\\
-\end{center}
-\subsection{Schliessen unbenutzter Pipe-Enden}
-\begin{itemize}
-	\item[1.] Saubere Programmierung
-	\item[2.] Schutz gegen copy/paste Fehler bei der Software-Entwicklung
-	\item[3.] Auf älteren Unix-Systemen begrenzte Anzahl verfügbarer Dateideskriptoren pro Prozess
-	\item[4.] Das Schliessen des letzten Lese- oder Schreib-Endes einer Pipe popen()im Betrieb hat Auswirkungen auf die Prozesssynchronisation.
-\end{itemize}
-\subsection{Pseudocode}
-\begin{lstlisting}[language=Java, caption=pipe() Pseudocode,style=JavaStyle]
-algorithm pipe 
-input: none 
-output: file descriptor, write file descriptor
-{
-	assign new inode from pipe device (algorithm ialloc);
-	/* Since System V R4 dedicated FIFO file system (fifofs) */
-	allocate file table entry for reading, another for writing;
-	initialize file table entries to point to new inode;
-	allocate user file descriptor for reading, another for writing,
-	initialize to point to respective file table entries; 
-	set inode reference count to 2;
-	initialize count of inode readers, writers to 1;
-}
-\end{lstlisting}
-\subsection{Dup Pipe Fork}
-\lstinputlisting[language=java,caption=Dup Pipe Fork,style=JavaStyle]{dup-pipe-fork.c}
-\subsection{popen() Bibliotheks- Funktion}
-\lstinputlisting[language=java,caption=popen() Beispiel,style=JavaStyle]{popen.c}
 
-\newpage
-\section{Signale}
-\subsection{Einleitung}
-Ursprünglich entwickelt, um Ausnahmesituationen und Fehlverhalten von Prozessen anzuzeigen (Division durch Null, Zugriffsschutzverletzungen usw.), die zu einer Prozessbeendigung durch den Kernel führen. Später erweitert, um asynchrone Prozesskommunikation zu erlauben, und um nicht-kritische Bedingungen (z.B. Terminieren eines Kindprozesses, Starten/Stoppen eines Prozesses für das Debugging, I/O auf einem Datei- deskriptor usw.) anzuzeigen. Mechanismus wird benutzt vom Kernel (als Sender), vom Benutzer (als Sender, z.B. Cntl-C) und von Prozessen (als Sender mittels kill() oder als Empfänger).
-\subsection{Signale und Prozesse}
+\subsection{Server / Client Bindung}
+\begin{itemize}
+	\item Finden eines Servers im Netz
+	\item Finden des gewÃ¼nschten Service auf dem Server im Netz
+	\item Sun RPC benutzt die Standard-Unix-Methode fÃ¼r das Finden von Servern im Internet (DNS).
+	\item Alle Serverprogramme, Programmversionen und angebotenen Prozeduren werden mit eindeutigen Nummern gekennzeichnet.
+	\item Ein Prozess kann eine oder mehrere Prozeduren anbieten.
+	\item Der protmapper Prozess (Linux: rpcbind) auf Porst 111 auf jedem Serversystem dient als zentrale, lokale Registratur fÃ¼r verfÃ¼gbare RPC-Dienste.
+\end{itemize}
+
+\subsection{RPC Portmapping Ablauf}
+\begin{itemize}
+	\item[1.] Der Server erstellt einen Socket und registriert Programmnummer, Versionsnummer und Portnummer beim Portmapper.
+	\item[2.] Ein Client kontaktiert den Portmapper und fragt nach einer Programm-, Versions- und Prozedurnummer. Falls lokal bekannt, sendet der Portmapper die Portnummer zurÃ¼ck.
+	\item[3./4.] Der Client kann nun die gewÃ¼nschte Prozedur direkt beim Server aufrufen. 
+\end{itemize}
 \begin{center}
-	\includegraphics[scale=0.3]{signale-processes.png}\\
-\end{center} 
-\subsection{System Calls}
-\begin{description}
-	\item[kill(signum)] Sendet ein Signal
-	\item[signal(signum,handler)] Setzt einen neuen Signal Handler und gibt den alten zurück.
-	\item[alarm(seconds)] Setzt ein Alarmsignal nach einer bestimmten Anzahl Sekunden ab.
-\end{description}
-\subsection{Eltern- / Kind-Prozess Signalisierung}
-Wenn ein Prozess \textit{fork()} aufruft, bleiben alle schon definierten Signalaktionen (Default, Ignore, Handler) im Eltern- und im Kindprozess intakt. Wenn ein Prozess mit pendenten, aber noch nicht behandelten Signalen \textit{fork()} aufruft, erbt der Kindprozess die pendenten Signale (d.h. Signalduplikation). Wenn ein Prozess \textit{exec()} aufruft, werden alle Signal Handler wieder auf ihre Default-Aktion zurückgesetzt, da die Adresse des Signal Handlers im Prozessadressraum auf anderen Code zeigt und der Rumpf der Handling Prozedur im Textsegment dealloziiert / überschrieben wurde.
-\subsection{Alarm Signal}
-\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{sign-alarm.c}
-\subsection{Jumping}
-\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{jumping.c}
-\end{document}
+	\includegraphics[scale=0.3]{rpc-ablauf.png}\\
+\end{center}
+
+\subsection{Auswahl des Transportprotokolls}
+\begin{itemize}
+	\item RPC ist unabhÃ¤ngig von spezifischen Transportdiensten oder Protokollen. (Sun RPC unterstÃ¼tzt TCP und UDP)
+	\item Es werden Abbildungen auf die Ã¼blichen Transportprotokolle angeboten.
+\end{itemize}
+
+\subsection{Programmierbeispiel}
+\begin{center}
+	\includegraphics[scale=0.3]{rpc-beispiel.png}\\
+\end{center}
+
+\subsection{Ausnahmebehandlung}
+\begin{itemize}
+	\item ZusÃ¤tzlich zu lokalen Fehlern kÃ¶nnen in RPC weitere Fehler auf dem Serversystem und bei der DatenÃ¼bermittlung durch das Netz auftreten.
+	\item Abbruch von bereits Ã¼bermittelten oder gestarteten Prozeduraufrufen durch den Klienten beim Server.
+	\item Terminieren des Klienten bevor der Server den Ablauf der entfernten Prozdedur beendet hat.
+	\item Sun RPC verwendet das automatische Neusenden von Anfragen im Fall der Benutzung von UDP, und erkennt verlorene Verbindungen in TCP.
+	\item Sun RPC unterstÃ¼tzt keinen separaten Kontrollkanal.
+\end{itemize}
+
+\subsection{Aufrufsemantik}
+\begin{itemize}
+	\item Prozedur wird genau einmal ausgefÃ¼hrt
+	\item Prozedur wird hÃ¶chstens einmal ausgefÃ¼hrt
+	\item Prozedur wird mindestens einmal ausgefÃ¼hrt
+	\item Jeder Server unterhÃ¤lt einen Cache mit kÃ¼rzlich erhaltenen Prozeduraufrufen und den zurÃ¼ckgesendeten Resultaten, und sendet das gespeicherte Resultat zurÃ¼ck, wenn ein Duplikat eines PRozeduraufrufs entdeckt wird.
+\end{itemize}
+
+\subsection{Benutzung und BeschrÃ¤nkungen}
+\begin{itemize}
+	\item Die Server sind meist zustandslos:
+		\begin{itemize}
+			\item alle Operationen sind unabhÃ¤ngig voneinander
+			\item Bobustheit gegen Fehler im Klienten, im Server und im Netz
+		\end{itemize}
+	\item Performance (lokale vs. entfernte Prozeduren)
+	\item Service-Strategien (ein Server, ein Server pro Klient, ...)
+	\item Verteilungsstrategien (wo im Netz werden Server plaziert.
+\end{itemize}
+% Inhalt Ende 
+\end{document} 
