@@ -16,6 +16,7 @@
 \usepackage{wasysym}
 \usepackage{fullpage}
 \usepackage{textcomp}
+\usepackage{floatflt}
 
 % Listings
 \usepackage{color}
@@ -249,6 +250,10 @@ Für jeden inneren Knoten, dessen beide Söhne beides Blätter sind, gilt trivialer
 \includegraphics[scale=0.4]{heap-sortiert.png}
 \end{center}
 
+\subsubsection{Sortierung}
+\lstinputlisting[language=java,caption=Sortierung,style=JavaStyle]{HeapSort.java}
+
+
 \pagebreak
 \section{Hash-Verfahren}
 Die grosse Aufgabe bei Datenstrukturen sind die drei Operationen Einfügen, Suchen und Entfernen möglichst schnell anzubieten. Das schnellste bisher sind die AVL-Bäume, die alle drei Operationen in $O(log(n))$ anbieten. Im Gegensatz dazu steht das Array, welches alle drei Operationen in $O(1)$ anbietet. Es kann direkt auf einzelne Speicherzellen zugegriffen werden ohne umständliches Vergleichen und/oder Suchen. Arrays sind aber nicht dynamisch und es ist nicht möglich, ein unendlich langes Array zu haben, sondern es muss auf eine fixe Grösse limitiert werden. Die Hash-Datenstruktuen versuchen das schnelle Array mit der Unlimitiertheit der dynamischen Datenstrukturen zu verbinden.
@@ -316,4 +321,223 @@ wird das Resultat jeweils noch modulo m gerechnet.
 
 \pagebreak
 \section{Graphen}
+\subsection{Definitionen}
+\begin{description}
+	\item[Graph] \hfill \\
+		Ein Graph besteht aus einer Knotenmenge V (vertices) und einer Kantenmenge E (edges). \\
+		Dabei gilt:
+		\begin{itemize}
+			\item[i] $|V|=n>0$
+			\item[ii] $E=\{(u,v)|u,v \in V\}$ wobei u und v nicht verschieden sein müssen. Eine Kante ist also ein Paar von Knoten. Falls $u=v$ gilt, dann sprechen wir von einer Schleife oder Schlinge, also einer Kante, welche einen Knoten mit sich selber verbindet. \\
+			$|E| = m \geq 0$
+		\end{itemize}
+	\item[Notation] \hfill \\
+		$V = \{1, 2, ..., n\}$ und $E = \{(1,2), (3,2), ..., (2,4)\}$
+	\item[Knoten] \hfill \\
+		Der Grad eines Knoten in einem Graphen entspricht der Menge der Kanten, welche den Knoten als (einen) Anfangs- bzw. Endpunkt haben. Der Grad wird angegeben als \textbf{deg(v)}. Eine Kante ist zu ihren Anfangs- und Endknoten \textbf{inzident}. Alle Knoten, mit denen ein Knoten durch eine Kante verbunden ist, heissen \textbf{adjazente} Knoten. Diese adjazenten Knoten werden meist auch als Nachbarn bezeichnet.
+	\item[Kanten] \hfill \\
+		Eine Kante verbindet zwei Knoten miteinander. Dabei kann sie eine Richtung haben (\textbf{gerichtet}), oder aber auch \textbf{ungerichtet} sein. Wenn sie eine Richtung hat, wird sie als Pfeil gezeichnet und als Paar von Knoten (u, v) symbolisiert, wobei u der Startknoten und v der Zielknoten ist. Eine ungerichtete Kante wird als Verbindungslinie gezeichnet und als Menge {u, v} symbolisiert. \\
+		Neben der Richtung kann eine Kante auch noch ein Gewicht haben. Solche Kanten heissen \textbf{gewichtete} Kanten. Gewichte stellen zum Beispiel die Entfernung zweier Knoten oder die Bandbreite einer Internetleitung dar.\\
+		Sind zwei Knoten durch mehrere direkte Kanten verbunden, wird diese Gruppe als Mehrfachkante zusammengefasst.\\
+		Ist ein Knoten mit sich selber durch eine Kante verbunden, wird diese Kante als Schlinge bezeich- net. (Für den Grad eines Knoten wird diese Kante zweimal gezählt.)
+	\item[Zusammenhängende Graphen] \hfill \\
+		Ein Graph ist zusammenhängend, wenn von jedem Knoten jeder andere Knoten über Kanten erreicht werden kann. Ist ein Graph nicht zusammenhängend, besteht er aus mehreren Komponenten. Das Tramnetz einer Stadt ist üblicherweise ein zusammenhängender Graph. Alle Tramnetze der Schweiz gemeinsam betrachtet, sind jedoch ein nicht zusammenhängender Graph.
+		\begin{center}
+			\includegraphics[scale=0.4]{graphen-zusammenhaengend.png}
+		\end{center}
+	\item[Baum] \hfill \\
+		Ein Baum ist ein spezieller zusammenhängender Graph. Er zeichnet sich dadurch aus, dass er keine Kreise und somit auch keine Schlingen enthält (siehe Unterkapitel Kreise).
+\end{description}
+
+\subsection{Einfache Graphen}
+Ein einfacher Graph ist ein ungerichteter Graph ohne Mehrfachkanten und ohne Schlingen. Dabei gilt:
+\begin{itemize}
+	\item Die Summe aller Knotengrade ist gerade (Zweifachen der Anzahl Kanten m).
+	\item Die Anzahl der Knoten mit ungeradem Knotengrad ist gerade.
+\end{itemize}
+
+\subsubsection{Vollständige Graphen}
+Ein vollständiger Graph ist ein einfacher Graph. Er hat aber die zusätzliche Eigenschaft, dass von jedem Knoten aus alle andern Knoten direkt mit einer Kante verbunden sind. Solche Graphen können für die Darstellung eines Tourniers verwendet werden, bei dem jedes Team gegen jedes andere Team spielen muss.
+\begin{center}
+\includegraphics[scale=0.4]{graphen-vollstaendig.png}
+\end{center}
+
+\subsubsection{Kreise}
+Ein Kreis ist ein einfacher Graph, bei dem alle Knoten den Grad 2 haben. Von jedem Knoten kommt man auf zwei Wegen zu jedem anderen Knoten.
+\begin{center}
+\includegraphics[scale=0.4]{graphen-kreise.png}
+\end{center}
+
+\subsubsection{Bipartite Graphen}
+Ein einfacher Graph heisst \textbf{bipartit}, wenn die Knotenmenge in zwei disjunkte Teilmengen aufgeteilt werden kann und wenn alle Kanten nur Verbindungen zwischen den beiden Teilmengen herstellen. Es gibt also keine Kanten zwischen zwei Knoten aus der gleichen Teilmenge. \\
+Ein bipartiter Graph heisst \textbf{vollständig}, wenn jeder Knoten aus der einen Teilmenge mit allen Knoten aus der andern Teilmenge verbunden ist. Wir bezeichnen einen vollständigen bipartiten Graph mit ($K_{a,b}$).
+\begin{center}
+\includegraphics[scale=0.4]{graphen-bipartite.png}
+\end{center}
+
+\subsubsection{Hyperwürfel}
+Eine etwas spezielle Art eines Graphen ist der Hyperwürfel. Dieser Graph ist wiederum ein einfacher Graph. Seine Knoten haben jedoch ganz bestimmte Namen. Ein Hyperwürfel der Dimension d hat die Knotenmenge, welche aus allen bina?ren Folgen der Länge d besteht. Formal heisst dies: $V= \{ \{0,1\}d \}$. Eine Kante verbindet immer genau dann zwei Knoten, wenn sich deren Binärfolge in nur einer Stelle unterscheiden. Z.B. werden die zwei Knoten mit den Binärfolgen 1011 und 1001 miteinander verbunden. Solche Hyperwürfel werden zum Beispiel in der Codierungstheorie verwendet.
+
+\subsubsection{Planare Graphen}
+Planare Graphen sind einfache Graphen, welche so gezeichnet werden ko?nnen, dass sich keine zwei Kanten überschneiden. 
+\begin{description}
+	\item[Bäume sind planar.] \hfill \\ Durch ihre spezielle Struktur können alle Bäume so gezeichnet werden, dass sich keine zwei Kanten überschneiden.
+	\item[Eulersche Polyederformel]  \hfill \\ Sei G ein planarer, zusammenhängender, einfacher Graph mit n Knoten, m Kanten und f Gebieten. Dann gilt: $n-m+$f$=2$.
+	\item[Das Verhältnis von Gebieten zu Kanten] \hfill \\
+		$3f \leq 2m$ \\
+		Ein Gebiet wird von mindestens drei Kanten begrenzt. Eine Kante begrenzt immer zwei Gebiete. 3f bezeichnet alle Randkanten. Dabei ist aber jede Kante doppelt gezählt.
+	\item[Kanten und Regionen in planaren Graphen] \hfill \\
+		Für jeden einfachen planaren Graphen $G = (V,E)$ mit $|V| \geq 3$ gilt: \\ $m \leq 3n-6$ und $f \leq 2n-4$
+	\item[$K_5$ und $K_{3,3}$ sind nicht planar] \hfill \\
+		$K_5$ oder $K_{3,3}$ sind die beiden kleinsten nicht planaren Graphen, was direkt aus dem Satz von Kuratowski folgt. Der Satz von Kuratowski sagt: "\textit{Ein endlicher Graph ist genau dann planar, wenn er keinen Teilgraphen enthält, der durch Unterteilung von $K_5$ oder $K_{3,3}$ entstanden ist. Unterteilung bedeutet hier das beliebig oft wiederholbare (auch nullmalige) Einfügen von neuen Knoten auf Kanten. Mit Teilgraph ist hier ein Graph gemeint, der aus dem ursprünglichen Graphen durch Entfernen von Knoten bzw. Kanten entsteht."} Somit erlaubt der Satz von Kuratowski zu entscheiden, ob ein Graph planar ist oder nicht.	
+\end{description}
+
+\subsection{Gerichtete Graphen (Digraphen)}
+Im Unterschied zu den allgemeinen Graphen besitzen die Kanten gerichteter Graphen eine Richtung. Das bedeutet, dass eine Kante zwischen zwei Knoten nur in einer Richtung durchlaufen werden darf. \\
+Gerichtete Graphen finden ihre Anwendung in ganz verschiedenen Gebieten. In einem Projektplan werden die Aktivitäten mit einer gerichteten Kante verbunden um anzuzeigen, wie der zeitliche Ablauf sein muss. In einer Strassenkarte werden Einbahnstrassen mit einer Richtung versehen.
+\begin{description}
+	\item[Eingangsgrad] \hfill \\ Der Eingangsgrad (Indegree) eines Knoten entspricht der Anzahl gerichteter Kanten, die in den Knoten hineinführen: \textbf{indeg(v)}
+	\item[Ausgangsgrad] \hfill \\ Der Ausgangsgrad (Outdegree) eines Knoten entspricht der Anzahl gerichteten Kanten, die aus dem Knoten hinausführen: \textbf{outdeg(v)}
+\end{description}
+\begin{center}
+	\textbf{Die Summe der Eingangsgrade aller Knoten ist gleich der Summe der Ausgangsgrade aller Knoten:} $\sum indeg(v) = \sum outdeg(v)$
+\end{center}
+
+\subsection{Speicherung von Graphen}
+Die Art der Speicherung der Graphen kann auf die Effizienz der auszufu?hrenden Algorithmen einen Einfluss haben. Das ist eigentlich nichts Neues, wie Sie schon längst bei anderen Datenstrukturen gesehen haben. Aus diesem Grund ist es wichtig, Graphen speicher- und laufzeiteffizient abzuspeichern.
+
+\subsubsection{Adjazenzmatrix}
+Die Adjazenzmatrix ist eine Matrix der Grässe n x n, wobei n die Anzahl der Knoten bezeichnet. Sind zwei Knoten (u \& v)mit einer gerichteten Kante verbunden wird in der u-ten Zeile und der v-ten Spalte eine 1 eingetragen. Sind die beiden Knoten mit mehr als einer Kante verbunden, wird die Anzahl der Kanten eingetragen. Für u und v gilt $1 \leq u \leq n$, $1 \leq v \leq n$. \\
+Wenn der Graph gewichtet ist, dann wird das Gewicht der Kante in die Zelle eingetragen. Bei gewichteten Graphen ist es unüblich, dass Mehrfachkanten auftreten. Es kann nicht unterscheiden werden, ob die Kanten gewichtet sind oder ob Mehrfachkanten aufgetreten sind. \\
+\begin{center}
+\includegraphics[scale=0.6]{graphen-adjazenzmatrix.png} \\
+$G=(V,E)$ mit $V=\{1,2,3,4,5\}$ und $E= \{(1,3), (1,3), (3,4), (2,3), (2,5), (5,5)\}$
+\end{center}
+
+\subsubsection{Inzidenzmatrix}
+Die Inzidenzmatrix ist eine (n x m)-Matrix. Dabei werden nicht nur die Knoten nummeriert, sondern auch die Kanten. Gehört eine Kante e mit Index j zu einem Knoten v, wird in der v-ten Zeile und der j-ten Spalte eine 1 eingetragen. Ansonsten wird eine 0 eingetragen. Für v und j gelten $1 \leq v \leq n$, $1 \leq j \leq m$. \\
+Für gerichtete Graphen kann die Darstellung nicht einfach übernommen werden. Mann muss definieren können, ob ein inzidenter Knoten der Ursprung oder das Ziel ist. Man ko?nnte z.B. für Ursprung eine 1 eintragen und für Ziel eine -1. \\
+Gewichte der Kanten können in der Inzidenzmatrix berücksichtigt werden indem der Wert des Gewichts in der Matrix eingetragen wird.\\
+\begin{center}
+\includegraphics[scale=0.6]{graphen-inzidenzmatrix.png} \\
+$G=(V,E)$ mit $V=\{1,2,3,4,5\}$ und $E= \{\{1,3\}, \{1,3\}, \{3,4\}, \{2,3\}, \{2,5\}, \{5\}\}$
+\end{center}
+
+\subsubsection{Adjazenzlisten}
+Wie bei der Adjazenzmatrix werden bei dieser Speicherung die Verbindungen zwischen zwei Knoten in den Vordergrund gestellt. Es wird also gespeichert, welcher Knoten mit welchem anderen Knoten benachbart ist. \\
+Die Grundlage der Speicherung ist ein Knoten-Array. Dieses Array hat so viele Felder, wie es Knoten gibt. Jedem Knoten wird eine Position im Array zugeteilt. Im Knoten-Array werden mindestens die Anfangszeiger auf verkettete Listen gespeichert. In diesen Listen sind die Knoten gespeichert, zu welchen eine direkte Verbindung durch eine Kante besteht. Die Kante (u, v) aus dem Graph führt zu einem Eintrag in der Liste an der Stelle u im Array. \\
+Diese Speicherung benötigt $\Theta$(n + m) Speicherplatz. Adjazenzlisten unterstützen viele Operationen, z.B. das Verfolgen von gerichteten Kanten in Graphen. Andere Operationen dagegen werden nur schlecht unterstützt, insbesondere das Hinzufügen und Entfernen von Knoten
+\begin{center}
+\includegraphics[scale=0.3]{graphen-adjazenzlisten.png} \\
+$G=(V,E)$ mit $V=\{1, 2, ..., 9\}$ und $E= \{(1,2), (1,3), (1,7), (4,6), (5,4), (6,1), (6,5), (6,6), (7,5), (9,8)\}$
+\end{center}
+
+\subsubsection{doppelt verketteten Listen}
+Bei dieser Speicherung werden die Knoten und die Kanten als Objekte behandelt. Es wird ihnen also zugestanden, mehr Information als nur den Namen zu enthalten.
+Die Basis bildet eine doppelt verkettete Liste, welche die Knotenobjekte enthält. Jedes Knotenobjekt speichert dann eine Liste mit den von ihm ausgehenden Kanten-Objekten. Auch diese Liste ist doppelt verkettet.
+Ein Kantenobjekt enthält drei Referenzen. Zwei Referenzen werden für die doppelt verkettete Kantenliste benötigt. Die dritte Referenz zeigt auf den Knoten, auf den die gerichtete Kante zeigt. Zusätzlich ko?nnen im Kantenobjekt noch weitere Informationen wie z.B. das Gewicht der Kante gespeichert werden.
+\begin{center}
+\includegraphics[scale=0.4]{graphen-doppelt-verkettete-listen.png} \\
+$G=(V,E)$ mit $V=\{1, 2, ..., 9\}$ und $E= \{(1,2), (1,3), (1,7), (4,6), (5,4), (6,1), (6,5), (6,6), (7,5), (9,8)\}$
+\end{center}
+
+\subsection{Graphenalgorithmen}
+\subsubsection{Topologisches Sortieren}
+Eine topologische Sortierung basiert auf einer vergleichenden Relation. In einem gerichteten Graphen besteht durch die Kantenrichtung eine solche vergleichende Relation zwischen je zwei benachbarten Knoten. Die Kantenrichtung kann dabei gelesen werden wie zum Beispiel: \textit{"grösser als"}. In ungerichteten Graphen besteht diese vergleichende Relation nicht und daher kann keine topologische Sortierung erreicht werden. \\
+Ein Zyklus oder Kreis ist eine Folge von Kanten bei der Anfangs- und Endpunkt dieselben sind. Eine Schlinge ist der kleinstmögliche Zyklus mit genau einem Knoten. Nicht fu?r alle Digraphen kann eine topologische Sortierung erzeugt werden. Die zentrale Eigenschaft von topologisch sortierbaren Digraphen ist, dass sie keine Zyklen enthalten, also zyklenfrei sind. \\
+\textbf{Satz:} \textit{Jeder zyklenfreie Graph hat eine topologische Sortierung.} \\
+Die Idee des Algorithmus ist es, mit Knoten zu arbeiten, welche keine eingehenden Kanten haben, d.h. die $indeg(v) = 0$ besitzen. Diese Knoten können nicht zu einem Zyklus gehören, da sie von keinem anderen Knoten erreicht werden können. In einem topologisch sortierbaren Graphen muss es mindestens einen Knoten v mit indeg(v) = 0 geben. Dieser Knoten wird markiert und bildet den Anfang der topologischen Sortierung. Alle markierten Knoten werden konzeptionell der Reihe nach aus dem Graphen entfernt. Dadurch erniedrigt sich der Eingangsgrad anderer Knoten und es gibt wieder einen oder mehrere neue Knoten mit $indeg(v) = 0$. \\
+\textbf{Beispiel:}
+\begin{center}
+
+\includegraphics[scale=0.4]{graphen-topologisches-sortieren.png} \\
+$1 \rightarrow 2 \rightarrow 5 \rightarrow 3 \rightarrow 4 \rightarrow 6$
+\end{center}
+\lstinputlisting[language=java,caption=TopologicalSort,style=JavaStyle]{TopologicalSort.java}
+
+\subsubsection{Tiefensuche (DFS)}
+Die DFS-Strategie ist eine Verallgemeinerung des Preorder-Durchlaufprinzips bei Binärbäumen. Das Prinzip ist das folgende:
+\begin{itemize}
+	\item Kanten werden ausgehend von dem zuletzt entdeckten Knoten v, der mit noch unerforschten Kanten inzident ist, erforscht.
+	\item Erreicht man von v aus einen noch nicht erforschten Knoten w, so verfährt man mit w genauso wie mit v.
+	\item Wenn alle mit w inzidenten Kanten erforscht sind, erfolgt ein Backtracking zu v.
+\end{itemize}
+Eine Methode ist es drei Arten von Knoten zu haben. Am Anfang ist jeder Knoten weiss. Das bedeutet, dass er noch nicht entdeckt worden ist. Sobald ein Knoten entdeckt worden ist, wird er grau. Wenn ein Knoten komplett abgearbeitet ist, wird er schwarz gefärbt. Dies ist der Fall, wenn er das Backtracking zum Vorgängerknoten einleitet. Des Weiteren wird für jeden Knoten noch abgespeichert, wer sein Vorgänger ist. Der Vorgänger wird in einem Array $\alpha$ gespeichert. Durch dieses Verfahren werden alle Zusammenhangskomponenten gefunden. Jeder Knoten und jede Kante werden einmal besucht. Am Ende enthält $\alpha$ die Informationen eines Spannbaums fu?r den Graphen, falls dieser zusammenhängend ist.
+\begin{center}
+\includegraphics[scale=0.3]{graphen-tiefensuche.png} 
+\end{center}
+\lstinputlisting[language=java,caption=Tiefensuche,style=JavaStyle]{Tiefensuche.java}
+
+\subsubsection{Breitensuche (BFS)}
+Der Algorithmus für die Breitensuche lautet wie folgt:
+\begin{itemize}
+	\item[1.] Für einen Knoten werden die noch nicht besuchten Nachbarknoten gesucht.
+	\item[2.] Jeder Nachbarknoten wird ans Ende einer Warteschlange eingefügt.
+	\item[3.] Solange die Warteschlange nicht leer ist, wähle den nächsten Knoten und beginne wieder bei 1.
+\end{itemize}
+\lstinputlisting[language=java,caption=Breitensuche,style=JavaStyle]{Breitensuche.java}
+
+
+\subsubsection{Kürzeste Pfade mit Dijkstra}
+Der Algorithmus von Dijkstra arbeitet mit einer "Wellenfront"-Strategie. Der Algorithmus von Dijkstra nicht negative Kantengewichte voraus. Für alle Knoten hinter der Front ist der endgültige Distanzwert bereits ermittelt worden. Wir nennen diese Knoten permanent und speichern sie ab. Fu?r diese Knoten v gilt also: $dist(s, v) = d[v]$. Die Knoten vor der Front sind noch nicht bearbeitet worden. Für alle Knoten auf der Front ist die Berechnung in Gange. Diese Knoten werden in einer Prioritätswarteschlange PQ gespeichert. Die Prioritäten entsprechen den momentanen Abständen zum Startknoten. \\
+Anfangszustand: Am Anfang ist die Menge der permanenten Knoten leer. Die Menge der Knoten auf der Front enthält nur den Startknoten s.\\
+\begin{itemize}
+	\item Nimm einen Knoten u aus PQ, welcher den kleinsten Abstand zu s hat.
+	\item Für alle Nachbarknoten v von u überpüfe die Distanz. Wenn nötig wird diese Distanz aktualisiert. Ist der Nachbarknoten v schon in PQ, wird seine Priorität dort aktualisiert. Ist er noch nicht in dieser Menge, wird er mit dem aktuellen Wert der Distanz in diese Menge eingefügt.
+	\item Nimm den Knoten u in die Menge der permanenten Knoten auf.
+\end{itemize}
+\lstinputlisting[language=java,caption=Dijkstra,style=JavaStyle]{Dijkstra.java}
+
+
+\subsubsection{Kürzeste Pfade mit Bellman und Ford}
+Der Algorithmus von Bellman und Ford, der hier erklärt wird, kann auch mit negativen Gewichten umgehen (wenn der Graph gerichtet ist). Wenn negative Gewichte zugelassen sind, tritt ein grundsätzliches Problem auf: es kann ein Kreis negativer Länge von s aus erreichbar sein und damit $dist(s, v)= - \inf $ für alle Knoten v gelten, die von s aus erreichbar sind. Denn dieser Kreis kann unendlich viele Male durchlaufen werden und vermindert den Wert des Pfades bei jedem Durchlaufen.
+\begin{itemize}
+	\item Es gibt n Phasen, wobei in der ersten Phase initialisiert wird.
+	\item In jeder weiteren Phase wird jede Kante mit test(u, v) überprüft und d[v] aktualisiert.
+	\item Am Ende enthält das Array d[v] für alle Knoten v die Distanz zwischen s und v.
+\end{itemize}
+Es ist zentral, dass eine Kantenreihenfolge festgelegt wird, in der alle Kanten des Graphen besucht werden. Obwohl der Algorithmus für alle möglichen Kantenreihenfolgen funktioniert, hat die Wahl Einfluss darauf, wie früh die kürzesten Distanzen entdeckt werden.
+\lstinputlisting[language=java,caption=BellmanFord,style=JavaStyle]{BellmanFord.java}
+
+\pagebreak
+\subsection{Spannbäume}
+Spannbäume sind Bäume die aus Kanten eines Graphen bestehen. Ein Baum mit n Knoten hat genau n-1 Kanten. Für einen Spannbaum werden also n-1 Kanten aus der Menge der Kanten ausgesucht, so dass ein zusammenhängender Graph entsteht. In diesem Graphen gibt es zwischen zwei Knoten genau einen Weg gibt. \\
+Im Code von BFS und DFS ist das Berechnen eines Spannbaumes schon "eingebaut". Speichert jeder Knoten den adjazenten Knoten, von dem er entdeckt wurde, dann entspricht dies dem Speichern des Vaters im Spannbaum.
+\begin{center}
+\includegraphics[scale=0.3]{graphen-spannbaum.png} 
+\end{center}
+
+\subsubsection{Definitionen}
+\begin{description}
+	\item[Spannbaum] \hfill \\
+		Ein Spannbaum ST (Spanning Tree) eines Graphen $G = (V, E)$ besteht aus $n-1$ Kanten der Menge E. Diese Kanten bilden einen zusammenhängenden Graphen, der alle Knoten aus V enthält.
+	\item[Minimaler Spannbaum] \hfill \\
+		Ein minimaler Spannbaum MST (Minimum Spanning Tree) ist ein Spanbaum, bei dem die Summe der Kantengewichte minimal ist.
+\end{description}
+
+\subsubsection{Algorithmus von Prim}
+Der Algorithmus von Prim, auch Prim-Dijkstra-Algorithmus genannt, funktioniert analog zum Dijkstra- Algorithmus. Der einzige Unterschied liegt darin, dass der Abstand zum Spannbaum und nicht der Abstand zum Startknoten als Priorität verwendet wird. \\
+Der Abstand eines Knoten zum Spannbaum ist gleich dem kleinsten Gewicht einer Kante, die den Knoten mit einem Knoten des Spannbaums verbindet.
+\begin{center}
+\includegraphics[scale=0.3]{graphen-primalg.png} 
+\end{center}
+Im Beispiel hat der graue Knoten vier inzidente Kanten, die ihn mit Knoten aus dem bisherigen Spannbaum verbinden. Die Kante mit dem geringsten Gewicht hat das Gewicht $(e) = 1$. Somit hat der graue Knoten den Abstand 1 zum Spannbaum. \\
+Abstand von v zum minimalen Spannbaum MST: \\
+$dist(v, MST) = min \{ w(e) | e = \{ v, u \} \in E$ und $v, u \in V\}$ \\
+Ist der Knoten v zu keinem Knoten des Spannbaums adjazent, ist die Distanz unendlich.
+\begin{description}
+	\item[Start] Als Ausgangspunkt wird ein beliebiger Knoten genommen. Dieser ist zu Beginn der einzige Knoten im Spannbaum. Der Spannbaum entha?lt noch keine Kante.
+	\item[Wachsen] Es wird der Knoten gesucht, der den kleinsten Abstand vom Spannbaum hat. Dieser Knoten darf aber nicht schon im Spannbaum enthalten sein. \\
+	 Der Knoten wird dann über die minimale Kante mit dem Spannbaum verbunden und in die Menge der Knoten des Spannbaums aufgenommen.
+	\item[Ende] Wenn alle Knoten im Spannbaum enthalten sind, dann ist die Berechnung zu Ende.
+\end{description}
+
+\subsubsection{Beispiel des Prim Algorithmus}
+\begin{floatingfigure}[r]{5cm}
+\includegraphics[scale=0.4]{graphen-prim-bsp.png}
+\end{floatingfigure} Gegeben ist ein Graph mit nebenstehender Adjazenzmatrix. Die Werte in den Feldern geben die Kantengewichte an. In diesem Beispiel wird ein Spannbaum ausgehend vom Knoten s berechnet. Das Bild zeigt den momentanen minimalen Spannbaum. Der nächste Knoten, die Queue und die Menge der Knoten werden in der mittleren Spalte angegeben. Rechts werden die Abstände der Knoten angegeben. \\
+\begin{center}
+\includegraphics[scale=0.7]{graphen-prim-schritte.png} 
+\end{center}
+
 \end{document}

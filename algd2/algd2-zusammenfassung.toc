@@ -20,15 +20,39 @@
 \contentsline {subsubsection}{\numberline {2.3.3}Einf\"ugen eines Objektes mit gegebener Priorit\"at}{11}
 \contentsline {subsubsection}{\numberline {2.3.4}Entfernen eines Objektes an beliebiger, aber gegebener Position}{12}
 \contentsline {subsubsection}{\numberline {2.3.5}Aufbau eines Heaps}{12}
-\contentsline {section}{\numberline {3}Hash-Verfahren}{13}
-\contentsline {subsection}{\numberline {3.1}Begriffe}{13}
-\contentsline {subsection}{\numberline {3.2}Hash-Funktionen}{13}
-\contentsline {subsection}{\numberline {3.3}Verkettung der \"Uberl\"aufer}{14}
-\contentsline {subsubsection}{\numberline {3.3.1}Separate Verkettung}{14}
-\contentsline {subsubsection}{\numberline {3.3.2}Direkte Verkettung}{14}
-\contentsline {subsection}{\numberline {3.4}Offene Hash-Verfahren}{14}
-\contentsline {subsubsection}{\numberline {3.4.1}Schema}{15}
-\contentsline {subsubsection}{\numberline {3.4.2}Lineares Sondieren}{15}
-\contentsline {subsubsection}{\numberline {3.4.3}Double-Hashing}{15}
-\contentsline {subsubsection}{\numberline {3.4.4}Implementierung}{15}
-\contentsline {section}{\numberline {4}Graphen}{17}
+\contentsline {subsubsection}{\numberline {2.3.6}Sortierung}{13}
+\contentsline {section}{\numberline {3}Hash-Verfahren}{14}
+\contentsline {subsection}{\numberline {3.1}Begriffe}{14}
+\contentsline {subsection}{\numberline {3.2}Hash-Funktionen}{14}
+\contentsline {subsection}{\numberline {3.3}Verkettung der \"Uberl\"aufer}{15}
+\contentsline {subsubsection}{\numberline {3.3.1}Separate Verkettung}{15}
+\contentsline {subsubsection}{\numberline {3.3.2}Direkte Verkettung}{15}
+\contentsline {subsection}{\numberline {3.4}Offene Hash-Verfahren}{15}
+\contentsline {subsubsection}{\numberline {3.4.1}Schema}{16}
+\contentsline {subsubsection}{\numberline {3.4.2}Lineares Sondieren}{16}
+\contentsline {subsubsection}{\numberline {3.4.3}Double-Hashing}{16}
+\contentsline {subsubsection}{\numberline {3.4.4}Implementierung}{16}
+\contentsline {section}{\numberline {4}Graphen}{18}
+\contentsline {subsection}{\numberline {4.1}Definitionen}{18}
+\contentsline {subsection}{\numberline {4.2}Einfache Graphen}{19}
+\contentsline {subsubsection}{\numberline {4.2.1}Vollst\"andige Graphen}{19}
+\contentsline {subsubsection}{\numberline {4.2.2}Kreise}{19}
+\contentsline {subsubsection}{\numberline {4.2.3}Bipartite Graphen}{19}
+\contentsline {subsubsection}{\numberline {4.2.4}Hyperw\"urfel}{19}
+\contentsline {subsubsection}{\numberline {4.2.5}Planare Graphen}{20}
+\contentsline {subsection}{\numberline {4.3}Gerichtete Graphen (Digraphen)}{20}
+\contentsline {subsection}{\numberline {4.4}Speicherung von Graphen}{21}
+\contentsline {subsubsection}{\numberline {4.4.1}Adjazenzmatrix}{21}
+\contentsline {subsubsection}{\numberline {4.4.2}Inzidenzmatrix}{21}
+\contentsline {subsubsection}{\numberline {4.4.3}Adjazenzlisten}{22}
+\contentsline {subsubsection}{\numberline {4.4.4}doppelt verketteten Listen}{22}
+\contentsline {subsection}{\numberline {4.5}Graphenalgorithmen}{23}
+\contentsline {subsubsection}{\numberline {4.5.1}Topologisches Sortieren}{23}
+\contentsline {subsubsection}{\numberline {4.5.2}Tiefensuche (DFS)}{24}
+\contentsline {subsubsection}{\numberline {4.5.3}Breitensuche (BFS)}{25}
+\contentsline {subsubsection}{\numberline {4.5.4}K\"urzeste Pfade mit Dijkstra}{25}
+\contentsline {subsubsection}{\numberline {4.5.5}K\"urzeste Pfade mit Bellman und Ford}{27}
+\contentsline {subsection}{\numberline {4.6}Spannb\"aume}{28}
+\contentsline {subsubsection}{\numberline {4.6.1}Definitionen}{28}
+\contentsline {subsubsection}{\numberline {4.6.2}Algorithmus von Prim}{28}
+\contentsline {subsubsection}{\numberline {4.6.3}Beispiel des Prim Algorithmus}{29}
