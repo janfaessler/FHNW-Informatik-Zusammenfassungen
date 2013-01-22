@@ -56,3 +56,11 @@
 \contentsline {subsubsection}{\numberline {4.6.1}Definitionen}{28}
 \contentsline {subsubsection}{\numberline {4.6.2}Algorithmus von Prim}{28}
 \contentsline {subsubsection}{\numberline {4.6.3}Beispiel des Prim Algorithmus}{29}
+\contentsline {section}{\numberline {5}Spieltheorie}{30}
+\contentsline {subsection}{\numberline {5.1}Minimax-Algorithmus}{30}
+\contentsline {subsubsection}{\numberline {5.1.1}Beschreibung}{30}
+\contentsline {subsubsection}{\numberline {5.1.2}Implementierung}{30}
+\contentsline {subsection}{\numberline {5.2}Alpha-Beta-Suche}{32}
+\contentsline {subsubsection}{\numberline {5.2.1}Beschreibung}{32}
+\contentsline {subsubsection}{\numberline {5.2.2}Der Algorithmus}{32}
+\contentsline {subsubsection}{\numberline {5.2.3}Implementierung}{33}

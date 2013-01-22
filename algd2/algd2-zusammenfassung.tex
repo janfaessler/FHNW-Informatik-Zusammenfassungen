@@ -540,4 +540,123 @@ Ist der Knoten v zu keinem Knoten des Spannbaums adjazent, ist die Distanz unend
 \includegraphics[scale=0.7]{graphen-prim-schritte.png} 
 \end{center}
 
+\pagebreak
+\section{Spieltheorie}
+\subsection{Minimax-Algorithmus}
+Der Minimax-Algorithmus ist ein Algorithmus zur Ermittlung der optimalen Spielstrategie für endliche Zwei-Personen-Nullsummenspiele mit perfekter Information. Zu diesen Spielen gehören insbesondere Brettspiele wie Schach, Go, Reversi, Dame, Mühle und Vier gewinnt, bei denen beide Spieler stets die gesamte Historie der Partie kennen. Auch für Spiele mit Zufallseinfluss wie Backgammon lässt sich der Minimax-Algorithmus auf Grundlage von Erwartungswerten erweitern. In der Regel, aber nicht ausschließlich, wird der Minimax-Algorithmus auf Spiele mit abwechselndem Zugrecht angewandt.
+\subsubsection{Beschreibung}
+\begin{floatingfigure}[r]{7cm}
+\includegraphics[scale=0.25]{minmax.png} 
+\end{floatingfigure} Die Kreise stellen die Züge der Spieler im Algorithmus dar (Maximierung), die Quadrate die Züge der Gegner (Minimierung). Die Werte in den Kreisen und Quadraten stellen den Wert $\alpha$ des Minimax-Algorithmus dar. Die roten Pfeile repräsentieren den gewählten Zug, die Nummern links die Baumtiefe und die blauen Pfeile den gewählten Zug. \\
+Die Knoten der Ebenen 0 und 2 entsprechen Spielsituationen, in denen Spieler A am Zug ist. Hier wird jeweils die Bewertungsfunktion der untergeordneten Knoten maximiert, d. h. der für Spieler A günstige Zug ausgewählt und dessen Wert dem Elternknoten zugewiesen. \\
+Die Knoten der Ebenen 1 und 3 entsprechen Spielsituationen, in denen Spieler B am Zug ist. Hier wird jeweils die Bewertungsfunktion der untergeordneten Knoten minimiert, d. h. der für Spieler B günstigste Zug ausgewählt und dessen Wert dem Elternknoten zugewiesen.\\
+Der Algorithmus beginnt unten bei den Blättern und geht dann nach oben bis zur Wurzel. In Ebene 3 wählt der Algorithmus den kleinsten Wert der Kindknoten und weist diesen dem Elternknoten zu (es wird minimiert). In Ebene 2 wird dann der jeweils größte Kindknoten dem Elternknoten zugewiesen (es wird maximiert). Dies wird abwechselnd so lange durchgeführt bis die Wurzel erreicht ist. Der Wurzel wird der Wert des größten Kindknoten zugewiesen. Dabei handelt es sich dann um den Zug der gespielt werden soll. \\
+
+\subsubsection{Implementierung}
+\begin{lstlisting}[language=Java, caption=Auszug Main, style=JavaStyle]
+ gespeicherterZug = NULL;
+ int gewuenschteTiefe = 4;
+ int bewertung = max(+1, gewuenschteTiefe);
+ if (gespeicherterZug == NULL)
+    es gab keine weiteren Zuege mehr;
+ else
+    gespeicherterZug ausführen;
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Funktionen, style=JavaStyle]
+ int max(int spieler, int tiefe) {
+    if (tiefe == 0 or keineZuegeMehr(spieler)) return bewerten();
+    int maxWert = -unendlich;
+    generiereMoeglicheZuege(spieler);
+    while (noch Zug da) {
+       fuehreNaechstenZugAus();
+       int wert = min(-spieler, tiefe-1);
+       macheZugRueckgaengig();
+       if (wert > maxWert) {
+          maxWert = wert;
+          if (tiefe == anfangstiefe) gespeicherterZug = Zug;
+       }
+    }
+    return maxWert;
+ }
+int min(int spieler, int tiefe) {
+    if (tiefe == 0 or keineZuegeMehr(spieler))
+       return bewerten();
+    int minWert = unendlich;
+    generiereMoeglicheZuege(spieler);
+    while (noch Zug da) {
+       fuehreNaechstenZugAus();
+       int wert = max(-spieler, tiefe-1);
+       macheZugRueckgaengig();
+       if (wert < minWert) {
+          minWert = wert;
+       }
+    }
+    return minWert;
+ }
+\end{lstlisting}
+
+\pagebreak
+\subsection{Alpha-Beta-Suche}
+Die Alpha-Beta-Suche, auch Alpha-Beta-Cut oder Alpha-Beta-Pruning genannt, ist eine optimierte Variante des Minimax-Suchverfahrens, also eines Algorithmus zur Bestimmung eines optimalen Zuges bei Spielen mit zwei gegnerischen Parteien. Während der Suche werden zwei Werte Alpha und Beta aktualisiert, die angeben, welches Ergebnis die Spieler bei optimaler Spielweise erzielen können. Mit Hilfe dieser Werte kann entschieden werden, welche Teile des Suchbaumes nicht untersucht werden müssen, weil sie das Ergebnis der Problemlösung nicht beeinflussen können. \\
+Die einfache (nicht optimierte) Alpha-Beta-Suche liefert exakt dasselbe Ergebnis wie die Minimax-Suche.
+\subsubsection{Beschreibung}
+Der Minimax-Algorithmus analysiert den vollständigen Suchbaum. Dabei werden aber auch Knoten betrachtet, die in das Ergebnis (die Wahl des Zweiges an der Wurzel) nicht einfließen. Die Alpha-Beta-Suche versucht, möglichst viele dieser Knoten zu ignorieren. \\
+Ein anschauliches Beispiel für die Funktionsweise ist ein Zweipersonenspiel, bei dem der erste Spieler eine von mehreren Taschen auswählt und von seinem Gegenspieler den Gegenstand mit geringstem Wert aus dieser Tasche erhält. \\
+Der Minimax-Algorithmus durchsucht für die Auswahl alle Taschen vollständig und benötigt somit viel Zeit. Die Alpha-Beta-Suche hingegen durchsucht zunächst nur die erste Tasche vollständig nach dem Gegenstand mit minimalem Wert. In allen weiteren Taschen wird nur solange gesucht, bis der Wert eines Gegenstands dieses Minimum unterschreitet. Ist dies der Fall, wird die Suche in dieser Tasche abgebrochen und die nächste Tasche untersucht. Andernfalls ist diese Tasche eine bessere Wahl für den ersten Spieler und ihr minimaler Wert dient für die weitere Suche als neue Grenze. \\
+Ähnliche Situationen sind jedem Schachspieler vertraut, der gerade einen konkreten Zug darauf prüft, ob er ihm vorteilhaft erscheint. Findet er bei seiner Analyse des Zuges eine für sich selbst ungünstige Erwiderung des Gegners, dann wird er diesen Zug als ?widerlegt? ansehen und verwerfen. Es wäre völlig sinnlos, noch weitere Erwiderungen des Gegners zu untersuchen um festzustellen, ob der Gegner noch effektivere Widerlegungen besitzt und wie schlecht der geplante Zug tatsächlich für den Spieler ist.
+
+\subsubsection{Der Algorithmus}
+Die Alpha-Beta-Suche arbeitet prinzipiell genauso wie obige informelle Beschreibung. Die Idee ist, dass zwei Werte (Alpha und Beta) weitergereicht werden, die das Worst-Case-Szenario der Spieler beschreiben. Der Alpha-Wert ist das Ergebnis, das Spieler A mindestens erreichen wird, der Beta-Wert ist das Ergebnis, das Spieler B höchstens erreichen wird (Hier ist zu beachten, dass es für Spieler B darum geht, ein möglichst niedriges Ergebnis zu erhalten, da er ja "minimierend" spielt!) \\
+Besitzt ein maximierender Knoten (von Spieler A) einen Zug, dessen Rückgabe den Beta-Wert überschreitet, wird die Suche in diesem Knoten abgebrochen (Beta-Cutoff, denn Spieler B würde A diese Variante erst gar nicht anbieten, weil sie sein bisheriges Höchst-Zugeständnis überschreiten würde). Liefert der Zug stattdessen ein Ergebnis, das den momentanen Alpha-Wert übersteigt, wird dieser entsprechend nach oben angehoben. \\
+Analoges gilt für die minimierenden Knoten, wobei bei Werten kleiner als Alpha abgebrochen wird (Alpha-Cutoff) und der Beta-Wert nach unten angepasst wird. \\
+\begin{center}
+\includegraphics[scale=0.6]{alpha_beta.png} 
+\end{center}
+Obige Abbildung zeigt einen Beispielbaum mit 18 Blättern, von denen nur 12 ausgewertet werden. Die drei umrandeten Werte eines inneren Knotens beschreiben den Alpha-Wert, den Rückgabewert und den Beta-Wert.
+Der Suchalgorithmus verwendet ein sogenanntes Alpha-Beta-Fenster, dessen untere Grenze der Alpha-Wert und dessen obere Grenze der Beta-Wert darstellt. Dieses Fenster wird zu den Kindknoten weitergegeben, wobei in der Wurzel mit dem maximalen Fenster [-inf, inf] begonnen wird. Die Blätter 1, 2 und 3 werden von einem maximierenden Knoten ausgewertet und der beste Wert 10 wird dem minimierenden Vaterknoten übergeben. Dieser passt den Beta-Wert an (signalisiert durch die orange Linie links unten) und übergibt das neue Fenster [-inf, 10] dem nächsten maximierenden Kindknoten, der die Blätter 4, 5 und 6 besitzt. Der Rückgabewert 12 von Blatt 5 ist aber so gut, dass er den Beta-Wert 10 überschreitet. Somit muss Blatt 6 nicht mehr betrachtet werden, weil das Ergebnis 12 dieses Teilbaumes besser ist, als das des linken Teilbaumes, und deshalb vom minimierenden Spieler nie gewählt werden würde. \\
+Ähnlich verhält es sich beim minimierenden Knoten mit dem 3-Alpha-Cutoff. Obwohl dieser Teilbaum erst teilweise ausgewertet wurde, ist klar, dass der maximierende Wurzelknoten diese Variante niemals wählen würde, weil der minimierende Knoten ein Ergebnis von höchstens 3 erzwingen könnte, während aus dem mittleren Teilbaum das Ergebnis 12 sichergestellt ist.
+
+\subsubsection{Implementierung}
+\begin{lstlisting}[language=Java, caption=Auszug Main, style=JavaStyle]
+ gespeicherterZug = NULL;
+ int gewuenschteTiefe = 4;
+ int bewertung = max(+1, gewuenschteTiefe, -unendlich, +unendlich);
+ if (gespeicherterZug == NULL)
+    es gab keine weiteren Zuege mehr;
+ else
+    gespeicherterZug ausführen;
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Funktionen, style=JavaStyle]
+ int max(int spieler, int tiefe, int alpha, int beta) {
+    if (tiefe == 0 or keineZuegeMehr(spieler)) return bewerten();
+    int maxWert = alpha;
+    generiereMoeglicheZuege(spieler);
+    while (noch Zug da) {
+       fuehreNaechstenZugAus();
+       int wert = min(-spieler, tiefe-1, maxWert, beta);
+       macheZugRueckgaengig();
+       if (wert > maxWert) {
+          maxWert = wert;
+          if (maxWert >= beta) break;
+          if (tiefe == anfangstiefe) gespeicherterZug = Zug;
+       }
+    }
+    return maxWert;
+ }
+ int min(int spieler, int tiefe, int alpha, int beta) {
+    if (tiefe == 0 or keineZuegeMehr(spieler)) return bewerten();
+    int minWert = beta;
+    generiereMoeglicheZuege(spieler);
+    while (noch Zug da) {
+       fuehreNaechstenZugAus();
+       int wert = max(-spieler, tiefe-1, alpha, minWert);
+       macheZugRueckgaengig();
+       if (wert < minWert) {
+          minWert = wert;
+          if (minWert <= alpha) break;
+       }
+    }
+    return minWert;
+ }
+\end{lstlisting}
 \end{document}
