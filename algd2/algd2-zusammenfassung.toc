@@ -14,4 +14,21 @@
 \contentsline {subsubsection}{\numberline {2.2.2}Einf\"ugen}{8}
 \contentsline {subsubsection}{\numberline {2.2.3}L\"oschen}{9}
 \contentsline {subsubsection}{\numberline {2.2.4}Beispiel}{9}
-\contentsline {subsection}{\numberline {2.3}Heaps \& Priority-Queues}{11}
+\contentsline {subsection}{\numberline {2.3}Heaps / Priority-Queues}{11}
+\contentsline {subsubsection}{\numberline {2.3.1}Bedingungen}{11}
+\contentsline {subsubsection}{\numberline {2.3.2}Element mit h\"ochster Priorit\"at entfernen}{11}
+\contentsline {subsubsection}{\numberline {2.3.3}Einf\"ugen eines Objektes mit gegebener Priorit\"at}{11}
+\contentsline {subsubsection}{\numberline {2.3.4}Entfernen eines Objektes an beliebiger, aber gegebener Position}{12}
+\contentsline {subsubsection}{\numberline {2.3.5}Aufbau eines Heaps}{12}
+\contentsline {section}{\numberline {3}Hash-Verfahren}{13}
+\contentsline {subsection}{\numberline {3.1}Begriffe}{13}
+\contentsline {subsection}{\numberline {3.2}Hash-Funktionen}{13}
+\contentsline {subsection}{\numberline {3.3}Verkettung der \"Uberl\"aufer}{14}
+\contentsline {subsubsection}{\numberline {3.3.1}Separate Verkettung}{14}
+\contentsline {subsubsection}{\numberline {3.3.2}Direkte Verkettung}{14}
+\contentsline {subsection}{\numberline {3.4}Offene Hash-Verfahren}{14}
+\contentsline {subsubsection}{\numberline {3.4.1}Schema}{15}
+\contentsline {subsubsection}{\numberline {3.4.2}Lineares Sondieren}{15}
+\contentsline {subsubsection}{\numberline {3.4.3}Double-Hashing}{15}
+\contentsline {subsubsection}{\numberline {3.4.4}Implementierung}{15}
+\contentsline {section}{\numberline {4}Graphen}{17}

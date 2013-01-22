@@ -214,6 +214,106 @@ Bei einem ALV Baum muss nach dem löschen noch balanciert werden.
 \subsubsection{Beispiel}
 \lstinputlisting[language=java,caption=Insert \& Delete from a AVL Tree,style=JavaStyle]{avl-operations.java}
 
-\subsection{Heaps \& Priority-Queues}
+\subsection{Heaps / Priority-Queues}
+Die wichtigsten Operationen bei Warteschlangen (queues) sind der Zugriff auf das vorderste Objekt, das Einfügen eines Objektes am Ende der Warteschlange und das Entfernen des vordersten Objektes. Solche einfache Warteschlangen werden üblicherweise mit verketteten Listen realisiert. \\
+Die wichtigsten Operationen von Prioritätswarteschlangen unterscheiden sich leicht von denjenigen der einfachen Warteschlangen. Der Zugriff auf das vorderste Objekt wird durch den Zugriff auf ein Objekt mit höchster Priorität ersetzt. Entsprechend wird das Entfernen des vordersten Objektes durch das Entfernen eines Objektes mit höchster Priorität ersetzt. Schliesslich wird ein neues Objekt nicht einfach am Ende eingefügt, sondern es muss an der richtigen Position gemäss seiner Priorität eingereiht werden. Dabei muss die richtige Position aber zuerst gesucht werden.
 
-\end{document} % Inhalt Ende 
+\subsubsection{Bedingungen}
+Man unterscheidet Heaps in Min-Heaps und Max-Heaps. Bei Min-Heaps bezeichnet man die Eigenschaft, dass die Schlüssel der Kinder eines Knotens stets größer als der Schlüssel ihres Vaters sind, als Heap-Bedingung. Dies bewirkt, dass an der Wurzel des Baumes stets ein Element mit minimalem Schlüssel im Baum zu finden ist. Umgekehrt verlangt die Heap-Bedingung bei Max-Heaps, dass die Schlüssel der Kinder eines Knotens stets kleiner als die ihres Vaters sind. Hier befindet sich an der Wurzel des Baumes immer ein Element mit maximalem Schlüssel.
+
+\subsubsection{Element mit höchster Priorität entfernen}
+Das eigentliche Entfernen eines Objektes mit höchster Priorität entspricht dem Entfernen der Wurzel des Heaps.Dies hinterlässt im Allgemeinen zwei separate Heaps, nämlich den linken und den rechten Teilbaum der Wurzel. Die beiden Heaps werden zusammengeführt in dem der Knoten genommen wird, der auf dem untersten Niveau am weitesten rechts steht, und an der Stelle der Wurzel eingefügt wird. \\
+Dadurch wird aber in der Regel die Heap Bedingungen verletzt. Um dies zu korrigieren lässt man die neue Wurzel versickern (\textbf{shift-down}) bis die Bedingungen wieder korrekt sind. Dabei bedeutet ein einzelner Versickerungsschritt das Vertauschen des Schlüssels eines inneren Knotens mit dem grösseren Schlüssel seiner beiden Söhne. \\
+Der Aufwand des Versickerns hängt direkt von der Länge des Pfades und somit von der Höhe des Heap ab. Da die Höhe eines balancierten Binärbaumes logarithmisch in der Anzahl der Knoten \textit{(= n)} ist, resultiert gesamthaft eine logarithmische Zeitkomplexität für das Entfernen eines Schlüssels mit höchster Priorität: \textit{O(log n)}.
+
+\subsubsection{Einfügen eines Objektes mit gegebener Priorität}
+Das neue Objekt wird am letzten Knoten im Heap eingefügt. Dazu werden alle Knoten im Heap fortlaufend nummerriert. Beginnend bei der Wurzel mit 1, dann alle weiteren Niveaus der Reihe nach und innerhalb der Niveaus von links nach rechts. Auch hier ist es sehr warscheinlich, dass die Heap Bedinungen verletzt werden. Man wenden hier das genau gegenteilige Verfahren an (\textbf{shift-up}): \\
+Erfüllt Knoten v die Heap-Bedingung nicht, so wird v mit demjenigen Sohn von v, welcher den grösseren Schlüssel besitzt, vertauscht.
+
+\subsubsection{Entfernen eines Objektes an beliebiger, aber gegebener Position}
+Auch bei dieser Operation wird die Nummerierung der Knoten benötigt. Falls der zu entfernende Knoten der letzte Knoten im Heap ist, kann dieser entfernt werden ohne die Heap Bedinungen zu verletzen. Andernfalls wird der zu löschende Knoten v mit dem letzten Knoten p des heaps vertauscht, damit v problemlos gelöscht werden kann. \\
+m Allgemeinen wird durch das Vertauschen der beiden Knoten v und p die Heap-Bedingung verletzt, entweder hat p einen grösseren Schlüssel als sein neuer Vater oder p hat einen kleineren Schlüssel als einer seiner neuen Söhne. Im ersteren Fall wird auf dem Pfad von p zur Wurzel die \textbf{sift-up}-Operation angewandt und im letzteren Fall lassen wir p mittels \textbf{sift-down}-Operation versickern.
+
+\subsubsection{Aufbau eines Heaps}
+Mit den n Schlüsselwerten bauen wir zuerst einen balancierten Binärbaum auf, so dass alle Blätter auf höchstens zwei verschiedenen Niveaus auftreten und dass auf demjenigen Niveau, wo sowohl innere Knoten als auch Blätter auftreten können, kein innerer Knoten weiter rechts liegt als irgend ein Blatt. Im Allgemeinen wird jedoch die Heap-Bedingung dadurch nicht erfüllt. \\
+Bevor wir auf die Umstrukturierung eingehen, zeigen wir den balancierten Binärbaum, welcher aus der Schlüsselmenge { 7, 5, 3, 11, 14, 8, 20, 17 } anfänglich aufgebaut wird. Die Anzahl innerer Knoten ist n = 8.
+\begin{center}
+\includegraphics[scale=0.4]{heap-unsortiert.png}
+\end{center}
+Für jeden inneren Knoten, dessen beide Söhne beides Blätter sind, gilt trivialerweise, dass die Heap- Bedingung bereits erfüllt ist. Dies ist der Fall für alle Knoten mit einer Nummer grösser als $(n/2)$. Im oben stehenden Beispiel sind dies die Knoten 5 bis 8. Die restlichen Knoten mit den Nummern 1 bis $(n/2)$ werden nun in der Reihenfolge $(n/2)$, $(n/2)-1$, ..., 1 mit der Operation \textbf{sift-down} versickert. Für oben stehendes Beispiel ergeben sich dadurch die folgenden Veränderungen und schliesslich der unten stehende Heap:\\ \\
+- Knoten 4 mit Schlüssel 11 versickern: 7, 5, 3, 17, 14, 8, 20, 11\\
+- Knoten 3 mit Schlüssel 3 versickern: 7, 5, 20, 17, 14, 8, 3, 11\\
+- Knoten 2 mit Schlüssel 5 versickern: 7, 17, 20, 11, 14, 8, 3, 5\\
+- Knoten 1 mit Schlüssel 7 versickern: 20, 17, 8, 11, 14, 7, 3, 5\\
+\begin{center}
+\includegraphics[scale=0.4]{heap-sortiert.png}
+\end{center}
+
+\pagebreak
+\section{Hash-Verfahren}
+Die grosse Aufgabe bei Datenstrukturen sind die drei Operationen Einfügen, Suchen und Entfernen möglichst schnell anzubieten. Das schnellste bisher sind die AVL-Bäume, die alle drei Operationen in $O(log(n))$ anbieten. Im Gegensatz dazu steht das Array, welches alle drei Operationen in $O(1)$ anbietet. Es kann direkt auf einzelne Speicherzellen zugegriffen werden ohne umständliches Vergleichen und/oder Suchen. Arrays sind aber nicht dynamisch und es ist nicht möglich, ein unendlich langes Array zu haben, sondern es muss auf eine fixe Grösse limitiert werden. Die Hash-Datenstruktuen versuchen das schnelle Array mit der Unlimitiertheit der dynamischen Datenstrukturen zu verbinden.
+
+\subsection{Begriffe}
+\begin{description}
+	\item[Quellmenge] \hfill \\ Die Menge aller Möglicher Nachrichten.
+	\item[Zielmenge] \hfill \\ Menge aller möglichen Hash-Werten. Sie ist im Allgemeinen viel kleiner als die Quellmenge.
+	\item[Kollision] \hfill \\ Nachrichten welche den selben Hash-Wert haben.
+	\item[Hash-Funktion] \hfill \\ Enthält die Berechnung, die es erlaubt, von einer beliebigen Nachricht einen Hash-Wert fixer Länge zu berechnen.
+\end{description}
+
+\subsection{Hash-Funktionen}
+\begin{description}
+	\item[Divisions-Rest-Methode] \hfill \\
+	Ein nahe liegendes Verfahren zur Erzeugung eines Hash-Wertes ist es, den Rest einer ganzzahligen  Division von k durch m zu nehmen: $h(k) = k$ $mod$ $m$. \\
+	Für die Qualität dieser Hash-Funktion ist dann allerdings eine geschickte Wahl von m entscheidend. Eine gute Wahl ist eine Primzahl welche kein Teiler einer zweierpotenz ist.
+	\item[Multiplikative Methode] \hfill \\
+	Der gegebene Schllüsse wird mit einer irrationalen Zahl multipliziert; der ganzzahlige Anteil des Resultats wird abgeschnitten. Auf diese Weise erhält man für verschiedene Schlüssel verschiedene Werte zwischen 0 und 1. Für Schlüssel 1, 2, 3, ..., n sind diese Werte ziemlich gleichmässig im Intervall [0, 1] verstreut.
+\end{description}
+Jede Hash-Funktion aus H bildet alle denkbar möglichen Schlüsselwerte auf einen Index aus \{0, 1, ..., m-1\} ab. H heisst nun \textbf{universell}, wenn für je zwei verschiedene Schlüsselwerte x und y gilt:
+\begin{center}
+$\frac{|[h \in H : h(x)=h(y)]|}{|H|} <= \frac{1}{m}$
+\end{center} 
+H ist also dann universell, wenn für jedes Paar von verschiedenen Schlüsseln höchstens der m-te Teil der Hash-Funktionen aus H zu einer Indexkollision für dieses Schlüsselpaar führen.
+
+\subsection{Verkettung der Überläufer}
+Das zu lösende Problem sind die Synonyme. Soll in ein Array, das bereits den Schlüssel k enthält, ein Synonym k' von k eingefügt werden, so ergibt sich eine Indexkollision. Der Platz h(k) = h(k') ist bereits besetzt und k', ein Überläufer, muss anderswo gespeichert werden. Eine einfache Art, Überläufer zu speichern, ist die, sie ausserhalb des Arrays abzulegen, und zwar in dynamisch veränderbaren Strukturen. So kann man etwa die Überläufer zu jedem Array-Index in einer linearen Liste verketten; diese Liste wird an den Array-Eintrag angehängt, der sich durch Anwendung der Hash-Funktion auf die Schlüssel ergibt.
+
+\subsubsection{Separate Verkettung}
+Bei der separaten Verkettung der Überläufer ist jedes Element der Hash-Tabelle das Anfangselement einer Überlaufkette (verkettete lineare Liste). Angenommen wir hätten eine Klasse List mit einer inneren Klasse List.Element. Somit können wir ein Array von solchen Elementen als unsere Hash-Tabelle verwenden. 
+\begin{center}
+\includegraphics[scale=0.4]{hash-separate-verkettung.png}
+\end{center}
+
+\subsubsection{Direkte Verkettung}
+Bei der direkten Verkettung der Überläufer ist jedes Element der Hash-Tabelle eine eigenständige Liste. In der Hash-Tabelle werden also bloss Referenzen auf Listen gespeichert und die Datensätze in die Listen eingefügt. 
+\begin{center}
+\includegraphics[scale=0.4]{hash-direkte-verkettung.png}
+\end{center}
+
+\subsection{Offene Hash-Verfahren}
+Mit der Idee von offenen Hash-Verfahren wird ein Ansatz verfolgt, die Überläufer innerhalb der Hash-Tabelle unterzubringen. Wenn also beim Versuch den Schlüssel k in die Hash- Tabelle an Position h(k) einzutragen festgestellt wird, dass t[h(k)] bereits belegt ist, so muss man nach einer festen Regel einen anderen, nicht belegten Platz finden, an dem man k unterbringen kann. Da man von vornherein nicht weiss, welche Plätze belegt sein werden und welche nicht, definiert man für jeden Schlüssel eine Reihenfolge, in der alle Speicherplätze einer nach dem anderen betrachtet werden. Sobald dann ein betrachteter Platz frei ist, wird der Datensatz dort gespeichert. Die Magie liegt also darin, wie man abhängig vom jeweiligen Schlüssel, die Hash-Tabelle inspiziert. Diese Reihenfolge nennt sich Sondierungsfolge. \\
+Um einen Schlüssel zu löschen ohne die Sondierungsreienfolge zu zerstören benötigt es einen kleineen Trick. Er wird nicht wirklich entfernt, sondern lediglich als entfernt markiert. Wird ein neuer Schlüssel eingefügt, so wird der Platz von k als frei angesehen; wird ein Schlüssel gesucht, so wird der Platz von k als belegt angesehen.
+
+\subsubsection{Schema}
+Sei s(j,k) eine Funktion von j und k so, dass $(h(k)-s(j,k))$ $mod$ $m$ für j = 0, 1, ..., m-1 eine Sondierungsfolge bildet, d.h. eine Permutation aller Hash-Adressen. Es sei stets noch mindestens ein Platz in der Hash-Tabelle frei.
+
+\subsubsection{Lineares Sondieren}
+Beim linearen Sondieren ergibt sich für den Schlüssel k die Sondierungsfolge \\
+$h(k), h(k)-1, h(k)-2, h(k)-3, ..., 0, m-1, m-2, m-3, ..., h(k) + 1$ \\
+Es wird einfach immer ein Array-Index kleiner versucht, bis der kleinste Index erreicht wird (also 0) und dann wird einfach vom höchsten Index an weiter gesucht. \\
+Das Schema ist beim linearen Sondieren die Funktion $s(j,k) = j$.
+
+\subsubsection{Double-Hashing}
+Für die Sondierungsfolge wird eine zweite Hash-Funktion verwendet. Die gewählte Sondierungsfolge für Schlüssel k ist \\
+$h(k), h(k)-h'(k), h(k)-2*h'(k), ..., h(k)-(m-1)*h'(k)$ \\
+wenn h'(k) die zweite Hash-Funktion bezeichnet. Damit wir keine Indizes errechnen, die kleiner 0 sind,
+wird das Resultat jeweils noch modulo m gerechnet.
+
+\subsubsection{Implementierung}
+\lstinputlisting[language=java,caption=Abstrakte Klasse,style=JavaStyle]{OpenHashMap.java}
+
+\lstinputlisting[language=java,caption=Besipiel,style=JavaStyle]{LinearHashMap.java}
+
+\pagebreak
+\section{Graphen}
+\end{document}
