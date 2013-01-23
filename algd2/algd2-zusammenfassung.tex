@@ -272,7 +272,10 @@ Die grosse Aufgabe bei Datenstrukturen sind die drei Operationen Einfügen, Suche
 	Ein nahe liegendes Verfahren zur Erzeugung eines Hash-Wertes ist es, den Rest einer ganzzahligen  Division von k durch m zu nehmen: $h(k) = k$ $mod$ $m$. \\
 	Für die Qualität dieser Hash-Funktion ist dann allerdings eine geschickte Wahl von m entscheidend. Eine gute Wahl ist eine Primzahl welche kein Teiler einer zweierpotenz ist.
 	\item[Multiplikative Methode] \hfill \\
-	Der gegebene Schllüsse wird mit einer irrationalen Zahl multipliziert; der ganzzahlige Anteil des Resultats wird abgeschnitten. Auf diese Weise erhält man für verschiedene Schlüssel verschiedene Werte zwischen 0 und 1. Für Schlüssel 1, 2, 3, ..., n sind diese Werte ziemlich gleichmässig im Intervall [0, 1] verstreut.
+	Der gegebene Schlüssel wird mit einer irrationalen Zahl multipliziert; der ganzzahlige Anteil des Resultats wird abgeschnitten. Auf diese Weise erhält man für verschiedene Schlüssel verschiedene Werte zwischen 0 und 1. Für Schlüssel 1, 2, 3, ..., n sind diese Werte ziemlich gleichmässig im Intervall [0, 1] verstreut.
+\begin{center}
+$h(k) = \lfloor (kA\mod 1) \times m \rfloor = \lfloor  (k A - \lfloor k A \rfloor) \times m \rfloor,\quad 0<A<1,\quad  m = $ Anz. Adressen
+\end{center} 
 \end{description}
 Jede Hash-Funktion aus H bildet alle denkbar möglichen Schlüsselwerte auf einen Index aus \{0, 1, ..., m-1\} ab. H heisst nun \textbf{universell}, wenn für je zwei verschiedene Schlüsselwerte x und y gilt:
 \begin{center}
