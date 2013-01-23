@@ -127,7 +127,7 @@ public final class AVLTree<T> implements Map<Integer, T> {
       if (t.parent == null) {
         assert this.root == t;
         this.root = null;
-        return oldValue;
+        return t.value;
       }
       r = t;
     } else {
