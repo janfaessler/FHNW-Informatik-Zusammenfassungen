@@ -38,3 +38,21 @@
 \contentsline {subsection}{\numberline {9.1}Ziel}{14}
 \contentsline {subsection}{\numberline {9.2}Regeln}{14}
 \contentsline {subsection}{\numberline {9.3}Beispiel}{14}
+\contentsline {section}{\numberline {10}Decorator Pattern}{15}
+\contentsline {subsection}{\numberline {10.1}Ziel}{15}
+\contentsline {subsection}{\numberline {10.2}Struktur}{15}
+\contentsline {subsection}{\numberline {10.3}Dynamics}{15}
+\contentsline {subsection}{\numberline {10.4}Beispiel}{16}
+\contentsline {section}{\numberline {11}Command Pattern}{17}
+\contentsline {subsection}{\numberline {11.1}Ziel}{17}
+\contentsline {subsection}{\numberline {11.2}Beteiligte}{17}
+\contentsline {subsection}{\numberline {11.3}Struktur}{17}
+\contentsline {section}{\numberline {12}Factory Pattern}{18}
+\contentsline {subsection}{\numberline {12.1}Idee}{18}
+\contentsline {subsubsection}{\numberline {12.1.1}Verwendung}{18}
+\contentsline {subsection}{\numberline {12.2}Struktur}{18}
+\contentsline {section}{\numberline {13}Singleton}{19}
+\contentsline {subsection}{\numberline {13.1}Idee}{19}
+\contentsline {subsection}{\numberline {13.2}Motivation}{19}
+\contentsline {subsection}{\numberline {13.3}Struktur}{19}
+\contentsline {subsection}{\numberline {13.4}Implementierung}{19}

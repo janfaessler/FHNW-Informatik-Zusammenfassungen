@@ -276,5 +276,83 @@ mehr geändert werden kann.
 
 \subsection{Beispiel}
 \lstinputlisting[language=java,caption=Beispiel Immutability Pattern,style=JavaStyle]{immutability.java}
+
+\newpage
+\section{Decorator Pattern}
+\subsection{Ziel}
+Das Muster ist eine flexible Alternative zur Unterklassenbildung, um eine Klasse um zusätzliche Funktionalitäten zu erweitern. Die Vorteile bestehen darin, dass mehrere Dekorierer hintereinandergeschaltet werden können; die Dekorierer können zur Laufzeit und sogar nach der Instanzierung ausgetauscht werden. Die zu dekorierende Klasse ist nicht unbedingt festgelegt (wohl aber deren Schnittstelle). Zudem können lange und unübersichtliche Vererbungshierarchien vermieden werden.
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.7]{decorator.png}
+\end{center}
+\subsection{Dynamics}
+\begin{center}
+	\includegraphics[scale=0.4]{decorator-dynamics.png}
+\end{center}
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Decorator Pattern,style=JavaStyle]{decorator.java}
+
+\newpage
+\section{Command Pattern}
+\subsection{Ziel}
+\begin{itemize}
+	\item Eine Aktion zu einem Objekt machen, damit man sie weiterleiten und zu einem beliebigen späteren Zeitpunkt ausführen kann. 
+	\item Eine Aktion aufrufen von der der Aufrufer weder den Empfänger noch die exakte Methode kennen muss.
+	\item Eine Entkoppelung des Objektes, welches eine Operation aufruft vom Objekt, das weiss, wie die Operation ausgeführt werden soll.
+\end{itemize}
+\subsection{Beteiligte}
+\begin{description}
+	\item[Klient] \hfill \\ Instanziert ein Kommando und füllt es mit Informationen um später eine Aktion ausführen zu können.
+	\item[Aufrufer] \hfill \\ Entscheidet wann das Kommando ausgeführt wird.
+	\item[Empfänger] \hfill \\ Objekt das die Aktion ausführen kann.
+\end{description}
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.7]{command.png}
+\end{center}
+
+\newpage
+\section{Factory Pattern}
+\subsection{Idee}
+Das Muster beschreibt, wie ein Objekt durch Aufruf einer Methode anstatt durch direkten Aufruf eines Konstruktors erzeugt wird. Es gehört somit zur Kategorie der Erzeugungsmuster.
+\subsubsection{Verwendung}
+Die Fabrikmethode findet Anwendung, wenn eine Klasse die von ihr zu erzeugenden Objekte nicht kennen kann bzw. soll, oder wenn Unterklassen bestimmen sollen, welche Objekte erzeugt werden. Typische Anwendungsfälle sind Frameworks und Klassenbibliotheken.
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.3]{factory.png}
+\end{center}
+
+\newpage
+\section{Singleton}
+\subsection{Idee}
+Von einer Klasse soll ho?chstens eine Instanz existieren.
+\subsection{Motivation}
+\begin{itemize}
+	\item Cache-Implementierungen
+	\item Objekte welche Registryeinstellungen oder Präferenzen verwalten
+	\item Thread-Pool
+	\item Klasse, mit welcher MP3 Dateien abgespielt werden. Falls man wa?hrend dem Abspielen einer Datei eine neue Datei abspielen lässt, so ist das Verhalten unvorhersehbar.
+	\item Treiber (Drucker/Datenbank).
+	\item Kommunikation über Rechnergrenzen hinweg: Versand von Daten u?ber einen Socket
+\end{itemize}
+
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.6]{singleton.png}
+\end{center}
+
+\subsection{Implementierung}
+\begin{lstlisting}[language=Java, caption=Java Implementierung, style=JavaStyle]
+public final class Singleton  {
+    private static Singleton instance;
+    private Singleton() {}
+    public synchronized static Singleton getInstance() {
+        if (instance == null) instance = new Singleton();
+        return instance;
+    }
+}
+\end{lstlisting}
+
+
 % Inhalt Ende
 \end{document}
