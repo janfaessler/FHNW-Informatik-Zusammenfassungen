@@ -85,13 +85,20 @@
 
 % Inhalt Start
 
+<<<<<<< HEAD
 \section{Unix/Linux}
 
 \subsection{Aufbau}
+=======
+\section{Einleitung}
+
+\subsection{UNIX-Aufbau}
+>>>>>>> janfaessler/master
 \begin{center}
 	\includegraphics[scale=0.3]{aufbau-unix.png}
 \end{center}
 
+<<<<<<< HEAD
 \subsection{Prozesse}
 \subsubsection{Steuerungssystem}
 \begin{itemize}
@@ -168,6 +175,30 @@ Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwal
 \end{description}
 
 \subsection{Datei-System}
+=======
+\subsection{System Call Schnittstelle}
+\begin{center}
+	\includegraphics[scale=0.55]{system-calls.png}
+\end{center}
+
+\subsection{Nötige System Calls für Multiuser-Betriebssystem}
+\begin{description}
+ \item[File System:] open(), read(), write(), close(), unlink(), creat()
+ \item[Prozess Steuer:] fork(), sleep(), exec(), kill(), exit(), wait()
+ \item[Inter Prozess Kommunikation:] pipe(), sync(), socket()
+ \item[Memory Management:] malloc(), free()
+\end{description}
+
+\newpage
+\section{Dateisystem}
+
+\subsection{Übersicht}
+\begin{center}
+	\includegraphics[scale=0.5]{filesystem-overview.png}
+\end{center}
+
+\subsection{System Calls}
+>>>>>>> janfaessler/master
 \begin{description}
 	\item[creat()] Anlegen einer Datei
 	\item[mknod()] Anlegen eines Ordners
@@ -190,6 +221,7 @@ Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwal
 	\item[writedir()] Schreiben eines Verzeichnises
 	\item[closedir()]  Schliessen eines Verzeichnises
 \end{description}
+<<<<<<< HEAD
 		
 \subsection{Speicherverwaltung}
 \begin{description}
@@ -210,6 +242,8 @@ Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwal
 \begin{center}
 	\includegraphics[scale=0.5]{filesystem-overview.png}
 \end{center}
+=======
+>>>>>>> janfaessler/master
 
 \subsection{Relevante Dateisystem Algorithmen}
 \subsubsection{Pfadnahme zu inode}
@@ -251,6 +285,7 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 \subsection{Beispiele}
 \subsubsection{Verzeichnismanipulation}
 \lstinputlisting[language=java,caption=Verzeichnismanipulation,style=JavaStyle]{dir_handling.c}
+<<<<<<< HEAD
 \newpage
 \subsubsection{Dateimanipulation}
 \lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
@@ -259,4 +294,235 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 \subsubsection{Dateisystem-Baum}
 \lstinputlisting[language=java,caption=Dateisystem-Baum,style=JavaStyle]{fs_handling.c}
 
+=======
+\subsubsection{Dateimanipulation}
+\lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
+
+
+
+\newpage
+\section{Prozesse}
+
+\subsection{Einleitung}
+\subsubsection{Aufgaben an ein Prozesssteuerungssystem}
+\begin{itemize}
+	\item Prozesse kreieren, starten, stoppen, unterbrechen \& terminieren
+	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
+	\item Prozess-Signalisierung und -kommunikation
+	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
+	\item Prozesse und ihre Zustände anzeigen
+\end{itemize}
+\subsubsection{Kernel und User Mode}
+\begin{itemize}
+	\item Ein Prozess hat mindestens zwei Ausführungsmodi:
+		\begin{description}
+			\item[User Mode] Es wird der normale Programmcode ausgeführt.
+			\item[Kernl Mode] Es werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
+		\end{description}
+	\item Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation oder durch asynchrone Events.
+\end{itemize}
+\subsubsection{Prozesskontext}
+\begin{description}
+	\item[Benutzer] Daten des Prozesses im zugewiesenen Adressraum
+	\item[Hardware]  Basis- und Grenzregister, Befehlszählregister, Akkumulator \&  Seitentabelle
+	\item[System] Prozessnummer, geöffneten Dateien, Eltern- oder Kindprozesse \& Prioritäten
+\end{description}
+\subsubsection{Zustände}
+\begin{center}
+	\includegraphics[scale=0.4]{process-states.png}
+\end{center}
+
+
+\subsection{System Calls}
+\begin{description}
+	\item[fork()] Erzeugung
+	\item[exit()] Beendigung
+	\item[exec()] Überlagerung des Prozesses
+	\item[wait()] Warten auf Prozesstermination (Kindprozesse)
+	\item[sleep()] Freiwilliges schlafen des Prozesses.
+	\item[kill()] Senden eines Signals (32 verschiedene)
+	\item[signal()] Signalbehandlung
+\end{description}
+\subsubsection{exec()}
+Ausführen eines neuen Programms in einer vorhandenen Prozesshülle
+\begin{lstlisting}[language=Java, caption=exec() Beispiel, style=JavaStyle]
+	(void) printf ("process started\n");
+	execl ("/bin/date", "/bin/date", (char *) 0);
+	(void) printf ("This should not happen\n");
+\end{lstlisting}
+\subsubsection{fork()}
+Der Aufruf \textit{fork()} erstellt einen neuen Prozess als Seiten- effekt und gibt einen numerischen Return-Code zurück:
+\begin{itemize}
+	\item Der neue Prozess (Kind) erhält eine 0.
+	\item Der aufrufende Prozess (Eltern) erhält entweder -1  im Fehlerfall oder einen Wert $> 0$, der der Prozess-ID des Kindprozesses entspricht.
+\end{itemize}
+Der Kindprozess ist eine identische Kopie des Elternprozesses (inkl. offenen Dateien, Speicher etc.), mit Ausnahme der Prozess- ID, der parent process ID und der Ressourcenverbrauchszähler. \textit{fork()} hat im Unterschied zur Prozesserzeugung in anderen Betriebssystemen keine Parameter.
+\begin{lstlisting}[language=Java, caption=fork() Beispiel, style=JavaStyle]
+
+switch (fork()) {
+	case -1:(void) printf ("fork failed\n");
+		break;
+	case 0: (void) printf ("child executing\n");
+		break;
+	default: (void) printf ("parent executing\n");
+	break;
+} 
+\end{lstlisting}
+\subsubsection{exit()}
+Der Aufruf von \textit{exit()} terminiert einen Prozess. Alle Ressourcen (Speicher, offene Dateien, ...) werden freigegeben, nur der Eintrag in der Prozesstabelle bleibt bestehen (Zombie-Prozess), bis der Elternprozess den Rückgabewert abruft. \\
+Ein Prozess kann \textit{exit()} selbst aufrufen, oder das Betriebssystem ruft \textit{\underline{ }exit()} auf, wenn ein Prozess zwangsweise terminiert werden muss.
+\subsubsection{wait()}
+Der Aufruf von \textit{wait()} suspendiert einen Prozess von der CPU (Kontextwechsel) bis ein Kindprozess terminiert oder eine Ausnahme (z.B. stoppen) signalisiert. \\
+\textit{wait()} liefert dem Elternprozess dann den Exit Code des Kindprozesses zurück, oder einen Indikator, warum der Kindprozess vom Betriebssystem terminiert wurde. \\
+Wenn der Prozess beim Aufruf von \textit{wait()} keine Kindprozesse hat, wird er nicht schlafen gelegt. \\
+In einigen Unix-Varianten liefert der Aufruf von \textit{wait()} den Exit Code des ersten terminierten Kindprozesses zurück (d.h. \textit{wait()} muss mehrfach aufgerufen werden, wenn mehrere Kindprozesse vorhanden sind), in anderen Varianten kehrt \textit{wait()} erst zurück, wenn der letzte Kindprozess terminiert ist, und liefert auch dessen Prozess-ID zuru?ck.
+\begin{lstlisting}[language=Java, caption=wait() Beispiel, style=JavaStyle]
+int main(int argc, char *argv[]) {
+	pid_t cpid, w;
+	int status;
+	cpid = fork();
+	if (cpid == -1) { perror("fork"); exit(EXIT_FAILURE); } 
+	if (cpid == 0) { /* Code executed by child */
+		printf("Child PID is %ld\n", (long) getpid());
+		if (argc == 1) pause(); /* Wait for signals */ 
+		_exit(atoi(argv[1]));
+	} else { do { /* Code executed by parent */ 
+		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
+		if (w == -1) { perror("waitpid"); 
+		exit(EXIT_FAILURE); } 
+		if (WIFEXITED(status)) {
+			printf("exited, status=%d\n", WEXITSTATUS(status)); 
+		} else if (WIFSIGNALED(status)) {
+			printf("killed by signal %d\n", WTERMSIG(status)); 
+		} else if (WIFSTOPPED(status)) {
+			printf("stopped by signal %d\n", WSTOPSIG(status)); 
+		} else if (WIFCONTINUED(status)) {
+			printf("continued\n"); }
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); 
+		exit(EXIT_SUCCESS);
+	}
+}
+\end{lstlisting}
+\subsection{Swapping}
+\includegraphics[scale=0.4]{swapping.png}
+\subsection{Demand Paging}
+Anforderung: ein einzelner Prozess soll grösser sein dürfen, als der verfügbare Hauptspeicher.\\ 
+Voraussetzungen für “demand paging”:
+\begin{itemize}
+ \item Hardware unterstützt seitenorientieres Speichermanagement ($\frac{1}{2} – 4$ kB / Seite)
+ \item Wiederaufsetzbare CPU-Instruktionen (wenn Instruktionen über eine Seitengrenze verlaufen)
+\end{itemize}
+Beobachtung: Lokalität des Codes, nur etwa 10-15\% des Programmcodes müssen zu jeder beliebigen Zeit im Hauptspeicher liegen (“working set”).\\
+Zugriff auf eine Seite ausserhalb des “working set” führt zu einem “page fault” (Seitenladefehler), dann wird die Seite nachgeladen $\to$ Balance zwischen der Grösse des “working set” und der Anzahl “page faults”\\
+Optimierung des “demand paging” durch
+\begin{itemize}
+ \item “Reference bit” $\to$ ermöglicht nicht-lineares “working set”
+ \item “Age bits” $\to$ verbleibende Zet einer Seite im “working set”
+\end{itemize}
+$\to$ Zwei Aufgaben für das Paging-Subsystem:
+\begin{itemize}
+ \item Seitenalterung und Auslagerung/Löschung genügend alter Seiten
+ \item Bearbeitung von “page faults”
+\end{itemize}
+
+\newpage
+\section{Threads}
+\subsection{Prozesse versus Threads}
+\begin{itemize}
+	\item Kontextwechsel sind eine schwere Operation mit viel Verarbeitungsaufwand durch den Kernel.
+	\item Da viele Unix-Prozesse I/O-intensiv sind, verbringen sie die meiste Laufzeit mit Warten, dadurch erhöht sich die Anzahl von Kontextwechseln im System.
+	\item Neuere Unix-/Linux-Systeme unterstützten mehr als einen parallellen Ausführungspfad innerhalb eines Prozesses (multi-threading) $\rightarrow$ es muss kein Kontextwechsel vorgenommen werden, um eine andere Aktivität zu starten.
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.5]{process_vs_threads.png}
+\end{center}
+\subsection{System Calls}
+\begin{description}
+	\item[pthread\_create()] Erzeugung eines Threads
+	\item[pthread\_exit()] Selbst-Termination eines Threads
+	\item[pthread\_cancel()] Fremd-Termination eines Threads
+	\item[pthread\_join()] Wartena uf Termination und Exit-Code eines Threads
+	\item[pthread\_detach()] Kein Warten auf einen Thread
+	\item[pthread\_self()] Ausgabe der unique thread-ID
+	\item[pthread\_equal()] Vergleich zweier thread-IDs
+	\item[pthread\_once()] Ausführung einer Initialisierungsroutinge
+\end{description}
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Threads,style=JavaStyle]{threads.c}
+
+\newpage
+\section{Pipes}
+\subsection{Einleitung}
+\begin{itemize}
+	\item Unidirektionaler Kommunikationskanal zwischen verwandten Prozessen (d.h. Prozessen, die eine direkte oder indirekte / vererbte Eltern-Kind- Beziehung nach einem \textit{fork()} haben).
+	\item Direkt nutzbar für Input/Output Umleitung in der Shell.
+	\item Wird innerhalb des Prozesses als 2 Dateideskriptoren repräsentiert, um Kompatibilita?t mit Standard-I/O mit \textit{read()} and \textit{write()} zu erlauben.
+	\item Volatiler Dateninhalt für kleine Datenmengen - d.h. keine permanente Speicherung im Dateisystem - der Inhalt einer Pipe geht verloren, wenn das System herunterfährt.
+	\item Keine Struktur der Daten in der Pipe (Bytestrom).
+	\item Blockierendes, nicht-atomares Schreiben
+	\item Blockierendes, destruktives Lesen
+	\item Sonderform named pipe mit permanenter Repräsentanz im Dateisystem
+\end{itemize}
+\subsection{Nutzung von Pipes}
+\subsubsection{Variante 1:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes1.png}\\
+\end{center} 
+\subsubsection{Variante 2:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes2.png}\\
+\end{center}
+\subsubsection{Variante 3:}
+\begin{center}
+	\includegraphics[scale=0.5]{pipes3.png}\\
+\end{center}
+\subsection{Schliessen unbenutzter Pipe-Enden}
+\begin{itemize}
+	\item[1.] Saubere Programmierung
+	\item[2.] Schutz gegen copy/paste Fehler bei der Software-Entwicklung
+	\item[3.] Auf älteren Unix-Systemen begrenzte Anzahl verfügbarer Dateideskriptoren pro Prozess
+	\item[4.] Das Schliessen des letzten Lese- oder Schreib-Endes einer Pipe popen()im Betrieb hat Auswirkungen auf die Prozesssynchronisation.
+\end{itemize}
+\subsection{Pseudocode}
+\begin{lstlisting}[language=Java, caption=pipe() Pseudocode,style=JavaStyle]
+algorithm pipe 
+input: none 
+output: file descriptor, write file descriptor
+{
+	assign new inode from pipe device (algorithm ialloc);
+	/* Since System V R4 dedicated FIFO file system (fifofs) */
+	allocate file table entry for reading, another for writing;
+	initialize file table entries to point to new inode;
+	allocate user file descriptor for reading, another for writing,
+	initialize to point to respective file table entries; 
+	set inode reference count to 2;
+	initialize count of inode readers, writers to 1;
+}
+\end{lstlisting}
+\subsection{Dup Pipe Fork}
+\lstinputlisting[language=java,caption=Dup Pipe Fork,style=JavaStyle]{dup-pipe-fork.c}
+\subsection{popen() Bibliotheks- Funktion}
+\lstinputlisting[language=java,caption=popen() Beispiel,style=JavaStyle]{popen.c}
+
+\newpage
+\section{Signale}
+\subsection{Einleitung}
+Ursprünglich entwickelt, um Ausnahmesituationen und Fehlverhalten von Prozessen anzuzeigen (Division durch Null, Zugriffsschutzverletzungen usw.), die zu einer Prozessbeendigung durch den Kernel führen. Später erweitert, um asynchrone Prozesskommunikation zu erlauben, und um nicht-kritische Bedingungen (z.B. Terminieren eines Kindprozesses, Starten/Stoppen eines Prozesses für das Debugging, I/O auf einem Datei- deskriptor usw.) anzuzeigen. Mechanismus wird benutzt vom Kernel (als Sender), vom Benutzer (als Sender, z.B. Cntl-C) und von Prozessen (als Sender mittels kill() oder als Empfänger).
+\subsection{Signale und Prozesse}
+\begin{center}
+	\includegraphics[scale=0.3]{signale-processes.png}\\
+\end{center} 
+\subsection{System Calls}
+\begin{description}
+	\item[kill(signum)] Sendet ein Signal
+	\item[signal(signum,handler)] Setzt einen neuen Signal Handler und gibt den alten zurück.
+	\item[alarm(seconds)] Setzt ein Alarmsignal nach einer bestimmten Anzahl Sekunden ab.
+\end{description}
+\subsection{Eltern- / Kind-Prozess Signalisierung}
+Wenn ein Prozess \textit{fork()} aufruft, bleiben alle schon definierten Signalaktionen (Default, Ignore, Handler) im Eltern- und im Kindprozess intakt. Wenn ein Prozess mit pendenten, aber noch nicht behandelten Signalen \textit{fork()} aufruft, erbt der Kindprozess die pendenten Signale (d.h. Signalduplikation). Wenn ein Prozess \textit{exec()} aufruft, werden alle Signal Handler wieder auf ihre Default-Aktion zurückgesetzt, da die Adresse des Signal Handlers im Prozessadressraum auf anderen Code zeigt und der Rumpf der Handling Prozedur im Textsegment dealloziiert / überschrieben wurde.
+\subsection{Alarm Signal}
+\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{sign-alarm.c}
+\subsection{Jumping}
+\lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{jumping.c}
+>>>>>>> janfaessler/master
 \end{document}

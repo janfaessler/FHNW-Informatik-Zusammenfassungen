@@ -1,0 +1,36 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Sockets}{1}
+\contentsline {subsection}{\numberline {1.1}Grundkonzepte}{1}
+\contentsline {subsection}{\numberline {1.2}Erstellen einer Socket Verbindung}{1}
+\contentsline {subsection}{\numberline {1.3}Senden und Empfangen von Daten}{1}
+\contentsline {subsection}{\numberline {1.4}Blockierendes vs. selektives Warten auf Sockets}{2}
+\contentsline {subsection}{\numberline {1.5}Beenden einer Verbindung}{2}
+\contentsline {subsection}{\numberline {1.6}Speicherverwaltung auf der Socket Schicht}{2}
+\contentsline {subsection}{\numberline {1.7}Datenfluss duch die Schichten}{3}
+\contentsline {subsection}{\numberline {1.8}System Calls}{3}
+\contentsline {section}{\numberline {2}Interprocess Communication (IPC)}{4}
+\contentsline {subsection}{\numberline {2.1}Zentrale Konzepte}{4}
+\contentsline {subsection}{\numberline {2.2}Verwaltung der Objekte}{4}
+\contentsline {subsection}{\numberline {2.3}Shared Memory}{5}
+\contentsline {subsubsection}{\numberline {2.3.1}Erstellen eines Segmentes (shmget)}{5}
+\contentsline {subsubsection}{\numberline {2.3.2}Einbinen eines Segmentes (shmat)}{5}
+\contentsline {subsubsection}{\numberline {2.3.3}Entfernen eines Segmentes (shmdt)}{6}
+\contentsline {subsubsection}{\numberline {2.3.4}System Calls}{6}
+\contentsline {subsection}{\numberline {2.4}Message Queues}{7}
+\contentsline {subsubsection}{\numberline {2.4.1}Erzeugen einer Message Queue}{7}
+\contentsline {subsubsection}{\numberline {2.4.2}Senden einer Nachricht}{7}
+\contentsline {subsubsection}{\numberline {2.4.3}Empfang einer Nachricht}{7}
+\contentsline {subsection}{\numberline {2.5}Semaphore}{9}
+\contentsline {subsubsection}{\numberline {2.5.1}Benutzung f\IeC {\"u}r gegenseitigen Ausschluss}{9}
+\contentsline {subsubsection}{\numberline {2.5.2}Benutzung f\IeC {\"u}r Prozess-Synchronisation}{9}
+\contentsline {subsubsection}{\numberline {2.5.3}Additive Semaphore}{10}
+\contentsline {subsubsection}{\numberline {2.5.4}Beispiel}{10}
+\contentsline {section}{\numberline {3}Remote Procedure Calls}{11}
+\contentsline {subsection}{\numberline {3.1}Funktionsweise}{11}
+\contentsline {subsection}{\numberline {3.2}Server / Client Bindung}{11}
+\contentsline {subsection}{\numberline {3.3}RPC Portmapping Ablauf}{12}
+\contentsline {subsection}{\numberline {3.4}Auswahl des Transportprotokolls}{12}
+\contentsline {subsection}{\numberline {3.5}Programmierbeispiel}{12}
+\contentsline {subsection}{\numberline {3.6}Ausnahmebehandlung}{13}
+\contentsline {subsection}{\numberline {3.7}Aufrufsemantik}{13}
+\contentsline {subsection}{\numberline {3.8}Benutzung und Beschr\IeC {\"a}nkungen}{13}

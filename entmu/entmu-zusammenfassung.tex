@@ -234,5 +234,47 @@ Ein modernes Beispiel sind die Klassendefinitionen der grafischen Benutzeroberfl
 \subsection{Beispiel}
 \lstinputlisting[language=java,caption=Beispiel Composite Pattern,style=JavaStyle]{composite.java}
 
+\newpage
+\section{Prototype Pattern}
+\subsection{Ziel}
+Neue Instanzen werden aufgrund prototypischer Instanzen erzeugt. Dabei wird die Vorlage kopiert und an neue Bedürfnisse angepasst
+
+\subsection{Motivation}
+\begin{itemize}
+	\item Copy und Paste funktion in einem Editor
+	\item Tool palette mit Prototyp-Objekten welche kopiert werden können
+\end{itemize}
+
+\subsection{Struktur}
+\begin{center}
+	\includegraphics[scale=0.45]{prototype-structure.png}
+\end{center}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Prototype Pattern,style=JavaStyle]{prototype.java}
+
+\subsection{Unterschiedliche Clone Varianten}
+\begin{center}
+	\includegraphics[scale=0.5]{java-clone.png}
+\end{center}
+
+\newpage
+\section{Immutability Pattern}
+\subsection{Ziel}
+Das Immutable Pattern stellt sicher, dass eine Instanz der Klasse nach der Initialisierung nicht
+mehr geändert werden kann.
+
+\subsection{Regeln}
+\begin{itemize}
+	\item[1.] Die Methoden der Klasse dürfen die Daten der Klasse nicht ändern.
+	\item[2.] Die Felder müssen privat oder final deklariert sein, falls es sich um Referenzen auf immutable Objekte oder Felder von primitiven Datentypen handelt.
+	\item[3.] Nur Getter-Methoden definieren, keine Setter Methoden
+	\item[4.] Alle Rückgabe-Werte von Getter-Methoden müssen kopiert werden, falls es nicht Referenzen auf immutable Objekte oder Resultate mit primitivem Datentyp sind.
+	\item[5.] Klassen als final deklarieren damit nicht in der Unterklasse die Regeln verletzt werden können.
+	\item[6.] Parameter in den Konstruktoren, die nicht immutable oder von primitiven Datentypen sind müssen geklont werden
+\end{itemize}
+
+\subsection{Beispiel}
+\lstinputlisting[language=java,caption=Beispiel Immutability Pattern,style=JavaStyle]{immutability.java}
 % Inhalt Ende
 \end{document}
