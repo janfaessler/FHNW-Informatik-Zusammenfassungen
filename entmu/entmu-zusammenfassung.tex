@@ -353,6 +353,38 @@ public final class Singleton  {
 }
 \end{lstlisting}
 
+\pagebreak 
+Soft-Referenzen werden beim Traversieren des Garbage Collectors zerst\"{o}rt, wenn keine weiteren harten Referenzen auf das Objekt mehr zeigen. Dies verhindert Memory-Leak durch Singleton-Patterns.
+\begin{lstlisting}[language=Java, caption=Java Implementierung (freundlicher für den Garbage Collector), style=JavaStyle]
+import java.lang.ref.SoftReference;
+public final class Singleton {
+    private static SoftReference<Singleton> instance;
+    private Singleton(){}
+    public synchronized static Singleton getInstance(){
+        if(instance == null){
+            instance = new SoftReference<Singleton>(new Singleton());
+        }
+        return instance.get();
+    }
+}
+\end{lstlisting}
+Das Initialization-on-demand Holder Idiom nutzt die Funktionsweise der JVM aus und macht effektiv das Gleiche wie die Synchronized-Variante. Sie ist threadsafe, ohne sich dabei auf spezielle Konstrukte wie synchronized oder volatile berufen zu müssen.
+\begin{lstlisting}[language=Java, caption=Initialization-on-demand holder idiom, style=JavaStyle]
+public class Singleton {
+        private Singleton() { }
+        /**
+        * SingletonHolder is loaded on the first execution 
+        * of Singleton.getInstance() or the first access
+        * to SingletonHolder.INSTANCE, not before.
+        */
+        private static class SingletonHolder { 
+                public static final Singleton INSTANCE = new Singleton();
+        }
+        public static Singleton getInstance() {
+                return SingletonHolder.INSTANCE;
+        }
+}
+\end{lstlisting}
 
 % Inhalt Ende
 \end{document}
