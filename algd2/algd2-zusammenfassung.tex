@@ -482,7 +482,7 @@ Der Algorithmus für die Breitensuche lautet wie folgt:
 
 
 \subsubsection{Kürzeste Pfade mit Dijkstra}
-Der Algorithmus von Dijkstra arbeitet mit einer \textit{Wellenfront}-Strategie. Der Algorithmus von Dijkstra setzt nicht negative Kantengewichte voraus. Für alle Knoten hinter der Front ist der endgültige Distanzwert bereits ermittelt worden. Wir nennen diese Knoten permanent und speichern sie ab. Für diese Knoten v gilt also: $dist(s, v) = d[v]$. Die Knoten vor der Front sind noch nicht bearbeitet worden. Für alle Knoten auf der Front ist die Berechnung in Gange. Diese Knoten werden in einer Prioritätswarteschlange PQ gespeichert. Die Prioritäten entsprechen den momentanen Abständen zum Startknoten. \\
+Der Algorithmus von Dijkstra arbeitet mit einer \textit{Wellenfront-Strategie}. Der Algorithmus von Dijkstra setzt nicht negative Kantengewichte voraus. Für alle Knoten hinter der Front ist der endgültige Distanzwert bereits ermittelt worden. Wir nennen diese Knoten permanent und speichern sie ab. Für diese Knoten v gilt also: $dist(s, v) = d[v]$. Die Knoten vor der Front sind noch nicht bearbeitet worden. Für alle Knoten auf der Front ist die Berechnung in Gange. Diese Knoten werden in einer Prioritätswarteschlange PQ gespeichert. Die Prioritäten entsprechen den momentanen Abständen zum Startknoten. \\
 Anfangszustand: Am Anfang ist die Menge der permanenten Knoten leer. Die Menge der Knoten auf der Front enthält nur den Startknoten s.
 \begin{itemize}
 	\item Nimm einen Knoten u aus PQ, welcher den kleinsten Abstand zu s hat.
