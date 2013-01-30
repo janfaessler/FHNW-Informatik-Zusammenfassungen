@@ -1,4 +1,43 @@
 \select@language {ngerman}
+<<<<<<< HEAD
+\contentsline {section}{\numberline {1}Unix/Linux}{1}
+\contentsline {subsection}{\numberline {1.1}Aufbau}{1}
+\contentsline {subsection}{\numberline {1.2}Prozesse}{1}
+\contentsline {subsubsection}{\numberline {1.2.1}Steuerungssystem}{1}
+\contentsline {subsubsection}{\numberline {1.2.2}Aufbau}{1}
+\contentsline {subsubsection}{\numberline {1.2.3}Kernel und User Mode}{2}
+\contentsline {subsubsection}{\numberline {1.2.4}Zust\"ande}{2}
+\contentsline {subsection}{\numberline {1.3}Memory}{2}
+\contentsline {subsubsection}{\numberline {1.3.1}Virtual Memory}{2}
+\contentsline {subsubsection}{\numberline {1.3.2}Swapping}{3}
+\contentsline {subsubsection}{\numberline {1.3.3}Paged Memory}{3}
+\contentsline {subsubsection}{\numberline {1.3.4}Fehlerzust\"ande}{3}
+\contentsline {section}{\numberline {2}System Call Schnittstelle}{4}
+\contentsline {subsection}{\numberline {2.1}Prozess-System}{4}
+\contentsline {subsection}{\numberline {2.2}Datei-System}{4}
+\contentsline {subsection}{\numberline {2.3}Directory Handling}{5}
+\contentsline {subsection}{\numberline {2.4}Speicherverwaltung}{5}
+\contentsline {subsection}{\numberline {2.5}Weitere}{5}
+\contentsline {section}{\numberline {3}Dateisystem}{6}
+\contentsline {subsection}{\numberline {3.1}\"Ubersicht}{6}
+\contentsline {subsection}{\numberline {3.2}Relevante Dateisystem Algorithmen}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}Pfadnahme zu inode}{6}
+\contentsline {subsubsection}{\numberline {3.2.2}Gemeinsame Nutzung von Dateien}{6}
+\contentsline {subsubsection}{\numberline {3.2.3}Datei Locking}{6}
+\contentsline {subsubsection}{\numberline {3.2.4}Mount / Unmount}{6}
+\contentsline {subsection}{\numberline {3.3}Allokation}{7}
+\contentsline {subsubsection}{\numberline {3.3.1}inode}{7}
+\contentsline {subsubsection}{\numberline {3.3.2}Datenblock}{7}
+\contentsline {subsection}{\numberline {3.4}Synchronisation von Zugriffen auf das Dateisystem}{7}
+\contentsline {subsection}{\numberline {3.5}Ger\"ate}{7}
+\contentsline {subsubsection}{\numberline {3.5.1}Einbindung}{7}
+\contentsline {subsubsection}{\numberline {3.5.2}Ger\"atetreiber}{7}
+\contentsline {subsubsection}{\numberline {3.5.3}Ger\"atespezialdateien}{8}
+\contentsline {subsection}{\numberline {3.6}Beispiele}{8}
+\contentsline {subsubsection}{\numberline {3.6.1}Verzeichnismanipulation}{8}
+\contentsline {subsubsection}{\numberline {3.6.2}Dateimanipulation}{9}
+\contentsline {subsubsection}{\numberline {3.6.3}Dateisystem-Baum}{10}
+=======
 \contentsline {section}{\numberline {1}Einleitung}{1}
 \contentsline {subsection}{\numberline {1.1}UNIX-Aufbau}{1}
 \contentsline {subsection}{\numberline {1.2}System Call Schnittstelle}{1}
@@ -57,3 +96,4 @@
 \contentsline {subsection}{\numberline {6.4}Eltern- / Kind-Prozess Signalisierung}{18}
 \contentsline {subsection}{\numberline {6.5}Alarm Signal}{18}
 \contentsline {subsection}{\numberline {6.6}Jumping}{19}
+>>>>>>> janfaessler/master

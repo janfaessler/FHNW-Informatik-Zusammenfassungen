@@ -85,13 +85,97 @@
 
 % Inhalt Start
 
+<<<<<<< HEAD
+\section{Unix/Linux}
+
+\subsection{Aufbau}
+=======
 \section{Einleitung}
 
 \subsection{UNIX-Aufbau}
+>>>>>>> janfaessler/master
 \begin{center}
 	\includegraphics[scale=0.3]{aufbau-unix.png}
 \end{center}
 
+<<<<<<< HEAD
+\subsection{Prozesse}
+\subsubsection{Steuerungssystem}
+\begin{itemize}
+	\item Prozesse kreieren \& starten
+	\item Prozesse schedulen, Warteschlangen, Ressourcenverbrauch
+	\item Prozesse stoppen / unterbrechen / terminieren
+	\item Prozess-Signalisierung und -kommunikation
+	\item Faire Zuordnung von Hauptspeicher und anderen geteilten Ressourcen
+	\item Ein-/Auslagerung von Prozessen bei vollem Speicher
+	\item Prozesse und ihre Zustände anzeigen
+\end{itemize}
+
+\subsubsection{Aufbau}
+\begin{center}
+	\includegraphics[scale=0.25]{prozess-aufbau.png}
+\end{center}
+
+\subsubsection{Kernel und User Mode}
+\begin{itemize}
+	\item Ein Prozess hat mindestens zwei Ausführungsmodi:
+		\begin{description}
+			\item[User Mode] Es wird der normale Programmcode ausgeführt.
+			\item[Kernl Mode] Es werden Systemaufrufe ausgeführt oder Ausnahmen behandelt.
+		\end{description}
+	\item Der Übergang erfolgt durch einen Systemaufruf durch das Programm, eine Ausnahmesituation oder durch asynchrone Events 
+	\item Beide Modi haben separate Segmente und sind voneinander abgeschirmt.
+\end{itemize}
+
+\subsubsection{Zustände}
+\begin{center}
+	\includegraphics[scale=0.5]{process-states.png}
+\end{center}
+
+\subsection{Memory}
+\subsubsection{Virtual Memory}
+\begin{itemize}
+	\item Erweiterung des Hauptspeichers pro System (mehr Prozesse im System als Speicher verfügbar), oder pro Prozess (einzelner Prozess grösser als verfu?gbarer Hauptspeicher).
+	\item Systematische Abstraktion fu?r systemspezifische Overlay- Techniken.
+	\item Organisation des Hauptspeichers in gleich grosse, einheitlich adressierbare Einheiten.
+\end{itemize}
+
+\subsubsection{Swapping}
+\begin{center}
+	\includegraphics[scale=0.3]{swapping.png}
+\end{center}
+
+\subsubsection{Paged Memory}
+Design und Layout der Datenstrukturen fu?r die seiten-orientierte Speicherverwaltung variieren zwischen Unix- und Linux-Varianten und sind zudem von den Hardware- Eigenschaften abhängig. Linux verwendet zum Beuispiel eine 3-stufige Seitentabelle:
+\begin{itemize}
+	\item Page Directory pro Prozess und für den BS-Kern
+	\item Page Mid-level Directory (für 64 bit CPU-Architekturen) Paged Memory II
+	\item Page Table, enthält Seitenbeschreibungen und Verweise auf den physische Speicheror
+\end{itemize}
+
+\subsubsection{Fehlerzustände}
+\begin{center}
+	\includegraphics[scale=0.3]{memory-error-state.png}
+\end{center}
+
+\newpage
+\section{System Call Schnittstelle}
+\begin{center}
+	\includegraphics[scale=0.5]{system-calls.png}
+\end{center}
+\subsection{Prozess-System}
+\begin{description}
+	\item[fork()] Erzeugung
+	\item[exit()] Beendigung
+	\item[exec()] Überlagerung des Prozesses
+	\item[wait()] Warten auf Prozesstermination (Kindprozesse)
+	\item[sleep()] Freiwilliges schlafen des Prozesses.
+	\item[kill()] Senden eines Signals (32 verschiedene)
+	\item[signal()] Signalbehandlung
+\end{description}
+
+\subsection{Datei-System}
+=======
 \subsection{System Call Schnittstelle}
 \begin{center}
 	\includegraphics[scale=0.55]{system-calls.png}
@@ -114,6 +198,7 @@
 \end{center}
 
 \subsection{System Calls}
+>>>>>>> janfaessler/master
 \begin{description}
 	\item[creat()] Anlegen einer Datei
 	\item[mknod()] Anlegen eines Ordners
@@ -136,6 +221,29 @@
 	\item[writedir()] Schreiben eines Verzeichnises
 	\item[closedir()]  Schliessen eines Verzeichnises
 \end{description}
+<<<<<<< HEAD
+		
+\subsection{Speicherverwaltung}
+\begin{description}
+	\item[malloc()] Speicher allozieren
+	\item[free()	] Speicher freigeben
+\end{description}
+
+\subsection{Weitere}
+\begin{description}
+	\item[pipe()] Basis-Interprozesskommunikation
+	\item[socket()] Interprozesskommunikation lokal oder u?ber Netzwerke
+\end{description}
+
+\newpage
+\section{Dateisystem}
+
+\subsection{Übersicht}
+\begin{center}
+	\includegraphics[scale=0.5]{filesystem-overview.png}
+\end{center}
+=======
+>>>>>>> janfaessler/master
 
 \subsection{Relevante Dateisystem Algorithmen}
 \subsubsection{Pfadnahme zu inode}
@@ -177,6 +285,16 @@ In Unix sind Gerätetreiber Teil jedes Prozesses (über den Kernel-Code) - in ande
 \subsection{Beispiele}
 \subsubsection{Verzeichnismanipulation}
 \lstinputlisting[language=java,caption=Verzeichnismanipulation,style=JavaStyle]{dir_handling.c}
+<<<<<<< HEAD
+\newpage
+\subsubsection{Dateimanipulation}
+\lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
+
+\newpage
+\subsubsection{Dateisystem-Baum}
+\lstinputlisting[language=java,caption=Dateisystem-Baum,style=JavaStyle]{fs_handling.c}
+
+=======
 \subsubsection{Dateimanipulation}
 \lstinputlisting[language=java,caption=Dateimanipulation,style=JavaStyle]{file_handling.c}
 
@@ -406,4 +524,5 @@ Wenn ein Prozess \textit{fork()} aufruft, bleiben alle schon definierten Signala
 \lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{sign-alarm.c}
 \subsection{Jumping}
 \lstinputlisting[language=java,caption=Alarm Signal,style=JavaStyle]{jumping.c}
+>>>>>>> janfaessler/master
 \end{document}
