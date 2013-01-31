@@ -20,8 +20,8 @@ public class HeapSort {
 	}
 	private static void siftDown(int[] a, int i, int m) {
 		int j;
-		while(2*i < m) {
-			j = 2*i;
+		while(2*i+1 < m) {
+			j = 2*i+1;
 			if(j < m) {
 				// check if right is bigger
 				if(a[j] < a[j+1]) j++;
