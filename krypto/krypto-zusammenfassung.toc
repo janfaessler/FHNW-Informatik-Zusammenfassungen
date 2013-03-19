@@ -14,9 +14,11 @@
 \contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{5}
 \contentsline {subsection}{\numberline {2.2}Modi von Blocksipher}{6}
 \contentsline {subsubsection}{\numberline {2.2.1}ECB-Modul (Electornic Code Block)}{6}
-\contentsline {section}{\numberline {3}Kryptosysteme}{7}
-\contentsline {section}{\numberline {4}Kryptoanalysis}{8}
-\contentsline {subsection}{\numberline {4.1}Ciphertext-only attack}{8}
-\contentsline {subsection}{\numberline {4.2}known-plaintext attack}{8}
-\contentsline {subsection}{\numberline {4.3}chosen-plaintext attack}{8}
-\contentsline {subsection}{\numberline {4.4}chosen-ciphertext attack}{8}
+\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modi}{6}
+\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modi (cipher feedback)}{7}
+\contentsline {section}{\numberline {3}Kryptosysteme}{8}
+\contentsline {section}{\numberline {4}Kryptoanalysis}{9}
+\contentsline {subsection}{\numberline {4.1}Ciphertext-only attack}{9}
+\contentsline {subsection}{\numberline {4.2}known-plaintext attack}{9}
+\contentsline {subsection}{\numberline {4.3}chosen-plaintext attack}{9}
+\contentsline {subsection}{\numberline {4.4}chosen-ciphertext attack}{9}

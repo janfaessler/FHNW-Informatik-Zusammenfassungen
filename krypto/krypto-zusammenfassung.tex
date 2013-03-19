@@ -387,7 +387,32 @@ $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2} | \underbrace{1100}_{m_3} | 1
 	\item[Bem. 2)] Vertauschen der Ciphertext-Blöcke wird nicht notwendigerweise erkannt.
 \end{description}
 
-
+\subsubsection{CBC-Modi}
+\begin{tabular}{p{7.5cm}  l}
+	$m= m_1 | m_2 | ...$ & $m=\underbrace{1100}_{m_1} | \underbrace{0110}_{m_2} | \underbrace{1100}_{m_3} | 101$ \\
+	{\color{red}IV = Initialvektor} (i.a. bekannt) &  $\color{red}IV=C_0=1110$  \\
+	$C_0 := IV$ & $c_1 = e_k(c_0 \oplus m_1) = e_k(0010) = 0001$ \\
+	$C_1 := e_k(C_0 \oplus m_1)$ & $c_2 = e_k(c_1 \oplus m_2) = e_k(0111) = 1011$ \\
+	$C_2 := e_k(C_1 \oplus m_2)$  & $c_3 = e_k(c_2 \oplus m_3) = e_k(0111) = 1011$ \\
+\end{tabular} \\ \\ \\
+\textbf{Entschlüsselung}: ${\color{red}c_1\oplus} d_k(c_2)={\color{red}c_1\oplus}d_k(e_k(c_1\oplus m_2))= c_1\oplus m_2 {\color{red}\oplus c_1 = m_2}$
+\begin{center}
+	\includegraphics[scale=0.2]{cbc-encryption.png}
+\end{center}
+\begin{description}
+	\item[Bem 1)] $m_1=m_3 \ntriangleright c_1=c3$
+	\item[Bem 2)] Vertauschen kann bemerkt werden 
+	\item[Bem 3)] Übertragungsfehler machen sich bemerkbar.
+\end{description}
+\subsubsection{CFB-Modi (cipher feedback)}
+\begin{tabular}{p{7.5cm} l}
+	$m= \underbrace{m_1}_{r} | m_2 | m_3 | ...$ & $m=\underbrace{110}_{m_1} \underbrace{001}_{m_2} \underbrace{101}_{m_3} \underbrace{100}_{m_4} \underbrace{101}_{m_5}$ \\
+	n: Cipher Block Länge (DES:64) & {\color{red} IV = 1110} \\
+	{\color{red} und $0 < r \leqslant n$} & {\color{red} r=3} / n=4 \\
+\end{tabular} \\
+\begin{center}
+	\includegraphics[scale=0.25]{cfb-encryption.png}
+\end{center}
 
 \newpage
 \section{Kryptosysteme}
