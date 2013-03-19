@@ -1,24 +1,25 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {1}Klassische Kryptologie}{1}
-\contentsline {subsection}{\numberline {1.1}Repetitionen}{1}
-\contentsline {subsection}{\numberline {1.2}Klassifizierungen}{1}
-\contentsline {subsection}{\numberline {1.3}Homophone Verschl\IeC {\"u}sselung}{1}
-\contentsline {subsection}{\numberline {1.4}Kaski - Text}{1}
-\contentsline {subsection}{\numberline {1.5}Polyfair-Cipher}{2}
-\contentsline {subsection}{\numberline {1.6}Koinzidenzindex}{2}
-\contentsline {subsection}{\numberline {1.7}Vigen\IeC {\`e}res Chipres}{2}
-\contentsline {subsubsection}{\numberline {1.7.1}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge}{2}
-\contentsline {subsubsection}{\numberline {1.7.2}Kryptoanalysis}{3}
-\contentsline {subsection}{\numberline {1.8}One-Time-Pad}{4}
-\contentsline {subsection}{\numberline {1.9}Kryptosysteme}{4}
-\contentsline {subsection}{\numberline {1.10}Kryptoanalysis}{5}
-\contentsline {subsubsection}{\numberline {1.10.1}Ciphertext-only attack}{5}
-\contentsline {subsubsection}{\numberline {1.10.2}known-plaintext attack}{5}
-\contentsline {subsubsection}{\numberline {1.10.3}chosen-plaintext attack}{5}
-\contentsline {subsubsection}{\numberline {1.10.4}chosen-ciphertext attack}{5}
-\contentsline {section}{\numberline {2}Block-Cipher}{6}
-\contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{6}
-\contentsline {subsection}{\numberline {2.2}Modi von Blocksipher}{7}
-\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modul (Electornic Code Block)}{7}
-\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modi}{7}
-\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modi (cipher feedback)}{8}
+\contentsline {section}{\numberline {1}Klassische Kryptographie}{1}
+\contentsline {subsection}{\numberline {1.0}Repetition}{1}
+\contentsline {subsection}{\numberline {1.1}Klassische Verschl\IeC {\"u}sselungsverfahren}{1}
+\contentsline {subsection}{\numberline {1.2}Spezielles Bsp f\IeC {\"u}r Substitution Homophone Verschl\IeC {\"u}sselung}{1}
+\contentsline {subsection}{\numberline {1.3}Kasiski-Text (monographisch \& polyalphabetisch)}{1}
+\contentsline {subsection}{\numberline {1.4}Playfair-Cipher}{2}
+\contentsline {subsection}{\numberline {1.5}Koinzidenzindex (index of coincidence)}{2}
+\contentsline {subsection}{\numberline {1.6}Vigen\IeC {\`e}res Chipres}{3}
+\contentsline {subsubsection}{\numberline {1.6.1}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{3}
+\contentsline {subsubsection}{\numberline {1.6.2}Kryptoanalysis des Vigen\`{e}re-Cipher}{3}
+\contentsline {subsection}{\numberline {1.7}One-Time-Pad}{5}
+\contentsline {subsection}{\numberline {1.8}Kryptosysteme}{5}
+\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{5}
+\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{5}
+\contentsline {subsubsection}{\numberline {1.9.2}known-plaintext attack}{5}
+\contentsline {subsubsection}{\numberline {1.9.3}chosen-plaintext attack}{5}
+\contentsline {subsubsection}{\numberline {1.9.4}chosen-ciphertext attack}{6}
+\contentsline {section}{\numberline {2}Block-Cipher}{7}
+\contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{7}
+\contentsline {subsection}{\numberline {2.2}Modi von Block-Cipher}{8}
+\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modus (electronic code block)}{8}
+\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modus (cipher block chaining)}{8}
+\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modus (cipher feedback)}{9}
+\contentsline {section}{\numberline {3}}{10}
