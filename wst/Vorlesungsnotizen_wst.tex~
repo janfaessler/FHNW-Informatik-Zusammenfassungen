@@ -1,0 +1,440 @@
+\documentclass[a4paper,10pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %für Blitz!
+
+%PageStyle
+%\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx}
+\usepackage[dvips]{hyperref}
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+\usepackage{fancyhdr} %for header/footer
+
+%Zeichnung
+\usepackage{tikz}
+\usepackage[all]{xy}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+%lstlisting for java
+\usepackage{listings}
+  \usepackage{courier}
+ \lstset{
+         basicstyle=\footnotesize\ttfamily, % Standardschrift
+         %numbers=left,               % Ort der Zeilennummern
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         %stepnumber=2,               % Abstand zwischen den Zeilennummern
+         numbersep=5pt,              % Abstand der Nummern zum Text
+         tabsize=2,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen
+         keywordstyle=\color{red},
+    		frame=b,         
+ %        keywordstyle=[1]\textbf,    % Stil der Keywords
+ %        keywordstyle=[2]\textbf,    %
+ %        keywordstyle=[3]\textbf,    %
+ %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
+         stringstyle=\color{white}\ttfamily, % Farbe der String
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         %backgroundcolor=\color{lightgray},
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+ }
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         %C++
+         %XML
+         %HTML
+         Java
+ }
+
+%My Commands
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}}
+\newcommand{\PN}{\mathbb{P}}
+\newcommand{\EN}{\mathbb{E}}
+\newcommand{\Inf}{\infty}
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 über igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas über etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+%Beispiel für lstlisting \lstinputlisting[label=Aufgabe 4a,caption=Aufgabe 4a]{4a.java}
+
+\usepackage{ucs}
+\author{Fabio Oesch}
+\title{Wahrscheinlichkeiten und Statistik}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+thomas-za.schwerzer@ubs.com
+\section{Zufallsexperiment}
+\begin{enumerate}
+ \item beliebig oft wiederholbar
+ \item Resultat ist zufällig
+\end{enumerate}
+\Bold{Bsp:} Lotto, Münze werfen, Würfeln
+\subsection{Ergebnisraum}
+$\Omega$ = Menge aller möglichen Ausgänge des Experiemnts (im Skript mit $S$)\\
+\Bold{Bsp:} $\Omega$ von Lotto: $\Omega=\{1,\dots,45\}$\\
+\subsection{Ereignis $E\subseteq\Omega$}
+Ereignis $E=$\{Augenzahl ist gerade\}\\
+spezielle Ereignisse:
+\begin{itemize}
+ \item $E=\Omega$ sicheres Ereignis
+ \item $E=\emptyset$ unmögliches Ereignis
+\end{itemize}
+$E$ Ereignis: $E^C=\overline{E}=\Omega\backslash E$
+\subsection{Wahrscheinlichkeitsfunktion}
+$\PN:\Potp(\Omega) \to[0,1]$\\
+2 wichtige Eigenschaften: $\Potp(\Omega) = 1$, $\Potp(\emptyset)=0$, $0\leq\Potp(E)\leq1$\\
+\Bold{Bsp:} $\Omega = \{$Kopf, Zahl, Kante$\}$\\
+$\Brackar{l}{\Potp(\{\T{Kopf}\}=\frac{2}{3}\\
+\Potp(\{\T{Kante}\}=0\\
+\Potp(\{\T{Zahl}\}=\Oneover{3}}\Ra\Potp(E)=1$, $E=\{\T{Kopf, Zahl}\}$
+\subsection{Subaditivität}
+$E_1$, $E_2\subseteq \Omega$, $E_1\cap E_2=\emptyset\Ra \Potp(E_1\cup E_2)=\Potp(E_1)+P(E_2)$\\
+\includegraphics[scale=0.5]{Pic2.png}$\Ra\Potp(E_1\cup E_2)=\Potp(E_1)+\Potp(E_2)$, $E=E_1\cup E_2$\\
+\includegraphics[scale=0.5]{Pic3.png}$\Ra\Potp(E)=\Potp(E_1)+\Potp(E_2)-\Potp(E_1\cap E_2)$, $E=E_1\cup E_2$\\
+$\Potp(E_1\cup E_2 \cup \dots \cup E_n)\leq \Potp(E_1)+\dots+\Potp(E_n)$\\
+\Bold{Bsp:} Lotto mit Matryoshka\\
+$\Potp(\{w\})=\Oneover{45}$, $E_1 =\{1\}$, $E_2=\{1,2\}$, $\dots$, $E_{45}=\{1,\dots,45\}=\Omega\Ra \Potp\overbrace{(E_1\cup\dots\cup E_{45})}^{\Omega}=1$\\
+$\Potp(E_1\cup E_2\cup \dots\cup E_{45}\leq\Potp(E_1)+\dots+\Potp(E_{45})=\Oneover{45}+\frac{2}{45}+\dots+\frac{45}{45}=\frac{\frac{45\cdot46}{2}}{45}=\frac{46}{2}=23$\\
+\subsection{Wahrscheinlichkeitsraum (Vorläufig)}
+$W=(\Omega$, $\Potp(\Omega)$, $\PN)$, $\Omega=$ Ergebnisraum, $\Potp(\Omega)=$alle Ausgänge des Experiments. alle $E$'s, $\PN=$ Wahrscheinlichkeitsfunktion
+\subsection{Theoretische Wahrscheinlichkeitsfunktion}
+$\Potp($\{Zahl\}$)=\Potp($\{Kopf\}$=\Oneover{2}$ (Definiere die Wahrscheinlichkeit synthetisch)\\
+$\Pota(E)=\frac{\T{wie häufig tritt }E\T{ ein bei N-facher Wiederholung}}{N}$ (Empirische Wahrscheinlichkeit)
+\subsection{Laplace-Experimente}
+$\underline{\wedge}$ Fairen Spielen, Die Wahrscheinlichkeiten sind gleichverteilt\\
+$\Abs{\Omega}=n$ endlicher Wahrscheinlichkeitraum.\\
+Jedes Elementarergebnis ist gleich wahrscheinlich $(\Abs{E}=1)$. \Bold{Bsp:} Würfel: $\{1\}=\{1,2,3,4,5,6\}$. kein Elementarergebnis: $\{3,4\}$
+$\omega\in\Omega:\Potp(\{\omega\})=\Oneover{n}=\Oneover{\Abs{\Omega}}$, $\Abs{A}$= Anzahl Elemente in $A$
+\subsection{Mehrstufige Zufallsexperiment}
+Zufallsexperiment $Z$, das mehrfache hintereinander angeführt wird.\\
+\Bold{Bsp:} mehrmals Würfeln: Wie gross ist die W'keit $2\times$ hintereinander 6 zu würfeln: $\Potp(2\times $ 6 Würfeln$)=\Oneover{36}$\\
+Produktregel: $\Potp(E_1$ und $E_2)=\Potp(E_1)\cdot \Potp(E_2)$\\
+Möglichkeiten: $\Omega_1$ hat $n_1$ viele Ausgänge $(\Abs{\Omega_1}=n_1)$, $\Omega_2$ hat $n_2$ viele Ausgänge $(\Abs{\Omega_2}=n_2)$ also $n_1\cdot n_2$
+\subsection{Urnenmodel}
+Unterscheidung nach "`Zurücklegen"' oder "`nicht zurücklegen"' und "`geordnet"' oder "`keine Reihenfolge"'
+\begin{tabular}{l|l|l}
+ &zurücklegen&nicht zurücklegen\\\hline
+ geordnet&$n^k$&$n!$ oder $\frac{n!}{(n-k)!}$\\\hline
+ ungeordnet&&$\binom{n}{k}=\frac{n!}{k!(n-k)!}$
+\end{tabular}\\
+\Bold{Bsp:} Klasse aus 10 Mädchen und 14 Knaben. Wähle 5 Personen aus.\\
+a) W'keit, dass alle Mädchen sind?\\
+Antwort: $P(\{5\T{ Mädchen}\})=\frac{\Abs{\{5\T{ Mädchen}\}}}{\Abs{\Omega}}$, $\Abs{\Omega}={24 \choose 5}$, $\Abs{\{5\T{ Mädchen}\}}={10\choose5}$\\
+$\Ra P(\{5\T{ Mädchen}\})=\frac{{10\choose5}}{{24\choose5}}$\\\
+b) W'keit alles Knaben: $P(\{5\T{ Knaben}\})=\frac{{14\choose5}}{{24\choose5}}$\\
+c) W'keit, dass in der 5-er Gruppe, sowohl Mädchen, als auch Knaben vorkommen.\\
+Gegenw'keit von a) + b), also $\overline{E}=\{$nur Mädchen oder nur Knaben$\}\Ra P(\overline{E})=P(\{$nur Mädchen$\})+P(\{$nur Knaben$\})=\frac{{10\choose5}+{14\choose5}}{{24\choose5}}\Ra P(E)=1-P(\overline{E})$\\
+\Bold{Gegenw'keit benutzen:} $P(E)$, $\frac{\Omega}{E}=\overline{E}$, $1-P(\overline{E})=P(E)$\\
+\Bold{Bsp:} 8x Münze werfen\\
+Wie gross ist die W'keit, das Zahl \& Kopf gleichhäufig vorkommen.\\
+$\Abs{E}={8\choose4}\cdot{4\choose4}$
+\subsection{Geburtstagparadoxon:}
+Wie gross ist die W'keit, dass in einer beliebigen Gruppe von $n$ Leuten, mind. zwei am selben Tag Geburstag haben?\\
+Gegenw'heit bestimmen: \\
+\subsection{Repetition}
+$\Brackar{l}{
+X\T{ Zufallsvariable: Anzahl bei 1x würfeln}\\
+Y\T{ Zufallsvariable: Anzahl bei 1x würfeln}}$
+$X,Y$ Gleichverteilt (uniform) uniform\\
+$Z:=X+Y$ Zufallsvariable: $F(z)=\Sum{}{X_i\leq Z}p_i$, $p_i =P(Z=x_i)$\\
+\subsection{Erwartungswert:}
+Theoretischer Pendant zum Mittelwert.\\
+\Bold{Bsp:} $x_1,x_2,x_3,x_4$, $h=\Abs{\{x_1,x_2,x_3,x_4\}}$ $\ra$ $\overline{x}=\frac{\Sum{}{}x_i}{h}$\\
+$\EN X=\mu=\Sum{}{\T{alle }X_i}x_i\cdot\PN(X=x_i)$ keine Zufallsvariable\\
+\Bold{Bsp:} $X$ sein die Augenzahl von 1x würfeln. $\EN X=\Sum{6}{i=1}i\cdot \frac{1}{6}=3.5$\\
+$Y=X-\EN(X)$ ist eine Zufallsvariable, $\EN Y=\EN(X-\EN X)=\Sum{n}{i=1}(x_i p_i-p_i\EN(X))=\Sum{n}{i=1}x_ip_i-\Sum{n}{i=1}p_i\EN(X)=\EN(X)-\EN(X)\Sum{n}{i=1}p_i=\EN(X)-\EN(X)=0$\\
+\Bold{Bsp: Würfel} $\EN(X)=3.5$, $E(X-\EN(X))=0$\\
+\begin{tabular}{c|c|c|c|c|c|c}
+ $X-3.5$&$1-3.5$&$2-3.5$&$3-3.5$&$4-3.5$&$5-3.5$&$6-3.5$\\\hline
+ $p_i$&$\frac{1}{6}$&$\frac{1}{6}$&$\frac{1}{6}$&$\frac{1}{6}$&$\frac{1}{6}$&$\frac{1}{6}$
+\end{tabular}
+\subsection{Streuung, Varianz}
+Var$(X):=\EN((X-\EN(X))^2) \Ra \EN(X-\mu)^2=\EN(X^2)-\EN(X)^2$
+\subsection{Binomialverteilung}
+Zufallsexperiment mit 2 Ausgängen: Erfolg, Misserfolg\\
+$P(X=\T{Erfolg})=p\in[0,1]$, $P(X=\T{Misserfolg})=1-p=q$\\
+Zufallsvariable $X=$ Anzahl Erfolge bei $n$-facher Wiederholung des Experiments\\
+Wahrscheinlichkeitsfunktion von $X$ aus. $P(X=x)=$
+\begin{tabular}{c|ccccc}
+ $x_i$&0&1&$k$&$n$\\\hline
+ $p_i$&$(1-p)^n$&${n\choose1}p(1-p)^{n-1}$&${n\choose k}p^k(1-p)^{n-k}$&${n\choose n}p^n$
+\end{tabular}\\
+\Bold{Bsp:}\\
+Spieler A: M.D. 40\% Erfolgsw'keit, Spieler B: K.G. 60\% Erfolgsw'keit.\\
+Sie spielen 3x gegeneinander. E: W'keit dass A häufiger als B gewinnt. Also muss A 2- oder 3-Mal gewinnen.
+$P(X=2)+P(X=3)\Ra {3\choose2}0.4^2\cdot0.6+{3\choose3}0.4^3+0.6^0=0.352\Ra35.2$\% W'keit gewinnt $A$\\
+Erfolgsw'keit von $p$: $\EN X$ bei $n$ spielen. Mit Trick: $\EN X=n\cdot p$\\
+$(a+b)^n=\Sumz{n}{k}{n\choose k}a^kb^{n-k}$\\
+$f(t)=(q+pt)^n=\Sumz{n}{k}{n\choose k}q^{n-k}(pt)^k$\\
+\subsubsection{Binomialverteilung:}
+Abkürzung: $X\sim$ Bin$(n,p)$, $n$: Anzahl Experimente, $p$: Erfolgsw'keit\\
+$P=(X=k)={n\choose k}p^k(1-p)^{n-k}$, $\EN(X)=np$, Var$(X)=\sigma^2=np(1-p)$. $\sigma$: Std'abweichung
+\subsubsection{Testen einer Hypothese:}
+Vermutung: Hühner können zw. $\circ$ und $\vartriangle$ Futter entscheiden.\\
+$20\times\circ$, $20\times\vartriangle$ $\Ra$ $\circ=$ Erfolg, $\vartriangle=$ Misserfolg\\
+Zufallsvariable $X$ zählt die Anzahl Erfolge $\Ra$ Binomiales Experiment d.h. $X\sim\T{Bin}(20,p)$.\\
+Führen das Experiment durch: $15\times\circ$ und $5\times\vartriangle$, experimentelle W'keit für Erfolg: $p=\frac{15}{20}=\frac{3}{4}$\\
+\Bold{Hypothese formulieren:}\\
+$H_0$: Nullhypothese: es gibt keinen Unterschied $\ra$ Huhn kann nicht unterscheiden zw. $\circ$ \& $\vartriangle$, $p=q=\Oneover{2}$\\
+$H_1$: Alternativhypothese: $p\geq q$ ($p\leq q$). d.h. es gibt einen Unterschied beim Fressverhalten.\\
+\Bold{Ziel:} Entscheiden ob $H_0$ anzunehmen ist, oder sie zugunsten von $H_1$ verwerfen.\\
+\Bold{Berechnung:} Berechne W'keit unter $H_0(p=q=\Oneover{2})$, dass wir einen Ausgang mit $15\times$ Erfolg und $5\times$ Misserfolg\\
+$P(15\leq X\leq20)=\Sum{20}{k=15}{20\choose k}p^k(1-p)^{20-k}\Oben{\T{unter }H_0!}{=}\Sum{20}{k=15}{20\choose k}\Oneover{2}^k\cdot\Oneover{2}^{20-k}\approx0.021=2.1\%$, Signifikanz-Niveau $\alpha$, $\alpha=0.1$ ($10\%$) $\Ra$ Falls $P(15\leq X\leq 20|H_0)\leq\alpha\Ra$ dann verwerfen $H_0$, ansonsten nehmen wir $H_0$ an.\\
+$\bullet$ 2 Möglichkeiten: falls unter der Nullhypothese 
+\begin{enumerate}
+ \item $P(15\leq X\leq 20)>\alpha$, dann nehmen wir die Nullhypothese an es spricht nichts gegen $H_0$ auf Signifikanzniveau $\alpha$
+ \item $P(15\leq X\leq 20)\leq \alpha$, dann verwerfen wir $H_0$ zugunsten von $H_1$
+\end{enumerate}
+$\bullet$ (2) Fehler 1. Art; verwerfen von $H_0$, obwohl $H_0$, obwohl $H_0$ korrekt wäre $\ra$ Irrtumsw'keit $P(15\leq X\leq 20)$.\\
+$\bullet$ (1) Fehler 2. Art; verwerfen $H_1$, obwohl $H_1$ korrekt ist $\ra$ Irrtumsw'keit $\beta$ (Power)
+\subsection{Poissonverteilung}
+\begin{enumerate}
+ \item Gleichverteilung (fairer Würfel)
+ \item Binomialverteilung
+ \item Poissonverteilung
+\end{enumerate}
+\Bold{Idee:} $p$ soll sehr klein sein. $n$ soll sehr gross sein.\\
+\Bold{Bsp:} $X$ sei binomialverteilt und Parametern $n$, $p$. $\Ra\EN(X)=n\cdot p$.\\
+$\lim_{n\to\inf}n\cdot p_n=\lambda\in\RN$, $\Ra p=\frac{\lambda}{n}$\\
+$X$ binomialverteilt: $P(X=k)={n\choose k}\cdot p^k(1-p)^{n-k}$, $\Oben{?}{\Ra}$ $\lim_{n\to\inf}P(X=k)=\frac{\lambda^k}{k!}\cdot e^{-\lambda}$\\
+Verteilung mit W'keitsfunktion $\frac{\lambda^k}{k!}\cdot e^{-\lambda}$ heisst Poissonverteilung.\\
+Erwartungswert von $X\tilde Poi(\lambda)$ ($X$ ist Poisson-verteilung mit Parameter $\lambda$)\\
+$\EN(X)=\Sumz{\infty}{x}x\cdot P(X=x)=\lambda$
+\begin{itemize}
+ \item Für sehr kleine W'keiten. Mit bekanntem "`Mittelwert"' (Erwartungswert) $\lambda$. Mit quasi unendlich (unbekannter) Anzahl gleicher Experimente.
+ \item $P(X=x)=\frac{\lambda^xe^{-lambda}}{x!}$
+ \item $\EN(X)=\lambda$
+ \item Var$(X)=\lambda$
+ \item $X\tilde Poi(\lambda)$, $Y\tilde Poi(\mu)$, $Z=X+Y:$ $Z\tilde Poi(\lambda+\mu)$
+\end{itemize}
+\Bold{Bsp:} Smartphonehersteller, Fehlerquote von $1\textperthousand$, $5.000$ Smartphones\\
+Wie gross ist die W'keit, dass mind. 2 defekt sind.\\
+Poissonapproximation: $\lambda = 0.001\cdot 5000=5$\\
+$P(X\geq 2)=1-(P(X=1)+P(X=0))=1-(\frac{\lambda^1e^{-\lambda}}{1!}+\frac{\lambda^0e^{-\lambda}}{0!})=1-(\frac{5^1e^{-5}}{1!}+\frac{5^0e^{-5}}{0!})=1-6e^{-5}\approx 0.96$
+\section{Stetige Zufallsgrössen und Verteilungen}
+Würfel: $P(X=6)=\Oneover{6}$\\
+$X:\Omega\to\RN$\\
+alle Ausgänge des Experiments sind i.a. (im allgemeinen) möglich.
+\Bold{Bsp:} Distanz messen. $P(\Omega)=1$\\
+$P(X=\Oneover{2})=0$, ist nicht sinnvoll, da es nur einzelne gibt die W'keit haben. Sinnvoller ist es ein Bereich zu nehmen: $P(1\leq x\leq 2)\neq 0$ i.a.\\
+\includegraphics[scale=0.5]{Integral-dichte.png}\\
+$P(a\leq X\leq b=$ Fläche unter $f$ sein zw. $a,b$
+\begin{itemize}
+ \item $f$ heisst Dichtefunktion. abgekürzt p.d.f.
+ \item $P(X\in\RN)=1=\int_{-\infty}^{\infty}f(x)dx=1$
+\end{itemize}
+\subsection{Erwartungswert von stetigen ZV}
+$\EN(X)=\int_{-\infty}^{\infty}x\cdot f(x)\cdot dx$
+\subsection{Varianz}
+Var($X$)$=\EN(X^2)-\EN^2(X)$
+\Bold{Bsp:} $X\sim$Unif$[0,1]$\\
+$\EN(X)=\int_{-\infty}^{\infty}x\cdot f(x)\cdot dx=\Oneover{2}$\\
+Var$(X)=\int_{-\infty}^{\infty}(x-\mu)^2f(x)dx=\int_{-\infty}^{\infty}(x-\Oneover{2})^2f(x)dx=\int_{-\infty}^{\infty}(x^2-x+\Oneover{4})f(x)dx=\int_{0}^{1}x^2-x+\Oneover{4}dx=(\frac{x^3}{3}-\frac{x^2}{2}+\frac{x}{4})\mid_0^1=\frac{1}{3}-\frac{1}{2}+\frac{1}{4}=\Oneover{12} $
+\subsection{Normalverteilung $N(0,1)$}
+\begin{itemize}
+ \item Wichtigste Funktion der Statistik/W'keit
+ \item Dichtefunktion
+ \item allgemeine Normalverteilung
+\end{itemize}
+\subsubsection{Zentrale Grenzwertsatz}
+$X_1$, $X_2$, $\dots$ ZV. unabhängig\\
+$S_n=\Sumone{n}{i}X_i$\\
+$\Brackar{r}{\EN(S_n)=n\mu\\\T{Var}(S_n)=n\sigma^2}z_n:=\frac{S_n-n\mu}{\sigma\sqrt{n}}\Oben{D}{\to}N(0,1)$
+\subsubsection{Dichtefunktion}
+$\varphi(z,0,1):=\Oneover{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$\\
+\includegraphics{Pic4.png}\\
+$\int_{-\infty}^{\infty}\varphi(z,0,1)dz=1$ keine elemntare Stammfunktion\\
+$\varPhi(z,0,1)=\varPhi(0.5,0,1)-\varPhi(-0.5,0,1)=0.6915-(1-0.6915)=0.3830$
+\subsubsection{allgemeine Normalverteilung $N(\mu,\sigma^2)$}
+$\varphi(z,\mu,\sigma^2)=\Oneover{\sqrt{2\pi\sigma}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\Ra\varPhi(z,\mu,\sigma^2)=\int_{-\infty}^{\infty}\varphi(z,\mu,\sigma^2)du$\\
+Transformation: $z=\frac{x-\mu}{\varphi}$\\
+$X\sim N(\mu,\sigma^2)$: $P(x_1\leq X\leq x_2)=P(\frac{x_1-\mu}{\sigma}\leq z\leq\frac{x_2-\mu}{\sigma})=\varPhi(\frac{x_2-\mu}{\sigma},0,1)-\varPhi(\frac{x_1-\mu}{\sigma},0,1)$ mit $Z\sim N(0,1)$\\
+\Bold{Bsp:} $X\sim N(\mu,\sigma^2)$\\
+Behauptung: $\EN(X)=\mu$, Var$(X)=\sigma^2$
+Sei $X$ binomialverteilt mit Parameter $n,p$.\\
+$\EN(X)=\mu=np$, $Var(X)=\sigma^2=np(1-p)$\\
+$X$ kann für \underline{genügend grosse} $n\in\NN$ durch $N(np,np(1-p))=N(\mu,\sigma^2)$\\
+Faustregel: $n>\frac{g}{p(1-p)}$\\
+Binomialvert: $P(X=k)={n\choose k}p^k(1-p)^{n-k}$, Normalverteilung (approx.): $P(X=k)=0$\\
+$P_{Bin}(x_1\leq X\leq x_2)=F_{Bin}(x_2)-F_{Bin}(x_1)$\\
+$P_N(x_1\leq X\leq x_2)=\varPhi(x_2;\mu,\sigma^2)-\varPhi(x_1;\mu,\sigma^2)$.\\
+de Moivre + Laplace: $F_{Bin(n,p)}\varPhi(\hspace{0.2cm};\mu,\sigma^2)$ $(n\to\infty)$ $\Ra$ $\Abs{F_{Bin(n,p)}(x)-\varPhi(\hspace{0.2cm};\mu,\sigma^2)}\to0$ $(n\to\infty)$ für alle $X$
+\subsection{Prinzip eines Tests:}
+Vermutung überprüfen, Stichprobe vorhanden, Signifikanzniveau festlegen
+\begin{enumerate}
+ \item Nullhypothese $H_0$ formulieren. \\
+Bsp: $\Brackar{r}{H_0:p=\Oneover{6}\T{ bei einem Würfel}\\
+ H_1:p>\Oneover{6} \T{ Alternativhypoth.}}H_1\cap H_0=\emptyset$
+ \item Signifikanzniveau $\alpha\in(0,1)$
+ \item Stichprobe sammeln
+ \item Entscheid fällen: Berechne W'keit unter $H_0$, das wir einen Ausgang haben, wie die Stichprobe\\
+ Ist sie grösser als $\alpha\Ra H_0$ annehmen\\
+ Ist sie kleiner als $\alpha\Ra H_0$ zugunsten von $H_1$ verwerfen
+\end{enumerate}
+\Bold{Bsp:} Fairer Würfel\\
+12'000 mal Würfeln, 2'107 mal Sechs, $\alpha=10\%$\\
+$H_0: p=\Oneover{6}$ Nullhypothese\\
+$H_1:p>\Oneover{6}$ Alternativhypothese\\
+Unter $H_0$ ist $X\sim Bin(12'000,\Oneover{6})$\\
+Approximieren $X\sim(Bin(12'000,\Oneover{6})$ durch Normalverteilung\\ $N(2000,12000\cdot \Oneover{6}\cdot \frac{5}{6})=N(2000,1666.5)\sim Y$\\
+$P(X\geq2107)\approx P(Y\geq2107)=1-\varPhi(\frac{2107-2000}{\sqrt{1666.6}},0.1)$\\
+\Bold{S. 72} Transformationsformel $\varPhi(x,0,1)$ gegeben $\varPhi(x,\mu,\sigma^2)$
+\begin{center}
+ \fbox{$z=\frac{x-\mu}{\sigma}$}\\ 
+\end{center}
+$P(X\geq2107)=1-\varPhi(2107,2000,1666.6)=1-\varPhi(\frac{2107-2000}{\sqrt{1666.6}},0.1)=\varPhi(2.621,0.1)=0.0044=0.44\%<\alpha\Ra H_0$ verwerfen\\
+\subsection{t-Verteilung}
+$X_1,\dots,X_n\sim N(\mu,\sigma^2)$\\
+$T_{n-1}:=\frac{\Oneover{n}\Sumone{n}{i}X_i-\mu}{\sqrt{\Oneover{n-1}\Sumone{n}{i}(X_i-\mu)^2}}\sqrt{n} \in\RN^{\Omega^n}$ heisst t-verteilt mit $n-1$ Freiheitsgraden\\
+$t_{n-1}:=\frac{\Oneover{n}\Sumone{n}{i}x_i-\mu}{\sqrt{\Oneover{n-1}\Sumone{n}{i}(x_i-\bar{x})^2}}\sqrt{n}\in\RN$\\
+$f_{n-1}(t)=c_{n-1}(1+\frac{t^2}{n})^-{\frac{n+1}{2}}$ für $\lim_{n\to\infty}\to\varphi(t,0,1)$\\
+$c_{n-1}=\frac{\Gamma(\frac{n}{2})}{\sqrt{\pi(n-1)}\Gamma(\frac{n-1}{2})}$, $\Gamma(x)=\int_0^\infty t^{x-1}e^{-t}dt$. Gammafunktion.\\
+$\Gamma(x+1)=x\Gamma(x)$; $\Gamma(1)=1$; $\Gamma(5)=\Gamma(4+1)=4\Gamma(4)=4\Gamma(3+1)=4\cdot3\cdot\Gamma(3)=\dots=5!$\\
+\subsection{Parametertests}
+\begin{itemize}
+ \item 1-Stichprobentest\\
+$H_0:\mu=\bar{x}$ $X\sim W(\mu_1,\sigma_1^2)$
+$H_1:\mu\neq\bar{x}$ $Y\sim W(\mu_2, \sigma_2^2)$
+ \item 2-Stichprobentest\\
+$H_0:\mu_1\neq\mu_2$
+\end{itemize}
+Grundvoraussage:
+\begin{itemize}
+ \item Verteilungsfamilie bekannt\\
+ (d.h. $W(\cdot,\cdot)$, t-verteilt, Weibull etz)
+ \item Testen ob 
+1-Stichpr.fall $H_0:\vartheta=\hat{\vartheta}_n$ ($\vartheta$: fester Wert, $\hat{vartheta}$: empirisch)\\
+2-sTichpr.fall $H_0:\hat{\vartheta}_n=\hat{\vartheta}_m$
+\end{itemize}
+\begin{enumerate}
+ \item Verteilung von $T_n$ (Teststatistik) unter $H_0$ bekannt $\Lra:$ exakter Test.
+ \item Verteilung von $T_n$ unter $H_0$ unbekannt.
+\end{enumerate}
+Nicht parametrische Tests (Verteilungsfreie Tests):
+\begin{itemize}
+ \item 1./2. Stichprobentests existieren
+ \item keine Verteilungsparameter
+\end{itemize}
+1. Stichprobentest $H_0:\hat{F_n}(x)=F_0(x)$\\
+2. Stichprobentest $H_0:\hat{F_n}(x)=\hat{G_m}(x)$\\
+$\bar{F_n}(x)=\Oneover{n}\Sumone{n}{i}\mathbb{I}\{x_i\leq x\}$
+\subsection{Konfidenz/Vertrauensintervall}
+$X\sim N(\mu,\sigma^2)$\\
+Experiment $n$-mail durchführen. $\Ra X=\{x_1,\dots,x_n\}$\\
+Theoretisch $\EN(X)=\mu$\\
+Empirisch: $\bar{x}=\Oneover{n}\Sumone{n}{i}x_i$ als Schätzung von $\mu$\\
+Wie gut ist die Schätzung? Vorgabe: $\gamma\in[0,1]$\\ $[\mu-\vartriangle x,\mu+\vartriangle x]\ni \bar{x}$ Finde $\vartriangle x$, so dass $\mathbb{P}(\bar{x}\in[\mu-\vartriangle x,\mu+\vartriangle x]=\gamma$.\\
+$\bar{x}=\Oneover{n}\Sumone{n}{i}x_i$. $s^2=\Oneover{n-1}\Sumone{n}{i}(x_i-x)^2$. $t_{n-1}=\frac{\bar{x}-\mu}{s}$ (t-verteilt (exakt) für ZV.).\\
+$\mathbb{P}(\bar{x}\in[\mu-\vartriangle x,\mu+\vartriangle x])=\gamma=1-\alpha$\\
+\Bold{Beispiel:}
+$n=10$ Stichproben $X=\{x_1,\dots,x_n\}$\\
+$\bar{x}=5$. $s=0.2$ Vertrauensintervall $=?$ bei Vertraunsw'keit von $\gamma=0.95\Ra \alpha=0.05$; $1-\frac{\alpha}{2}=1-0.025=0.975$\\
+$\Ra\vartriangle x=\frac{t_{10-1},0.975}{\sqrt{10}}\cdot 0.2$ Tabelle betrachten Seite 140 ergibt mit Freiheitsgrad $=n-1=9$. $t_{9,0.975}=2.262$.\\
+$\Ra \vartriangle x=\frac{2.262}{\sqrt{10}}\cdot 0.2\approx 0.14$\\
+Vertrauensintervall $[4.86, 5.14]$. mit W'keit von $95\%$ liegt $\mu$ in $[4.86, 5.14] = [5-\vartriangle x, 5+\vartriangle x]$\\
+\Bold{Allgemein}\\
+Feste Vertrauensw'keit $\gamma=0.95$\\
+$s$ konstant\\
+Stichproben $n$: $\vartriangle x=\frac{t_{N-1,0.975}}{\sqrt{N}}s (n\to\infty)=0$\\
+$t_{n,0.975}\leq t_{n-1,0.975}\leq2.262$ für $n\geq10$\\
+\Bold{Beispiel:}\\
+$t=\overbrace{\frac{\bar{x}-\mu}{s}}^{\vartriangle\mu}\sqrt{s}$\\
+Festes $\gamma$, und $\vartriangle\mu$. Wie gross $n$ wählen?\\
+$\frac{t\cdot s}{\bar{x}-\mu}=\sqrt{n}\Oben{^2}{\Ra}\frac{t^2\cdot s^2}{(\vartriangle x)^2}\leq n$\\
+$\bullet$ Vorgehen: - Vertrauensintervallgrösse $\vartriangle\mu$, - Vertrauensw'keit $\gamma$ ($\to$ fliesst in $t$ ein)\\
+$t=t_{n-1,1-\frac{1-\gamma}{2}}$ Quantifunktion der t-Verteilung.\\
+$\bullet$ Abschätzung: $t\approx 2$ (oder $t=3)$. Daumenregel: $\frac{4\cdot s^2}{(\vartriangle\mu)^2}\geq N$ ($s^2$ ist geschätzt)
+\subsubsection{2-Stichproben t-Test}
+Annahme: $\bullet$ Normalverteilung, $\bullet$ 2 Gruppen\\
+$H_0:\mu_1=\mu_2$, $H_1: \mu_1\neq\mu_2$\\
+2 Fälle: a) unbekannte, aber gleiche Varianz d.h. $\sigma_1^2=\sigma_2^2=\sigma_2$ (Homoskedastisch) exakter Test\\
+ b) unbekannte, evtl. ungleiche Varianzen, $\sigma_1^2\neq\sigma_2^2$ (Heteroskedastisch) approximation
+\subsubsection{Homoskedastischer Fall}
+Zwei Stichproben: $X=\{x_1,\dots,x_n\}$ $W(\mu,\sigma^2)$; $Y=\{y_1,\dots,y_n\}$ $W(\mu_2,\sigma^2)$\\
+$\mu_1,\mu_2,\sigma^2$ sind unbekannt.\\
+Testen, ob $\mu_1=\mu_2$ auf Signifikanzniveau $\alpha$ (2-seitiger Test, d.h. $H_0:\mu_1=\mu_2$ gegen $H_1:\mu_1\neq\mu_2$)\\
+Testgrösse: $t=\frac{\bar{x}-\bar{y}}{s}\sqrt{\frac{n\cdot m}{n+m}}$. t-verteilt mit $n+m-2$ Freiheitsgraden\\ 
+$\bar{s_1}=\Oneover{n-1}\Sumone{n}{i}(x_i-\bar{x})^2$, $\bar{m-1}=\Oneover{m}\Sumone{m}{i}(y_i-\bar{y})^2$\\
+$s=\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}=\frac{\Sumone{n}{i}(x_i-\bar{x})^2+\Sumone{m}{i}(y_i-\bar{y})^2}{n+m-2}$\\
+Signifikanzniveau $\alpha$: Ist $\Abs{t} < t_{n+m-2,1-\frac{\alpha}{2}}\Ra H_0$ annehmen. Ist $\Abs{t} \geq t_{n+m-2,1-\frac{\alpha}{2}}\Ra H_0$ ablehnen
+
+
+
+
+
+\end{document}

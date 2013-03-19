@@ -1,0 +1,32 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Zufallsexperiment}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Ergebnisraum}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Ereignis $E\subseteq \Omega $}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Wahrscheinlichkeitsfunktion}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Subaditivität}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Wahrscheinlichkeitsraum (Vorläufig)}{4}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Theoretische Wahrscheinlichkeitsfunktion}{4}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Laplace-Experimente}{4}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}Mehrstufige Zufallsexperiment}{4}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}Urnenmodel}{4}{subsection.1.9}
+\contentsline {subsection}{\numberline {1.10}Geburtstagparadoxon:}{4}{subsection.1.10}
+\contentsline {subsection}{\numberline {1.11}Repetition}{5}{subsection.1.11}
+\contentsline {subsection}{\numberline {1.12}Erwartungswert:}{5}{subsection.1.12}
+\contentsline {subsection}{\numberline {1.13}Streuung, Varianz}{5}{subsection.1.13}
+\contentsline {subsection}{\numberline {1.14}Binomialverteilung}{5}{subsection.1.14}
+\contentsline {subsubsection}{\numberline {1.14.1}Binomialverteilung:}{5}{subsubsection.1.14.1}
+\contentsline {subsubsection}{\numberline {1.14.2}Testen einer Hypothese:}{5}{subsubsection.1.14.2}
+\contentsline {subsection}{\numberline {1.15}Poissonverteilung}{6}{subsection.1.15}
+\contentsline {section}{\numberline {2}Stetige Zufallsgrössen und Verteilungen}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Erwartungswert von stetigen ZV}{7}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Varianz}{7}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Normalverteilung $N(0,1)$}{7}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Zentrale Grenzwertsatz}{7}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Dichtefunktion}{8}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}allgemeine Normalverteilung $N(\mu ,\sigma ^2)$}{8}{subsubsection.2.3.3}
+\contentsline {subsection}{\numberline {2.4}Prinzip eines Tests:}{8}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}t-Verteilung}{9}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Parametertests}{9}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Konfidenz/Vertrauensintervall}{9}{subsection.2.7}
+\contentsline {subsubsection}{\numberline {2.7.1}2-Stichproben t-Test}{10}{subsubsection.2.7.1}
+\contentsline {subsubsection}{\numberline {2.7.2}Homoskedastischer Fall}{10}{subsubsection.2.7.2}

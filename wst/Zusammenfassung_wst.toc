@@ -1,0 +1,28 @@
+\select@language {german}
+\contentsline {section}{\numberline {1}Themen}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Ergebnisraum}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Ereignis $E\subseteq \Omega $}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Wahrscheinlichkeitsfunktion}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Subaditivit\"{a}t}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Wahrscheinlichkeitsraum (Vorl\"{a}ufig)}{3}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Theoretische Wahrscheinlichkeitsfunktion}{4}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Laplace-Experimente}{4}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}Mehrstufige Zufallsexperiment}{4}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}Urnenmodel}{4}{subsection.1.9}
+\contentsline {subsection}{\numberline {1.10}Repetition}{4}{subsection.1.10}
+\contentsline {subsection}{\numberline {1.11}Erwartungswert:}{4}{subsection.1.11}
+\contentsline {subsection}{\numberline {1.12}Streuung, Varianz}{5}{subsection.1.12}
+\contentsline {subsection}{\numberline {1.13}Binomialverteilung}{5}{subsection.1.13}
+\contentsline {subsubsection}{\numberline {1.13.1}Binomialverteilung:}{5}{subsubsection.1.13.1}
+\contentsline {subsubsection}{\numberline {1.13.2}Testen einer Hypothese:}{5}{subsubsection.1.13.2}
+\contentsline {subsection}{\numberline {1.14}Poissonverteilung}{6}{subsection.1.14}
+\contentsline {subsection}{\numberline {1.15}Statistische Tests}{6}{subsection.1.15}
+\contentsline {subsubsection}{\numberline {1.15.1}Prinzip des statistischen Tests}{6}{subsubsection.1.15.1}
+\contentsline {subsubsection}{\numberline {1.15.2}Beispiel}{6}{subsubsection.1.15.2}
+\contentsline {subsubsection}{\numberline {1.15.3}Erwartungswert und Varianz}{7}{subsubsection.1.15.3}
+\contentsline {subsection}{\numberline {1.16}t-Verteilung}{7}{subsection.1.16}
+\contentsline {subsection}{\numberline {1.17}Parametertests}{7}{subsection.1.17}
+\contentsline {subsection}{\numberline {1.18}Konfidenz/Vertrauensintervall}{7}{subsection.1.18}
+\contentsline {subsubsection}{\numberline {1.18.1}2-Stichproben t-Test}{8}{subsubsection.1.18.1}
+\contentsline {subsubsection}{\numberline {1.18.2}Homoskedastischer Fall}{8}{subsubsection.1.18.2}
+\contentsline {section}{\numberline {2}Beispiele:}{8}{section.2}

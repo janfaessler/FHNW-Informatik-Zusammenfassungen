@@ -1,0 +1,42 @@
+\select@language {german}
+\contentsline {section}{\numberline {3}Zufall und Ereignis}{3}{section.3}
+\contentsline {subsection}{\numberline {3.2}Zufallsexperimente und Ereignisse}{3}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Verkn\"{u}fung von Ereignissen}{3}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Zusammengesetzte Versuche, Produktregel}{3}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Permutationen, Variationen, Kombinationen}{3}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Permutationen (geordnet mit Zur\"{u}cklegen)}{3}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Geordnete Stichprobe mit Zur\"{u}cklegen}{4}{subsubsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.3}Variation (geordnet ohne Zur\"{u}cklegen)}{4}{subsubsection.3.5.3}
+\contentsline {subsubsection}{\numberline {3.5.4}Kombinationen (ungeordnet ohne Zur\"{u}cklegen)}{4}{subsubsection.3.5.4}
+\contentsline {section}{\numberline {4}Wahrscheinlichkeit}{4}{section.4}
+\contentsline {subsection}{\numberline {4.1}Theoretische Wahrscheinlichkeit}{4}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Experimentelle Wahrscheinlichkeit}{5}{subsection.4.2}
+\contentsline {section}{\numberline {5}Zufallsgr\"{o}ssen und Wahrscheinlichkeitsverteilungen}{5}{section.5}
+\contentsline {subsection}{\numberline {5.1}Diskrete und stetige Zufallsgr\"{o}ssen}{5}{subsection.5.1}
+\contentsline {section}{\numberline {6}Diskrete Zufallsgr\"{o}ssen und Verteilungen}{5}{section.6}
+\contentsline {subsection}{\numberline {6.1}Erwartungswert und Varianz}{5}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Die Binomialverteilung}{5}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Definition und Eigenschaften der Binomialverteilung}{5}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Erwartungswert und Varianz der Binomialverteilung}{6}{subsubsection.6.2.2}
+\contentsline {subsubsection}{\numberline {6.2.3}Die Binomialverteilung beim Testen von Hypothesen}{6}{subsubsection.6.2.3}
+\contentsline {subsection}{\numberline {6.3}Die Poissonverteilung}{6}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Poissonverteilung als Grenzfall der Binomialverteilung}{6}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Erwartungswert und Varianz der Poissonverteilung}{6}{subsubsection.6.3.2}
+\contentsline {section}{\numberline {7}Stetige Zufallsgr\"{o}ssen und Verteilungen}{7}{section.7}
+\contentsline {subsection}{\numberline {7.1}Stetige Zufallsgr\"{o}ssen und Wahrscheinlichkeitsdichten}{7}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}Die Gleichverteilung}{7}{subsubsection.7.1.1}
+\contentsline {subsubsection}{\numberline {7.1.2}Erwartungswert und Varianz}{7}{subsubsection.7.1.2}
+\contentsline {subsection}{\numberline {7.2}Die Normalverteilung}{7}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}Die standardisierte Normalverteilung}{7}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}Die Normalverteilung mit den Parametern $\mu $ und $\sigma ^2$}{7}{subsubsection.7.2.2}
+\contentsline {subsubsection}{\numberline {7.2.3}Transformation auf die standardisierte Normalverteilung}{8}{subsubsection.7.2.3}
+\contentsline {subsection}{\numberline {7.3}Normalverteilung als Grenzfall der Binomialverteilung}{8}{subsection.7.3}
+\contentsline {section}{\numberline {8}Statistische Tests}{8}{section.8}
+\contentsline {subsection}{\numberline {8.1}Das Prinzip des statistischen Tests}{8}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Einseitiger und zweiseitiger Test}{8}{subsection.8.2}
+\contentsline {section}{\numberline {9}Pr\"{u}fen von Erwartungswerten}{10}{section.9}
+\contentsline {subsection}{\numberline {9.2}Einstichproben-$t$-Test}{10}{subsection.9.2}
+\contentsline {subsubsection}{\numberline {9.2.1}Vertrauensintervall f\"{u}r den Erwartungswert}{11}{subsubsection.9.2.1}
+\contentsline {subsubsection}{\numberline {9.2.2}Ungef\"{a}hr erforderlicher Stichprobenumfang}{11}{subsubsection.9.2.2}
+\contentsline {subsection}{\numberline {9.3}Vergleich zweier Mittelwerte unverbundener Stichproben}{11}{subsection.9.3}
+\contentsline {subsubsection}{\numberline {9.3.1}Zweistichproben-$t$-Test bei unbekannten aber gleichen Varianzen}{11}{subsubsection.9.3.1}

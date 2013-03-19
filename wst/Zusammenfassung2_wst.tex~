@@ -1,0 +1,399 @@
+\documentclass[a4paper,10pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\"{u}r Blitz!
+
+%PageStyle
+%\usepackage[utf8x]{inputenc}
+\usepackage[german]{babel}
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx}
+\usepackage[dvips]{hyperref}
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+\usepackage{fancyhdr} %for header/footer
+
+%Zeichnung
+\usepackage{tikz}
+\usepackage[all]{xy}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+%lstlisting for java
+\usepackage{listings}
+  \usepackage{courier}
+ \lstset{
+         basicstyle=\footnotesize\ttfamily, % Standardschrift
+         %numbers=left,               % Ort der Zeilennummern
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         %stepnumber=2,               % Abstand zwischen den Zeilennummern
+         numbersep=5pt,              % Abstand der Nummern zum Text
+         tabsize=2,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen
+         keywordstyle=\color{red},
+    		frame=b,         
+ %        keywordstyle=[1]\textbf,    % Stil der Keywords
+ %        keywordstyle=[2]\textbf,    %
+ %        keywordstyle=[3]\textbf,    %
+ %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
+         stringstyle=\color{white}\ttfamily, % Farbe der String
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         %backgroundcolor=\color{lightgray},
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+ }
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         %C++
+         %XML
+         %HTML
+         Java
+ }
+
+%My Commands
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}}
+\newcommand{\EN}{\mathbb{E}}
+\newcommand{\Var}{\T{Var}}
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Potz}{\mathcal{Z}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 \"{u}ber igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas \"{u}ber etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+\newcommand{\Bildpng}[1]{\includegraphics[width=0.3\textwidth]{#1.png}} %Bilder jpeg!!
+%Beispiel f\"{u}r lstlisting \lstinputlisting[label=Aufgabe 4a,caption=Aufgabe 4a]{4a.java}
+\newcommand{\Bsp}[1]{\Bold{Beispiel #1}}
+\newcommand{\Aufg}[1]{\Bold{Aufgabe #1}}
+\newcommand{\Los}{\Bold{L\"{o}sung:} }
+
+\usepackage{ucs}
+\author{Fabio Oesch}
+\title{Wahrscheinlichkeiten und Statistik Zusammenfassung}
+
+\begin{document}
+\maketitle
+\pagebreak
+
+\tableofcontents
+\pagebreak
+
+\setcounter{section}{2}
+\section{Zufall und Ereignis}
+\setcounter{subsection}{1}
+\subsection{Zufallsexperimente und Ereignisse}
+Unter einem Zufallsexperiment verstehen wir einen Vorgang,
+\begin{itemize}
+ \item der gedanklich beliebig oft wiederholbar und
+ \item dessen Ausgang innerhalb einer Menge m\"{o}glicher Ergebnisse ungewiss (zuf\"{a}llig)
+\end{itemize}
+ist.
+\Bsp{3.2.1.} Ziehung der Lottozahlen ist $S=\{1,2,3,\dots,45\}$. Beim Ziehen einer Kugel aus einer Urne mit $r$ roten und $s$ schwarzen Kugeln ist $S=\{\T{Kugel ist rot,Kugel ist schwarz}\}$.
+Das \Bold{sichere Ereignis} ist falls der Stichprobenraum $S$ immer zu trifft. W\"{u}rfel: $S=\{1,2,3,4,5,6\}$.\\
+Das \Bold{unm\"{o}gliche Ereignis} ist falls der Stichprobenraum $S$ nie zutreffen kann. Wird als $\emptyset$ dargestellt.
+\subsection{Verkn\"{u}fung von Ereignissen}
+\begin{description}
+ \item [Oder] $A\cup B$
+ \item [Und] $A\cap B$
+ \item [Gegenereignis] $\bar{A}$
+\end{description}
+\begin{figure}[h!]
+\centering
+ \Bildpng{Oder}
+ \Bildpng{Und}
+ \Bildpng{Nicht}
+\caption{Von l.n.r.: Oder, Und, Gegenereignis}
+\end{figure}
+\Aufg{3.3.8.} Eine Anlage besteht aus zwei Kesseln und einer Maschine. Ist die Maschine intakt, dann liege das Ereignis $A$ vor. Ist der erste (resp. zweite) Kessel arbeitsf\"{a}hig, so liege das Ereignis $B_1$ (resp. $B_2$) vor. Es bezeichne $C$ das Ereignis: die Anlage ist arbeitsf\"{a}hig, die gew\"{a}hrleistet ist, wenn die Maschine und mindestens ein Kessel intakt sind. Dr\"{u}cken Sie die Ereignisse $C$ und $\bar{C}$ durch die Ereignisse $A$, $B_1$ und $B_2$ aus. \Los $C=A\cap(B_1\cup B_2)$ daraus folgt, dass $\bar{C}=\overline{A\cap(B_1\cup B_2)}=\bar{A}\cup(\bar{B_1}\cap\bar{B_2})$
+\subsection{Zusammengesetzte Versuche, Produktregel}
+\Bsp{3.4.2.} Wenn wir vier Mal hintereinander eine M\"{u}nze werfen, haben wir bei jedem Wurf die M\"{o}glichkeit Kopf $K$ oder Zahl $Z$ zu erhalten.
+\begin{center}
+ Ereignisbaum.png
+\end{center}
+Aus diesem Ereignisbaum ergen sich $2\cdot2\cdot2\cdot2=2^4=16$ Ausfallsm\"{o}glichkeiten beim zusammengesetzten Versuch. Der Stichprobenraum ist demzufolge $S=\{(K,K,K,K),(K,K,K,Z),\dots,(Z,Z,Z,Z)\}$.
+\subsection{Permutationen, Variationen, Kombinationen}
+\subsubsection{Permutationen (geordnet mit Zur\"{u}cklegen)}
+\Bsp{3.5.1.} Gegeben seien die Ziffern $1,2,3,4$ und $5$. Nun haben wir f\"{u}nf Pl\"{a}tze mit f\"{u}nf Zeichen auszuf\"{u}llen. Das Setzen eines Zeichens auf einen Platz stellt einen Teilversuch dar. Beim 1. Teilversuch sind noch alle Pl\"{a}tze frei und wir haben genau f\"{u}nf M\"{o}glichkeiten die erste Ziffer 1 zu setzen; beim 2. Teilversuch bleiben noch vier M\"{o}glichkeiten offen, die zweite Ziffer 2 zu setzen; etc $\Ra$ $P(5)=1\cdot2\cdot3\cdot4\cdot5=5!=120$
+\subsubsection{Geordnete Stichprobe mit Zur\"{u}cklegen}
+\Bsp{3.5.2.} Es seien $n$ nummerierte Lose in einer Urne. Es werde $k$ mal ein Los gezogen und dessen Nummer notiert. Dann wird das Los wieder in die Urne gelegt. Wir erhalten somit als Ereignis eine Anzahl von $k$ Nummern in einer bestimmten Reihenfolge. Bei allen $k$ Teilversuchen haben wir $n$ Wahlm\"{o}glichkeiten. $\Ra$ $V(k,n)=n^k$
+\subsubsection{Variation (geordnet ohne Zur\"{u}cklegen)}
+Der Versuch l\"{a}uft analog zu \Bsp{3.5.2.} mit der Ausnahme, dass die Lose nicht zur\"{u}ckgelegt werden. $\Ra$ $V(k,n) = n(n-1)(n-2)\cdots(n-k+1)=\frac{n!}{(n-k)!}$
+\subsubsection{Kombinationen (ungeordnet ohne Zur\"{u}cklegen)}
+Ein typisches Beispiel zu dieser Art Stichprobe ist folgendes: Es seien $n$ Kugeln gleicher Farbe in einer Urne und es werden $k$ Kugeln ohne Zur\"{u}cklegen gezogen. Da die Kuglen nicht unterscheidbar sind, kann keine Reihenfolge ber\"{u}cksichtigt werden. $\Ra$ $C(k,n)=\frac{n!}{k!(n-k)!}={n\choose k}$
+\subsection*{Aufgaben}
+\Aufg{3.5.3.} Frau Meier hat 4 Kleider, 3 H\"{u}te und 5 Paar Schuhe. Auf wie viele Arten kann sie sich zum Ausgehen anziehen, wenn alles zueinander passt und das Tragen eines Hutes \Bold{a.} Pflicht, \Bold{b.} freiwillig ist? \Los Dies k\"{o}nnte anhand eines Ereignisbaums gezeigt werden. Wir haben bei den Kleidern 4 verschiedene, Zus\"{a}tzlich haben wir 5 Paar Schuhe und bei \Bold{a.} 3 H\"{u}te und bei \Bold{b.} 4 H\"{u}te. Also k\"{o}nnen wir die Produktregel anwenden: \Bold{a.} $4\cdot3\cdot5=60$ analog f\"{u}r \Bold{b.}.\\
+\Aufg{3.5.5.} Eine M\"{u}nze wird 8 mal geworfen. Welcher Bruchteil der m\"{o}glichen Ausf\"{a}lle enth\"{a}lt Kopf und Zahl gleich oft? \Los Da die Chance immer die selbe ist (n\"{a}mlich $\Oneover{2}$ f\"{u}r jeden Wurf) k\"{o}nnen wir annehmen, dass wir 8 M\"{u}nzen haben, die wir nicht zur\"{u}cklegen. Die Reihenfolge spielt keine Rolle, dass heisst, dass wir die Formel ${8\choose4}$ nehmen und bekommen so die Anzahl von M\"{o}glichkeiten bei der es genau 4x Kopf geworfen wurde. Dies impliziert, dass wir auch automatisch 4x Zahl geworfen haben und m\"{u}ssen dies in die Berechnung nicht mit einbeziehen. Dies m\"{u}ssen wir nun durch die maximale Anzahl der M\"{o}glichkeiten teilen die $2^8$ w\"{a}re. Wir haben also als Endresultat $\frac{70}{256}$\\
+\Bold{Aufgabe 3.5.8.} Auf wie viele Arten k\"{o}nnen die Buchstaben des Wortes Pfeffer permutiert werden?\Los Da das \Kursiv{f} 3x vor kommt und das \Kursiv{e} 2x m\"{u}ssen wir durch diese dividieren. $\frac{7!}{3!\cdot 2!}=420$\\
+\Bold{Aufgabe 3.5.10.} Eine Klasse hat 15 Fussballspieler, einer davon heisst Klaus. Auf wie viele Arten kann eine Mannschaft von 11 Spielern a. Mit Klaus, b. ohne Klaus zusammengestellt werden. \Los a. ${14\choose 10}$, b. ${14\choose 11}$\\
+\Bold{Aufgabe 3.5.14.} Wie viele M\"{o}glichkeiten gibt es, die 36 Jasskarten auf vier Spieler $A$, $B$, $C$, $D$ zu verteilen? \Los ${36\choose9}\cdot{27\choose9}\cdot{18\choose9}\cdot{9\choose9}$\\
+\section{Wahrscheinlichkeit}
+\subsection{Theoretische Wahrscheinlichkeit}
+\begin{center}
+ \fbox{$p=\frac{\T{Anzahl der g\"{u}nstigen F\"{a}lle}}{\T{Anzahl der m\"{o}glichen F\"{a}lle}}=\frac{g}{m}$}\\
+\end{center}
+\Bsp{4.1.3.} Gegeben seien 10 N\"{u}sse, davon seien 3 verdorben. Wie gross ist die Wahrscheinlichkeit, dass zwei gute N\"{u}sse mit einem Griff genommen werden? Es gibt $m={10\choose2}$ m\"{o}gliche F\"{a}lle und $g={7\choose2}$ g\"{u}nstige F\"{a}lle. Damit ist die W'keit $p=\frac{{7\choose2}}{{10\choose2}}=\frac{7}{15}$\\
+\Bold{Aufgabe 4.1.12} 10 Lose 2 Gewinnlose mit 5x herausziehen genau 1 Gewinnlos \Los $m=8,n=2,k=5,s=1\Ra \frac{{8\choose4}{2\choose1}}{{10\choose5}}$\\
+\Bold{Aufgabe 4.1.13} Es liegen $m+n$ Lose vor, unter denen $n$ Gewinnlose sind. Es werden $k$ Lose auf einmal gezogen. Bestimmen Sie die W'keit daf\"{u}r, dass sich unter den $k$ Losen genau $s$ Gewinnlose befinden.\Los Es gibt $m={m+n\choose k}$ m\"{o}gliche Ausf\"{a}lle und genau $g={m\choose k-s}{n\choose s}$ M\"{o}glichkeiten f\"{u}r $s$ Gewinnlose. Dabei z\"{a}hlt der Faktor ${m\choose k-s}$ die M\"{o}glickeiten, $k-s$ Nieten zu haben und der Faktor ${n\choose s}$ z\"{a}hlt die M\"{o}glichkeiten, $s$ Treffer zu haben. Damit folgt $p(s)=\frac{{m\choose k-s}{n\choose s}}{{m+n\choose k}}$.\\
+\subsection{Experimentelle Wahrscheinlichkeit}
+Gegeben sei ein Stichprobenraum $S=\{s_1,s_2,\dots,s_n\}$ eines Versuchs. Zu jedem Ausfall $s_i\in S$ geh\"{o}rt eine relative H\"{a}ufigkeit
+\begin{center}
+ \fbox{$h(s_i)=\frac{\T{Anzahl des Auftretens von }s_i}{\T{Anzahl Versuche }N}$}
+\end{center}
+seines Auftretens. Dabei gilt $0\leq h(s_i)\leq 1$ und $h(s_1)+\dots+h(s_n)=1$.
+\section{Zufallsgr\"{o}ssen und Wahrscheinlichkeitsverteilungen}
+\subsection{Diskrete und stetige Zufallsgr\"{o}ssen}
+Die Zufallsgr\"{o}sse $X$, die die Werte $x_1,\dots,x_n$ annehmen kann, wird durch die Angabe ihrer W'keit charakterisiert. Jedem Ausfall $s_i$ aus dem Stichprobenraum $S$, respektive $X(s_i)=x_i$, entspricht eine W'keit $p_i=P(X=x_i)\in[0,1]$ als Funktion von $x_i$ aufgefasst Dabei gilt $\Sumone{n}{i}p_i=\Sumone{n}{i}P(X=x_i)=1$.\\
+\Aufg{5.1.1.} Die Trefferwahrscheinlichkeit f\"{u}r einen Basketball in den gegnerishen Korb sei bei jedem Wurf 0.3. Bestimmen Sie die Wahrscheinlichkeitsverteilung und die Verteilungsfunktion der zuf\"{a}lligen Trefferzahl $X$ bei zwei W\"{u}rfen. \Los $k=0$: ${2\choose 0}(0.3)^0*(1-0.3)^2=0.49$, $k=1$: ${2\choose 1}(0.3)^1*(1-0.3)^1= 0.42$, $k=2$: ${2\choose 2}(0.3)^2*(1-0.3)^0=0.09$ Daraus folgt die folgende Tabelle: \begin{tabular}{c|ccc}
+ $k$&0&1&2\\\hline $P(X=k)$&0.49&0.42&0.09\\ $\Sumz{k}{i}P(X=i)$&0.49&0.91&1.00
+\end{tabular}
+\section{Diskrete Zufallsgr\"{o}ssen und Verteilungen}
+\subsection{Erwartungswert und Varianz}
+\Bold{Erwartungswert} $\mu=\mathbb{E}(X)=\Sumone{n}{i}x_ip_i$. \Bold{Varianz} oder \Bold{Streuung} $\varsigma^2=\T{Var}(X)=\EN((X-\mu)^2)=\Sumone{n}{i}(x_i-\mu)^2p_i=\Sumone{n}{i}x_i^2p_i-\mu^2$ \Bold{Standardabweichung} $\Abs{\sqrt{\sigma}}=\sigma$\\
+\Bsp{6.1.1.} Betrachten wir wieder einmal den symmetrischen W\"{u}rfel. Es ist bekanntlich $x_t=i$ und $p_t=\Oneover{6}$ f\"{u}r alle $i\in\{1,2,3,4,5,6\}$. Dann erhalten wir f\"{u}r den Erwartungswert $\EN(X)=\Sumone{6}{i}i\Oneover{6}=1\cdot\Oneover{6}+2\cdot\Oneover{6}+3\cdot\Oneover{6}+4\cdot\Oneover{6}+5\cdot\Oneover{6}+6\cdot\Oneover{6}=3.5$\\
+und f\"{u}r die Varianz $\Var(X)=\Sumone{n}{i}(i-\mu)^2\Oneover{6}=2.92$\\
+Die Standardabweichung betr\"{a}gt demzufolge $\sigma=1.71$.
+\subsection{Die Binomialverteilung}
+\subsubsection{Definition und Eigenschaften der Binomialverteilung}
+Die Binomialverteilung besch\"{a}ftigt sich mit Ereignissen, bei denen zwei alternative Ausg\"{a}nge auftreten k\"{o}nnen, wei zum Beispiel M\"{u}nzwurf (Kopf oder Zahl). Wir betrachten also einen Versuch mit zwei m\"{o}glichen Ausf\"{a}llen:
+\begin{itemize}
+ \item \Bold{Erfolg} mit W'keit $p\in[0,1]$
+ \item \Bold{Misserfolg} mit W'keit $q=1-p\in[0,1]$
+\end{itemize}
+Bei $n$ Versuchen gibt es genau ${n\choose x}$ Anordnungen mit $x$ Erfolgen und $n-x$ Misserfolgen. Damit erhalten wir die \Bold{Binomialverteilung} $P(X=x)={n\choose x}p^xq^{n-x}={n\choose x}p^x(1-p)^{n-x}$
+\Bsp{6.2.1.} Zwei Spieler $A$ und $B$ spielen Tischtennis. Der bessere Spieler $A$ gewinnt mit der Wahrscheinlichkeit von $60$\%. Unentschieden sei ausgeschlossen. Sieger des Turniers (3 Spiele) ist der Spieler, der die Mehrzahl der Spiele gewonnen hat.Wie gross ist die W'keit, dass Spieler $B$ das Turnier gewinnt? \Los Es bezeichne $X$ die Zufallsgr\"{o}sse, die als Werte die Anzahl der von $A$ gewonnen Spiele habe. Dann ist $n=3$, $p=0.6$ und $q=0.4$. $P(X\leq1)=P(X=0)+P(X=1)={3\choose0}p^0q^3+{3\choose1}p^1q^2=0.352$. In diesem Fall gewinnt der schlechtere Spieler mit 35\%.
+\subsubsection{Erwartungswert und Varianz der Binomialverteilung}
+\Bold{Varianz} oder \Bold{Streuung}: $\sigma^2=\Var(X)=npq$\\
+\Bold{Standardabweichung} $\sigma=\sqrt{npq}$
+\subsubsection{Die Binomialverteilung beim Testen von Hypothesen}
+\Bold{Vorgehen:}
+\begin{enumerate}
+ \item Aufstellen der \Bold{Nullhypothese} $H_0$ und der \Bold{Alternativhypothese} $H_1$ und Vorgabe des \Bold{Signifikanzniveaus} $\alpha$
+ \item Berechnung der \Bold{W'keit des Ereignisses} unter der Voraussetzung der Nullhypothese $H_0$.
+ \item \Bold{Statistischer Schluss:} Ist die berechnete W'keit kleiner als das Signifikanzniveau $\alpha$, so wird $H_0$ abgelehnt, sonst wird $H_0$ angenommen.
+\end{enumerate}
+\Bsp{6.2.2.} Hat ein Huhn ein Favoriten von runden zu eckigen K\"{o}rnern. Wir lassen das Huhn 20x ein Korn nehmen. 15x rundes, 5x eckiges. \Los
+\begin{description}
+ \item [Nullhypothese $H_0$] $p=q=\Oneover{2}$, d.h., das Huhn unterscheidet keine Formen. Mit Signifikanzniveau 0.05.
+ \item [Alternativhypothese $H_1$] $http://www.youtube.com/user/TeamFortressTVp>q$, d.h.,das Huhn zieht Kreise vor.
+\end{description}
+\begin{center}
+ $P(15\leq X\leq20)=\Sum{20}{x=15}{20\choose x}p^xq^{20-x}=0.021$.
+\end{center}
+Die Berechnung der W'keit betr\"{a}gt nur 2.1\%. Da wir das Signifikanzniveau auf 5\% angesetzt haben. Lehnen wir $H_0$ ab und nehmen die \Bold{Irrtumsw'keit} $H_1$ an.
+\subsection{Die Poissonverteilung}
+\subsubsection{Poissonverteilung als Grenzfall der Binomialverteilung}
+Die \Bold{Poissonverteilung} ergibt sich, wenn $n$ so gegen unendlich strebt, dass der Erwartungswert $\mu=np$ gegen einen endlichen Wert strebt. Das heisst wir k\"{o}nnen in der Binomialverteilung $p=\frac{\mu}{n}$ und $q=1-\frac{\mu}{n}$ setzen. Die Grenzverteilung ist somit $P(X=x)=\frac{\mu^x}{x!}e^{-\mu}$. 
+Beispiele f\"{u}r poissonverteilte Zufallsgr\"{o}ssen sind:
+\begin{itemize}
+ \item Die Anzahl der innerhalb einer kurzen Zeitspanne zerfallenden Atome eines radioaktiven Pr\"{a}parats.
+ \item Die Anzahl der w\"{a}hrend einer festen Zeit beobachteten Sternschnuppen.
+\end{itemize}
+\subsubsection{Erwartungswert und Varianz der Poissonverteilung}
+\Bold{Erwartungswert} $\EN(X)=\mu$ \Bold{Varianz} oder \Bold{Streuung} $\Var(X)=\mu$ \Bold{Standardabweichung} $\sigma = \sqrt{\mu}$
+\Bsp{6.3.1.} Die W'keit daf\"{u}r, dass ein Produkt einem Qualit\"{a}tstest nicht gen\"{u}gt, betr\"{a}gt $p=0.001$. Wir bestimmen die W'keit, dass von 5000 Produkten mindestens zwei die Pr\"{u}fung nicht \"{u}berstehen. Diese Aufgabe ist eigentlich eine Aufgabe der Binomialverteilung. Sie kann aber wegen dem kleinen $p$ und dem grossen $n$ n\"{a}herungsweise als Aufgabe der Poissonverteilung betrachtet werden. \Los Es sei $n=5000$, $p=0.001$ also $\mu=np=5$, und $X$ bezeichne die Anzahl Waren, die die Pr\"{u}fung nicht bestehen. Dann gilt $P(X<2)=P(X=0)+P(X=1)=\frac{5^0}{0!}e^{-5}+\frac{5^1}{1!}e^{-5}=6e^{-5}=0.04$. Also $P(X\geq2=1-P(X<2)=0.96$.\\
+\Aufg{6.3.4.} Wie gross ist die W'keit, dass von einer Gruppe mit 730 Personen wenigstens drei am Oster- oder Pfingstsonntag geboren sind? \Los $n=730$, $p=\frac{2}{365}$ also $\mu=np=4$, und $X$ bezeichne die Anzahl Personen die am Oster- oder Pfingstsonntag geboren wurden ($P(X\geq3)$). Dann gilt $P(X<3)=P(X=0)+P(X=1)+P(X=2)=\frac{4^0}{0!}e^{-4}+\frac{4^1}{1!}e^{-4}+\frac{4^2}{2!}e^{-4}=0.2381$. Also $P(X\geq3)=1-P(X<3)=0.7619$.
+\section{Stetige Zufallsgr\"{o}ssen und Verteilungen}
+\subsection{Stetige Zufallsgr\"{o}ssen und Wahrscheinlichkeitsdichten}
+Eigenschaften der nichtnegativen Funktion $f$ (\Bold{W'keitsdichte}:)
+\begin{enumerate}
+ \item Die Funktion $F$ ist stetig monoton wachsend mit $F(-\infty)=0$ und $F(\infty)=1$.
+ \item Der Gesamtfl\"{a}cheninhalt untder der W'keitsdichtekurve ist gleich 1, d.h. $\int_{-\infty}^\infty f(x)dx=1$.
+ \item Es gilt $\frac{d}{dx}F(x)=F'(x)=f(x)$ f\"{u}r alle $x\in\RN$
+ \item Die W'keit ein Ergeignis zwischen $x_1$ und $x_2$ zu erhalten, betr\"{a}gt $P(x_1\leq X\leq x_2)\int_{x_1}^{x_2}f(x)dx=F(x_2)-F(x_1)$
+\end{enumerate}
+\subsubsection{Die Gleichverteilung}
+$f(x)=\Brackal{ll}{1&\T{wenn} 0\leq x\leq1\\1&\T{sonst}}$\\
+\begin{figure}[h!]
+\centering
+ \Bildpng{Wahrscheinlichkeitsdichte_l}
+ \Bildpng{Wahrscheinlichkeitsdichte_r}
+\caption{links: Die W'keitdichte der Gleichverteilung, rechts: Die Verteilungsfunktion der Gleichverteilung}
+\end{figure}
+\subsubsection{Erwartungswert und Varianz}
+\Bold{Erwartungswert} $\mu=\EN(X)=\int_{-\infty}^\infty xf(x)dx$ \Bold{Varianz} oder \Bold{Streuung} $\sigma^2=\Var(X)=\int^\infty_{-\infty}(x-\mu)^2f(x)dx=\int^\infty_{-\infty}x^2f(x)dx-\mu^2$
+\subsection{Die Normalverteilung}
+\subsubsection{Die standardisierte Normalverteilung}
+Dichtefunktion der standardisierten Normalverteilung $f(z)=\varphi(z,0,1)=\Oneover{\sqrt{2\pi}}e^{-\frac{z^2}{2}}$ f\"{u}r $-\infty<z<\infty$\\
+\Bsp{7.2.1.} Es sei $Z\sim\Potn(0,1)$ eine standardnormalverteilte Zufallsgr\"{o}sse. Wir berechnen die W'keit $P(1\leq Z\leq2.45)=\Oneover{\sqrt{2\pi}}\int_1^{2.45}e^{-\frac{z^2}{2}}dz=\Phi(2.45,0,1)-\Phi(1,0,1)$. In der Tafel finden wir $\Phi(1,0,1)=0.8413$ und $\Phi(2.45,0,1)=0.9929$. Also folgt durch Subraktion die gesuchte W'keit $=0.1516$.
+\Bold{Bemerkung 7.2.1.} Es gilt $\Phi(-\infty,0,1)=0$ und $\Phi(\infty,0,1)=1$
+\subsubsection{Die Normalverteilung mit den Parametern $\mu$ und $\sigma^2$}
+Dichtefunktion $f(x)=\varphi(x,\mu,\sigma^2)=\Oneover{\sqrt{2\pi\sigma^2}}e^{-\frac{(z-\mu)^2}{2\sigma^2}}$ f\"{u}r $-\infty<x<\infty$.\\
+\Bold{Erwartungswert} $\EN(X)=\mu$ \Bold{Varianz} oder \Bold{Streuung} $\Var(X)=\sigma^2$
+\subsubsection{Transformation auf die standardisierte Normalverteilung}
+Es wird $z=\frac{x-\mu}{\sigma}$ substituiert. Daraus folgt $P(x_1\leq X\leq x_2)=\Oneover{\sqrt{2\pi\sigma^2}}\int_{x_1}^{x_2}e^{-\frac{(x-\mu)^2}{2\sigma^2}}dx=\Phi(x_2,\mu,\sigma^2)-\Phi(x_1,\mu,\sigma^2)=\Oneover{\sqrt{2\pi}}\int_\frac{x_1-\mu}{\sigma}^\frac{x_2-\mu}{\sigma}e^{-\frac{z^2}{2}}dz=\Phi(\frac{x_2-\mu}{\sigma},0,1)-\Phi(\frac{x_1-\mu}{\sigma},0,1)$.\\
+\Bsp{7.2.2.} Es sei $X\sim\Potn(2,4)$ eine normalverteilte Zufallsgr\"{o}sse mit den Parametern $\mu=2$ und $\sigma^2=4$. Wir berechnen die W'keit $P(1\leq X\leq 2.45)=\Oneover{\sqrt{2\pi\cdot4}}\int_1^{2.45}e^{-\frac{(x-2)^2}{2\cdot4}}dx$. Also folgt mit der Transformation $z_1=\frac{1-2}{2}=-0.5$ und $z_2=\frac{2.45-2}{2}=0.225$, dass $P(1\leq X\leq2.45)=P(-0.5\leq Z\leq0.225)=\Phi(0.225,0,1)-\Phi(-0.5,0,1)$. In der Tafel finden wir $\Phi(-0.5,0,1)=1-\Phi(0.5,0,1)$.
+\subsection{Normalverteilung als Grenzfall der Binomialverteilung}
+Die Binomialverteilung kann f\"{u}r kleine Erfolgsw'keiten $p$ und grosse Versuchsanzahl $n$ durch die Poissonverteilung angen\"{a}hert werden. Ist $p$ nicht klein, so k\"{o}nnen wir die Normalverteilung nutzen.
+Der \Bold{Grenzwertsatz von de Moivre und Laplace} besagt, dass eine binomialverteilte Zufallsgr\"{o}sse $X$ mit Erwartungswert $\EN(X)=np$ und Varianz $\Var(X)=np(1-p)$, n\"{a}herungsweise normalverteilt mit den Parametern $\mu=np$ und $\sigma^2=np(1-p)$ ist. Danach k\"{o}nnen wir f\"{u}r eine binomialverteilte Zufallsgr\"{o}sse $X$ f\"{u}r greosses $n$ die N\"{a}herungsformel $P(x_1\leq x_2)\approx\Phi(\frac{x_2-np}{\sqrt{np(1-p)}},0,1)-\Phi(\frac{x_1-np}{\sqrt{np(1-p)}},0,1)$ verwenden. In der Literatur wird diese N\"{a}herung als Faustregel f\"{u}r $n>\frac{9}{p(1-p)}$ empfohlen.
+\section{Statistische Tests}
+\subsection{Das Prinzip des statistischen Tests}
+\Bsp{8.1.1.} Bei 12000 W\"{u}rfen eines W\"{u}rfels wurden $x=2107$ Sechsen gez\"{a}hlt. Ist dieser W\"{u}rfel unsymmetrisch, d.h. werden Sechsen bevorzugt gew\"{u}rfelt? \Los $n=12000$ W\"{u}rfen, $p$ die W'keit eine Sechs zu w\"{u}rfeln und $X$ die Zufallsgr\"{o}sse der Anzahl Sechsen.
+\begin{description}
+ \item [Nullhypothese $H_0$] $p=\Oneover{6}$, d.h., der W\"{u}rfel ist symmetrisch
+ \item [Alternativhypothese $H_1$] $p>\Oneover{6}$, d.h., es werden Sechsen bevorzugt gew\"{u}rfelt
+\end{description}
+Unter der Voraussetzung der Nullhypothese $H_0$ berechnen wir nun den Erwartungswert $\EN(X)=np=12000\cdot\Oneover{6}=2000$. Da der Erwartungswert nicht unserem Experiment entspricht ($2107>2000$) bestimmen wir die W'keit $P(2107\leq X)$. $\mu=2000$ und $\sigma^2=np(1-p)=12000\cdot\Oneover{6}\cdot\frac{5}{6}=1666\frac{2}{3}$. Wir erhalten nun mit Tafel $P(2107\leq X)\approx 1-\Phi(\frac{2107-2000}{\sqrt{1666\frac{2}{3}}},0,1)=1-\Phi(2.621,0,1)=0.0044$. Die W'keit unter der Voraussetzung der Nullhypothese so viel Abweichung vom Erwartungswert zu erhalten, ist somit ausserordentlich klein. Dies erlaubt uns, die Nullhypothese abzulehnen. Die \Bold{Irrtumsw'keit} dieses Schlusses entspricht dem berechneten Wert $P(2107\leq X)\approx0.0044$\\
+\Bold{Vorgehen:}
+\begin{enumerate}
+ \item Aufstellen der \Bold{Nullhypothese} $H_0$ und der \Bold{Alternativhypothese} $H_1$ und Vorgabe des \Bold{Signifikanzniveaus} $\alpha$
+ \item Bestimmen eines \Bold{Ablehnungsbereichs} in Abh\"{a}ngigkeit von $\alpha$, f\"{u}r den die W'keit, dass die Stichprobenfunktion Werte aus dem Ablehnungsbereich annimmt, h\"{o}chstens gleich $\alpha$ ist.
+ \item Berechnung der \Bold{Testgr\"{o}sse} aus der vorliegenden konkreten Stichprobe.
+ \item \Bold{Statistischer Schluss:} Liegt die Testgr\"{o}sse im Ablehnungsbereichs, so wird $H_0$ abgelehnt, sonst wird $H_0$ angenommen.
+\end{enumerate}
+\subsection{Einseitiger und zweiseitiger Test}
+In allen F\"{a}llen gehen wir von der Nullhypothese $H_0:\mu=\mu_0$ aus.
+\begin{enumerate}
+ \item \Bold{Zweiseitiger Test} $H_1:\mu\neq\mu_0$. Zur Konstruktion des Ablehnungsbereiches wird der Fl\"{a}cheninhalt $\alpha$ symmetrisch auf beiden Seiten der Kurve aufgeteilt, und es ergibt sich einen zweiseitigen Ablehnungsbereich mit den beiden kritischen Gr\"{o}ssen $z_\frac{\alpha}{2}$ und $z_{1-\frac{\alpha}{2}}$. Die Abweichung zwischen den Stichprobenparameter und dem hypothetischen Wert $\mu_0$ wird nur dem Absolutbetrag nach beurteilt.
+\begin{figure}[h!]
+\centering
+ \Bildpng{Zweiseitig}
+\caption{$H_1:\mu\neq\mu_0$, zweiseitige Fragestellung mit den kritischen Gr\"{o}ssen $z_{\frac{\alpha}{2}}$ und $z_{1-\frac{\alpha}{2}}$}
+\end{figure}
+ \item \Bold{Einseitiger Test} $H_1:\mu>\mu_0$ (resp. $H_1:\mu<\mu_0$). Zur Konstrutkion des Ablehnungsbereiches wird der Fl\"{a}cheninhalt $\alpha$ nur auf einer Seite der Kurve abgeschnitten, und es ergibt sich einen einseitigen Ablehnungsbereich mit der kritischen Gr\"{o}sse $z_\alpha$ (resp. $z_{1-\alpha}$). Die damit verbundene einseitige Fragestellung liegt dann vor, wenn nur Abweichungen nach einer Seite interessieren, d.h., wenn es z.B. darauf ankommt zu beurteilen, ob ein Stichprobenparameter nicht zu gross ist, w\"{a}hrend einem zu kleinen Stichprobenparameter keine Bedeutung beigemessen wird. Hier m\"{u}ssen also grosse positive (resp. negative) Abweichungen zu einer Ablehnung zur Nullhypothese f\"{u}hren.
+\begin{figure}[h!]
+\centering
+ \Bildpng{Einseitig_l}
+ \Bildpng{Einseitig_r}
+\caption{$H_1:\mu<\mu_0$ (r: $H_1:\mu>\mu_0$) einseitige untere (obere) Fragestellung mit der kritishen Gr\"{o}sse $z_\alpha$ ($z_{1-\alpha}$)}
+\end{figure}
+\end{enumerate}
+\Bsp{8.2.1. (z-Test)} Letztes Jahr waren 75\% der SBB-Fahrg\"{a}ste Inhaber von Halbtaxabos. Bei einer k\"{u}rzlich durchgef\"{u}hrten Fahrgastbefragung gaben 270 von 350 Befragten an, dass sie ein Halbtaxabo besitzen. Hat sich der Anteil der Besitzer von Halbtaxabos wesentlich ver\"{a}ndert? Das Signifikanzniveau sei $\alpha=10\%$. \Los Um diese Frage zu beantworten, f\"{u}hren wir einen statistischen Test nach obigem Prinzip durch: Es sei $p=0.75$ der relative Anteil von Halbtaxabobesitzer im letzten Jahr. Nun formulieren wir die Null- und Alternativhypothese f\"{u}r einen statistischen Test:
+\begin{center}
+\begin{tabular}{l}
+ $H_0:p=0.75$, d.h., die \# Halbtaxabobesitzer ist gleich wie letztes Jahr.\\
+ $H_0:p\neq0.75$, d.h., die \# Halbtaxabobesitzer hat sich ver\"{a}ndert.\\
+\end{tabular}
+\end{center}
+Es handelt sich hier um einen so genannten \Bold{zweiseitigen Test}, da hier die Alternativhypothese nur Werte $p\neq0.75$ zul\"{a}sst. Weiter beschreibe die Zufallsgr\"{o}sse $X$ die Anzahl der Halbtaxabobesitzer unter den $n=350$ befragten Fahrg\"{a}sten. Die Zufallsgr\"{o}sse $X$ ist binomialverteilt. Wir berechnen den Erwartungswert und die Varianz unter Annahame der Nullhypothese $H_0$. $\EN(X)=np=262.5$ und $\Var(X)=np(1-p)=65.625$. Es stellt sich also die Frage, ob sich die Zahl der gez\"{a}hlten 270 Halbtaxabobesitzer signifikant vom Erwartungswert unterscheidet.\\
+Weil $np(1-p)>9$ k\"{o}nnen wir die Binomialverteilung mit einer Nomralverteilung mit den Parametern $\mu=262.5$ und $\sigma^2=65.625$ approximieren. Durch eine Massstabs\"{a}nderung auf der Koordinatenachse und einer Nullpunktverschiebung auf der $x$-Achse $z=\frac{x-\mu}{\sigma}$ kann von der Normalverteilung mit den Parametern $\mu$ und $\sigma^2$ zur standardisierten Normalverteilung mit den Parametern \"{u}bergangen werden. Da es sich hier um eine zweiseitigen Test handelt, verteilen wir $\alpha=0.10=0.05+0.05$ gleichm\"{a}ssig auf beide Seiten der Standardnormalverteilung. Aus der Beziehung $P(Z\leq z_{0.05})=\Phi(z_{0.05},0,1)=0.05$ bestimmen wir mit Tafel. $z_{0.05}=-1.645$ ist die untere kritische Grenze. Die obere ist $z_{0.95}=1.645$.\\
+Die Berechnung der Testgr\"{o}sse aus den vorliegenden Angaben ergibt $z=\frac{270-\mu}{\sigma}=0.926$. Es gilt nun $z_{0.05}<z=0.926<z_{0.95}=1.645$, d.h., die testgr\"{o}sse $z$ liegt im Annahmebereich und somit lautet der statistische Schluss: Wir nehmen die Nullhypothese auf dem Niveau 10\% an. Der Anteil der Besitzer von Halbtaxabos hat sich nicht signifikant ver\"{a}ndert.
+\section{Pr\"{u}fen von Erwartungswerten}
+\setcounter{subsection}{1}
+\subsection{Einstichproben-$t$-Test}
+Beim \Bold{Einstichproben-$t$-Test} ist der Erwartungswert $\mu$ der Grundgesamtheit $G$ bekannt und es sind folgende \Bold{Voraussetzungen} zu beachten:
+\begin{enumerate}
+ \item Die normalverteilte Grundgesamtheit $G$ hat den bekannten Erwartungswert $\mu$ und die unbekannte Varianz $\sigma^2$.
+ \item Es dind zuf\"{a}llig $N$ Stichprobenwerte $x_1,\dots,x_N$ aus einer normalverteilten Grundgesamtheit gew\"{a}hlt.
+\end{enumerate}
+\Bold{gesch\"{a}tzte Mittelwert} $\bar{x}=\Oneover{N}\Sumone{N}{i}x_i$ aufstellen und mit Erwartungswert $\mu$ der Grundgesamtheit $G$ vergleichen.
+\begin{center}
+\begin{tabular}{l}
+ $H_0:\mu=\bar{x}$, d.h., Stichprobe stammt aus der Grundgesamtheit $G$ mit Erwartungswert $\mu$.\\
+ $H_1:\mu\neq\bar{x}$, d.h., Stichprobe stammt aus einer anderen Grundgesamtheit.
+\end{tabular}
+\end{center}
+Zu jeder Stichprobe berechnen wir aus den Werten $x_1,\dots,x_N$ den gesch\"{a}tzten Mittelwert $\bar{x}$ und die \Bold{gesch\"{a}tzte Varianz} $s^2=\Oneover{N-1}\Sumone{N}{i}(x_i-\bar{x})^2$ und daraus die \Bold{Testgr\"{o}sse} $t=\frac{\bar{x}-\mu}{s}\sqrt{N}$.\\
+Der Wert der Testgr\"{o}sse $t$ wird umso gr\"{o}sser,
+\begin{itemize}
+ \item je gr\"{o}sser die Abweichung des gesch\"{a}tzten MIttelwerts $\bar{x}$ vom Erwartungswert $\mu$ ist,
+ \item je gr\"{o}sser der Stichprobenumfang $N$ gew\"{a}hlt ist und
+ \item je kleiner die gesch\"{a}tzte Varianz $s^2$ ist, d.h., je weniger die Stichprobenwerte um den Mittelwert streuen.
+\end{itemize}
+\Bold{statistische Schluss} (zweiseitige Fragestellung):
+\begin{itemize}
+ \item Ist die Testgr\"{o}sse $\Abs{t}<t_{n,1-\frac{\alpha}{2}}$, dann wird die Nullhypothese $H_0$ angenommen, d.h., Abweichungen vom idealen Wert $t=0$ sind zuf\"{a}lliger Natur. Die Stichprobe stammt somit mit einer Irrtumsw'keit von $1-\alpha$ aus der Grundgesamtheit mit dem Erwartungswert $\mu$.
+ \item Ist die Testgr\"{o}sse $\Abs{t}\geq t_{n,1-\frac{\alpha}{2}}$, dann wird die Nullhypothese $H_0$ auf dem Signifikanzniveau $\alpha$ abgelehnt. Die Stichprobe stammt demnach aus einer andere Grundgesamtheit.
+\end{itemize}
+\Bsp{9.2.1.} Es sei die folgende Stichprobe mit zehn Werten gegeben: 5 -5 7 4 15 -7 5 10 18 16 \Los Uns interessiert nun, ob die Stichprobe aus einer Grundgesamtheit mit Erwartungswert $\mu=0$ und unbekannter Varianz stammt oder nicht.
+\begin{center}
+\begin{tabular}{l}
+ $H_0:\mu=\bar{x}$, d.h., Stichprobe stammt aus der Grundgesamtheit mit Erwartungswert $\mu=0$.\\
+ $H_1:\mu\neq\bar{x}$, d.h., Stichprobe stammt aus einer anderen Grundgesamtheit.
+\end{tabular}
+\end{center}
+Wir indentifizieren den Stichprobenumfang mit $N=10$ und berechnen $\bar{x}=6.8$ und $s^2=70.18$. Die Nullhypothese besagt in diesem Fall, dass das Mittel $\bar{x}=6.8$ rein zuf\"{a}llig, auswahlbedingt, vom erwarteten theoretischen Wert $\mu=0$ abweicht. Da hier der Erwartungswert $\mu=0$ der Grundgesamtheit bekannt und die Varianz unbekannt ist, benutzen wir einen Student-$t$-Test mit $n=N-1=9$ Freiheitsgraden, um obige Hypothese zu untersuchen. Wir berechnen die Testgr\"{o}sse $t=\frac{\bar{x}-\mu}{s}\sqrt{N}=\frac{6.8-0}{\sqrt{70.18}}\sqrt{10}=2.567$. Zum Signifikanzniveau $\alpha=0.05$ bestimmen wir nun die kritische Gr\"{o}sse $t_{9,1-0.025}=2.262$ f\"{u}r die zweiseitige Fragestellung. Nun f\"{u}hren wir den \Bold{statistischen Schluss} durch: Es gilt $\Abs{t}=2.567\geq t_{9,1-0.025}=2.262$, also wird die Nullhypothese $H_0$ abgelehnt. Das Mittel $\bar{x}=6.8$ weicht somit wesentlich vom theoretischen Wert $\mu=0$ ab.
+\subsubsection{Vertrauensintervall f\"{u}r den Erwartungswert}
+\Bsp{9.2.2.} Es sei eine Stichprobe vom Umfang $N=10$ mit gesch\"{a}tztem Mittelwert $\bar{x}=5$ und Standardabweichung $s=0.2$ gegeben. In welchem Intervall liegt nun der wahre aber unbekannte Erwartungswert $\mu$ der normalverteilten Grundgesamtheit? \Los Dazu berechnen wir zur Vertrauensw'keit $\gamma=0.95$ die kritische Gr\"{o}sse $t_{9,1-0.025}=2.262$ der Student-$t$-Verteilung. Damit ergibt sich das gesuchte Vertrauensintervall $5-\frac{2.262}{\sqrt{10}}0.2\leq\mu\leq5+\frac{2.262}{\sqrt{10}}0.2$, also $4.86\leq\mu\leq5.14$ mit 95\% W'keit.
+\subsubsection{Ungef\"{a}hr erforderlicher Stichprobenumfang}
+$N=\frac{t^2s^2}{(\bar{x}-\mu)^2}$. Toleranzbereich $\delta\mu=\Abs{\bar{x}-\mu}$ vor. Ist zus\"{a}tzlich die Varianz $s^2$ aus Voruntersuchungen etwa in Form einer oberen Schranke bekannt, so k\"{o}nnen wir f\"{u}r den Stichprobenumfang $N$ einen ungef\"{a}hren Wert absch\"{a}tzen, indem wir einen Durchschnittswert f\"{u}r $t=t_{n,1-\frac{\alpha}{2}}\approx2$ bei einer Vertrauensw'keit $\gamma=1-\alpha$ einsetzen. Wir erhalten damit einen ungef\"{a}hren Stichprobenumfang $N\approx4\frac{s^2}{\delta\mu^2}$.
+\subsection{Vergleich zweier Mittelwerte unverbundener Stichproben}
+\subsubsection{Zweistichproben-$t$-Test bei unbekannten aber gleichen Varianzen}
+\Bsp{9.3.1.} (Parallelklassen) An einer Fachhochschule werden eine Klasse $A$ von 25 Studierenden und eine Parallelklasse $B$ von 28 Studierenden vom gleichen Dozenten in Mathe unterrichtet. Der Dozent gestaltet jeweils den Unterricht in beiden Klassen gleich. Demzufolge wurden die beiden Klassen gleichzeitig zur gleichen Klausur aufgeboten. Die erreichten Notendurchschnitte waren $\bar{x}_A=3.9$ und $\bar{x}_B=4.2$ und die Standardabweichungen betrugen je $s_A=s_B=1$. Der Dozent stellt sich nun sofort die Frage ob die $B$-Klasse signifikant besser als die $A$-Klasse sei. \Los Beim \Bold{Zweistichproben-$t$-Test} sind folgende \Bold{Voraussetzungen} zu beachten:
+\begin{enumerate}
+ \item Die normalverteilten Grundgesamtheiten $G_1$ und $G_2$ haben die unbekannten Erwartungswerte $\mu_1$ und $\mu_2$ und die unbekannten aber \Bold{gleichen} Varianzen $\sigma_1^2=\sigma_2^2=\sigma^2$ so genannt \Bold{homoskedastischer} Fall. Der Wert von $\sigma^2$ braucht jedoch nicht bekannt zu sein.
+ \item Es sind zuf\"{a}llig zwei Stichproben $x_1,\dots,x_{N_1}$ und $y_1,\dots,y_{N_2}$ aus den normalverteilten Grundgesamtheiten $G_1$ und $G_2$ gew\"{a}hlt.
+\end{enumerate}
+Wir wollen nun wissen, ob sich die Mittelwerte $\bar{x}$ und $\bar{y}$ der gew\"{a}hlten Stichproben signifikant voneinander unterscheiden um herauszufinden, ob die Stichproben aus der gleichen Grundgesamtheit stammen. Dazu formulieren wir die beiden alternativen Hypothesen
+\begin{center}
+\begin{tabular}{l}
+ $H_0:\mu=\bar{x}$, d.h., Stichprobe stammt aus der Grundgesamtheit.\\
+ $H_1:\mu\neq\bar{x}$, d.h., Stichprobe stammt aus unterschiedlichen Grundgesamtheit.
+\end{tabular}
+\end{center}
+Um die Frage zu beantworten berechnen wir die \Bold{gesch\"{a}tzten Mittelwerte} $\bar{x}=\Oneover{N_1}\Sumone{N_1}{i}x_i$ und $\bar{y}=\Oneover{N_2}\Sumone{N_2}{i}y_i$ und die \Bold{gesch\"{a}tzte Varianzen} $s_1^2=\Oneover{N_1-1}\Sumone{N_1}{i}(x_i-\bar{x})^2$ und $s_2^2=\Oneover{N_2-1}\Sumone{N_2}{i}(y_i-\bar{y})^2$ und daraus das \Bold{gewogene Mittel der Varianzen} $s^2=\frac{(N_1-1)s_1^2+(N_2-1)s_2^2}{N_1+N_2-2}$. Mit diesen Werten berechnen wir nun die \Bold{Testgr\"{o}sse} $t=\frac{\bar{x}-\bar{y}}{s}\sqrt{\frac{N_1N_2}{N_1+N_2}}$, welche unter den obigen Voraussetzungen und der Nullhypothese einer Student-$t$-Verteilung mit $n=N_1+N_2-2$ Freiheitsgraden gen\"{u}gt. Damit k\"{o}nnen wir nun nach Vorgabe eines Signifikanzniveaus $\alpha$ die kritische Gr\"{o}sse $t_{n,1-\frac{\alpha}{2}}$ f\"{u}r die zweiseitige Fragestellung bestimmen. Danach ziehen wir wieder den \Bold{statistischen Schluss:}
+\begin{itemize}
+ \item Ist die Testgr\"{o}sse $\Abs{t}<t_{n,1-\frac{\alpha}{2}}$, dann wird die Nullhypothese $H_0$ angenommen, d.h., die Unterschiede zwischen $\bar{x}$ und $\bar{y}$ sind zuf\"{a}lliger Natur.
+ \item Ist die Testgr\"{o}sse $\Abs{t}\geq t_{n,1-\frac{\alpha}{2}}$, dann wird die Nullhypothese $H_0$ auf dem Signifikanzniveau $\alpha$ abgelehnt.
+\end{itemize}
+Sind im Falle unabh\"{a}ngiger Stichproben ihre Umf\"{a}nge gleich, gilt also $N_1=N_2=N$, so vereinfacht sich die Testgr\"{o}sse zu $t=\frac{\bar{x}-\bar{y}}{\sqrt{s_1^2+s_2^2}}\sqrt{N}$
+
+
+
+
+
+\end{document}
