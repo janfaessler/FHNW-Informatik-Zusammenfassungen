@@ -328,6 +328,47 @@ $\sum = \{0,1\}$ \\
 	& $\ra$ ($p_1 \oplus k_1$)
 \end{tabular}
 
+\subsection{Kryptosysteme}
+\begin{description}
+	\item[Kryptosystem:] (P, C, K, e, d)
+	\item[P] Menge der {\color{blue}Klartexte}
+	\item[C] Menge der {\color{red}Geheimtexte}
+	\item[K] Menge der Schlüssel \\
+		$e:K\times P \ra C$ \\
+		$d:K\times C \ra P$ \\ \\
+		$\forall k \varepsilon K$ $\forall p \varepsilon P: d( k, e (k,p))=p$ \\
+		$\ra$ $\forall k \varepsilon K : e (k,-)$ ist {\color{blue}injektiv} \\
+		$\ra$ $\forall k \varepsilon K : d (k,-)$ ist {\color{red}surjektiv} \\
+\end{description}
+
+\subsection{Kryptoanalysis}
+\subsubsection{Ciphertext-only attack}
+\begin{description}
+	\item[Gegeben] $c_i=e_k(p_i)$, i=1, ..., n
+	\item[Gesucht] $p_i$, i= 1, ...,n oder k
+\end{description}
+
+\subsubsection{known-plaintext attack}
+\begin{description}
+	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n
+	\item[Gesucht] k
+\end{description}
+
+\subsubsection{chosen-plaintext attack}
+\begin{description}
+	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n \\
+		$p_i$ nach Wahl des Kryptoanalytikers
+	\item[Gesucht] k
+	\item[Verwendung] DIE Attacke gegen jedes Public-Key System
+\end{description}
+
+\subsubsection{chosen-ciphertext attack}
+\begin{description}
+	\item[Gegeben] ($p_i$, $p_i=d_k(c_i)$), i=1, ..., n \\
+		$c_i$ nach Wahl des Kryptoanalytikers
+	\item[Gesucht] k
+\end{description}
+
 \newpage
 \section{Block-Cipher}
 \begin{description}
@@ -415,47 +456,7 @@ $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2} | \underbrace{1100}_{m_3} | 1
 \end{center}
 
 \newpage
-\section{Kryptosysteme}
-\begin{description}
-	\item[Kryptosystem:] (P, C, K, e, d)
-	\item[P] Menge der {\color{blue}Klartexte}
-	\item[C] Menge der {\color{red}Geheimtexte}
-	\item[K] Menge der Schlüssel \\
-		$e:K\times P \ra C$ \\
-		$d:K\times C \ra P$ \\ \\
-		$\forall k \varepsilon K$ $\forall p \varepsilon P: d( k, e (k,p))=p$ \\
-		$\ra$ $\forall k \varepsilon K : e (k,-)$ ist {\color{blue}injektiv} \\
-		$\ra$ $\forall k \varepsilon K : d (k,-)$ ist {\color{red}surjektiv} \\
-\end{description}
 
-\newpage
-\section{Kryptoanalysis}
-\subsection{Ciphertext-only attack}
-\begin{description}
-	\item[Gegeben] $c_i=e_k(p_i)$, i=1, ..., n
-	\item[Gesucht] $p_i$, i= 1, ...,n oder k
-\end{description}
-
-\subsection{known-plaintext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n
-	\item[Gesucht] k
-\end{description}
-
-\subsection{chosen-plaintext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n \\
-		$p_i$ nach Wahl des Kryptoanalytikers
-	\item[Gesucht] k
-	\item[Verwendung] DIE Attacke gegen jedes Public-Key System
-\end{description}
-
-\subsection{chosen-ciphertext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $p_i=d_k(c_i)$), i=1, ..., n \\
-		$c_i$ nach Wahl des Kryptoanalytikers
-	\item[Gesucht] k
-\end{description}
 
 % Inhalt Ende 
 \end{document} 

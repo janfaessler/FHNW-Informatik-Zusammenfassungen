@@ -10,15 +10,15 @@
 \contentsline {subsubsection}{\numberline {1.7.1}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge}{2}
 \contentsline {subsubsection}{\numberline {1.7.2}Kryptoanalysis}{3}
 \contentsline {subsection}{\numberline {1.8}One-Time-Pad}{4}
-\contentsline {section}{\numberline {2}Block-Cipher}{5}
-\contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{5}
-\contentsline {subsection}{\numberline {2.2}Modi von Blocksipher}{6}
-\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modul (Electornic Code Block)}{6}
-\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modi}{6}
-\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modi (cipher feedback)}{7}
-\contentsline {section}{\numberline {3}Kryptosysteme}{8}
-\contentsline {section}{\numberline {4}Kryptoanalysis}{9}
-\contentsline {subsection}{\numberline {4.1}Ciphertext-only attack}{9}
-\contentsline {subsection}{\numberline {4.2}known-plaintext attack}{9}
-\contentsline {subsection}{\numberline {4.3}chosen-plaintext attack}{9}
-\contentsline {subsection}{\numberline {4.4}chosen-ciphertext attack}{9}
+\contentsline {subsection}{\numberline {1.9}Kryptosysteme}{4}
+\contentsline {subsection}{\numberline {1.10}Kryptoanalysis}{5}
+\contentsline {subsubsection}{\numberline {1.10.1}Ciphertext-only attack}{5}
+\contentsline {subsubsection}{\numberline {1.10.2}known-plaintext attack}{5}
+\contentsline {subsubsection}{\numberline {1.10.3}chosen-plaintext attack}{5}
+\contentsline {subsubsection}{\numberline {1.10.4}chosen-ciphertext attack}{5}
+\contentsline {section}{\numberline {2}Block-Cipher}{6}
+\contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{6}
+\contentsline {subsection}{\numberline {2.2}Modi von Blocksipher}{7}
+\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modul (Electornic Code Block)}{7}
+\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modi}{7}
+\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modi (cipher feedback)}{8}
