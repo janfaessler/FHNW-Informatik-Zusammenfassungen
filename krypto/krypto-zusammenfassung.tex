@@ -535,9 +535,63 @@ $e_k(m)=e_k(0101)=1010=c$
   &$\oplus$&$\to c_1=000$&&$\oplus$&$\to c_2=001$\\
   $\tilde{m_1}=$&$110$&&$\tilde{m_2}=$&$001$
  \end{tabular}
-\section{}
+ 
+\newpage
+\section{RSA}
+\subsection{Schlüsselerzeugung}
+PK = (n,e) \\
+SK = (n,d) \\
+Wir wählen zwei (grosse) Primzahlen p,q $\in \RN$*. $\varphi\neq q$ \\
+$n=p*Q$ \\
+$\varphi(n)=(p-1)(q-1)$ {\color{blue}// $\varphi(n) = |\ZN^*_n|$ }\\
+{\color{blue}Wir wählen $e \in \ZN^*_{\varphi(n)}$} // ggT(e,$\varphi(n))=1$ \\
+{\color{blue} $d:=e^{-1}$ in $\ZN^*_{\varphi(n)}$} // ed=1 in $\ZN^*_{\varphi(n)} \Leftrightarrow$ ed $\equiv$ 1 mod $\varphi(n)$\\ \\
+$\Longrightarrow\varphi(n) | (ed-1)$\\ \\
+$\Longrightarrow$ \fbox{$\exists k \in \ZN:e{\color{red}*d}+{\color{red}k*}\varphi(n))=1$} \\ \\
+$d:=e^{-1}\in \ZN^*_{120}$ : \fbox{$ed+k\varphi(n)=1$} \\
+\\
+\textbf{Beispiel}: \\
+$p=11$, $q=13$ \\
+$n=p*q=143$ \\
+$\varphi(n)=120=2^3*3*5$ \\
+{\color{blue} e:=7} $\Rightarrow$ PK=(143,7) \\
+$\ZN_n=\{0,1,2,3,\dots,n-1\}$ \\
 
+\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	i & $q_i$ & $r_i$ & $s_i$ & $t_i$ \\
+	\hline
+	0 & - & {\color{blue} 120} & {\color{red} 1} & {\color{red} 0} \\
+	1 & {\color{red} 17} & {\color{blue} 7} & {\color{red} 0} & {\color{red} 1}\\
+	\hline
+	&&{\color{red} 1}&{\color{red} 1}&{\color{red} -17} \\
+	\hline
+\end{tabular} {\color{blue} 120=}{\color{red} q}$*${\color{blue} 7+}{\color{red} r} \\ \\
+{\color{blue}$\Longrightarrow (*) \underbrace{e}_{7}*(-17)+1*\underbrace{\varphi(n)}_{120})=1$} {\color{red} // mod $\varphi(n) \Rightarrow$ \fbox{$d \equiv (-17)$ mod $\varphi(n)$}}
 
+\subsection{Verschlüsselung und Entschlüsselung}
+\subsubsection{RSA ist ein Blockcipher}
 
+\begin{description}
+	\item[encryption] : enc \\
+		$\ZN_n \longrightarrow \ZN_n$ \\
+		$m \longrightarrow c^e$ mod n
+	\item[decyption] : dec \\
+		$\ZN_n \longrightarrow \ZN_n$ \\
+		$m \longrightarrow c^d$ mod n
+\end{description} 
+$\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red}SK}((enc_{\color{red}PK}(m)))=m$} \\
+\\
+\subsubsection{Beweis}
+\begin{description}
+	\item[Fall 1:] \hfill \\
+		ggT(m,n)=1 \\
+		$(m^e)^d=m$ in $\ZN_n$ \\
+		Weil ggT(m,n)=1 existiert das Inverse von m: $\underbrace{m^{ed-1}=1}_{\text{Das ist zu Zeigen!}}$ in $\ZN_n$ \\
+		$e*d+k*\varphi(n)=1$ // Konstruktion des Schlüssel \\
+		$\Rightarrow e*d-1=-k*\varphi(n) : m^{ed-1}=m^{-k*\varphi(n)}=(m^{-k})=1$ // Satz von Euler-Fermat  
+	\item[Fall 2:] \hfill \\
+		ggT(m,n)$\neq$1 $\Rightarrow m=l*p$ oder $m=k*q$ \\
+\end{description}
 
 \end{document} 
