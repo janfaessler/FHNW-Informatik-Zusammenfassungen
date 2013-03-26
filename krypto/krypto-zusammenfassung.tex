@@ -457,17 +457,15 @@ $p\Brackal{c}{000\\001\\\dots\\111}\Brackar{cc}{\nearrow&000\\\to&001\\&\dots\\\
  DES&Schlüssellänge& 56\\
  &Blocklänge& 64
 \end{tabular}\\
-\begin{center}
-	\includegraphics[scale=0.2]{horst-feistel.png}
-\end{center}
-\begin{align*}
-	L_1 & := R_0 \\
-	R_1 & := f(R_0,k_1) \oplus L_0
-\end{align*}
-\begin{align*}
-	L_0 & := f(L_1,k_1) \oplus R_1 \\
-	R_0 & := L_1
-\end{align*}
+\begin{tabular}{p{7.5cm}lr}
+\begin{tabular}{cc}
+	$L_1$ & $:= R_0$ \\
+	$R_1$ & $:= f(R_0,k_1) \oplus L_0$ \\
+	$L_0$ & $:= f(L_1,k_1) \oplus R_1$ \\
+	$R_0$ & $:= L_1$
+\end{tabular} & \includegraphics[scale=0.2]{horst-feistel.png} \\
+\end{tabular}
+
 \textbf{Die $f$-Funktion:} \\
 \begin{center}
 	\includegraphics[scale=0.2]{funktion.png}
