@@ -145,7 +145,44 @@
 \subsection{Modulare Division}
 
 \subsection{Modulares Potenzieren}
-
+Seien $a,b,n \in \ZN$ und $b,n > 1$. Berechnen Sie $a^b$ mod $n$. \\
+Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechnen verwenden wir ein spezielles Verfahren:
+\begin{itemize}
+	\item[1.)] binäre Darstellung von b: \\
+		$b=\sum_{i=0}^k \alpha_i2^i$ mit $\alpha \in \{0,1\}$.
+	\item[2.)] Anwendung auf a: \\
+		$a^b$ = $a^{\sum_{i=0}^k \alpha_i2^i}$\\
+		$a^b$ = $\prod_{i=0}^{k} a^{\alpha_i2^i}$ \\
+		$a^b$ = $a^{\alpha_k2^k}*a^{\alpha_{k-1}2^{k-1}}*a^{\alpha_{k-2}2^{k-2}} \dots  a^{\alpha_12}*a^{\alpha_0}$ \\
+		$a^b$ = $($\dots$((a^{a_k})^2*a^{a_{k-1}})^2$\dots$*a^{\alpha_1})^2*a^{\alpha_0}$
+	\item[3.)] Das Verfahren besteht nun darin, den letzten Ausdruck von innen nach aussen auszuwerten und nach jeder Multiplikation das Resultat modulo $n$ zu rechnen.
+\end{itemize}
+\textbf{Beispiel:} $977^{2222}$ mod $11$
+\begin{itemize}
+	\item[1.)] $2222_{10} \blacktriangleright$ bin $= 100010101110_2$
+	\item[2.)] ( \dots $ (977)^2)^2)^2)^2*977)^2)^2*977)^2)^2*977)^2*977)^2*977)^2 {\color{gray} *(0*977)}$
+	\item[3.)] Anwendung des Verfahren: \\
+	\begin{tabular}{l l l}
+	 977 & mod 11 & = 9 \\
+	 $9^2$ & mod 11 & = 4 \\
+	 $4^2$ & mod 11 & = 5 \\
+	 $5^2$ & mod 11 & = 3 \\
+	 $3^2$ & mod 11 & = 9 \\
+	 $9*977$ & mod 11 & = 4\\
+	 $4^2$ & mod 11 & = 5\\
+	 $5^2$ & mod 11 & = 3\\
+	 $3*977$ & mod 11 & = 5\\
+	 $5^2$ & mod 11 & = 3\\
+	 $3^2$ & mod 11 & = 9\\
+	 $9*977$ & mod 11 & = 4\\
+	 $4^2$ & mod 11 & = 5\\
+	 $5*977$ & mod 11 & = 1\\
+	 $1^2$ & mod 11 & = 1\\
+	 $1*977$ & mod 11 & = 9\\
+	 $9^2$ & mod 11 & = \textbf{4}
+	\end{tabular}
+\end{itemize}
+ 
 \section{Klassische Kryptographie}
 \setcounter{subsection}{-1}
 \subsection{Repetition}
