@@ -139,9 +139,9 @@
 
 \newpage
 \setcounter{page}{1}
-\setcounter{section}{0}
 \pagenumbering{arabic}
 
+\setcounter{section}{-1}
 \section{Mathematische Grundlagen}
 \subsection{Modulare Division}
 Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$} .\\
@@ -274,6 +274,29 @@ Information über die Sprache des Klartextes:
 \end{tabular}\\
 GCX kommt 2x for so können wir eine Annahme zur Periode $p$ machen. Die Periode ist dann $c\cdot p$. Dies kann aber auch zufällig passieren.
 \subsection{Playfair-Cipher}
+\subsubsection{Beschreibung}
+Bei der Playfair-Methode handelt es sich um eine Substitution, die monoalphabetisch und bigraphisch ist, das heißt, es kommt nur ein einziges  festes Alphabet zur Anwendung und als zu verschlüsselnde Symbole werden Bigramme, also jeweils ein Paar (zwei) Buchstaben benutzt.
+\begin{itemize}
+	\item[1.)] \textbf{Vorbereitung des Schlüssel-Quadrates}:
+		\begin{itemize}
+			\item[a.)] Von links nach rechts alle Buchstaben streichen die bereits einmal vorgekommen sind im Schlüssel.
+			\item[b.)] Die Buchstaben in ein 5x5 Quadrat füllen und danach mit den restlichen Bustaben des Alphabetes der Reihe nach auffüllen. Die Buchstaben I und J kommen zusammen in ein Feld.
+		\end{itemize}
+	\item[2.)] \textbf{Preprocessing}: \\
+		Zwischen alle doppelten Buchstaben im Klartext ein X einsetzen und die Buchstaben in Zweierpaare unterteilen. Falls es nicht aufgeht kommt am Ende noch ein X.
+	\item[3.] \textbf{Verschlüsselung}:
+		\begin{itemize}
+ 			\item Falls 2 auf gleicher Zeile: Beide Buchstaben um eins nach rechts
+			\item Falls 2 auf gleicher Spalte: Beide Buchstaben um eins nach unten
+			\item Falls 2 nicht auf gleicher Zeile/Spalte: Man nimmt die Buchstaben die auf seiner Spalte und auf des anderen Zeile liegen.\\
+				\begin{tabular}{llll}
+  					L&M&N&Q\\
+					$\downarrow$&&&$\uparrow$\\
+  					U&V&W&X\\
+				\end{tabular}
+		\end{itemize}
+\end{itemize}
+\subsubsection{Beispiel}
 \begin{tabular}{|c|}\hline
  HARYP\\
  OTEBC\\
@@ -288,16 +311,7 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
  Preprocessed&HA&LX&LO&ZU&SA&MX&ME&NX\\
  Secret&AR&QU&UD&UV&\dots\\
 \end{tabular}\\
-\begin{itemize}
- \item Falls 2 auf gleicher Zeile: Beide Buchstaben um eins nach rechts
- \item Falls 2 auf gleicher Spalte: Beide Buchstaben um eins nach unten
- \item Falls 2 nicht auf gleicher Zeile/Spalte: Man nimmt die Buchstaben die auf seiner Spalte und auf des anderen Zeile liegen.\\
- \begin{tabular}{llll}
-  L&M&N&Q\\
-  $\downarrow$&&&$\uparrow$\\
-  U&V&W&X\\
- \end{tabular}
-\end{itemize}
+
 
 \subsection{Koinzidenzindex (index of coincidence)}
 \begin{enumerate}
@@ -313,7 +327,7 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 		\end{tabular} \\
 		mit $0\leq p_i \leq 1$ und $\sum_{i=1}^{26} p_i=1$
 	\item[IC:] Grösse, die von der Sprache abhängt, aber invariant ist gegenüber Cäsar-Verschiebungen.
-	\item[Frage:] Was bedeutet: Was bedeutet \fbox{$IC_L:=\Sumone{26}{1}P_i^2$} \Bold{i}ndex of \Bold{c}oincidence L: Language
+	\item[Frage:] Was bedeutet \fbox{$IC_L:=\sum^{26}_{i=1}p_i^2$}? \Bold{i}ndex of \Bold{c}oincidence L: Language
 	\item[Bemerkung:] \hfill \\
 		Jede Sprache hat ihren eigenen Konzidenzindex \\
 		$IC_{German}=0.0766$ \\
