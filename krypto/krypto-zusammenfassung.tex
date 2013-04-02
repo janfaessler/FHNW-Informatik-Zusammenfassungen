@@ -143,6 +143,29 @@
 
 \section{Mathematische Grundlagen}
 \subsection{Modulare Division}
+Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$} .\\
+Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$.
+\\\\
+Beispiel: $23/27$ mod $31$
+\\\\
+Zuerst $ggT(27,31)$ mittels euklidischem Algorithmus ermitteln:\\
+$31 = 1 * {\color{red}27} + {\color{blue}4}$\\
+${\color{red}27} = 6 * {\color{blue}4} + {\color{green}3}$ \\
+${\color{blue}4} = 1 * {\color{green}3} + {\color{brown}1}$\\
+${\color{green}3} = 3 * {\color{brown}1} + 0 \Longrightarrow$ $ggT(27,31) = 1 \rightarrow$  modulare Division möglich \\
+\\
+Jetzt fahren wir mit dem erweiterten euklidischen Algorithmus fort, um $c$ zu ermitteln:. Dafür müssen wir zuerst die lineare diophantische Gleichung $23 = 27c + 31x$ lösen:\\
+
+${\color{brown}1} = {\color{blue}4} - 1 * {\color{green}3}$\\
+${\color{brown}1} = {\color{blue}4} - 1 * ({\color{red}27} - 6 * {\color{blue}4})$  {\color{gray}// ersetze $3$ durch diese Klammer, indem man obigen Algorithmus rückwärts durchläuft}\\
+${\color{brown}1} = {\color{blue}4} - 1 * {\color{red}27} + 6 * {\color{blue}4} = 7 * {\color{blue}4} - 1 * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
+${\color{brown}1} = 7 * (31 - 1 * {\color{red}27}) - 1 * {\color{red}27}$  {\color{gray}// ersetze {\color{blue}4} durch Klammer}\\
+${\color{brown}1} = 7 * 31 - 7 * {\color{red}27}) - 1 * {\color{red}27} = \textbf{7} * 31 \textbf{ -8} * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
+$23 * 1 = 23 * \textbf{7} * 31 + 23 * \textbf{(-8)} * {\color{red}27}$  {\color{gray}// erweitern mit 23}\\
+$\Longrightarrow$ uns interessiert nur $c = 23 * (-8) = -184$ was der \textbf{Restklasse 2} (von Modulo 31) entspricht. Dies ermittelt man, indem man zu -184 so oft 31 addiert, bis man eine positive Zahl erhält.\\
+Die gesuchte Gleichung lautet also: $27 * 2 \equiv 23$ mod $31$.
+
+
 
 \subsection{Modulares Potenzieren}
 \subsubsection{Theorie}
