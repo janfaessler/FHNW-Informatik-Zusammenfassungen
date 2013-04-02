@@ -314,8 +314,8 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 
 
 \subsection{Koinzidenzindex (index of coincidence)}
-\begin{enumerate}
-  \item \begin{description}
+Der Koinzidenzindex ist die Grösse, die von der Sprache abhängt, aber invariant ist gegenüber Cäsar-Verschiebungen.
+\begin{description}
 	\item[Gegeben] \hfill \\
 		Alphabet Alphabet $\Pota:=\{A,B,C,\dots,Z\}$\\
 		Sprache: Englisch \\ 
@@ -326,26 +326,19 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 			$p_1$ & $p_2$ & ... & $p_3$ \\
 		\end{tabular} \\
 		mit $0\leq p_i \leq 1$ und $\sum_{i=1}^{26} p_i=1$
-	\item[IC:] Grösse, die von der Sprache abhängt, aber invariant ist gegenüber Cäsar-Verschiebungen.
-	\item[Frage:] Was bedeutet \fbox{$IC_L:=\sum^{26}_{i=1}p_i^2$}? \Bold{i}ndex of \Bold{c}oincidence L: Language
 	\item[Bemerkung:] \hfill \\
 		Jede Sprache hat ihren eigenen Konzidenzindex \\
 		$IC_{German}=0.0766$ \\
 		$IC_{Arabic}=0.0759$ \\
 		$IC_{flat}=0.0385$ (Alle Buchstaben haben die gleiche häufigkeit: $p_1=p_2=...=p_{26}=\frac{1}{26}$)\\
 		\textbf{Je unregelmässiger die buchstabenhäufigkeit, umso grösser der Index.}
-	\end{description}
- \item  \begin{description}
-	\item[Gegegen:] \hfill \\
-		Sei $F$ eine Buchstabenfolge der Länge $n$\\
-		\Bold{Bsp:} $F=$''$AXCAABCXA$''\\
-		\begin{tabular}{l}
-		  $n_1=\# A's$ in $F$\\
-		  $n_1=\# B's$ in $F$\\
-		  $\vdots$
-		\end{tabular}\\
+	\item[Berechnung] \hfill \\
+		\fbox{$\mathbf{IC_L} = \frac{\sum_{i=A}^{Z}n_i(n_i -1)}{N(N-1)}$} \\\\
+		In seiner grundlegenden Form wird der Koinzidenzindex ermittelt, indem man die Einzelanzahlen  der unterschiedlichen Einzelzeichen $n_i$ eines Geheimtextes zählt, also beispielsweise wie oft der Buchstabe A auftritt, wie oft B, und so weiter. Diese werden nach oben angegebener Formel mit den um 1 verminderten Einzelanzahlen multipliziert und für alle Buchstaben (beispielsweise von A bis Z) aufsummiert. Die Summe wird schließlich dividiert durch die Gesamtanzahl N der Buchstaben des Textes (also der Textlänge) sowie die um 1 verminderte Textlänge. \\ \\
+		 \fbox{$\mathbf{IC_L} = \sum_{i=1}^n p_i^2$} \\ \\
+		Denn der Erwartungswert $IC_L$ für die Sprache $S$ lässt sich aus den Buchstabenhäufigkeiten nach der Formel  berechnen, wobei $p_i$ die Wahrscheinlichkeit des $i$-ten Zeichens des Alphabets in Texten der entsprechenden Sprache angibt.
 	\item[Frage:] Wie gross ist die Wahrscheinlichkeit zwei gleiche Buchstaben aus $F$ herauszugreifen?
-	\item[Definition] \fbox{$IC_F=\frac{\Sum{26}{1}{n_i\choose2}}{{n\choose2}}$}
+	\item[Definition] \fbox{$\mathbf{IC_F}=\frac{\Sum{26}{1}{n_i\choose2}}{{n\choose2}}$} {\color{gray}${n \choose k}=\frac{n!}{k!*(n-k)!}$}
 	\item[Bsp:] \hfill \\
 		Alphabet $\Sigma := \{0,1\}$ \\
 		F = 00110111101 \\
@@ -359,8 +352,8 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 		F $\mapsto$ Perm(F) \\
 		F = "{}AXCA\dots" $\mapsto$ Perm(F) = "{}CBYC\dots" \\
 		\fbox{$IC_F=IC_{Perm(F)}$}
-	\end{description}
-\end{enumerate}
+\end{description}
+
 \subsection{Vigenères Chipres}
 \subsubsection{Beschreibung}
 Die im 16. Jahrhundert entstandene Vigenère-Verschlüsselung galt lange als sicherer Chiffrieralgorithmus. Ein Schlüsselwort bestimmt, wie viele und welche Alphabete genutzt werden. Die Alphabete leiten sich aus der Caesar-Substitution ab.

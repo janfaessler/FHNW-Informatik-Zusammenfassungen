@@ -21,9 +21,9 @@
 \contentsline {subsubsection}{\numberline {1.6.5}Kryptoanalysis des Vigen\`{e}re-Cipher}{7}
 \contentsline {subsection}{\numberline {1.7}One-Time-Pad}{8}
 \contentsline {subsection}{\numberline {1.8}Kryptosysteme}{8}
-\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{8}
-\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{8}
-\contentsline {subsubsection}{\numberline {1.9.2}known-plaintext attack}{8}
+\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{9}
+\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{9}
+\contentsline {subsubsection}{\numberline {1.9.2}known-plaintext attack}{9}
 \contentsline {subsubsection}{\numberline {1.9.3}chosen-plaintext attack}{9}
 \contentsline {subsubsection}{\numberline {1.9.4}chosen-ciphertext attack}{9}
 \contentsline {section}{\numberline {2}Block-Cipher}{10}
