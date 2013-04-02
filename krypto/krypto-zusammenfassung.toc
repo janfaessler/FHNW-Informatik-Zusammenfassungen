@@ -2,8 +2,10 @@
 \contentsline {section}{\numberline {1}Mathematische Grundlagen}{1}
 \contentsline {subsection}{\numberline {1.1}Modulare Division}{1}
 \contentsline {subsection}{\numberline {1.2}Modulares Potenzieren}{1}
-\contentsline {section}{\numberline {2}Klassische Kryptographie}{1}
-\contentsline {subsection}{\numberline {2.0}Repetition}{1}
+\contentsline {subsubsection}{\numberline {1.2.1}Theorie}{1}
+\contentsline {subsubsection}{\numberline {1.2.2}Beispiel}{1}
+\contentsline {section}{\numberline {2}Klassische Kryptographie}{2}
+\contentsline {subsection}{\numberline {2.0}Repetition}{2}
 \contentsline {subsection}{\numberline {2.1}Klassische Verschl\IeC {\"u}sselungsverfahren}{2}
 \contentsline {subsection}{\numberline {2.2}Spezielles Bsp f\IeC {\"u}r Substitution Homophone Verschl\IeC {\"u}sselung}{2}
 \contentsline {subsection}{\numberline {2.3}Kasiski-Text (monographisch \& polyalphabetisch)}{2}
@@ -18,15 +20,15 @@
 \contentsline {subsubsection}{\numberline {2.9.1}Ciphertext-only attack}{6}
 \contentsline {subsubsection}{\numberline {2.9.2}known-plaintext attack}{6}
 \contentsline {subsubsection}{\numberline {2.9.3}chosen-plaintext attack}{6}
-\contentsline {subsubsection}{\numberline {2.9.4}chosen-ciphertext attack}{6}
-\contentsline {section}{\numberline {3}Block-Cipher}{7}
-\contentsline {subsection}{\numberline {3.1}Data Encription Standard (DES)}{7}
-\contentsline {subsection}{\numberline {3.2}Modi von Block-Cipher}{8}
-\contentsline {subsubsection}{\numberline {3.2.1}ECB-Modus (electronic code block)}{8}
-\contentsline {subsubsection}{\numberline {3.2.2}CBC-Modus (cipher block chaining)}{8}
-\contentsline {subsubsection}{\numberline {3.2.3}CFB-Modus (cipher feedback)}{9}
-\contentsline {section}{\numberline {4}RSA}{10}
-\contentsline {subsection}{\numberline {4.1}Schl\IeC {\"u}sselerzeugung}{10}
-\contentsline {subsection}{\numberline {4.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{10}
-\contentsline {subsubsection}{\numberline {4.2.1}RSA ist ein Blockcipher}{10}
-\contentsline {subsubsection}{\numberline {4.2.2}Beweis}{10}
+\contentsline {subsubsection}{\numberline {2.9.4}chosen-ciphertext attack}{7}
+\contentsline {section}{\numberline {3}Block-Cipher}{8}
+\contentsline {subsection}{\numberline {3.1}Data Encription Standard (DES)}{8}
+\contentsline {subsection}{\numberline {3.2}Modi von Block-Cipher}{9}
+\contentsline {subsubsection}{\numberline {3.2.1}ECB-Modus (electronic code block)}{9}
+\contentsline {subsubsection}{\numberline {3.2.2}CBC-Modus (cipher block chaining)}{9}
+\contentsline {subsubsection}{\numberline {3.2.3}CFB-Modus (cipher feedback)}{10}
+\contentsline {section}{\numberline {4}RSA}{11}
+\contentsline {subsection}{\numberline {4.1}Schl\IeC {\"u}sselerzeugung}{11}
+\contentsline {subsection}{\numberline {4.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{11}
+\contentsline {subsubsection}{\numberline {4.2.1}RSA ist ein Blockcipher}{11}
+\contentsline {subsubsection}{\numberline {4.2.2}Beweis}{11}

@@ -145,6 +145,7 @@
 \subsection{Modulare Division}
 
 \subsection{Modulares Potenzieren}
+\subsubsection{Theorie}
 Seien $a,b,n \in \ZN$ und $b,n > 1$. Berechnen Sie $a^b$ mod $n$. \\
 Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechnen verwenden wir ein spezielles Verfahren:
 \begin{itemize}
@@ -157,7 +158,8 @@ Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechn
 		$a^b$ = $($\dots$((a^{a_k})^2*a^{a_{k-1}})^2$\dots$*a^{\alpha_1})^2*a^{\alpha_0}$
 	\item[3.)] Das Verfahren besteht nun darin, den letzten Ausdruck von innen nach aussen auszuwerten und nach jeder Multiplikation das Resultat modulo $n$ zu rechnen.
 \end{itemize}
-\textbf{Beispiel:} $977^{2222}$ mod $11$
+\subsubsection{Beispiel}
+$977^{2222}$ mod $11$
 \begin{itemize}
 	\item[1.)] $2222_{10} \blacktriangleright$ bin $= 100010101110_2$
 	\item[2.)] ( \dots $ (977)^2)^2)^2)^2*977)^2)^2*977)^2)^2*977)^2*977)^2*977)^2 {\color{gray} *(0*977)}$
@@ -182,7 +184,8 @@ Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechn
 	 $9^2$ & mod 11 & = \textbf{4}
 	\end{tabular}
 \end{itemize}
- 
+
+\newpage
 \section{Klassische Kryptographie}
 \setcounter{subsection}{-1}
 \subsection{Repetition}
