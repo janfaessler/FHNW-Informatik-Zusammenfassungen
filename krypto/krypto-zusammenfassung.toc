@@ -12,14 +12,17 @@
 \contentsline {subsection}{\numberline {2.4}Playfair-Cipher}{4}
 \contentsline {subsection}{\numberline {2.5}Koinzidenzindex (index of coincidence)}{4}
 \contentsline {subsection}{\numberline {2.6}Vigen\IeC {\`e}res Chipres}{5}
-\contentsline {subsubsection}{\numberline {2.6.1}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{5}
-\contentsline {subsubsection}{\numberline {2.6.2}Kryptoanalysis des Vigen\`{e}re-Cipher}{5}
+\contentsline {subsubsection}{\numberline {2.6.1}Beschreibung}{5}
+\contentsline {subsubsection}{\numberline {2.6.2}Beispiel}{5}
+\contentsline {subsubsection}{\numberline {2.6.3}Tabelle}{5}
+\contentsline {subsubsection}{\numberline {2.6.4}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{5}
+\contentsline {subsubsection}{\numberline {2.6.5}Kryptoanalysis des Vigen\`{e}re-Cipher}{6}
 \contentsline {subsection}{\numberline {2.7}One-Time-Pad}{7}
 \contentsline {subsection}{\numberline {2.8}Kryptosysteme}{7}
-\contentsline {subsection}{\numberline {2.9}Kryptoanalysis}{7}
-\contentsline {subsubsection}{\numberline {2.9.1}Ciphertext-only attack}{7}
-\contentsline {subsubsection}{\numberline {2.9.2}known-plaintext attack}{7}
-\contentsline {subsubsection}{\numberline {2.9.3}chosen-plaintext attack}{7}
+\contentsline {subsection}{\numberline {2.9}Kryptoanalysis}{8}
+\contentsline {subsubsection}{\numberline {2.9.1}Ciphertext-only attack}{8}
+\contentsline {subsubsection}{\numberline {2.9.2}known-plaintext attack}{8}
+\contentsline {subsubsection}{\numberline {2.9.3}chosen-plaintext attack}{8}
 \contentsline {subsubsection}{\numberline {2.9.4}chosen-ciphertext attack}{8}
 \contentsline {section}{\numberline {3}Block-Cipher}{9}
 \contentsline {subsection}{\numberline {3.1}Data Encription Standard (DES)}{9}

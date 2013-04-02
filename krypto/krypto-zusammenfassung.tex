@@ -348,6 +348,17 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 	\end{description}
 \end{enumerate}
 \subsection{Vigenères Chipres}
+\subsubsection{Beschreibung}
+Die im 16. Jahrhundert entstandene Vigenère-Verschlüsselung galt lange als sicherer Chiffrieralgorithmus. Ein Schlüsselwort bestimmt, wie viele und welche Alphabete genutzt werden. Die Alphabete leiten sich aus der Caesar-Substitution ab.
+\subsubsection{Beispiel}
+Das Schlüsselwort sei „AKEY“, der Text „geheimnis“. Vier Caesar-Substitutionen verschlüsseln den Text. Die erste Substitution ist eine Caesar-Verschlüsselung mit dem Schlüssel „A“. „A“ ist der erste Buchstabe im Alphabet. Er verschiebt den ersten Buchstaben des zu verschlüsselnden Textes, das „g“, um 0 Stellen, es bleibt „G“. Der zweite Buchstabe des Schlüssels, das „K“, ist der elfte Buchstabe im Alphabet, er verschiebt das zweite Zeichen des Textes, das „e“, um zehn Zeichen. Aus „e“ wird ein „O“ (siehe Tabelle). Das dritte Zeichen des Schlüssels („E“) verschiebt um 4, „Y“ um 24 Stellen. Die Verschiebung des nächsten Buchstabens des Textes beginnt wieder bei „A“, dem ersten Buchstaben des Schlüssels: \\ \\
+\begin{tabular}{l c c c c c c c c c }
+	\textbf{Klartext}: & g & e & h & e & i & m & n & i & s \\
+	\textbf{Schlüssel}: & A & K & E & Y & A & K & E & Y & A \\
+	\textbf{Geheimtext}: & G & O & L & C & I & W & R & G & S 
+\end{tabular}
+\subsubsection{Tabelle}
+
 \subsubsection{Berechnung der Schlüssellänge eines Vigen\`{e}re-Cipher}
 \begin{description}
 	\item[Gegeben] \hfill \\
