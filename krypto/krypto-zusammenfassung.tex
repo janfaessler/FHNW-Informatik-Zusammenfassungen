@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{ulem}
 \usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+\usepackage{tikz}
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
@@ -712,6 +713,146 @@ $\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red
 		ggT(m,n)$\neq$1 $\Rightarrow m=l*p$ oder $m=k*q$ \\
 \end{description}
 
+\subsection{Hastad Attac}
+\textbf{RSA} (n,e), (n,d) \\
+\\
+ \\
+\begin{tabular}{l l l l l}
+    & & {\color{red} $e=3$} & & $=x$ \\
+	&  & Bob $(n_1,e)$ & : {\color{red}$c_1$} & $= m^3$ mod $n_1$\\
+	&$\nearrow$  \\
+	Alice & $\rightarrow$ & Jon $(n_2,e)$ & : {\color{red}$c_2$} & $= m^3$ mod $n_2$\\
+	& $\searrow$ \\
+	& & Paul $(n_3,e)$ & : {\color{red}$c_3$} & $= m^3$ mod $n_3$\\
+\end{tabular}
+
+$\underbrace{x}_{m^3} = c_1 y_1 M_1 + c_2 y_2 M_2 + c_3 y_3 M_3$ mod $n_1n_2n_3$ \\ 
+
+\begin{tabular}{p{5cm}  p{5cm} l }
+	$l=n_1n_2n_3$ & $y_iM_i\equiv 1$ mod $n_i$ & $y_i{\color{red}M_i} + \beta {\color{red}n_i}=1$\\
+	$M_1 = \frac{l}{n_1} = n_2n_3$ \\
+	$M_2 = \frac{l}{n_2} = n_1n_3$ \\
+	$M_3 = \frac{l}{n_3} = n_1n_2$ \\
+\end{tabular} \\ \\
+\\
+\begin{tabular}{p{5cm}  p{5cm} l }
+	$m < min(n_1,n_2,n_3)$ & $x\equiv2$ mod $5$ & $crt([2,1,5],[5,7,9])$ \\
+	& $x\equiv1$ mod $7$ \\
+	$m*m*m < n_1n_2n_3$ & $x\equiv5$ mod $9$ & $y_1\equiv M_1.inverse\_mod(n_1)$ \\
+\end{tabular} \\ \\
+\\
+\begin{tabular}{l l l}
+	$\ZN_{n_1n_2n_3}$ & $\rightarrow$ & $\ZN_{n_1}$ x $\ZN_{n_2}$ x $\ZN_{n_3}$ \\
+	x & $\rightarrow$ & (x mod $n1$,x mod $n_2$, x mod $n_3$) \\
+	\\
+	x & $\equiv$ 2 mod 5 & crt([2,1,5],[5,7,9]) \\
+	x & $\equiv$ 1 mod 7 & $\rightarrow$ 302 \\
+	x & $\equiv$ 5 mod 9 & $y_1 = M_1.inverse\_mod(n_1)$
+\end{tabular}
+
+\subsection{Bellare-Rogenwog plaintext-awarnes encription scheme}
+\begin{description}
+	\item[Def.] \hfill \\
+		Ein Public-ky-Verschl. System heisst {\color{red} plaintext aware} \\
+		$\Longleftrightarrow$ Es ist (praktisch) unmöglich einen {\color{red}gültigen} Ciphertext herzustellen, ohne den Plaintext zu kennen.
+	\item[Gegeben] \hfill \\
+		$f: \ZN^k_2 \longmapsto \ZN^k_2$ trapdoor Permutation (zb RSA) 
+	\item[Bsp.] \hfill \\
+		$k=1024$ $k_0=128$ $k_1=128$
+\end{description}
+$m=$Nachricht \\ 
+$|m|\leq768$ \\ 
+{\color{red} $r=$ random number} \\ \\
+$\Brackar{l}{G: \ZN^{k_1}_2 \longrightarrow \ZN^{k-k_1}_2 \\ G: \ZN^{k-k_1}_2 \longrightarrow \ZN^{k_1}_2}$ "random" funktion
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\multicolumn{1}{c}{$k-k_0-k_1$}&\multicolumn{1}{c}{$k_0$}&\multicolumn{1}{c}{$k_1$}\\\hline
+$m$ $\mid\mid$ padding & $0\dots\dots0$&{\color{red}$r$}\\\hline
+\multicolumn{2}{c}{\raisebox{.5\normalbaselineskip}{$\underbrace{\hspace*{4cm}}$}}&\multicolumn{1}{c}{\raisebox{.5\normalbaselineskip}{$\underbrace{\hspace*{3cm}}$}}
+\end{tabular}\\
+ \begin{tikzpicture}
+\tikzstyle{every node}=[draw,shape=circle];
+\node (G) at (0,0) {$G$};
+\node (plus) at (-2,0) {$+$};
+\node (H) at (0,-2) {$H$};
+\node (plus2) at (2,-2) {$+$};
+\draw [->] (G) -- (plus);
+\draw [->] (H) -- (plus2);
+\draw [->] (-2,1) -- (plus);
+\draw [->] (2,1) -- (plus2);
+\draw [->] (2,0) -- (G);
+\draw [->] (plus) -- (-2,-3);
+\draw [->] (plus2) -- (2,-3);
+\draw [->] (-2,-2) -- (H);
+\end{tikzpicture}\\
+\begin{tabular}{|c|c|}
+\multicolumn{1}{c}{$\overbrace{\hspace*{4cm}}$}&\multicolumn{1}{c}{$\overbrace{\hspace*{5cm}}$}\\\hline
+($m$ $\mid\mid$ padding $\mid 0\dots\dots0)\oplus G(r)$&$H((m\mid\mid$ padding $\mid 0\dots\dots0)\oplus G(r))\oplus r$\\\hline
+\end{tabular}\\
+\end{center}
+
+
+\subsection{RSA-Probleme}
+\subsubsection{Kleines $e$}
+$p=next\_probable\_prime(2^{513}+\dots)$ \\
+$q=next\_probable\_prime(2^{513}+\dots)$ \\
+$n=p*q$ \\
+$\phi=(p-1)*(q-1)$ \\
+$e=3$ \\
+$d=e.inverse\_mod(n)$ \\
+${\color{red}PK =(n,e), SK=(n,e)}$ \\
+$m=500000001230$ \\
+$c=m.powermod(3,n)$\\
+$cc=m^3$ \\
+$c==cc$? \\
+{\color{blue}
+$\Rightarrow$ Alle Zahlen ($m$) die kleiner sind als $n$ werden nicht verschlüsselt. \\
+$\Rightarrow$ Dies lässt sich mit einem grösseren $e$ lösen.
+}
+
+\newpage
+\section{Keltenbrüche}
+\begin{description}
+	\item[Definition] \hfill \\
+		Ein Ausdruck der From $a_0 + \frac{1}{a_1+\frac{1}{a_2+ \frac{1}{a_3+\frac{1}{a_n}}}}$ mit $a_0 \in \ZN$ \& $a_1,a_2,a_3$ \dots $\in \NN$* nennen wir endliche (reguläre) Keltenbrüche.
+	\item[Notation] \hfill \\
+		Wir schreiben dafür: $<a_0;a_1,a_2,a_2,$ \dots $,a_n>$
+	\item[Entwicklung (KE)] \hfill \\
+		Sei $a \in \QN \backslash \ZN$ // $\RN \backslash \ZN$ \\
+		$\xi_0:=a$ \\
+		$x_0:=[\xi_0]$ \\
+		{\color{red}if} $\xi_0-x_0 \neq 0$ \\
+		$\xi_1:=\frac{1}{\xi_0-x_0}$ \\
+		$x_1:=[\xi_1]$ \\
+		{\color{red}if} $\xi_1-x_1 \neq 0$ \\
+		$\xi_2:=\frac{1}{\xi_1-x_1}$ \\
+		$x_2:=[\xi_2]$
+	\item[Beispiel] \hfill \\
+		$\xi_0=\frac{37}{7}$ \\
+		$x_0=[\xi_0]={\color{red}5}$ \\
+		$\xi_1=\frac{1}{\xi_0-x_0}=\frac{1}{\frac{2}{7}}=\frac{7}{2}$ \\
+		$x_1=[\xi_1]={\color{red}3}$ \\
+		$\xi_2=\frac{1}{\xi_1-x_1}=\frac{1}{\frac{1}{2}}=2$ \\
+		$x_2=[\xi_2]={\color{red}2}$ \\
+		{\color{red} Ende} $\Rightarrow \frac{37}{7}=<5;3,2>$ \\
+	\item[euklidischer Algorithmus] \hfill \\
+		$\Brackar{l}{37={\color{red}5}*7+2 \\\\ 07={\color{red}3}*2+1 \\\\ 02={\color{red}2}*1}$
+		\begin{tabular}{l}
+			$\frac{37}{7}=5+\frac{2}{7}$ \\\\
+			$\frac{7}{2}=3+\frac{1}{2}$ // $\frac{1}{\frac{7}{2}}=\frac{1}{3+\frac{1}{2}}$\\\\
+			$\frac{2}{1}=2+\frac{0}{1}$ \\
+		\end{tabular}  
+	\item[Konvergente] \hfill \\
+		Sei $a \in \QN \backslash \ZN (\RN \backslash \ZN)$ durch die KE gegeben: $a = <a_0;a_1,a_2,a_3,$ \dots, $a_n>$ \\
+		Die Brüche: $<a_0>$, $<a_0;a_1>$, $<a_0;a_1,a_2>$,$<a_0;a_1,a_2,a_3>$, \dots, $<a_0;a_1,a_2,a_3,$\dots,$a_n>$ heissen die Konvergenten a.
+	\item[Beispiel] \hfill \\
+		$a=\frac{37}{7}$ \\
+		Konvergenten: $5, 5+\frac{1}{3}=\frac{16}{3},\frac{37}{7}$ \\
+		Sage: continued\_fraction\_list(37/7, partial\_convergents=True)
+\end{description}
+
+\newpage
+\section{Uebungen}
 \section*{Serie 4}
 \subsection*{Aufgabe 1}
 $m=$\begin{tabular}{|c|c|c|c|}\hline
