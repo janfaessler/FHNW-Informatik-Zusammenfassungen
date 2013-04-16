@@ -726,12 +726,8 @@ $m=$\begin{tabular}{|c|c|c|c|}\hline
 \Bold{Annahme:} 
 \begin{tabular}{lll}
  &$\nearrow$&$c_1:=m^3$ mod $n_1$\\
- Alice&$\to$&$c_2:=m^3$ mod $n_2$\\
- $m$&$c_3:=m^3$ mod $n_3$
-\end{tabular}\\
-\Bold{$e=3$ für alle Teilnehmer}\\
-$ggT(n_i,n_j)=1$, wenn $i\neq j$\\
-$m<min(n_1,n_2,n_3)$
+ &
+\end{tabular}
 
 \section*{Serie 5}
 \subsection*{Aufgabe 1}

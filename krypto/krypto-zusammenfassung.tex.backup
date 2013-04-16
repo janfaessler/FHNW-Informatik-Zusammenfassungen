@@ -721,18 +721,6 @@ $m=$\begin{tabular}{|c|c|c|c|}\hline
 \begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
  1&1&1&1&0&0&0&0\\\hline
 \end{tabular} $IV=c_0$ (bekannt)
-\subsection*{Aufgabe 4 (Broadcast-attack)}
-\Bold{Bem:} Sei $n=100$, $e=3$, $m\in\{0,1,2,3,4\}$, $m^e=(m^e$ mod $n)$\\
-\Bold{Annahme:} 
-\begin{tabular}{lll}
- &$\nearrow$&$c_1:=m^3$ mod $n_1$\\
- Alice&$\to$&$c_2:=m^3$ mod $n_2$\\
- $m$&$c_3:=m^3$ mod $n_3$
-\end{tabular}\\
-\Bold{$e=3$ für alle Teilnehmer}\\
-$ggT(n_i,n_j)=1$, wenn $i\neq j$\\
-$m<min(n_1,n_2,n_3)$
-
 \section*{Serie 5}
 \subsection*{Aufgabe 1}
 $(n,e)$, $(n,d)$ RSA-Schlüssel Oscar\\
@@ -759,6 +747,7 @@ $\tilde{d_A}:=\alpha$ mod $h$\\
  mm = c. power_mod(dd, n)
  m = 1337
 \end{lstlisting}
+
 
 
 \end{document} 
