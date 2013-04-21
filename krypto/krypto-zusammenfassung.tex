@@ -738,24 +738,15 @@ $\underbrace{x}_{m^3} = c_1 y_1 M_1 + c_2 y_2 M_2 + c_3 y_3 M_3$ mod $n_1n_2n_3$
 
 \begin{tabular}{p{5cm}  p{5cm} l }
 	$l=n_1n_2n_3$ & $y_iM_i\equiv 1$ mod $n_i$ & $y_i{\color{red}M_i} + \beta {\color{red}n_i}=1$\\
-	$M_1 = \frac{l}{n_1} = n_2n_3$ \\
+	$M_1 = \frac{l}{n_1} = n_2n_3$ & $y_1\equiv M_1.inverse\_mod(n_1)$ \\
 	$M_2 = \frac{l}{n_2} = n_1n_3$ \\
 	$M_3 = \frac{l}{n_3} = n_1n_2$ \\
 \end{tabular} \\ \\
 \\
 \begin{tabular}{p{5cm}  p{5cm} l }
-	$m < min(n_1,n_2,n_3)$ & $x\equiv2$ mod $5$ & $crt([2,1,5],[5,7,9])$ \\
+	$m < min(n_1,n_2,n_3)$ & $x\equiv2$ mod $5$ & $x= crt([2,1,5],[5,7,9])$ \\
 	& $x\equiv1$ mod $7$ \\
-	$m*m*m < n_1n_2n_3$ & $x\equiv5$ mod $9$ & $y_1\equiv M_1.inverse\_mod(n_1)$ \\
-\end{tabular} \\ \\
-\\
-\begin{tabular}{l l l}
-	$\ZN_{n_1n_2n_3}$ & $\rightarrow$ & $\ZN_{n_1}$ x $\ZN_{n_2}$ x $\ZN_{n_3}$ \\
-	x & $\rightarrow$ & (x mod $n1$,x mod $n_2$, x mod $n_3$) \\
-	\\
-	x & $\equiv$ 2 mod 5 & crt([2,1,5],[5,7,9]) \\
-	x & $\equiv$ 1 mod 7 & $\rightarrow$ 302 \\
-	x & $\equiv$ 5 mod 9 & $y_1 = M_1.inverse\_mod(n_1)$
+	$m*m*m < n_1n_2n_3$ & $x\equiv5$ mod $9$ & \\
 \end{tabular}
 
 \subsection{Bellare-Rogenwog plaintext-awarnes encription scheme}
