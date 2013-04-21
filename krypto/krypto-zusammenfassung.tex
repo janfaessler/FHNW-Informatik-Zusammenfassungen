@@ -9,6 +9,8 @@
 \usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
 \usepackage{tikz}
 
+\usepackage{multirow}
+
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
 \usepackage[utf8]{inputenc} 
@@ -318,47 +320,43 @@ Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
 Der Koinzidenzindex ist die Grösse, die von der Sprache abhängt, aber invariant ist gegenüber Cäsar-Verschiebungen.
 \begin{description}
 	\item[Gegeben] \hfill \\
-		Alphabet Alphabet $\Pota:=\{A,B,C,\dots,Z\}$\\
-		Sprache: Englisch \\ 
+		Alphabet Alphabet $\Pota:=\{A,B,C,\dots,Z\}$\\ 
 		$\Ra$ Buchstabenhäufigkeit: 
 		\begin{tabular}{c c c c}
 			$p_A$ & $p_B$ & ... & $p_Z$ \\
 			$\shortparallel$ & $\shortparallel$ & & $\shortparallel$ \\
 			$p_1$ & $p_2$ & ... & $p_3$ \\
-		\end{tabular} \\
+		\end{tabular} 
 		mit $0\leq p_i \leq 1$ und $\sum_{i=1}^{26} p_i=1$
 	\item[Bemerkung:] \hfill \\
 		Jede Sprache hat ihren eigenen Konzidenzindex \\
-		$IC_{German}=0.0766$ \\
-		$IC_{Arabic}=0.0759$ \\
-		$IC_{flat}=0.0385$ (Alle Buchstaben haben die gleiche häufigkeit: $p_1=p_2=...=p_{26}=\frac{1}{26}$)\\
+		$IC_{German}=0.0766$ / $IC_{Arabic}=0.0759$ / $IC_{flat}=0.0385$ \\
 		\textbf{Je unregelmässiger die buchstabenhäufigkeit, umso grösser der Index.}
-	\item[Berechnung] \hfill \\
-		\fbox{$\mathbf{IC_L} = \frac{\sum_{i=A}^{Z}n_i(n_i -1)}{N(N-1)}$} \\\\
-		In seiner grundlegenden Form wird der Koinzidenzindex ermittelt, indem man die Einzelanzahlen  der unterschiedlichen Einzelzeichen $n_i$ eines Geheimtextes zählt, also beispielsweise wie oft der Buchstabe A auftritt, wie oft B, und so weiter. Diese werden nach oben angegebener Formel mit den um 1 verminderten Einzelanzahlen multipliziert und für alle Buchstaben (beispielsweise von A bis Z) aufsummiert. Die Summe wird schließlich dividiert durch die Gesamtanzahl N der Buchstaben des Textes (also der Textlänge) sowie die um 1 verminderte Textlänge. \\ \\
+		
+	\item[Berechnung 1:] \hfill \\
 		 \fbox{$\mathbf{IC_L} = \sum_{i=1}^n p_i^2$} \\ \\
-		Denn der Erwartungswert $IC_L$ für die Sprache $S$ lässt sich aus den Buchstabenhäufigkeiten nach der Formel  berechnen, wobei $p_i$ die Wahrscheinlichkeit des $i$-ten Zeichens des Alphabets in Texten der entsprechenden Sprache angibt.
+		Denn der Erwartungswert $IC_L$ für die Sprache $S$ lässt sich aus den Buchstabenhäufigkeiten nach der Formel  berechnen, wobei $p_i$ die Wahrscheinlichkeit des $i$-ten Zeichens des Alphabets in Texten der entsprechenden Sprache angibt. \\
+		\\
+		$Sprache_{flat}$: $p_1=p_2=p_3=$ \dots $=p_{26}=\frac{1}{26}$: $IC_{flat}=\sum^{26}_{i=1}(\frac{1}{26})^2$ \\
+		
+	\item[Berechnung 2:] \hfill \\
+		\fbox{$\mathbf{IC_L} = \frac{\sum_{i=A}^{Z}n_i(n_i -1)}{N(N-1)}$} \\\\
+		In seiner grundlegenden Form wird der Koinzidenzindex ermittelt, indem man die Einzelanzahlen  der unterschiedlichen Einzelzeichen $n_i$ eines Geheimtextes zählt, also beispielsweise wie oft der Buchstabe A auftritt, wie oft B, und so weiter. Diese werden nach oben angegebener Formel mit den um 1 verminderten Einzelanzahlen multipliziert und für alle Buchstaben (beispielsweise von A bis Z) aufsummiert. Die Summe wird schließlich dividiert durch die Gesamtanzahl N der Buchstaben des Textes (also der Textlänge) sowie die um 1 verminderte Textlänge. \\
+	\\
+	Alphabet $\Sigma := \{0,1\}$ / F = 00110111101 \\
+	$\Brackar{l}{n_0=4 \\ n_1=7 \\ \hline n=11 }$ $IC_F=\frac{4*3+7*6}{11*10}=0.49$ \\
+	
 	\item[Frage:] Wie gross ist die Wahrscheinlichkeit zwei gleiche Buchstaben aus $F$ herauszugreifen?
 	\item[Definition] \fbox{$\mathbf{IC_F}=\frac{\Sum{26}{1}{n_i\choose2}}{{n\choose2}}$} {\color{gray}${n \choose k}=\frac{n!}{k!*(n-k)!}$}
-	\item[Bsp:] \hfill \\
-		Alphabet $\Sigma := \{0,1\}$ \\
-		F = 00110111101 \\
-			$\Brackar{l}{n_0=4 \\
-				n_1=7 \\
-				\hline
-				n=11 }$ $IC_F=\frac{4*3+7*6}{11*10}=0.49$ \\
-	\item[Annahme] $IC_F  \xrightarrow[F \ra \infty ]{}$ $IC_L$ (ist im Allgemeinen falsch)
+
 	\item[Bemerkung] \hfill \\
-		Permutation der Buchstaben \\
-		F $\mapsto$ Perm(F) \\
+		Permutation der Buchstaben: F $\mapsto$ Perm(F) \fbox{$IC_F=IC_{Perm(F)}$} \\
 		F = "{}AXCA\dots" $\mapsto$ Perm(F) = "{}CBYC\dots" \\
-		\fbox{$IC_F=IC_{Perm(F)}$}
+		
 \end{description}
 
 \subsection{Vigenères Chipres}
 \subsubsection{Beschreibung}
-Die im 16. Jahrhundert entstandene Vigenère-Verschlüsselung galt lange als sicherer Chiffrieralgorithmus. Ein Schlüsselwort bestimmt, wie viele und welche Alphabete genutzt werden. Die Alphabete leiten sich aus der Caesar-Substitution ab.
-\subsubsection{Beispiel}
 Das Schlüsselwort sei „AKEY“, der Text „geheimnis“. Vier Caesar-Substitutionen verschlüsseln den Text. Die erste Substitution ist eine Caesar-Verschlüsselung mit dem Schlüssel „A“. „A“ ist der erste Buchstabe im Alphabet. Er verschiebt den ersten Buchstaben des zu verschlüsselnden Textes, das „g“, um 0 Stellen, es bleibt „G“. Der zweite Buchstabe des Schlüssels, das „K“, ist der elfte Buchstabe im Alphabet, er verschiebt das zweite Zeichen des Textes, das „e“, um zehn Zeichen. Aus „e“ wird ein „O“ (siehe Tabelle). Das dritte Zeichen des Schlüssels („E“) verschiebt um 4, „Y“ um 24 Stellen. Die Verschiebung des nächsten Buchstabens des Textes beginnt wieder bei „A“, dem ersten Buchstaben des Schlüssels: \\ \\
 \begin{tabular}{l c c c c c c c c c }
 	\textbf{Klartext}: & g & e & h & e & i & m & n & i & s \\
@@ -431,63 +429,56 @@ $\gamma:=$ Anzahl gleicher Buchstabenpaare aus $C$, $IC_L=\frac{\gamma}{{n\choos
 
 \subsubsection{Kryptoanalysis des Vigen\`{e}re-Cipher}
 \begin{description}
-	\item[1)] Schlüssellänge p\\
-		p=1,2,3,...
+	\item[1)] Schlüssellänge p=1,2,3,\dots
 		\begin{itemize}
 			\item Einleitung des Cipher-Tests in p Abschnitte
 			\item Berechnung des IC des Abschnitts
-			\item Wähle p mit $IC\sim IC_2$ (oder hoch)
+			\item Wähle p mit $IC\sim IC_L$ (oder hoch)
 		\end{itemize}
-	\item[2)] Sei s,t zwei  Strings über dem Alphabet A. \\
-		$s=s_1,s_2,s_3, .... s_k$ \\
-		$t=t_1,t_2,t_3, ..., t_l$ \\
-		Wieder zählen wir $n_1(s) :=$ A in s, $n_3(t)=$ C in t
-	\item[Def.] $MIC(s,t):=\frac{\sum_{i=1}{26}n_i(s)*n_i(t)}{k*l}$ \\
-	\item[Bsp.] \hfill \\
-		s="{}AABCCA" \\
-		t="ABCABCABC" \\
-		\\
-		$n_1(s)=3$, $n_1(t)=3$ \\
-		$n_2(s)=1$, $n_2(t)=3$ \\
-		$n_3(s)=2$, $n_3(t)=3$ \\ \\
-		$\ra$ $MIC(s,t)=\frac{1}{6*9}[3*3+1*3+2*3]$
-	\item[Idee:] s,t zwei cipher-Text mit Cäsar Cerschlüsselung \\
-		Wenn beide mit dem gleichen Schlüssel verschlüsselt werden \\
-		$\ra$ $MIC(s,t)\rightsquigarrow IC_L$ \\
-		Sonst: $MIC(s,t)\rightsquigarrow IC_{flat}$
+	\item[2)] Sei s,t zwei  Strings über dem Alphabet A: $s=s_1,s_2,s_3,$ \dots$. s_k$ / $t=t_1,t_2,t_3,$ \dots$, t_l$ \\
+		Seien $n_1(s) :=$ \#A's in s, $n_2(s) :=$ \#B's in s, \dots
+	\item[Def.] $MIC(s,t):=\frac{\sum_{i=1}^{26}n_i(s)*n_i(t)}{k*l}$
+	\item[Beispiel:] s="{}AABCCA" / t="{}ABCABCABC" \\
+		$\Brackar{l}{ n_1(s)=3, n_1(t)=3 \\ n_2(s)=1, n_2(t)=3 \\ n_3(s)=2, n_3(t)=3} \ra$ $MIC(s,t)=\frac{1}{6*9}[3*3+1*3+2*3]$
+
 	\item[3.)] \textbf{Anwendung auf Cipher Text} \\
-		Schlüssellänge p sei 5 \\
-		$c_1,c_2, ...,c_5$ Abschnitte des Cipher Text \\
-		$MIC(c_i,c_j+k)$ \\ \\
-		\textbf{Tabelle}:  \\
- \begin{tabular}{|c|c|c|c|c|}\hline
-  $(i,j)$;$k$&0&1&2&$\cdots$\\\hline
-  $(1,2)$&&&&\\
-  $(1,3)$&&&&\\
-  $(1,4)$&&&&\\
-  $(1,5)$&&&&\\\hline
-  $(2,3)$&&&$x$&\\\hline
-  $(2,4)$&&&&\\
-  $(2,5)$&&&&\\
-  $(3,4)$&&&&\\
-  $(3,5)$&&&&\\
-  $(4,5)$&&&&\\\hline
- \end{tabular}$\to MIC(c_2,c_3+k)$\\
-	\item[Bsp] \hfill \\
 		\begin{tabular}{l l}
-			$c_1$: & AXBM...\\
-			$c_3$: & ABXHE... \\
-			\hline
-			$c_3+2$: & CDZJG \\
-		\end{tabular}
+			\multirow{6}{*}{
+			\begin{tabular}{|c|c|c|c|c|}\hline
+				$(i,j)\backslash k$&0&1&2&$\cdots$\\\hline
+				$(1,2)$&&&&\\
+				$(1,3)$&&&&\\
+				$(1,4)$&&&&\\
+				$(1,5)$&&&&\\\hline
+				$(2,3)$&&&$MIC(c_2,c_{3+2})$&\\\hline
+				$(2	,4)$&&&&\\
+				$(2,5)$&&&&\\
+				$(3,4)$&&&&\\
+				$(3,5)$&&&&\\
+				$(4,5)$&&&&\\\hline
+			\end{tabular}
+			} & p = Schlüssellänge von c (Annahme:5) \\
+			& $c_1,c_2, ...,c_5$ sind Abschnitte des Ciphertext \\
+			& $i=1,$ \dots$,p$ \\
+			& $j=i+1,$ \dots$,p$ \\
+			& $k=0,$ \dots$,25$ \\
+			& $\to MIC(c_i,c_{j+k})$ \\
+			& \\
+			& Beispiel: \\
+			& $c_1$:AXBM\dots\\
+			& $c_3$:ABXH\dots \\
+			& $------$ \\
+			& $c_{3+2}$:CDZJ\dots \\
+		\end{tabular} \\
+
 	\item[4.)] Wir suchen Einträge in der Tabelle, die hoch sind ($> 0.06$) \\
 		$MIC(s,t)=\Oneover{kl}\Sum{26}{i=1}n_i(s)n_i(t)$, $\Abs{s}=k$, $\Abs{t}=l$\\
 		zb: $MIC(c_2,c_3{+22} > 0.06 \Longleftrightarrow c_2 \sim c_3+22 \Ra$\fbox{$\beta_2-\beta_3=k$} \\
 	\item[Notation] s$\sim$t $\Longleftrightarrow$ s und t sind mit dem gleichen Shift aus zwei Klartexten entstanden.
 	\item[Bsp.] $klar_1 \sim klar_2$ \\
-		\begin{tabular}{l | l}
-			$klar_1 \xrightarrow[]{\beta_1} c_1$ & $c_1 = klar_1+\beta_1$ \\
-			$klar_2 \xrightarrow[]{\beta_2} c_2$ & $c_2 = klar_2+\beta_2$ \\
+		\begin{tabular}{l | l | l}
+			$klar_1 \xrightarrow[]{\beta_1} c_1$ & $c_1 = klar_1+\beta_1$ & ${\color{red}\beta_1}+klar_1=c_1-\beta_1+{\color{red}\beta_1}=c_1$ \\
+			$klar_2 \xrightarrow[]{\beta_2} c_2$ & $c_2 = klar_2+\beta_2$ & ${\color{red}\beta_1}+klar_2=c_2-\beta_2+{\color{red}\beta_1}=c_2+(\beta_1+\beta_2)$\\
 		\end{tabular} \\ \\ \\
 		Wir suchen die grossen Werte von $MIC(c_i, c_j +k)$ \\
 		$MIC(c_i, c_j +k)$ gross $\Longleftrightarrow$ $c_i \sim c_j + k$ \\ \\
@@ -694,7 +685,7 @@ $\ZN_n=\{0,1,2,3,\dots,n-1\}$ \\
 \begin{description}
 	\item[encryption] : enc \\
 		$\ZN_n \longrightarrow \ZN_n$ \\
-		$m \longrightarrow c^e$ mod n
+		$m \longrightarrow m^e$ mod n
 	\item[decyption] : dec \\
 		$\ZN_n \longrightarrow \ZN_n$ \\
 		$m \longrightarrow c^d$ mod n
@@ -703,9 +694,7 @@ $\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red
 \\
 \subsubsection{Beweis}
 \begin{description}
-	\item[Fall 1:] \hfill \\
-		ggT(m,n)=1 \\
-		$(m^e)^d=m$ in $\ZN_n$ \\
+	\item[Fall 1:] ggT(m,n)=1 und $(m^e)^d=m$ in $\ZN_n$ \\
 		Weil ggT(m,n)=1 existiert das Inverse von m: $\underbrace{m^{ed-1}=1}_{\text{Das ist zu Zeigen!}}$ in $\ZN_n$ \\
 		$e*d+k*\varphi(n)=1$ // Konstruktion des Schlüssel \\
 		$\Rightarrow e*d-1=-k*\varphi(n) : m^{ed-1}=m^{-k*\varphi(n)}=(m^{-k})=1$ // Satz von Euler-Fermat  
