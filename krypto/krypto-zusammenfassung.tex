@@ -146,6 +146,44 @@
 
 \setcounter{section}{-1}
 \section{Mathematische Grundlagen}
+\subsection{Euklid}
+\textbf{ggT(a,b):} \\
+$a=q*b+b_{neu}$ \hspace*{1cm} $s_1=1$ \& $t_1=0$ \hspace*{0.75cm} $s=t_{\T{alt}}$ \& $t=s_{\T{alt}}-q\cdot t_{\T{alt}}$\\
+\begin{tabular}{| c | c | c | c | c |}
+   \hline
+   $a$ & $b$ & $q$ & $s$ & $t$ \\
+   \hline
+   99 & 78 & 1 &  & \\
+   78 & 21 & 3 &  & \\
+   21 & 15 & 1 &  & \\
+   15 & 6 & 2 &  & \\
+   6 & 3 & 2 &  & \\
+   3 & 0 &  &  & \\\hline
+\end{tabular}
+\begin{tabular}{| c | c | c | c | c |}
+   \hline
+   $a$ & $b$ & $q$ & $s$ & $t$ \\
+   \hline
+   99 & 78 & 1 &  & \\
+   78 & 21 & 3 &  & \\
+   21 & 15 & 1 &  & \\
+   15 & 6 & 2 &  & \\
+   6 & 3 & 2 &  & \\
+   3 & 0 &  & 1 & 0 \\\hline
+\end{tabular}
+\begin{tabular}{| c | c | c | c | c |}
+   \hline
+   $a$ & $b$ & $q$ & $s$ & $t$ \\
+   \hline
+   99 & 78 & 1 & -11 & 14\\
+   78 & 21 & 3 & 3 & -11\\
+   21 & 15 & 1 & -2 & 3\\
+   15 & 6 & 2 & 1 & -2\\
+   6 & 3 & 2 & 0 & 1\\
+   3 & 0 &  & 1 & 0 \\\hline
+\end{tabular}\\
+\\
+Daraus folgt dann $3=-11\cdot99+14\cdot78$
 \subsection{Modulare Division}
 Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$} .\\
 Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$.
@@ -591,10 +629,8 @@ $e_k(m)=e_k(0101)=1010=c$
 \subsubsection{ECB-Modus (electronic code block)}
  $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2}|\underbrace{1100}_{m_3}|101^*$\\
  $\Unten{m_1}{\longrightarrow}$\fbox{$e_k$}$\Unten{c_1}{\longrightarrow}$\\
- \Bold{Bem:} \begin{enumerate}
-              \item $m_1=m_3\Ra c_1=c_3$
-              \item Vertauschen der Ciphertext-Blöcke wird nicht notwendigerweise erkannt
-             \end{enumerate}
+ \\
+ \Bold{Bem:} $m_1=m_3\Ra c_1=c_3$
 \subsubsection{CBC-Modus (cipher block chaining)}
 \begin{tabular}{p{7.5cm}  l}
 	$m=\Unten{\T{Länge n}}{m_1}|m_2|\dots$, $n:$ Blocklänge &\Bold{Bsp:} $m=\underbrace{1100}_{m_1} | \underbrace{0110}_{m_2} | \underbrace{1100}_{m_3} | 101$ \\
@@ -603,36 +639,20 @@ $e_k(m)=e_k(0101)=1010=c$
 	$C_1 := e_k(C_0 \oplus m_1)$ & $c_2 = e_k(c_1 \oplus m_2) = e_k(0111) = 1011$ \\
 	$C_2 := e_k(C_1 \oplus m_2)$  & $c_3 = e_k(c_2 \oplus m_3) = e_k(0111) = 1011$ \\
 \end{tabular} \\ \\ \\
- \textbf{Entschlüsselung}: ${\color{red}c_1\oplus} d_k(c_2)={\color{red}c_1\oplus}d_k(e_k(c_1\oplus m_2))= c_1\oplus m_2 {\color{red}\oplus c_1 = m_2}$
- \begin{center}
-	\includegraphics[scale=0.2]{cbc-encryption.png}
- \end{center}
- $m=\Unten{\T{Länge n}}{m_1}|m_2$, $n:$ Blocklänge\\
- $IV=$Initialvektor (i.a. bekannt)\\
+ \textbf{Entschlüsselung}:  \\
+ ${\color{red}c_1\oplus} d_k(c_2)={\color{red}c_1\oplus}d_k(e_k(c_1\oplus m_2))= c_1\oplus m_2 {\color{red}\oplus c_1 = m_2}$ \\
+ $m=\Unten{\T{Länge n}}{m_1}|m_2$, $n:$ Blocklänge / $IV=$Initialvektor (i.a. bekannt)\\
  $c_0:=IV$, $c_1:=e_k(c_0\oplus m_1)$, $c_2:=e_k(c_1\oplus m_2)$\\
  $c_1\oplus d_k(c_2)=d_k(e_k(c_1\oplus m_2))=c_1\oplus m_2\oplus c_1=m_2$\\
- \Bold{Bsp:} $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2}|\underbrace{1100}_{m_3}|101$, $IV=c_0=1110$\\
- $c_1=e_k(c_0\oplus m_1)=e_k(0010)=0001$\\
- $c_2=e_k(c_1\oplus m_2)=e_k(0111)=1011$\\
- $c_3=e_k(c_2\oplus m_3)=e_k(0111)=1011$\\
- \Bold{Bem:} \begin{enumerate}
-              \item $m_1=m_3\nRightarrow c_1=c_3$
-              \item Vertauschen kann bemerkt werden
-              \item Übertragungsfaktor machen sich bemerkbar
-             \end{enumerate}
+
+ \Bold{Bem:} $m_1=m_3\nRightarrow c_1=c_3$
+ 
 \subsubsection{CFB-Modus (cipher feedback)}
- $m=\underbrace{\tilde{m_1}}_{\T{Länge}=r}|\tilde{m_2}|\tilde{m_3}|\dots$, $n$: Cipher Block-Länge (DES: 64) und \fbox{$0<r\leq n$}\\
- \begin{tabular}{p{7.5cm}lr}
-  \begin{tabular}{cl}
-  $I_1$&$:=IV\in\Sigma^n$\\
-  $\downarrow$\\
-  \fbox{DES}\\
-  $\downarrow$\\
-  $O_1:\underbrace{\square}_{r}\square$\\
-  $\oplus$&$\to c_1$\\
-  $\tilde{m_1}\to\underbrace{\square}_{r}$\\
- \end{tabular}&\includegraphics[scale=0.25]{cfb-encryption.png}\\
- \end{tabular}
+ $m=\underbrace{\tilde{m_1}}_{\T{Länge}=r}|\tilde{m_2}|\tilde{m_3}|\dots$, $n$: Cipher Block-Länge (DES: 64) und \fbox{$0<r\leq n$}
+\begin{center}
+\includegraphics[scale=0.3]{cfb-encryption.png}
+\end{center}
+
 
  
  \Bold{Bsp:} $m=110|001|101|100|101$, $IV=1110$, \fbox{$r=3$, $n=4$}\\
@@ -649,10 +669,9 @@ $e_k(m)=e_k(0101)=1010=c$
 \newpage
 \section{RSA}
 \subsection{Schlüsselerzeugung}
-PK = (n,e) \\
-SK = (n,d) \\
+PK = (n,e) und SK = (n,d) \\
 Wir wählen zwei (grosse) Primzahlen p,q $\in \RN$*. $\varphi\neq q$ \\
-$n=p*Q$ \\
+$n=p*q$ \\
 $\varphi(n)=(p-1)(q-1)$ {\color{blue}// $\varphi(n) = |\ZN^*_n|$ }\\
 {\color{blue}Wir wählen $e \in \ZN^*_{\varphi(n)}$} // ggT(e,$\varphi(n))=1$ \\
 {\color{blue} $d:=e^{-1}$ in $\ZN^*_{\varphi(n)}$} // ed=1 in $\ZN^*_{\varphi(n)} \Leftrightarrow$ ed $\equiv$ 1 mod $\varphi(n)$\\ \\

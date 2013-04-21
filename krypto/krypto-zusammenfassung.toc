@@ -1,9 +1,10 @@
 \select@language {ngerman}
 \contentsline {section}{\numberline {0}Mathematische Grundlagen}{1}
-\contentsline {subsection}{\numberline {0.1}Modulare Division}{1}
-\contentsline {subsection}{\numberline {0.2}Modulares Potenzieren}{1}
-\contentsline {subsubsection}{\numberline {0.2.1}Theorie}{1}
-\contentsline {subsubsection}{\numberline {0.2.2}Beispiel}{1}
+\contentsline {subsection}{\numberline {0.1}Euklid}{1}
+\contentsline {subsection}{\numberline {0.2}Modulare Division}{1}
+\contentsline {subsection}{\numberline {0.3}Modulares Potenzieren}{1}
+\contentsline {subsubsection}{\numberline {0.3.1}Theorie}{1}
+\contentsline {subsubsection}{\numberline {0.3.2}Beispiel}{2}
 \contentsline {section}{\numberline {1}Klassische Kryptographie}{3}
 \contentsline {subsection}{\numberline {1.0}Repetition}{3}
 \contentsline {subsection}{\numberline {1.1}Klassische Verschl\IeC {\"u}sselungsverfahren}{3}
@@ -30,7 +31,7 @@
 \contentsline {subsection}{\numberline {2.2}Modi von Block-Cipher}{10}
 \contentsline {subsubsection}{\numberline {2.2.1}ECB-Modus (electronic code block)}{10}
 \contentsline {subsubsection}{\numberline {2.2.2}CBC-Modus (cipher block chaining)}{10}
-\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modus (cipher feedback)}{11}
+\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modus (cipher feedback)}{10}
 \contentsline {section}{\numberline {3}RSA}{12}
 \contentsline {subsection}{\numberline {3.1}Schl\IeC {\"u}sselerzeugung}{12}
 \contentsline {subsection}{\numberline {3.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{12}
