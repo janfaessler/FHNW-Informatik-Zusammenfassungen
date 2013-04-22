@@ -104,7 +104,7 @@
 \lstdefinestyle{JavaStyle}{
  language=Java,
  basicstyle=\footnotesize\ttfamily, % Standardschrift
- numbers=left,               % Ort der Zeilennummern
+ numbers=left,   % Ort der Zeilennummern
  numberstyle=\tiny,          % Stil der Zeilennummern
  stepnumber=5,              % Abstand zwischen den Zeilennummern
  numbersep=5pt,              % Abstand der Nummern zum Text
@@ -142,7 +142,6 @@
 
 % hier beginnt das Dokument
 \begin{document}
-
 \section{Mathematische Grundlagen}
 \subsection{Euklid}
 \textbf{ggT(a,b):} \\
@@ -183,32 +182,23 @@ $a=q*b+b_{neu}$ \hspace*{1cm} $s_1=1$ \& $t_1=0$ \hspace*{0.75cm} $s=t_{\T{alt}}
 \\
 Daraus folgt dann $3=-11\cdot99+14\cdot78$
 \subsection{Modulare Division}
-Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$} .\\
-Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$.
+Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$}. Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$. \textbf{Beispiel}: $23/27$ mod $31$
 \\\\
-Beispiel: $23/27$ mod $31$
-\\\\
-Zuerst $ggT(27,31)$ mittels euklidischem Algorithmus ermitteln:\\
-$31 = 1 * {\color{red}27} + {\color{blue}4}$\\
+$31 = 1 * {\color{red}27} + {\color{blue}4}$ \hspace{2cm} {\color{gray}//$ggT(27,31)$ mittels euklidischem Algorithmus} \\
 ${\color{red}27} = 6 * {\color{blue}4} + {\color{green}3}$ \\
 ${\color{blue}4} = 1 * {\color{green}3} + {\color{brown}1}$\\
 ${\color{green}3} = 3 * {\color{brown}1} + 0 \Longrightarrow$ $ggT(27,31) = 1 \rightarrow$  modulare Division möglich \\
 \\
-Jetzt fahren wir mit dem erweiterten euklidischen Algorithmus fort, um $c$ zu ermitteln:. Dafür müssen wir zuerst die lineare diophantische Gleichung $23 = 27c + 31x$ lösen:\\
-
+Jetzt fahren wir mit dem erweiterten euklidischen Algorithmus fort, um $c$ ($23 = 27c + 31x$) zu ermitteln:\\
 ${\color{brown}1} = {\color{blue}4} - 1 * {\color{green}3}$\\
-${\color{brown}1} = {\color{blue}4} - 1 * ({\color{red}27} - 6 * {\color{blue}4})$  {\color{gray}// ersetze $3$ durch diese Klammer, indem man obigen Algorithmus rückwärts durchläuft}\\
+${\color{brown}1} = {\color{blue}4} - 1 * ({\color{red}27} - 6 * {\color{blue}4})$  {\color{gray}// ersetze $3$ durch Klammer, obigen Algorithmus rückwärts}\\
 ${\color{brown}1} = {\color{blue}4} - 1 * {\color{red}27} + 6 * {\color{blue}4} = 7 * {\color{blue}4} - 1 * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
 ${\color{brown}1} = 7 * (31 - 1 * {\color{red}27}) - 1 * {\color{red}27}$  {\color{gray}// ersetze {\color{blue}4} durch Klammer}\\
 ${\color{brown}1} = 7 * 31 - 7 * {\color{red}27}) - 1 * {\color{red}27} = \textbf{7} * 31 \textbf{ -8} * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
 $23 * 1 = 23 * \textbf{7} * 31 + 23 * \textbf{(-8)} * {\color{red}27}$  {\color{gray}// erweitern mit 23}\\
-$\Longrightarrow$ uns interessiert nur $c = 23 * (-8) = -184$ was der \textbf{Restklasse 2} (von Modulo 31) entspricht. Dies ermittelt man, indem man zu -184 so oft 31 addiert, bis man eine positive Zahl erhält.\\
-Die gesuchte Gleichung lautet also: $27 * 2 \equiv 23$ mod $31$.
-
-
+$\Longrightarrow$ uns interessiert nur $c = 23 * (-8) = -184$ was der \textbf{Restklasse 2} (von Modulo 31) entspricht. Dies ermittelt man, indem man zu -184 so oft 31 addiert, bis man eine positive Zahl erhält. Die gesuchte Gleichung lautet also: $27 * 2 \equiv 23$ mod $31$.
 
 \subsection{Modulares Potenzieren}
-\subsubsection{Theorie}
 Seien $a,b,n \in \ZN$ und $b,n > 1$. Berechnen Sie $a^b$ mod $n$. \\
 Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechnen verwenden wir ein spezielles Verfahren:
 \begin{itemize}
@@ -221,7 +211,7 @@ Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechn
 		$a^b$ = $($\dots$((a^{a_k})^2*a^{a_{k-1}})^2$\dots$*a^{\alpha_1})^2*a^{\alpha_0}$
 	\item[3.)] Das Verfahren besteht nun darin, den letzten Ausdruck von innen nach aussen auszuwerten und nach jeder Multiplikation das Resultat modulo $n$ zu rechnen.
 \end{itemize}
-\subsubsection{Beispiel}
+\textbf{Beispiel:} \\
 $977^{2222}$ mod $11$
 \begin{itemize}
 	\item[1.)] $2222_{10} \blacktriangleright$ bin $= 100010101110_2$
@@ -247,6 +237,22 @@ $977^{2222}$ mod $11$
 	 $9^2$ & mod 11 & = \textbf{4}
 	\end{tabular}
 \end{itemize}
+
+\subsection{Chinesischer Restsatz}
+\begin{tabular}{l c l}
+ $x\equiv {\color{blue}m_1}\T{ mod }{\color{purple}n_1}$ & $\Ra$ & $x\equiv {\color{blue}2}\T{ mod }{\color{purple}3}$\\
+ $x\equiv {\color{blue}m_2}\T{ mod }{\color{purple}n_2}$ & $\Ra$ & $x\equiv {\color{blue}3}\T{ mod }{\color{purple}4}$\\
+ $x\equiv {\color{blue}m_3}\T{ mod }{\color{purple}n_3}$ & $\Ra$ & $x\equiv {\color{blue}2}\T{ mod }{\color{purple}5}$\\
+\end{tabular}\\ \\
+$N={\color{purple}n_1\cdot n_2 \cdot n_3} = {\color{purple}3\cdot4\cdot5}=60$, 
+${\color{brown}N_1}=\frac{N}{\color{purple}n_1}={\color{brown}20}$, ${\color{brown}N_2}=\frac{N}{\color{purple}n_2}={\color{brown}15}$, ${\color{brown}N_3}=\frac{N}{\color{purple}n_3}={\color{brown}12}$\\
+\\
+$ggT({\color{brown}N_i},{\color{purple}n_i})=x\cdot {\color{purple}n_i}+y\cdot {\color{brown}N_i} = 1 \to {\color{red}e_i}=y\cdot {\color{brown}N_i}$ \hspace{1cm}{\color{gray}// erweiterter Euklid}\\
+$ggT({\color{brown}20},3)=7\cdot3+(-1)\cdot{\color{brown}20} = 1 \to {\color{red}e_1}=-20$\\
+$ggT({\color{brown}15},4)=4\cdot4+(-1)\cdot{\color{brown}15} = 1 \to {\color{red}e_2}=-15$\\
+$ggT({\color{brown}12},5)=5\cdot5+(-2)\cdot{\color{brown}12} = 1 \to {\color{red}e_3}=-24$\\
+ \\
+ $x={\color{blue}m_1}\cdot {\color{red}e_1}+{\color{blue}m_2}\cdot {\color{red}e_2}+{\color{blue}m_3}\cdot {\color{red}e_3}={\color{blue}2}\cdot {\color{red}-20}+{\color{blue}3}\cdot {\color{red}-15}+{\color{blue}2}\cdot {\color{red}-24}=-133\T{ mod }60=47$ 
 \section{Klassische Kryptographie}
 \setcounter{subsection}{-1}
 \subsection{Repetition}
@@ -650,7 +656,6 @@ $\ZN_n=\{0,1,2,3,\dots,n-1\}$ \\
 
 \subsection{Verschlüsselung und Entschlüsselung}
 \subsubsection{RSA ist ein Blockcipher}
-
 \begin{description}
 	\item[encryption] : enc \\
 		$\ZN_n \longrightarrow \ZN_n$ \\
@@ -659,8 +664,8 @@ $\ZN_n=\{0,1,2,3,\dots,n-1\}$ \\
 		$\ZN_n \longrightarrow \ZN_n$ \\
 		$m \longrightarrow c^d$ mod n
 \end{description} 
-$\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red}SK}((enc_{\color{red}PK}(m)))=m$} \\
-\\
+$\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red}SK}((enc_{\color{red}PK}(m)))=m$}
+
 \subsubsection{Beweis}
 \begin{description}
 	\item[Fall 1:] ggT(m,n)=1 und $(m^e)^d=m$ in $\ZN_n$ \\
@@ -668,60 +673,22 @@ $\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red
 		$e*d+k*\varphi(n)=1$ // Konstruktion des Schlüssel \\
 		$\Rightarrow e*d-1=-k*\varphi(n) : m^{ed-1}=m^{-k*\varphi(n)}=(m^{-k})=1$ // Satz von Euler-Fermat  
 	\item[Fall 2:] \hfill \\
-		ggT(m,n)$\neq$1 $\Rightarrow m=l*p$ oder $m=k*q$ \\
+		ggT(m,n)$\neq$1 $\Rightarrow m=l*p$ oder $m=k*q$
 \end{description}
 
 \subsection{Hastad Attack}
-\textbf{RSA} (n,e), (n,d) \\
 \begin{tabular}{l l l l l}
     & & {\color{red} $e=3$} & & $=x$ \\
 	&  & Bob $(n_1,e)$ & : {\color{red}$c_1$} & $= m^3$ mod $n_1$\\
 	&$\nearrow$  \\
 	Alice & $\rightarrow$ & Jon $(n_2,e)$ & : {\color{red}$c_2$} & $= m^3$ mod $n_2$\\
 	& $\searrow$ \\
-	& & Paul $(n_3,e)$ & : {\color{red}$c_3$} & $= m^3$ mod $n_3$\\
-\end{tabular}
-
-$\underbrace{x}_{m^3} = c_1 y_1 M_1 + c_2 y_2 M_2 + c_3 y_3 M_3$ mod $n_1n_2n_3$ \\ 
-
-\begin{tabular}{p{4cm}  p{4cm} l }
-	$l=n_1n_2n_3$ & $y_iM_i\equiv 1$ mod $n_i$ & $y_i{\color{red}M_i} + \beta {\color{red}n_i}=1$\\
-	$M_1 = \frac{l}{n_1} = n_2n_3$ & $y_1\equiv M_1.inverse\_mod(n_1)$ \\
-	$M_2 = \frac{l}{n_2} = n_1n_3$ \\
-	$M_3 = \frac{l}{n_3} = n_1n_2$ \\
+	& & Paul $(n_3,e)$ & : {\color{red}$c_3$} & $= m^3$ mod $n_3$
 \end{tabular} \\ \\
-\\
-\begin{tabular}{p{4cm}  p{4cm} l }
-	$m < min(n_1,n_2,n_3)$ & $x\equiv2$ mod $5$ & $x= crt([2,1,5],[5,7,9])$ \\
-	& $x\equiv1$ mod $7$ \\
-	$m*m*m < n_1n_2n_3$ & $x\equiv5$ mod $9$ & \\
-\end{tabular}
-\subsection{Chinesischer Restsatz}
-\begin{tabular}{l}
- $x\equiv 2\T{ mod }3$\\
- $x\equiv 3\T{ mod }4$\\
- $x\equiv 2\T{ mod }5$
-\end{tabular}\\
- $m_1=3$, $m_2=4$, $m_3=5$, $M=3\cdot4\cdot5=60$, $M_1=\frac{M}{m_1}=20$, $M_2=15$, $M_3=12$\\
- $ggT(20,3)=7\cdot3+(-1)\cdot20 = 1 \to e_1=-20$, $ggT(15,4)=4\cdot4+(-1)\cdot15 = 1 \to e_2=-15$, $ggT(12,5)=5\cdot5+(-2)\cdot12 = 1 \to e_3=-24$\\
- $x=2\cdot e_1+3\cdot e_2+2\cdot e_3=-133\T{ mod }60=47$ 
-\subsection{SK-Such-Algorithmus}
-\begin{description}
-	\item[Bob:] $(n,e)$, $(n,d)$
-	\item[Alice:] $(n,d_A)$
-	\item[unbekannt:] $d_A,p,q,\varphi(n)$
-	\item[Gesucht:] Finde $d_A$ 
-	\item[Bemerkung:] \hfill \\
-		Falls $c=m^{m_A}$ mod $n$ ist, gilt $m=c^{d_A}$ mod $n$ \\
-		$e*d-1=k*\varphi(n)$ \\
-		$h:=\frac{e*d-1}{ggT(e_A,e*d-1)}$ \hspace*{2cm}//$\varphi(n)\mid h$\\
-		$h:=\frac{h}{ggT(h,e_A)}$ \\
-		$e_A\cdot\alpha+h\cdot\beta=1 $ {\color{red}$\Ra d_A:=\alpha$ mod $h$}
-\end{description}
-
-\section{Primzahlen 2 - 10 000 motherfucker }
-    2,     3,     5,     7,    11,    13,    17,    19,    23,    29,    31,    37,    41,    43,
-   47,    53,    59,    61,    67,    71,    73,    79,    83,    89,    97,   101,   103,   107,
+\textbf{Chinesischer Restsatz}: $m^3= crt([m^3,m^3,m^3],[n_1,n_2,n_3])$ \\
+Es benötigt so viele Gleichungen für den Restsatz wie ${\color{red}e}$ gross ist.
+\section{Primzahlen 2 - 2000 motherfucker}
+2, 3, 5, 7,    11,    13,    17,    19,    23,    29,    31,    37,    41,    43,47,    53,    59,    61,    67,    71,    73,    79,    83,    89,    97,   101,   103,   107,
   109,   113,   127,   131,   137,   139,   149,   151,   157,   163,   167,   173,   179,   181,
   191,   193,   197,   199,   211,   223,   227,   229,   233,   239,   241,   251,   257,   263,
   269,   271,   277,   281,   283,   293,   307,   311,   313,   317,   331,   337,   347,   349,
@@ -741,73 +708,7 @@ $\underbrace{x}_{m^3} = c_1 y_1 M_1 + c_2 y_2 M_2 + c_3 y_3 M_3$ mod $n_1n_2n_3$
  1607,  1609,  1613,  1619,  1621,  1627,  1637,  1657,  1663,  1667,  1669,  1693,  1697,  1699,
  1709,  1721,  1723,  1733,  1741,  1747,  1753,  1759,  1777,  1783,  1787,  1789,  1801,  1811,
  1823,  1831,  1847,  1861,  1867,  1871,  1873,  1877,  1879,  1889,  1901,  1907,  1913,  1931,
- 1933,  1949,  1951,  1973,  1979,  1987,  1993,  1997,  1999,  2003,  2011,  2017,  2027,  2029,
- 2039,  2053,  2063,  2069,  2081,  2083,  2087,  2089,  2099,  2111,  2113,  2129,  2131,  2137,
- 2141,  2143,  2153,  2161,  2179,  2203,  2207,  2213,  2221,  2237,  2239,  2243,  2251,  2267,
- 2269,  2273,  2281,  2287,  2293,  2297,  2309,  2311,  2333,  2339,  2341,  2347,  2351,  2357,
- 2371,  2377,  2381,  2383,  2389,  2393,  2399,  2411,  2417,  2423,  2437,  2441,  2447,  2459,
- 2467,  2473,  2477,  2503,  2521,  2531,  2539,  2543,  2549,  2551,  2557,  2579,  2591,  2593,
- 2609,  2617,  2621,  2633,  2647,  2657,  2659,  2663,  2671,  2677,  2683,  2687,  2689,  2693,
- 2699,  2707,  2711,  2713,  2719,  2729,  2731,  2741,  2749,  2753,  2767,  2777,  2789,  2791,
- 2797,  2801,  2803,  2819,  2833,  2837,  2843,  2851,  2857,  2861,  2879,  2887,  2897,  2903,
- 2909,  2917,  2927,  2939,  2953,  2957,  2963,  2969,  2971,  2999,  3001,  3011,  3019,  3023,
- 3037,  3041,  3049,  3061,  3067,  3079,  3083,  3089,  3109,  3119,  3121,  3137,  3163,  3167,
- 3169,  3181,  3187,  3191,  3203,  3209,  3217,  3221,  3229,  3251,  3253,  3257,  3259,  3271,
- 3299,  3301,  3307,  3313,  3319,  3323,  3329,  3331,  3343,  3347,  3359,  3361,  3371,  3373,
- 3389,  3391,  3407,  3413,  3433,  3449,  3457,  3461,  3463,  3467,  3469,  3491,  3499,  3511,
- 3517,  3527,  3529,  3533,  3539,  3541,  3547,  3557,  3559,  3571,  3581,  3583,  3593,  3607,
- 3613,  3617,  3623,  3631,  3637,  3643,  3659,  3671,  3673,  3677,  3691,  3697,  3701,  3709,
- 3719,  3727,  3733,  3739,  3761,  3767,  3769,  3779,  3793,  3797,  3803,  3821,  3823,  3833,
- 3847,  3851,  3853,  3863,  3877,  3881,  3889,  3907,  3911,  3917,  3919,  3923,  3929,  3931,
- 3943,  3947,  3967,  3989,  4001,  4003,  4007,  4013,  4019,  4021,  4027,  4049,  4051,  4057,
- 4073,  4079,  4091,  4093,  4099,  4111,  4127,  4129,  4133,  4139,  4153,  4157,  4159,  4177,
- 4201,  4211,  4217,  4219,  4229,  4231,  4241,  4243,  4253,  4259,  4261,  4271,  4273,  4283,
- 4289,  4297,  4327,  4337,  4339,  4349,  4357,  4363,  4373,  4391,  4397,  4409,  4421,  4423,
- 4441,  4447,  4451,  4457,  4463,  4481,  4483,  4493,  4507,  4513,  4517,  4519,  4523,  4547,
- 4549,  4561,  4567,  4583,  4591,  4597,  4603,  4621,  4637,  4639,  4643,  4649,  4651,  4657,
- 4663,  4673,  4679,  4691,  4703,  4721,  4723,  4729,  4733,  4751,  4759,  4783,  4787,  4789,
- 4793,  4799,  4801,  4813,  4817,  4831,  4861,  4871,  4877,  4889,  4903,  4909,  4919,  4931,
- 4933,  4937,  4943,  4951,  4957,  4967,  4969,  4973,  4987,  4993,  4999,  5003,  5009,  5011,
- 5021,  5023,  5039,  5051,  5059,  5077,  5081,  5087,  5099,  5101,  5107,  5113,  5119,  5147,
- 5153,  5167,  5171,  5179,  5189,  5197,  5209,  5227,  5231,  5233,  5237,  5261,  5273,  5279,
- 5281,  5297,  5303,  5309,  5323,  5333,  5347,  5351,  5381,  5387,  5393,  5399,  5407,  5413,
- 5417,  5419,  5431,  5437,  5441,  5443,  5449,  5471,  5477,  5479,  5483,  5501,  5503,  5507,
- 5519,  5521,  5527,  5531,  5557,  5563,  5569,  5573,  5581,  5591,  5623,  5639,  5641,  5647,
- 5651,  5653,  5657,  5659,  5669,  5683,  5689,  5693,  5701,  5711,  5717,  5737,  5741,  5743,
- 5749,  5779,  5783,  5791,  5801,  5807,  5813,  5821,  5827,  5839,  5843,  5849,  5851,  5857,
- 5861,  5867,  5869,  5879,  5881,  5897,  5903,  5923,  5927,  5939,  5953,  5981,  5987,  6007,
- 6011,  6029,  6037,  6043,  6047,  6053,  6067,  6073,  6079,  6089,  6091,  6101,  6113,  6121,
- 6131,  6133,  6143,  6151,  6163,  6173,  6197,  6199,  6203,  6211,  6217,  6221,  6229,  6247,
- 6257,  6263,  6269,  6271,  6277,  6287,  6299,  6301,  6311,  6317,  6323,  6329,  6337,  6343,
- 6353,  6359,  6361,  6367,  6373,  6379,  6389,  6397,  6421,  6427,  6449,  6451,  6469,  6473,
- 6481,  6491,  6521,  6529,  6547,  6551,  6553,  6563,  6569,  6571,  6577,  6581,  6599,  6607,
- 6619,  6637,  6653,  6659,  6661,  6673,  6679,  6689,  6691,  6701,  6703,  6709,  6719,  6733,
- 6737,  6761,  6763,  6779,  6781,  6791,  6793,  6803,  6823,  6827,  6829,  6833,  6841,  6857,
- 6863,  6869,  6871,  6883,  6899,  6907,  6911,  6917,  6947,  6949,  6959,  6961,  6967,  6971,
- 6977,  6983,  6991,  6997,  7001,  7013,  7019,  7027,  7039,  7043,  7057,  7069,  7079,  7103,
- 7109,  7121,  7127,  7129,  7151,  7159,  7177,  7187,  7193,  7207,  7211,  7213,  7219,  7229,
- 7237,  7243,  7247,  7253,  7283,  7297,  7307,  7309,  7321,  7331,  7333,  7349,  7351,  7369,
- 7393,  7411,  7417,  7433,  7451,  7457,  7459,  7477,  7481,  7487,  7489,  7499,  7507,  7517,
- 7523,  7529,  7537,  7541,  7547,  7549,  7559,  7561,  7573,  7577,  7583,  7589,  7591,  7603,
- 7607,  7621,  7639,  7643,  7649,  7669,  7673,  7681,  7687,  7691,  7699,  7703,  7717,  7723,
- 7727,  7741,  7753,  7757,  7759,  7789,  7793,  7817,  7823,  7829,  7841,  7853,  7867,  7873,
- 7877,  7879,  7883,  7901,  7907,  7919,  7927,  7933,  7937,  7949,  7951,  7963,  7993,  8009,
- 8011,  8017,  8039,  8053,  8059,  8069,  8081,  8087,  8089,  8093,  8101,  8111,  8117,  8123,
- 8147,  8161,  8167,  8171,  8179,  8191,  8209,  8219,  8221,  8231,  8233,  8237,  8243,  8263,
- 8269,  8273,  8287,  8291,  8293,  8297,  8311,  8317,  8329,  8353,  8363,  8369,  8377,  8387,
- 8389,  8419,  8423,  8429,  8431,  8443,  8447,  8461,  8467,  8501,  8513,  8521,  8527,  8537,
- 8539,  8543,  8563,  8573,  8581,  8597,  8599,  8609,  8623,  8627,  8629,  8641,  8647,  8663,
- 8669,  8677,  8681,  8689,  8693,  8699,  8707,  8713,  8719,  8731,  8737,  8741,  8747,  8753,
- 8761,  8779,  8783,  8803,  8807,  8819,  8821,  8831,  8837,  8839,  8849,  8861,  8863,  8867,
- 8887,  8893,  8923,  8929,  8933,  8941,  8951,  8963,  8969,  8971,  8999,  9001,  9007,  9011,
- 9013,  9029,  9041,  9043,  9049,  9059,  9067,  9091,  9103,  9109,  9127,  9133,  9137,  9151,
- 9157,  9161,  9173,  9181,  9187,  9199,  9203,  9209,  9221,  9227,  9239,  9241,  9257,  9277,
- 9281,  9283,  9293,  9311,  9319,  9323,  9337,  9341,  9343,  9349,  9371,  9377,  9391,  9397,
- 9403,  9413,  9419,  9421,  9431,  9433,  9437,  9439,  9461,  9463,  9467,  9473,  9479,  9491,
- 9497,  9511,  9521,  9533,  9539,  9547,  9551,  9587,  9601,  9613,  9619,  9623,  9629,  9631,
- 9643,  9649,  9661,  9677,  9679,  9689,  9697,  9719,  9721,  9733,  9739,  9743,  9749,  9767,
- 9769,  9781,  9787,  9791,  9803,  9811,  9817,  9829,  9833,  9839,  9851,  9857,  9859,  9871,
- 9883,  9887,  9901,  9907,  9923,  9929,  9931,  9941,  9949,  9967,  9973
+ 1933,  1949,  1951,  1973,  1979,  1987,  1993,  1997,  1999
 \section{Künzlerischi-Tabelle}
 {
 \setlength{\tabcolsep}{0.15em}
