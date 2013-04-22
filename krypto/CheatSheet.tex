@@ -696,6 +696,15 @@ $\underbrace{x}_{m^3} = c_1 y_1 M_1 + c_2 y_2 M_2 + c_3 y_3 M_3$ mod $n_1n_2n_3$
 	& $x\equiv1$ mod $7$ \\
 	$m*m*m < n_1n_2n_3$ & $x\equiv5$ mod $9$ & \\
 \end{tabular}
+\subsection{Chinesischer Restsatz}
+\begin{tabular}{l}
+ $x\equiv 2 mod 3$\\
+ $x\equiv 3 mod 4$\\
+ $x\equiv 2 mod 5$
+\end{tabular}
+ $m_1=3$, $m_2=4$, $m_3=5$, $M=3\cdot4\cdot5=60$, $M_1=\frac{M}{m_1}=20$, $M_2=15$, $M_3=12$\\
+ $ggT(20,3)=7\cdot3+(-1)\cdot20 = 1 \to e_1=-20$, $ggT(15,4)=4\cdot4+(-1)\cdot15 = 1 \to e_2=-15$, $ggT(12,5)=5\cdot5+(-2)\cdot12 = 1 \to e_3=-24$\\
+ $x=2\cdot e_1+3\cdot e_2+2\cdot e_3=-133 mod 60=47$ 
 \subsection{SK-Such-Algorithmus}
 \begin{description}
 	\item[Bob:] $(n,e)$, $(n,d)$
