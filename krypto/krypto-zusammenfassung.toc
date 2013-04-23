@@ -3,8 +3,7 @@
 \contentsline {subsection}{\numberline {0.1}Euklid}{1}
 \contentsline {subsection}{\numberline {0.2}Modulare Division}{1}
 \contentsline {subsection}{\numberline {0.3}Modulares Potenzieren}{1}
-\contentsline {subsubsection}{\numberline {0.3.1}Theorie}{1}
-\contentsline {subsubsection}{\numberline {0.3.2}Beispiel}{2}
+\contentsline {subsection}{\numberline {0.4}Chinesischer Restsatz}{2}
 \contentsline {section}{\numberline {1}Klassische Kryptographie}{3}
 \contentsline {subsection}{\numberline {1.0}Repetition}{3}
 \contentsline {subsection}{\numberline {1.1}Klassische Verschl\IeC {\"u}sselungsverfahren}{3}
@@ -16,30 +15,26 @@
 \contentsline {subsection}{\numberline {1.5}Koinzidenzindex (index of coincidence)}{4}
 \contentsline {subsection}{\numberline {1.6}Vigen\IeC {\`e}res Chipres}{5}
 \contentsline {subsubsection}{\numberline {1.6.1}Beschreibung}{5}
-\contentsline {subsubsection}{\numberline {1.6.2}Tabelle}{6}
-\contentsline {subsubsection}{\numberline {1.6.3}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{6}
-\contentsline {subsubsection}{\numberline {1.6.4}Kryptoanalysis des Vigen\`{e}re-Cipher}{7}
-\contentsline {subsection}{\numberline {1.7}One-Time-Pad}{8}
-\contentsline {subsection}{\numberline {1.8}Kryptosysteme}{8}
-\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{8}
-\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{8}
+\contentsline {subsubsection}{\numberline {1.6.2}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{6}
+\contentsline {subsubsection}{\numberline {1.6.3}Kryptoanalysis des Vigen\`{e}re-Cipher}{6}
+\contentsline {subsection}{\numberline {1.7}One-Time-Pad}{7}
+\contentsline {subsection}{\numberline {1.8}Kryptosysteme}{7}
+\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{7}
+\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{7}
 \contentsline {subsubsection}{\numberline {1.9.2}known-plaintext attack}{8}
 \contentsline {subsubsection}{\numberline {1.9.3}chosen-plaintext attack}{8}
 \contentsline {subsubsection}{\numberline {1.9.4}chosen-ciphertext attack}{8}
 \contentsline {section}{\numberline {2}Block-Cipher}{9}
 \contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{9}
-\contentsline {subsection}{\numberline {2.2}Modi von Block-Cipher}{10}
-\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modus (electronic code block)}{10}
+\contentsline {subsection}{\numberline {2.2}Modi von Block-Cipher}{9}
+\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modus (electronic code block)}{9}
 \contentsline {subsubsection}{\numberline {2.2.2}CBC-Modus (cipher block chaining)}{10}
 \contentsline {subsubsection}{\numberline {2.2.3}CFB-Modus (cipher feedback)}{10}
-\contentsline {section}{\numberline {3}RSA}{12}
-\contentsline {subsection}{\numberline {3.1}Schl\IeC {\"u}sselerzeugung}{12}
-\contentsline {subsection}{\numberline {3.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{12}
-\contentsline {subsubsection}{\numberline {3.2.1}RSA ist ein Blockcipher}{12}
-\contentsline {subsubsection}{\numberline {3.2.2}Beweis}{12}
-\contentsline {subsection}{\numberline {3.3}Hastad Attac}{13}
-\contentsline {subsection}{\numberline {3.4}Bellare-Rogenwog plaintext-awarnes encription scheme}{13}
-\contentsline {subsection}{\numberline {3.5}RSA-Probleme}{14}
-\contentsline {subsubsection}{\numberline {3.5.1}Kleines $e$}{14}
-\contentsline {section}{\numberline {4}Keltenbr\IeC {\"u}che}{15}
-\contentsline {section}{\numberline {5}Uebungen}{16}
+\contentsline {section}{\numberline {3}RSA}{11}
+\contentsline {subsection}{\numberline {3.1}Schl\IeC {\"u}sselerzeugung}{11}
+\contentsline {subsection}{\numberline {3.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{11}
+\contentsline {subsubsection}{\numberline {3.2.1}RSA ist ein Blockcipher}{11}
+\contentsline {subsubsection}{\numberline {3.2.2}Beweis}{11}
+\contentsline {subsection}{\numberline {3.3}Hastad Attack}{12}
+\contentsline {section}{\numberline {4}Keltenbr\IeC {\"u}che}{13}
+\contentsline {section}{\numberline {5}Uebungen}{14}
