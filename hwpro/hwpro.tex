@@ -1,6 +1,5 @@
 \documentclass[a4paper, 11pt]{article}
 
-%\usepackage[utf8]{input}
 
 %Math
 \usepackage{amsmath}
@@ -12,7 +11,7 @@
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
-\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage[utf8]{inputenc} 
 \usepackage{fontenc}
 \usepackage{fancyhdr, graphicx} %for header/footer
 \usepackage{wasysym}
@@ -66,7 +65,20 @@
 \setlength{\headheight}{15.2pt}
 \pagestyle{plain}
 
+
+%Metadata
+\title{
+	\vspace{5cm}
+	Kryptographie
+}
+\author{Jonas Schwambi Schwammberger}
+\date{4. Semester (FS 2013)}
+
 \begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
 
 \section{Register}
 \begin{itemize}
@@ -82,7 +94,7 @@
 \end{itemize}
 Ausser \%eip und \%esp sind alles General Purpose Register, man kann auch \%ebx für eine Array-Manipulation verwenden.
 
-\subsubsection{MOV Instruktion}
+\subsection{MOV Instruktion}
 movl kann in drei Varianten verwendet werden:
 \begin{itemize}
 	\item movl "register", "register"
@@ -90,7 +102,7 @@ movl kann in drei Varianten verwendet werden:
 	\item movl [Expression], "register"
 \end{itemize}
 
-\subsubsection{Expression}
+\subsection{Expression}
 Generelle Funktion für Expressions: $D(Rb,Ri,S)= Mem[Reg[Rb]+S \cdot Reg[Ri]+D]$\\
 \begin{itemize}
 	\item D: Konstante in Byte(4 Byte für 64b)
@@ -110,7 +122,7 @@ Beispiele:
 
 \section{Function Call}
 \subsection{Stack Frame}
-\%ebp zeigt immer auf die "Basis" des stacks, heisst alle Adressen kleiner als \%ebp gehören zur momentan ausgeführten Methode. Die Parameter dieser Methode sind dabei auf den Adressen grösser als \%ebp abgespeichert. Die Speicherstelle, auf die \%ebp hinzeigt, ist der \&ebp Wert der vorherigen Methode. 4(\%ebp) beinhaltet die Return-Adresse für diese Methode, alles höher als 4(\%ebp) sind Parameter der momentanen Methode.
+\%ebp zeigt immer auf die "Basis" des stacks, heisst alle Adressen kleiner als \%ebp gehören zur momentan ausgeführten Methode. Die Parameter dieser Methode sind dabei auf den Adressen grösser als \%ebp abgespeichert. Die Speicherstelle, auf die \%ebp hinzeigt, ist der \&ebp Wert der vorherigen Methode. 4(\%ebp) beinhaltet die Return-Adresse für diese Methode, alles höher als 4(\%ebp) sind Parameter der momentanen Methode.\\
 \begin{tabular}{|c|c}
 	$\vdots$&\\\cline{0-0}
 	yp\\\cline{0-0}
@@ -123,16 +135,16 @@ Beispiele:
 \subsection{Function Call Setup}
 Nachdem der Aufrufer die Parameter auf den Stack abgelegt und "Call Function" ausgeführt hat.
 \begin{lstlisting}
-	pushl \%ebp
-	movl \%esp, \%ebp
+	pushl %ebp
+	movl %esp, %ebp
 \end{lstlisting}
 
  
 \subsection{Function Call Teardown}
 Falls die Methode einen Rückgabewert hat, muss dieser vorher noch in\%eax abgelegt werden.
 \begin{lstlisting}
-	movl \%ebp, \%esp
-	pop \%ebp
+	movl %ebp, %esp
+	pop %ebp
 	return
 \end{lstlisting}
 
@@ -178,17 +190,15 @@ Alle binären Operatoren lesen aus dem Source Register und den berechneten Wert 
 \end{tabular}
 
 \subsubsection{LEA Instruction}
-Vom Internet: LEA, the only instruction that performs memory addressing calculations but doesn't actually address memory. LEA accepts a standard memory addressing operand, but does nothing more than store the calculated memory offset in the specified register, which may be any general purpose register.
-
-What does that give us? Two things that ADD doesn't provide:
-
+Vom Internet: LEA, the only instruction that performs memory addressing calculations but doesn't actually address memory. LEA accepts a standard memory addressing operand, but does nothing more than store the calculated memory offset in the specified register, which may be any general purpose register.\\
+What does that give us? Two things that ADD doesn't provide:\\
 the ability to perform addition with either two or three operands, and
 the ability to store the result in any register; not just one of the source operands.
 
 \section{Vergleiche und Konditionen}
 Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überprüft werden. Diese Flags werden von den arithmetischen Operationen selber gesetzt, oder durch die Befehle testl oder cmpl. Zum Beispiel überprüft die JUMP ZERO Instruktion, ob das ZERO FLAG von einer anderen Instruktion zuvor gesetzt wurde.
 
-\subsubsection{Flags}
+\subsection{Flags}
 \begin{tabular}{|c|c|c|}
 	\hline
 	Abkürzung & Name & wird gesetzt durch \\\hline 
@@ -198,23 +208,30 @@ Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überpr�
 	CF & Carry Flag & von arithmetischen Operationen gesetzt.\\\hline
 \end{tabular}
 
-\subsubsection{Vergleichsoperatoren}
+\subsection{Vergleichsoperatoren}
 \begin{tabular}{|c|c|}
 	\hline
-	cmpl Var1, Var2 & Rechnet Var2 - Var1, ohne das Resultat in Var2 zu speichern. Nur die Flags werden verändert. Heisst Var1 == Var2, dann ist das Zero Flag gesetzt.\\\hline
-	testl & Macht das gleiche wie cmpl, mit dem Unterschied dass es Bitwise AND anstatt einer Substraktion macht.\\\hline
+	cmpl Var1, Var2 & Rechnet Var2 - Var1, ohne das Resultat in Var2 zu speichern.\\ 
+	& Nur die Flags werden verändert. Heisst Var1 == Var2, \\
+	& dann ist das Zero Flag gesetzt.\\\hline
+	testl & Macht das gleiche wie cmpl, mit dem Unterschied dass es Bitwise AND\\
+	& anstatt einer Substraktion macht.\\\hline
 	{\color{red}cmovle} & move src to dest if condition c is true(less or equal).\\\hline
-\end{tabular}
-
-
-SetX Befehle verändern die Flags direkt, falls man das möchte:
+\end{tabular}\\ \\
+SetX Befehle verändern die Flags direkt, falls man das möchte:\\
 \begin{tabular}{|c|c|c|}
 	\hline
 	Befehl & Ausdruck & Beschreibung\\\hline 
 	sete & $ZF$ & Equal / Zero\\\hline 
-	setne & $~ZF$ & Not Equal / Not Zero\\\hline 
+	setne & $\sim ZF$ & Not Equal / Not Zero\\\hline 
 	sets & $SF$ & Negative\\\hline 
-	setns & $~SF$ & Nonnegative\\\hline  
+	setns & $\sim SF$ & Nonnegative\\\hline  
+	setg & $\sim(SF^\wedge OF)\&\sim ZF$ & Greater (Signed)\\\hline 
+	setge & $\sim(SF^\wedge OF)$ & Greater or Equal (Signed)\\\hline 
+	setl & $(SF^\wedge OF)$ & Less (Signed)\\\hline 
+	setle & $(SF^\wedge OF)\mid ZF$ & Less or Equal (Signed)\\\hline 
+	seta & $\sim CF\&\sim ZF$ & Above (unsigned)\\\hline 
+	setb & CF & Below (unsigned)\\\hline
 \end{tabular}
 
 \subsection{Jump}
@@ -253,7 +270,6 @@ C Code:
 		return result;
 	}
 \end{lstlisting}
-
 Assembler:
 \begin{lstlisting}
 	absdiff:
@@ -309,7 +325,6 @@ C Code:
 		return result;
 	}
 \end{lstlisting}
-
 Intermediate Code, bevor der Code zu Assembler übersetzt wird:
 \begin{lstlisting}
 	int fact(int x)
@@ -325,7 +340,6 @@ Intermediate Code, bevor der Code zu Assembler übersetzt wird:
 		return result;
 	}
 \end{lstlisting}
-
 Assembler:
 \begin{lstlisting}
 	fact:
@@ -345,15 +359,13 @@ Assembler:
 \end{lstlisting}
 
 \subsubsection{while loops}
-While loops werden vom GCC in einen Do While loop übersetzt.
-
+While loops werden vom GCC in einen Do While loop übersetzt.\\
 \paragraph{Alte Übersetzungsart}
 Pseudocode While:
 \begin{lstlisting}
 	while(TEST)
 		Body
 \end{lstlisting}
-
 Pseudo intermediate Code:
 \begin{lstlisting}
 	if(TEST)
@@ -366,8 +378,7 @@ Pseudo intermediate Code:
 \end{lstlisting}
 
 \paragraph{Neue Übersetzungsart}
-In der neuen Übersetzungsart wird der unnötige Test vor dem eigentlichen Loop weggelassen, heutige Prozessoren haben keine Performance einbussen bei unconditional jumps
-
+In der neuen Übersetzungsart wird der unnötige Test vor dem eigentlichen Loop weggelassen, heutige Prozessoren haben keine Performance einbussen bei unconditional jumps\\
 Pseudocode:
 \begin{lstlisting}
 	goto MIDDLE
@@ -379,14 +390,12 @@ Pseudocode:
 \end{lstlisting}
 
 \subsubsection{For Loops}
-For loops sind eigentlich nur While loops mit einer speziellen letzten Zeile. For loops werden in einen While loop umgewandelt, der wieder in einen do while \ldots
-
+For loops sind eigentlich nur While loops mit einer speziellen letzten Zeile. For loops werden in einen While loop umgewandelt, der wieder in einen do while \dots\\
 Pseudocode for:
 \begin{lstlisting}
 	for(INIT;TEST;UPDATE)
 		body
 \end{lstlisting}
-
 Pseudocode in while übersetzt:
 \begin{lstlisting}
 	INIT
@@ -398,8 +407,7 @@ Pseudocode in while übersetzt:
 \end{lstlisting}
 
 \subsection{Select Case}
-Ein Select Case gibt es zwei Möglichkeiten, entweder es wird als eine Reihe von if then else Anweisungen implementiert, was bei vielen Cases sehr langsam wird, oder mittels einer Jump Table. Der GCC entscheidet selbst, was er macht.
-
+Ein Select Case gibt es zwei Möglichkeiten, entweder es wird als eine Reihe von if then else Anweisungen implementiert, was bei vielen Cases sehr langsam wird, oder mittels einer Jump Table. Der GCC entscheidet selbst, was er macht.\\
 Beispiel C Code:
 \begin{lstlisting}
 	typedef enum {ADD,MULT,MINUS,DIV,MOD,BAD} op_type;
@@ -421,18 +429,16 @@ Beispiel C Code:
 		}
 	}
 \end{lstlisting}
-
 Jump Table
 \begin{lstlisting}
 	.section .rodata
 		.align 4
 	.L57:
-		.long .51	//Addresse für Case 0
-		.long .L52	//Addresse für Case 1
+		.long .51	//Addresse fuer Case 0
+		.long .L52	//Addresse fuer Case 1
 		...
-		.long .L56  //Addresse für Case 5
+		.long .L56  //Addresse fuer Case 5
 \end{lstlisting}
-
 Eigentlicher Switch wird ungefähr so übersetzt. Jeder Case bekommt ein eigenes Label. Ebenso wird hier ein weiteres Label hinzugefügt, mitdem wir zu den Instruktionen springen können, die nach dem Switch ausgeführt werden sollen.
 \begin{lstlisting}
 	.L51
@@ -451,7 +457,6 @@ Eigentlicher Switch wird ungefähr so übersetzt. Jeder Case bekommt ein eigenes
 		popl %ebp
 		ret
 \end{lstlisting}
-
 Methodenaufruf, wie die Jump Tabelle und die
 \begin{lstlisting}
 	unparse_symbol:
@@ -464,8 +469,7 @@ Methodenaufruf, wie die Jump Tabelle und die
 		jmp *.L57(,%eax,4)	#  .L57[%eax]
 \end{lstlisting}
 Erklärung der Letzten Instruktion:
-(,\%eax,4) wird übersetzt in (0+ \%eax)*4, somit haben wir unseren Offset für die Jump Tabelle. Der Rest des Ausdrucks bedeutet: \"Gehe zur Memory Adresse, die das Label L57 hat, addiere den Offset dazu und springe dan zum Wert, der diese Adresse beinhaltet." Dieser Wert ist dann zum Beispiel die Adresse des Labels .L51.
-
+$(,\%eax,4)$ wird übersetzt in $(0+ \%eax)\cdot4$, somit haben wir unseren Offset für die Jump Tabelle. Der Rest des Ausdrucks bedeutet: \"Gehe zur Memory Adresse, die das Label L57 hat, addiere den Offset dazu und springe dan zum Wert, der diese Adresse beinhaltet." Dieser Wert ist dann zum Beispiel die Adresse des Labels .L51.
 \section{Bitwise Magix}
 \begin{lstlisting}
 	int bitXor(int x, int y) {
