@@ -398,27 +398,73 @@ Pseudocode in while übersetzt:
 \end{lstlisting}
 
 \subsection{Select Case}
-Ein Select Case gibt es zwei Möglichkeiten, entweder es wird als eine Reihe von if then else Anweisungen implementiert, was bei vielen Cases sehr langsam wird, oder mittels einer Jump Table.
+Ein Select Case gibt es zwei Möglichkeiten, entweder es wird als eine Reihe von if then else Anweisungen implementiert, was bei vielen Cases sehr langsam wird, oder mittels einer Jump Table. Der GCC entscheidet selbst, was er macht.
 
+Beispiel C Code:
+\begin{lstlisting}
+	typedef enum {ADD,MULT,MINUS,DIV,MOD,BAD} op_type;
+	char unparse_symbol(op_type op) {
+		switch(op)
+		{
+			case ADD:
+				return '+';
+			case MULT:
+				return '*';
+			case MINUS:
+				return '-';
+			case DIV:
+				return '/';
+			case MOD:
+				return '%';
+			case BAD:
+				return '?';
+		}
+	}
+\end{lstlisting}
 
+Jump Table
+\begin{lstlisting}
+	.section .rodata
+		.align 4
+	.L57:
+		.long .51	//Addresse für Case 0
+		.long .L52	//Addresse für Case 1
+		...
+		.long .L56  //Addresse für Case 5
+\end{lstlisting}
+
+Eigentlicher Switch wird ungefähr so übersetzt. Jeder Case bekommt ein eigenes Label. Ebenso wird hier ein weiteres Label hinzugefügt, mitdem wir zu den Instruktionen springen können, die nach dem Switch ausgeführt werden sollen.
 \begin{lstlisting}
 	.L51
-		body case 1
+		movl $43,\%eax  //'+'
 		jmp .L49
 	.L52
-		body case 2
+		movl $42,\%eax  //'*'
 		jmp .L49
 	.L53
-		body case 3
+		movl $45,\%eax  //'-'
 		jmp .L49
 	...
 	
 	.L49
-		movl \%ebp,\%esp
-		popl \%ebp
+		movl %ebp, %esp
+		popl %ebp
 		ret
 \end{lstlisting}
 
+Methodenaufruf, wie die Jump Tabelle und die
+\begin{lstlisting}
+	unparse_symbol:
+		pushl %ebp
+		movl %esp,%ebp
+		
+		movl 8(%ebp), %eax  #eax = op
+		cmpl $5,%eax 		
+		ja	.L49			# if > goto end
+		jmp *.L57(,%eax,4)	#  .L57[%eax]
+\end{lstlisting}
+Erklärung der Letzten Instruktion:
+(,\%eax,4) wird übersetzt in (0+ \%eax)*4, somit haben wir unseren Offset für die Jump Tabelle. Der Rest des Ausdrucks bedeutet: \"Gehe zur Memory Adresse, die das Label L57 hat, addiere den Offset dazu und springe dan zum Wert, der diese Adresse beinhaltet." Dieser Wert ist dann zum Beispiel die Adresse des Labels .L51.
 
 \section{Bitwise Magix}
 \begin{lstlisting}
