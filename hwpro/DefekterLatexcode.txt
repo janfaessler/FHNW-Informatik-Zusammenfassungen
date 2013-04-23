@@ -1,6 +1,0 @@
-	setg & $~(SF^OF)&~ZF$ & Greater (Signed)\\\hline 
-	setge & $~(SF^OF)$ & Greater or Equal (Signed)\\\hline 
-	setl & $(SF^OF)$ & Less (Signed)\\\hline 
-	setle & $(SF^OF)|ZF$ & Less or Equal (Signed)\\\hline 
-	seta & $~CF&~ZF$ & Above (unsigned)\\\hline 
-	setb & CF & Below (unsigned)\\\hline
