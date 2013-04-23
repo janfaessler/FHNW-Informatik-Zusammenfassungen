@@ -82,7 +82,7 @@
 \end{itemize}
 Ausser \%eip und \%esp sind alles General Purpose Register, man kann auch \%ebx für eine Array-Manipulation verwenden.
 
-\subsubsection{movl}
+\subsubsection{MOV Instruktion}
 movl kann in drei Varianten verwendet werden:
 \begin{itemize}
 	\item movl "register", "register"
@@ -90,6 +90,7 @@ movl kann in drei Varianten verwendet werden:
 	\item movl [Expression], "register"
 \end{itemize}
 
+\subsubsection{Expression}
 Generelle Funktion für Expressions: $D(Rb,Ri,S)= Mem[Reg[Rb]+S \cdot Reg[Ri]+D]$\\
 \begin{itemize}
 	\item D: Konstante in Byte(4 Byte für 64b)
@@ -124,10 +125,13 @@ Stack Frame
 	yp\\\cline{0-0}
 	xp\\\cline{0-0}
 	ret addr\\\cline{0-0}
-	\%ebp & $\leftarrow$ pushl \%ebp, movl \%esp, \%ebp\\\cline{0-0}
-	\%ebx & $\leftarrow$ pushl \%ebx\\\cline{0-0}
+	\%ebp & $\leftarrow$ pushl \%ebp 			\%ebp\\\cline{0-0}
+ 	\%ebx\\\cline{0-0}
 \end{tabular}\\
 
+\subsection{Auf Parameter zugreifen}
+Alle Parameter sind auf dem Stack. \%ebp zeigt immer auf die Adresse, inder der \%ebp der aufrufenden Metode gespeichert ist. Eine Memoryzelle höher ist die Adresse der aufrufenden Methode, mit 4(\%ebp) können wir darauf zugreifen. Alle Adressen höher (8(\%ebp),12(\%ebp),\ldots) sind mit Übergabeparameter befüllt. Es hält uns natürlich niemand auf weitere Speicherzellen auszulesen, die nicht mehr mit den Übergabeparameter befüllt sind :).
+ 
 \subsection{Function Call Teardown}
 \begin{lstlisting}
 	//allenfalls Returnwert in \%eax speichern
@@ -176,6 +180,18 @@ the ability to perform addition with either two or three operands, and
 the ability to store the result in any register; not just one of the source operands.
 
 \subsection{Compare und Konditionen}
+Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überprüft werden. Diese Flags werden teils von den arithmetischen Operationen selber gesetzt, oder durch die Befehle testl oder cmpl. Zum Beispiel überprüft die JUMP ZERO Instruktion, ob das ZERO FLAG gesetzt wurde. 
+
+\subsubsection{Flags}
+\begin{tabular}{|c|c|c|}
+	\hline
+	Abkürzung & Name & wird gesetzt durch \\\hline 
+	ZF & Zero Flag & wird von testl gesetzt.\\\hline
+	SF & Signed Flag & wird von testl gesetzt.\\\hline
+	OF & Overflow Flag & von arithmetischen Operationen gesetzt.\\\hline
+	CF & Carry Flag & von arithmetischen Operationen gesetzt.\\\hline
+\end{tabular}
+
 \begin{tabular}{|c|c|}
 	\hline
 	cmpl & compare\\\hline
@@ -188,15 +204,6 @@ the ability to store the result in any register; not just one of the source oper
 
 \end{tabular}
 
-\subsubsection{Flags}
-\begin{tabular}{|c|c|c|}
-	\hline
-	Abkürzung & Name & wird gesetzt durch \\\hline 
-	ZF & Zero Flag & wird von testl gesetzt.\\\hline
-	SF & Signed Flag & wird von testl gesetzt.\\\hline
-	OF & Overflow Flag & von arithmetischen Operationen gesetzt.\\\hline
-	CF & Carry Flag & von arithmetischen Operationen gesetzt.\\\hline
-\end{tabular}
 
 \begin{tabular}{|c|c|c|}
 	\hline
@@ -222,7 +229,7 @@ the ability to store the result in any register; not just one of the source oper
 	jl (label) & & jump less  \\\hline
 	jle (label) & & jump less or equal \\\hline
 	ja (label) & & jump above (unsigned) \\\hline
-	jb (label) & & jump below (unsigned) \\\hline
+	jb (label) & CF & jump below (unsigned) \\\hline
 \end{tabular}
 
 \subsection{Instrutionen für den Methodenaufruf}
@@ -378,6 +385,23 @@ Pseudocode:
 \end{lstlisting}
 
 \subsubsection{For Loops}
+For loops sind eigentlich nur While loops mit einer speziellen letzten Zeile. For loops werden in einen While loop umgewandelt, der wieder in einen do while \ldots
+
+Pseudocode for:
+\begin{lstlisting}
+	for(INIT;TEST;UPDATE)
+		body
+\end{lstlisting}
+
+Pseudocode in while übersetzt:
+\begin{lstlisting}
+	INIT
+	while(TEST)
+	{
+		body
+		UPDATE
+	}
+\end{lstlisting}
 
 \subsection{Select Case}
 \begin{lstlisting}
