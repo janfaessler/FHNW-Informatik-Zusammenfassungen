@@ -186,7 +186,7 @@ the ability to perform addition with either two or three operands, and
 the ability to store the result in any register; not just one of the source operands.
 
 \section{Vergleiche und Konditionen}
-Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überprüft werden. Diese Flags werden teils von den arithmetischen Operationen selber gesetzt, oder durch die Befehle testl oder cmpl. Zum Beispiel überprüft die JUMP ZERO Instruktion, ob das ZERO FLAG von einer anderen Instruktion zuvor gesetzt wurde.
+Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überprüft werden. Diese Flags werden von den arithmetischen Operationen selber gesetzt, oder durch die Befehle testl oder cmpl. Zum Beispiel überprüft die JUMP ZERO Instruktion, ob das ZERO FLAG von einer anderen Instruktion zuvor gesetzt wurde.
 
 \subsubsection{Flags}
 \begin{tabular}{|c|c|c|}
@@ -201,26 +201,20 @@ Alle Compare Operationen werden durchgeführt, indem verschiedene Flags überpr�
 \subsubsection{Vergleichsoperatoren}
 \begin{tabular}{|c|c|}
 	\hline
-	cmpl & compare\\\hline
-	testl & (jmp \%eax \%eax) überprüft, ob \%eax grösser,kleiner oder = 0 ist.\\\hline
-	{\color{red}cmovle} & move src to dest if condition c is true. Nur Unter 64 Bit!\\\hline
-\end{tabular}
-
-\begin{tabular}{|c|c|}
-	\hline
-	
-
+	cmpl Var1, Var2 & Rechnet Var2 - Var1, ohne das Resultat in Var2 zu speichern. Nur die Flags werden verändert. Heisst Var1 == Var2, dann ist das Zero Flag gesetzt.\\\hline
+	testl & Macht das gleiche wie cmpl, mit dem Unterschied dass es Bitwise AND anstatt einer Substraktion macht.\\\hline
+	{\color{red}cmovle} & move src to dest if condition c is true(less or equal).\\\hline
 \end{tabular}
 
 
+SetX Befehle verändern die Flags direkt, falls man das möchte:
 \begin{tabular}{|c|c|c|}
 	\hline
 	Befehl & Ausdruck & Beschreibung\\\hline 
 	sete & $ZF$ & Equal / Zero\\\hline 
 	setne & $~ZF$ & Not Equal / Not Zero\\\hline 
 	sets & $SF$ & Negative\\\hline 
-	setns & $~SF$ & Nonnegative\\\hline 
- 
+	setns & $~SF$ & Nonnegative\\\hline  
 \end{tabular}
 
 \subsection{Jump}
