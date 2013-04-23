@@ -1,0 +1,304 @@
+\documentclass[a4paper, 11pt]{article}
+
+%\usepackage[utf8]{input}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage{fontenc}
+\usepackage{fancyhdr, graphicx} %for header/footer
+\usepackage{wasysym}
+\usepackage{fullpage}
+\usepackage{textcomp}
+
+% Listings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+
+% Code listenings
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\definecolor{DarkPurple}{rgb}{0.4,0.1,0.4}
+\definecolor{DarkCyan}{rgb}{0.0,0.5,0.4}
+\definecolor{LightLime}{rgb}{0.4,0.6,0.5}
+\definecolor{Blue}{rgb}{0.0,0.0,1.0}
+ 
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=3pt,
+ framexbottommargin=2pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+\pagestyle{plain}
+
+\begin{document}
+
+\section{Register}
+\begin{itemize}
+	\item \%esp = stack pointer
+	\item \%ebp = base pointer
+	\item \%eax = accumulator, return Werte von Funktionen werden hier abgelegt.
+	\item \%ebx = base index (array manipulation)
+	\item \%ecx = counter (array manipulation)
+	\item \%edx = data / general register
+	\item \%esi = source index (string manipulation)
+	\item \%edi = destination index (string manipulation)
+	\item \%eip = instruction pointer
+\end{itemize}
+Ausser \%eip und \%esp sind alles General Purpose Register, man kann auch \%ebx für eine Array-Manipulation verwenden.
+
+\subsubsection{movl}
+movl kann in drei Varianten verwendet werden:
+\begin{itemize}
+	\item movl "register", "register"
+	\item movl "register, [Expression]
+	\item movl [Expression], "register"
+\end{itemize}
+
+Generelle Funktion für Expressions: $D(Rb,Ri,S)= Mem[Reg[Rb]+S \cdot Reg[Ri]+D]$\\
+\begin{itemize}
+	\item D: Konstante in Byte(4 Byte für 64b)
+	\item Rb: Base Register
+	\item Ri: Index Register, können alle sein ausser \%esp und \%ebp
+	\item S: Skalar in Zweierpotenz
+\end{itemize}
+
+Beispiele:
+\begin{tabular}{|c|c|c|}
+	\hline
+	Ausdruck & Berechnung & Adresse im Hauptspeicher \\\hline\hline
+	0x8(\%edx) & 0xf000 + 0x8 & 0xf008 \\\hline
+	(\%edx,\%ecx,4)&0xf000 + 4*0x100&0xf400\\\hline
+	0x80(,\%edx,2)&2*0xf000 + 0x80 & 0x1e080\\\hline
+\end{tabular}
+
+\section{Function Call}
+\subsection{Stack Frame}
+\%ebp zeigt immer auf die "Basis" des stacks, heisst alle Adressen kleiner als \%ebp gehören zur momentan ausgeführten Methode. Die Parameter dieser Methode sind dabei auf den Adressen grösser als \%ebp abgespeichert. Die Speicherstelle, auf die \%ebp hinzeigt, ist der \&ebp Wert der vorherigen Methode. 4(\%ebp) beinhaltet die Return-Adresse für diese Methode, alles höher als 4(\%ebp) sind Parameter der momentanen Methode.
+
+\subsection{Function Call Setup}
+Nachdem der Aufrufer die Parameter auf den Stack abgelegt und "Call Function" ausgeführt hat.
+\begin{lstlisting}
+	pushl \%ebp
+	movl \%esp, \%ebp
+\end{lstlisting}
+
+Stack Frame
+\begin{tabular}{|c|c}
+	$\vdots$&\\\cline{0-0}
+	yp\\\cline{0-0}
+	xp\\\cline{0-0}
+	ret addr\\\cline{0-0}
+	\%ebp & $\leftarrow$ pushl \%ebp, movl \%esp, \%ebp\\\cline{0-0}
+	\%ebx & $\leftarrow$ pushl \%ebx\\\cline{0-0}
+\end{tabular}\\
+
+\subsection{Function Call Teardown}
+\begin{lstlisting}
+	//allenfalls Returnwert in \%eax speichern
+	movl \%ebp, \%esp
+	pop \%ebp
+	return
+\end{lstlisting}
+
+\section{Instruktionen}
+\subsection{Arithmetische Operatoren}
+
+\subsubsection{Binäre Operatoren}
+Alle binären Operatoren lesen aus dem Source Register und den berechneten Wert in das Destination Register.
+
+\begin{tabular}{|c|c|}
+	\hline
+	Befehl & Beschreibung\\\hline\hline
+	addl & Dest += Source\\\hline
+	subl & Dest -= Source \\\hline
+	imull & Dest *= Source \\\hline
+	sall & Dest $<<$ Source\\\hline
+	sarl & Dest $>>$ Source, füllt mit 1 auf falls MSB = 1 \\\hline
+	shrl & Dest $>>$ Source, füllt immer mit 0 auf\\\hline
+	leal & siehe LEA Instruction. \\\hline
+	xorl & \ldots \\\hline
+	andl &\ldots  \\\hline
+	orl & \ldots \\\hline
+\end{tabular}
+
+\subsubsection{Unäre Operatoren}
+\begin{tabular}{|c|c|}
+	\hline
+	Befehl & Beschreibung\\\hline\hline
+	incl & increment \\\hline
+	decl & decrement \\\hline
+	negl & negate \\\hline
+	notl & not operator\\\hline
+\end{tabular}
+
+\subsubsection{LEA Instruction}
+Vom Internet: LEA, the only instruction that performs memory addressing calculations but doesn't actually address memory. LEA accepts a standard memory addressing operand, but does nothing more than store the calculated memory offset in the specified register, which may be any general purpose register.
+
+What does that give us? Two things that ADD doesn't provide:
+
+the ability to perform addition with either two or three operands, and
+the ability to store the result in any register; not just one of the source operands.
+
+\subsection{Compare und Konditionen}
+\begin{tabular}{|c|c|}
+	\hline
+	cmpl & compare\\\hline
+	testl & (jmp \%eax \%eax) überprüft, ob \%eax grösser,kleiner oder = 0 ist.\\\hline
+\end{tabular}
+
+\begin{tabular}{|c|c|}
+	\hline
+	
+
+\end{tabular}
+
+\subsubsection{Flags}
+\begin{tabular}{|c|c|c|}
+	\hline
+	Abkürzung & Name & wird gesetzt durch \\\hline 
+	ZF & Zero Flag & wird von testl gesetzt.\\\hline
+	SF & Signed Flag & wird von testl gesetzt.\\\hline
+	OF & Overflow Flag & von arithmetischen Operationen gesetzt.\\\hline
+	CF & Carry Flag & von arithmetischen Operationen gesetzt.\\\hline
+\end{tabular}
+
+\begin{tabular}{|c|c|c|}
+	\hline
+	Befehl & Ausdruck & Beschreibung\\\hline 
+	sete & $ZF$ & Equal / Zero\\\hline 
+	setne & $~ZF$ & Not Equal / Not Zero\\\hline 
+	sets & $SF$ & Negative\\\hline 
+	setns & $~SF$ & Nonnegative\\\hline 
+ 
+\end{tabular}
+
+\subsection{Control Statements}
+\begin{tabular}{|c|c|}
+	\hline
+	jmp (label) & jump \\\hline
+	je (label) & jump equal \\\hline
+	jne (label) & jump not equal  \\\hline
+	js (label) & jump negative \\\hline
+	jns (label) & jump not negative  \\\hline
+	jg (label) & jump greater \\\hline
+	jge (label) & jump greater or equal \\\hline
+	jl (label) & jump less  \\\hline
+	jle (label) & jump less or equal \\\hline
+	ja (label) & jump above (unsigned) \\\hline
+	jb (label) & jump below (unsigned) \\\hline
+	push Src &  \\\hline
+	pop Dest & \\\hline
+	call (label) &  \\\hline
+	ret &  \\\hline
+\end{tabular}
+
+\section{Loops und If's}
+
+\subsection{If Statement}
+\subsubsection{Unter 32Bit}
+C Code:
+\begin{lstlisting}
+	int absdiff(int x,int y)
+	{
+		int result;
+		
+		if(x > y)
+			result = x-y;
+		else
+			result y-x;
+			
+		return result;
+	}
+\end{lstlisting}
+
+Assembler:
+\begin{lstlisting}
+	absdiff:
+		pushl %ebp
+		movl %esp,%ebp
+		
+		movl 8(%ebp),%edx
+		movl 12(%ebp),%eax
+		cmpl %eax,%edx
+		jle .L7			 
+		movl %edx,%eax 
+	.L8:
+		movl %ebp,%esp
+		popl %ebp
+		ret
+	.L7:
+		subl %edx, %eax
+		jmp .L8
+\end{lstlisting}
+
+\subsubsection{Unter 64Bit}
+\begin{lstlisting}
+	absdiff:
+		pushl %ebp
+		movl %esp,%ebp
+		
+		movl %edi, %eax	# v = x
+		movl %esi, %edx	# ve = y
+		subl %esi, %eax # v -= y
+		subl %edi, %edx # ve -= x
+		cmpl %esi, %edi # x:y
+		cmovle %edxm %eax # v=ve if <=
+		movl %ebp,%esp
+		popl %ebp
+		ret
+\end{lstlisting}
+
+\subsection{Loops}
+\begin{lstlisting}
+	
+\end{lstlisting}
+
+\section{Bitwise Magix}
+\begin{lstlisting}
+	int bitXor(int x, int y) {
+		return ~x & y;
+	}
+	
+	int isEqual(int x, int y) {
+		return !(x ^ y);
+	}
+\end{lstlisting}
+
+
+\end{document}
