@@ -1,0 +1,14 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Networking}{1}
+\contentsline {subsection}{\numberline {1.1}InetAddress}{1}
+\contentsline {subsection}{\numberline {1.2}Network Interfaces}{1}
+\contentsline {subsection}{\numberline {1.3}Sockets}{1}
+\contentsline {subsubsection}{\numberline {1.3.1}Controlling Socket Behaviors}{2}
+\contentsline {subsubsection}{\numberline {1.3.2}Closing Connections}{2}
+\contentsline {subsubsection}{\numberline {1.3.3}User Datagram Protocol}{3}
+\contentsline {section}{\numberline {2}Internet}{4}
+\contentsline {subsection}{\numberline {2.1}Protocol}{4}
+\contentsline {subsubsection}{\numberline {2.1.1}Response Codes}{4}
+\contentsline {subsection}{\numberline {2.2}Request Headers}{5}
+\contentsline {subsection}{\numberline {2.3}Response Headers}{5}
+\contentsline {subsection}{\numberline {2.4}Servlet}{6}
