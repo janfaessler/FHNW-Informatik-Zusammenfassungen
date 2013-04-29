@@ -25,6 +25,7 @@
 \newcommand{\Kursiv}[1]{\textit{#1}} %Italic
 \newcommand{\T}[1]{\text{#1}} %Textmode
 \newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\usepackage{tabto} %Möglichkeit Tabulatoren zu nutzen%
 
 %Arrows
 \newcommand{\lra}{\leftrightarrow} 
@@ -84,7 +85,7 @@
 	\vspace{5cm}
 	Verteilte Systeme - Zusammenfassung
 }
-\author{Jan Fässler}
+\author{Jan Fässler \& Chregi Glatthard}
 \date{4. Semester (FS 2013)}
 
 
@@ -345,6 +346,108 @@ public class Converter extends HttpServlet {
 	</servlet-mapping>
 </web-app>
 \end{lstlisting}
+
+\section{Webservices}
+\subsection{XML-RPC}
+
+simples RPC Protokoll über HTTP, benötigt keine lange Einarbeitungszeit
+\subsubsection{Primitive Datentypen}
+\begin{itemize}
+\item int, i4 \tab signed 32bit Integer
+\item string \tab ASCII string (no latin1)
+\item boolean \tab either 0 or 1
+\item double \tab double-precision floating point number
+\item dateTime.iso8601 \tab z.B. 20050717T14:08:14
+\item base64 \tab raw binary data, base64 encoded
+\end{itemize}
+
+\begin{lstlisting}[language=Java, caption=Beispiele, style=JavaStyle]
+<i4>13</i4>
+<boolean>0</boolean>
+\end{lstlisting}
+
+\subsubsection{Structs}
+\begin{itemize}
+\item Struct enthält Members mit Name und Wert.
+\item können rekursiv sein (Structs die Structs enthalten)
+\end{itemize}
+
+\begin{lstlisting}[language=Java, caption=Struct Beispiel, style=JavaStyle]
+<i4>13</i4>
+<struct> 
+  <member> 
+    <name>from</name> 
+    <value><i4>-5</i4></value> 
+  </member> 
+  <member> 
+    <name>to</name> 
+    <value><i4>5</i4></value> 
+  </member>
+</struct>
+\end{lstlisting}
+
+
+
+\subsubsection{XML-RPC Request}
+\begin{lstlisting}[language=Java, caption=Method Call, style=JavaStyle]
+<?xml version="1.0" encoding="UTF-8"?>
+<methodCall>
+  <methodName>Echo.getEcho</methodName>
+    <params>
+      <param>
+        <value>World</value>
+      </param>
+    </params>
+</methodCall>
+\end{lstlisting}
+
+\subsubsection{XML-RPC Response}
+\begin{lstlisting}[language=Java, caption=Single Result, style=JavaStyle]
+<?xml version="1.0" encoding="UTF-8"?>
+<methodResponse>
+  <params>
+    <param>
+      <value>Hello World, welcome to XML-RPC</value>
+    </param>
+  </params>
+</methodResponse>
+\end{lstlisting}
+Als Resultat kann nur ein Wert zurückkommen, dieser kann jedoch auch ein Struct oder ein Array sein.
+
+\begin{lstlisting}[language=Java, caption=Fault Result, style=JavaStyle]
+<?xml version="1.0" encoding="UTF-8"?>
+<methodResponse>
+  <fault>
+    <value>
+      <struct>
+        <member>
+          <name>faultCode</name>
+          <value><i4>0</i4></value>
+        </member>
+        <member>
+          <name>faultString</name>
+          <value>No such handler: Echo.foo</value>
+        </member>
+      </struct>
+    </value>
+  </fault>
+</methodResponse>
+\end{lstlisting}
+
+
+\subsection{SOAP}
+\subsubsection{WSDL}
+\subsubsection{JAX-WS (Java API for XML Web Services}
+\begin{itemize}
+\item Java-API zum Erstellen von Webservices
+\item Benutzt Annotationen um Entwicklung und Deployment von Clients und Service-Endpunkten zu vereinfachen
+\item Kommunikation über SOAP
+\item unterstützt erst WSDL 1.1
+\end{itemize}
+
+\subsection{XML-RPC vs SOAP}
+
+\section{REST}
 
 % Inhalt Ende 
 \end{document} 

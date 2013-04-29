@@ -12,3 +12,14 @@
 \contentsline {subsection}{\numberline {2.2}Request Headers}{5}
 \contentsline {subsection}{\numberline {2.3}Response Headers}{5}
 \contentsline {subsection}{\numberline {2.4}Servlet}{6}
+\contentsline {section}{\numberline {3}Webservices}{6}
+\contentsline {subsection}{\numberline {3.1}XML-RPC}{6}
+\contentsline {subsubsection}{\numberline {3.1.1}Primitive Datentypen}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}Structs}{7}
+\contentsline {subsubsection}{\numberline {3.1.3}XML-RPC Request}{7}
+\contentsline {subsubsection}{\numberline {3.1.4}XML-RPC Response}{7}
+\contentsline {subsection}{\numberline {3.2}SOAP}{8}
+\contentsline {subsubsection}{\numberline {3.2.1}WSDL}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}JAX-WS (Java API for XML Web Services}{8}
+\contentsline {subsection}{\numberline {3.3}XML-RPC vs SOAP}{8}
+\contentsline {section}{\numberline {4}REST}{8}
