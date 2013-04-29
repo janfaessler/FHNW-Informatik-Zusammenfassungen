@@ -386,7 +386,20 @@ simples RPC Protokoll über HTTP, benötigt keine lange Einarbeitungszeit
 </struct>
 \end{lstlisting}
 
+\subsubsection{Arrays}
+\begin{itemize}
+\item Element-Typen können gemischt werden
+\end{itemize}
 
+\begin{lstlisting}[language=Java, caption=Array, style=JavaStyle]
+<array>
+ <data>
+  <value><i4>-5</i4></value>
+  <value><string>44</string></value>
+  <value><boolean>1</boolean></value>
+ </data> 
+</array>
+\end{lstlisting}
 
 \subsubsection{XML-RPC Request}
 \begin{lstlisting}[language=Java, caption=Method Call, style=JavaStyle]
@@ -434,9 +447,20 @@ Als Resultat kann nur ein Wert zurückkommen, dieser kann jedoch auch ein Struct
 </methodResponse>
 \end{lstlisting}
 
+\subsubsection{Apache XML-RPC Sample Server}
+\lstinputlisting[language=java,caption=Sample Server,style=JavaStyle]{code/ApacheXML-RPC-Server1.class}
+
+\lstinputlisting[language=java,caption=Handler Class Server,style=JavaStyle]{code/ApacheXML-RPC-Server2.class}
+
+Nur Instanzmethoden der Handlerklasse sind zugreifbar. Keine void Methoden. Public Default Constructor zwingend.
+
+\subsubsection{Apache XML-RPC Client}
+\lstinputlisting[language=java,caption=Handler Class Server,style=JavaStyle]{code/ApacheXML-RPC-Client.class}
+
 
 \subsection{SOAP}
-\subsubsection{WSDL}
+\subsubsection{WSDL (Web Services Description Language)}
+früher Web Services Definition Language
 \subsubsection{JAX-WS (Java API for XML Web Services}
 \begin{itemize}
 \item Java-API zum Erstellen von Webservices

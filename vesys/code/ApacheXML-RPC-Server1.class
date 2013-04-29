@@ -1,0 +1,14 @@
+import org.apache.xmlrpc.server.*;
+import org.apache.xmlrpc.webserver.WebServer;
+
+public class HelloServer {
+	public static void main (String [] args) throws Exception {
+		PropertyHandlerMapping phm = new PropertyHandlerMapping();
+		phm.addHandler("Echo", ch.fhnw.ds.xmlrcp.echo.EchoImpl.class);
+		WebServer server = new WebServer(80);
+		XmlRpcServer xmlRpcServer = server.getXmlRpcServer();
+		xmlRpcServer.setHandlerMapping(phm);
+		server.start();
+		System.out.println("Server started at port 80");
+	}
+}

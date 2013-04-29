@@ -1,0 +1,15 @@
+import java.util.*;
+import org.apache.xmlrpc.*;
+
+public class HelloClient {
+	public static void main (String [] args) throws Exception {
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		config.setServerURL(new URL("http://localhost/xmlrpc"));
+		XmlRpcClient client = new XmlRpcClient();
+		client.setConfig(config);
+		List params = new ArrayList();
+		params.add(args[0]);
+		Object result = client.execute("Echo.getEcho", params );
+		System.out.println("The result is: "+result.toString());
+	}
+}

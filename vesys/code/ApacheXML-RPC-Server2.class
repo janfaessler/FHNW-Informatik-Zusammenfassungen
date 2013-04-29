@@ -1,0 +1,5 @@
+public class EchoImpl {
+public String getEcho(String name) {
+return "[XML-RPC] Hello "+name+", welcome to XML-RPC";
+}
+}
