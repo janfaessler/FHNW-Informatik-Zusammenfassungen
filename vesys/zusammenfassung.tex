@@ -461,14 +461,270 @@ Nur Instanzmethoden der Handlerklasse sind zugreifbar. Keine void Methoden. Publ
 
 \subsection{SOAP}
 \subsubsection{WSDL (Web Services Description Language)}
-früher Web Services Definition Language
-\subsubsection{JAX-WS (Java API for XML Web Services}
+(früher Web Services Definition Language)\linebreak
+WSDL ist eine XML basierte Interface Beschreibungssprache die genutzt wird um die Funktionalität von Webservices zu beschreiben. Eine WSDL Beschreibung eines Webservices enthält:
 \begin{itemize}
-\item Java-API zum Erstellen von Webservices
-\item Benutzt Annotationen um Entwicklung und Deployment von Clients und Service-Endpunkten zu vereinfachen
-\item Kommunikation über SOAP
-\item unterstützt erst WSDL 1.1
+\item Wie der Service aufgerufen werden kann
+\item Welche Parameter er erwartet
+\item Welche Datenstruktur er zurückgibt
 \end{itemize}
+
+\subsubsection{JAX-WS (Java API for XML Web Services}
+JAX-WS ist eine Java API um Webservices zu erstellen. Es ist Teil der Java EE (Enterprise Edition) Plattform von Sun Microsystems. Wie auch andere Java EE APIs nutzt JAX-WS Annotationen (@Webservice, @WebMethod usw). Basiert auf SOAP. Nur WSDL 1.1 unterstützt.
+
+\subsubsection{Anleitung JAX-WS}
+1. Interface erstellen
+\begin{lstlisting}[language=Java, caption=Interface erstellen, style=JavaStyle]
+package ch.fhnw.ds.jaxws.server;
+import javax.jws.WebService;
+@WebService
+public interface HelloService {
+	String sayHello(@WebParam(name = "name") String name);
+}
+\end{lstlisting}
+
+2. Interface implementieren
+\begin{lstlisting}[language=Java, caption=Interface implementieren, style=JavaStyle]
+package ch.fhnw.ds.jaxws.server; 
+import java.util.Date; 
+@WebService 
+public class HelloServiceImpl implements HelloService { 
+	@Override 
+	public String sayHello(@WebParam(name = "name") String name){ 
+		return "Hello " + name + " from SOAP at " + new Date(); 
+	} 
+}
+\end{lstlisting}
+3. Java Objekte für XML Requests \& Responses generieren
+\% wsgen -cp bin -keep -s src -d bin ch.fhnw.ds.jaxws.server.HelloServiceImpl
+\begin{itemize}
+\item cp <path> classpath
+\item keep keep generated files
+\item s <path> path where to place generated source files
+\item d <path> path where to place generated output files
+\item <SEI> specify a SIB (service implementation bean)
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=SayHello, style=JavaStyle]
+package ch.fhnw.ds.jaxws.server.jaxws;
+import ...;
+@XmlRootElement(name = "sayHello", 
+		namespace = "http://server.jaxws.ds.fhnw.ch/")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "sayHello",
+		namespace = "http://server.jaxws.ds.fhnw.ch/")
+public class SayHello {
+
+	@XmlElement(name = "name", namespace = "")
+	private String name;
+	public String getName() { return this.name; }
+	public void setName(String name) { this.name = name; }
+}
+
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=SayHelloResponse, style=JavaStyle]
+package ch.fhnw.ds.jaxws.server.jaxws;
+import ...;
+@XmlRootElement(name = "sayHelloResponse",
+		namespace = "http://server.jaxws.ds.fhnw.ch/")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "sayHelloResponse",
+		namespace = "http://server.jaxws.ds.fhnw.ch/")
+public class SayHelloResponse {
+
+	@XmlElement(name = "return", namespace = "")
+	private String _return;
+	public String getReturn() { return this._return; }
+	public void setReturn(String _return) {
+		this._return = _return;
+	}
+}
+\end{lstlisting}
+4. Service publishen
+\begin{lstlisting}[language=Java, caption=HelloServicePublisher, style=JavaStyle]
+package ch.fhnw.ds.jaxws.server;
+import javax.xml.ws.Endpoint;
+
+public class HelloServicePublisher {
+	public static void main(String[] args){
+		Endpoint.publish(
+			"http://127.0.0.1:9876/hs", // publication URI
+			new HelloServiceImpl()); // SIB instance
+		System.out.println("service published");
+	}
+}
+\end{lstlisting}
+
+5. Generierte Webservice Definition anschauen
+http://localhost:9876/hs?wsdl
+\begin{lstlisting}[language=Java, caption=WSDL, style=JavaStyle]
+<?xml version="1.0" encoding="UTF-8"?> <definitions 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 	xmlns:tns="http://server.jaxws.ds.fhnw.ch/" 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 	xmlns="http://schemas.xmlsoap.org/wsdl/" 	targetNamespace="http://server.jaxws.ds.fhnw.ch/" 	name="HelloServiceImplService"> 
+<types> 
+	<xsd:schema> 
+		<xsd:import namespace="http://server.jaxws.ds.fhnw.ch/" schemaLocation="http://localhost:9876/hs?xsd=1"> 
+		</xsd:import> 
+	</xsd:schema> 
+</types>
+<message name="sayHello">
+<part name="parameters"
+element="tns:sayHello">
+</part>
+</message>
+<message name="sayHelloResponse">
+<part name="parameters"
+element="tns:sayHelloResponse">
+</part>
+</message>
+<portType name="HelloServiceImpl">
+<operation name="sayHello">
+<input message="tns:sayHello"></input>
+<output message="tns:sayHelloResponse"></output>
+</operation>
+</portType>
+<binding name="HelloServiceImplPortBinding" 
+type="tns:HelloServiceImpl"> 
+<soap:binding 
+transport="http://schemas.xmlsoap.org/soap/http" 
+style="document"> 
+</soap:binding> 
+<operation name="sayHello"> 
+<soap:operation soapAction=""></soap:operation> 
+<input> 
+<soap:body use="literal"></soap:body> 
+</input> 
+<output> 
+<soap:body use="literal"></soap:body> 
+</output> 
+</operation> 
+</binding>
+<service name="HelloServiceImplService">
+<port name="HelloServiceImplPort"
+binding="tns:HelloServiceImplPortBinding">
+<soap:address location="http://localhost:9876/hs">
+</soap:address>
+</port>
+</service>
+</definitions>
+
+Referenzierte Schema Definition:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:tns="http://server.jaxws.ds.fhnw.ch/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+version="1.0"
+targetNamespace="http://server.jaxws.ds.fhnw.ch/">
+<xs:element name="sayHello" type="tns:sayHello"></xs:element> <xs:element name="sayHelloResponse" type="tns:sayHelloResponse"></xs:element> 
+<xs:complexType name="sayHello">
+  <xs:sequence> 
+    <xs:element name="name" type="xs:string" minOccurs="0"></xs:element> 
+  </xs:sequence> 
+</xs:complexType> 
+<xs:complexType name="sayHelloResponse"> 
+  <xs:sequence> 
+    <xs:element name="return" type="xs:string" minOccurs="0"></xs:element> 
+  </xs:sequence>
+ </xs:complexType> 
+</xs:schema>
+
+\end{lstlisting}
+
+6. Client Proxy generieren
+\% wsimport -keep -p ch.fhnw.ds.jaxws.client.jaxws -d bin -s src 
+\begin{itemize}
+\item -keep keep generated files
+\item -p <package> specify (overwrite) target package
+\item -s <path> path where to place generated source files
+\item -d <path> path where to place generated output files
+\item <WSDL> Web Service Definition
+\item => HelloServiceImpl generated interface
+\item => HelloServiceImplService factory class
+\end{itemize}
+
+
+7. Client Applikation schreiben
+\begin{lstlisting}[language=Java, caption=Client, style=JavaStyle]
+package ch.fhnw.imvs.client;
+import ch.fhnw.imvs.client.jaxws.HelloServiceImpl;
+import ch.fhnw.imvs.client.jaxws.HelloServiceImplService;
+
+public class Client {
+	public static void main(String[] args) {
+		HelloServiceImplService service =
+			new HelloServiceImplService();
+		HelloServiceImpl port =
+			service.getHelloServiceImplPort();
+		String result = port.sayHello("Dominik");
+		System.out.println(result);
+	}
+}
+\end{lstlisting}
+
+8. JAX-WS HTTP Request
+\begin{lstlisting}[language=Java, caption=..., style=JavaStyle]
+POST /hs HTTP/1.1						HTTP Request
+Accept: text/xml, multipart/related
+User-Agent: JAX-WS RI 2.2.4-b01
+Host: 127.0.0.1:9877
+Connection: keep-alive
+Content-Length: 209
+Content-Type: text/xml; charset=utf-8		SOAP HTTP Binding
+SOAPAction: "http://server.jaxws.ds.fhnw.ch/HelloServiceImpl/sayHelloRequest"
+
+<?xml version="1.0" ?>					SOAP Payload
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+	<S:Body>
+		<ns2:sayHello xmlns:ns2="http://server.jaxws.ds.fhnw.ch/">
+			<name>Dominik</name>
+		</ns2:sayHello>
+	</S:Body>
+</S:Envelope>
+
+
+\end{lstlisting}
+9. JAX-WS HTTP Response
+\begin{lstlisting}[language=Java, caption=..., style=JavaStyle]
+HTTP/1.1 200 OK						HTTP Response
+Transfer-encoding: chunked
+Content-type: text/xml; charset=utf-8
+Date: Mon, 18 Mar 2013 00:06:44 GMT
+Content-Length: 277
+
+<?xml version="1.0" ?>					SOAP Payload
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+<S:Body>
+<ns2:sayHelloResponse
+xmlns:ns2="http://server.jaxws.ds.fhnw.ch/">
+<return>
+Hello Dominik from SOAP at Mon Mar 18 01:06:44 CET 2013
+</return>
+</ns2:sayHelloResponse>
+</S:Body>
+</S:Envelope>
+
+\end{lstlisting}
+
+\subsection{Vergleich SOAP und XML-RPC}
+\begin{tabular}{|c|c|c|}
+\hline 
+Feature & XML-RPC & SOAP \\ 
+\hline
+Structs & yes & yes \\ 
+\hline 
+Arrays & yes & yes \\ 
+\hline 
+Named structs \& arrays & no & yes \\ 
+\hline 
+Short learning curve & yes & no \\ 
+\hline 
+Developer specified character set & no & yes \\ 
+\hline 
+Developer defined data types & no & yes \\ 
+\hline 
+Can specify recipient & no & yes \\ 
+\hline 
+Require client understanding & no & yes \\ 
+\hline 
+Message specific processing instructions & no & yes \\ 
+\hline  
+\end{tabular} 
 
 \newpage
 \section{Representation State Transfer (REST)}
