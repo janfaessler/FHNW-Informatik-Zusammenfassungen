@@ -347,6 +347,7 @@ public class Converter extends HttpServlet {
 </web-app>
 \end{lstlisting}
 
+\newpage
 \section{Webservices}
 \subsection{XML-RPC}
 
@@ -469,9 +470,215 @@ früher Web Services Definition Language
 \item unterstützt erst WSDL 1.1
 \end{itemize}
 
-\subsection{XML-RPC vs SOAP}
+\newpage
+\section{Representation State Transfer (REST)}
+\subsection{Prinzipien}
+\begin{itemize}
+	\item Addressability - Give everything an ID
+	\item Uniform, Constrained Interface
+	\item Representation-oriented
+	\item Link things together - Use Resource references
+	\item Stateless communications - Resources hold state
+	\item Use standard HTTP methods
+\end{itemize}
+\subsubsection{Addressability}
+\begin{itemize}
+	\item Resources = key abstractions in REST
+	\item Each resource is addressable via a URI
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=REST example, style=JavaStyle]
+http://www.example.com/customers/1234 http://www.example.com/customers?lastName=Meier http://www.example.com/orders/2011/03/445245 http://www.example.com/products/ http://www.example.com/products/4711
+\end{lstlisting}
+\subsubsection{CRUD}
+\begin{description}
+	\item[READ] \hfill
+	\begin{itemize}
+		\item HTML: \textbf{GET, HEAD}
+		\item Retrieve information in a particular representation
+		\item No side effects, possibly cached
+		\item May contain query parameters
+	\end{itemize}
+	\item[CREATE] \hfill
+	\begin{itemize}
+		\item HTML: \textbf{POST}
+		\item Create a new sub-resource (without known ID)
+	\end{itemize}
+	\item[CREATE \& UPDATE] \hfill
+	\begin{itemize}
+		\item HTML: \textbf{PUT}
+		\item Update an existing resource
+		\item Create a new resource with a known ID
+	\end{itemize}
+	\item[DELETE] \hfill
+	\begin{itemize}
+		\item HTML: \textbf{DELETE}
+		\item Remove resources
+	\end{itemize}
+	\item[OPTIONS] \hfill \\
+	Returns allowed operations
+\end{description}
+\subsubsection{Representation-oriented}
+Allow multiple representations of a resource: 
+\begin{itemize}
+	\item text/html
+	\item text/plain
+	\item application/json
+	\item application/xml
+\end{itemize}
+\subsubsection{Link things together}
+References to other resources may be used in representations
+\begin{lstlisting}[language=Java, caption=example, style=JavaStyle]
+<order>
+   <date>16.03.2013</date>
+   <amount>23</amount>
+   <product ref="http://example.com/products/4711" />
+   <customer ref="http://example.com/customers/1234" />
+</order>
+\end{lstlisting}
 
-\section{REST}
+\subsection{SOAP vs REST}
+\begin{tabular}{l | l}
+	\textbf{REST} & \textbf{SOAP} \\
+	\hline
+	Resource Oriented & Service oriented \\
+	Messages represented in different formats & Messages represented in XML \\
+	HTTP used as protocol & Can be bound to different protocols \\
+	HTTP verbs are used for access and manipulation & Access and Manipulation is service specific \\
+	HTTP error codes are used as error messages & Fault Elements in SOAP body describes errors \\
+	No formal interface description language & WSDL is used as interface description language \\
+	GET requests can be cached in a proxy & All requests are POST requests, no caching!
+\end{tabular}
+\begin{center}
+	\includegraphics[scale=0.5]{soap-rest.png}
+\end{center}
 
+\subsection{JAX-RS}
+\subsubsection{HTTP Methods}
+\begin{itemize}
+	\item Annotate resource class methods with HTTP method annotations @GET, @POST, @PUT, @DELETE, @HEAD
+	\item Java method name has no significance
+	\item Return value is mapped to the response (void = no response)
+\end{itemize}
+
+\begin{lstlisting}[language=Java, caption=JAX-RS Service = Annotated Java Class, style=JavaStyle]
+@Singleton
+@Path("/polls")
+public class DoodlePoolResource {
+	@GET
+	@Path("{id}")
+	public String getPoll(@PathParam("id") String key){ ... }
+	
+	@PUT
+	@Path("{id}")
+	public String putPoll(@PathParam("id") String key){ ... }
+	
+	@DELETE
+	@Path("{id}")
+	public void deletePoll(@PathParam("id") String key){ ... }
+}
+\end{lstlisting}
+\subsubsection{Injection}
+\begin{itemize}
+	\item Automatic Type Conversion from Strings to
+	\begin{itemize}
+		\item Primitive types (int, short, float, double, byte, char, boolean)
+		\item Classes T which have a constructor with a single String parameter
+		\item Classes T which contain a static method T valueOf(String arg)
+	\end{itemize}
+	\item Default values may be defined with @DefaultValue for the case that the parameter is not passed with the request
+\end{itemize}
+\begin{description}
+	\item[PathParam] \hfill \\
+		Allows to extract values from URI template parameters
+	\item[MatrixParam] \hfill \\
+		Allows to extract matrix parameters ( /images/cars;color=blue/2010/)
+	\item[QueryParam] \hfill \\
+		Allows to extract query parameters added to a URI
+	\item[FormParam] \hfill \\
+		Allows to extract values from posted form data
+	\item[HeaderParam] \hfill \\
+		Allows to extract request headers
+	\item[CookieParam] \hfill \\
+		Allows to extract values from HTTP cookies
+\end{description}
+\subsubsection{Content Negotiation}
+\begin{description}
+	\item[@Produces] declares type of result, default: all types are supported \\
+		@Produces(\{"{}text/plain", "{}text/html"\})
+	\item[@Consumes] declares type which is accepted (PUT / POST) \\
+		@Consumes("{}application/x-www-form-urlencoded")
+\end{description}
+\subsection{Data Binding}
+\begin{lstlisting}[language=Java, caption=XStream Provider, style=JavaStyle]
+@Provider
+@Consumes("application/xstream")
+@Produces("application/xstream")
+public class XStreamProvider implements MessageBodyReader<Object>, MessageBodyWriter<Object>{
+	private XStream xstream = new XStream(new DomDriver());
+	
+	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mimeType) {
+		return true;
+	}
+	public Object readFrom(Class<Object> type, Type genericType, Annotation[] annotations, MediaType mimeType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) {
+		return xstream.fromXML(entityStream);
+	}
+	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] ann, MediaType mimeType) {
+		return true;
+	}
+	
+	public long getSize(Object object, Class<?> type, Type genericType, Annotation[] ann, MediaType mimeType) {
+		return -1;// size not yet known
+	}
+	
+	public void writeTo(Object object, Class<?> type, Type genericType, Annotation[] ann, MediaType mimeType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) {
+		xstream.toXML(object, entityStream);
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XStream Example, style=JavaStyle]
+public class Client {
+	public static void main(String[] args) {
+	ClientConfig config = new DefaultClientConfig();
+	config.getClasses().add(XStreamProvider.class);
+	Client c = Client.create(config);
+	WebResource r = c.resource("http://localhost:9998/msg");
+	Msg msg = new Msg("Hello from XClient");
+	r.type("application/xstream").put(msg);
+	Msg res = r.accept("application/xstream").get(Msg.class); 
+	System.out.println(res);
+	System.out.println(res.getText());
+	System.out.println(res.getDate());
+	}
+}
+\end{lstlisting}
+\subsection{JAXB}
+Java Architecture for XML Binding, kurz JAXB, ist eine Programmschnittstelle in Java, die es ermöglicht, Daten aus einer XML-Schema-Instanz heraus automatisch an Java-Klassen zu binden, und diese Java-Klassen aus einem XML-Schema heraus zu generieren. Diesen Vorgang nennt man XML-Datenbindung.
+\begin{lstlisting}[language=Java, caption=Unmarshalling, style=JavaStyle]
+
+JAXBContext jc = JAXBContext.newInstance("com.acme.foo:com.acme.bar");
+Unmarshaller u = jc.createUnmarshaller();
+FooObject fooObj = (FooObject) u.unmarshal(new File("foo.xml"));
+BarObject barObj = (BarObject) u.unmarshal(new File("bar.xml"));
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption=Marshalling, style=JavaStyle]
+Marshaller m = jc.createMarshaller();
+m.marshal(fooObj, System.out);
+\end{lstlisting}
+
+\newpage
+\section{Code Samples}
+\subsection{Socket}
+\lstinputlisting[caption=Client,style=JavaStyle]{SocketBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{SocketBankServer.java}
+\subsection{Internet}
+\lstinputlisting[caption=Client,style=JavaStyle]{HttpBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{HttpBankServer.java}
+\subsection{XmlRpc}
+\lstinputlisting[caption=Client,style=JavaStyle]{XmlRpcBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{XmlRpcBankServer.java}
+\subsection{REST}
+\lstinputlisting[caption=Client,style=JavaStyle]{RestBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{RestBankServer.java}
 % Inhalt Ende 
 \end{document} 
