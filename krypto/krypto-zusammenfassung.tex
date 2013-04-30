@@ -735,8 +735,64 @@ Es benötigt so viele Gleichungen für den Restsatz wie ${\color{red}e}$ gross i
 		Konvergenten: $5, 5+\frac{1}{3}=\frac{16}{3},\frac{37}{7}$ \\
 		Sage: continued\_fraction\_list(37/7, partial\_convergents=True)
 \end{description}
+\subsection{Wiener's Angriff}
+$\frac{5}{3}=$\\
+\begin{tabular}{l|c|l}\cline{2-1}
+ $5=$&$1$&$\cdot3+2$\\
+ $3=$&$1$&$\cdot2+1$\\
+ $2=$&$2$&$\cdot1$\\\cline{2-1}
+\end{tabular}\\\linebreak
+{\color{red}KE von $\frac{5}{3}=<1,1,2>$}\\
+$1+\frac{1}{1+\frac{1}{2}}=\frac{5}{3}$\\
+\Bold{Satz:}
+\begin{description}
+ \item [Voraussetzung] \hfill \\
+    \begin{itemize}
+      \item $(n,e),(n,d)$ RSA-Schlüssel mit $n=p\cdot q$, $p<q<2p$
+      \item $0<d\leqslant\Oneover{3}\sqrt[4]{n}$
+    \end{itemize}
+ \item [Behauptung] $\exists$ schneller Alg. zur Faktorisierung von $n$
+\end{description}
+\Bold{Beweis:}
+\begin{itemize}
+ \item $\Brackar{l}{e\cdot d-k\cdot \varphi(n)=1\\e<\varphi(n)}\Ra k\leqslant d$
+ \item $\Abs{\frac{e}{n}-\frac{k}{d}}=\Abs{\frac{e\cdot d-n\cdot k}{n\cdot d}}=\Abs{\frac{ed-{\color{red}k\varphi(n)+k\varphi(n)}-nk}{nd}}=\Abs{\frac{ed-k\varphi(n)-k(n-\varphi(n))}{nd}}=\Abs{\frac{1-k(n-\varphi(n)}{nd}}\leqslant\Abs{\frac{k(n-\varphi(n)}{nd}}=\Abs{\frac{k(p+q-1)}{nd}}\Oben{\T{Var. 1}}{\leqslant}\Abs{\frac{k3p}{nd}}\Oben{k\leqslant d}{\leqslant}\Abs{\frac{3p}{n}}\leqslant\Abs{\frac{3\sqrt{n}}{n}}=\Abs{\frac{3}{\sqrt{n}}}$\\
+ \hspace*{1.65cm}$\Oben{\T{Var. 2}}{\leqslant}\Abs{\frac{3}{9d^2}}=\Abs{\Oneover{3d^2}}<\Oneover{2d^2}$\\
+ $\Ra$\fbox{$\Abs{\frac{e}{n}-\frac{k}{d}}<\Oneover{2d^2}$}\\
+ $\Ra\frac{k}{d}$ ist Konvergente von $\frac{e}{n}$
+\end{itemize}
+\begin{lstlisting}
+ p = nth_prime(2000)
+ q = nth_prime(2030)
+ n = p * q
+ phi = (p - 1) * (q - 1)
+ d = 101
+ e = d.invers_mod(phi) // 139917965
+ con = continued_fraction_list(e/n, partial_convergents = true)
+ conv1 = con[1]
+ conv1
+[(0, 1),
+ (1, 2),
+ (5, 11),
+ (46, 101),
+ (51, 112),
+ (97, 213),
+ (342, 751),
+ (781, 1715),
+ (32363, 71066),                                                                              
+ (33144, 72781),                                                                              
+ (131795, 289409),                                                                            
+ (1482889, 3256280),                                                                          
+ (1614684, 3545689),
+ (3097573, 6801969),
+ (17102549, 37555534),
+ (139917965, 307246241)]
 
-\newpage
+\end{lstlisting}
+
+
+
+\pagebreak
 \section{Uebungen}
 \subsection*{Serie 4}
 \subsubsection*{Aufgabe 1}
