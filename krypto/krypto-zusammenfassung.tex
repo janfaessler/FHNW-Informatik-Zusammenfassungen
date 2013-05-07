@@ -29,6 +29,7 @@
 \newcommand{\QN}{\mathbb{Q}} %Rational Number
 \newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
 \newcommand{\CN}{\mathbb{C}}
+\newcommand{\PN}{\mathbb{P}}
 \newcommand{\Teilt}{\mid} %|
 \newcommand{\Teiltn}{\nmid} %kein teiler
 \newcommand{\Potp}{\mathcal{P}} %Potenzmenge
@@ -790,7 +791,72 @@ $1+\frac{1}{1+\frac{1}{2}}=\frac{5}{3}$\\
 
 \end{lstlisting}
 
+\pagebreak
+\section{Faktorisierungsalgorithmen}
+\subsection{Pollard's (p-1)-Methode}
+Sei $n \in \NN^*$ ungerade, $p \in \PN^*$ unbekannt, $p|n$, $a \in \NN^*, 0< a < n, ggT(a,n)=1$ \\
+\\
+\textbf{Annahme:}
+Wir kennen ein $k\in \NN^*$ mit \\ \\
+$\Brackar{l}{a^k \equiv 1 \% p \\ a^k \not\equiv 1 \% n} $ $\Ra$ \fbox{$1 < ggT(a^k-1, n) < n$} \\
+\\
+Wie komme ich zu einem geeigneten k? \\
+Falls $(p-1)|k \Ra a^k \equiv 1 \% p$ // Satz von Fermat \\
+Primfaktorzerlegung:  $p-1 = q_1^{\beta_1} \cdot q_2^{\beta_2} \cdot$ \dots $q_r^{\beta_r}$ 
+mit $q_1, \dots, q_r \in \PN$, 
+$\beta_1, \dots, \beta_r \in \NN$ \\
+\\
+Annahme: Für $B \in \NN$ gilt: $q_i^{\beta_i} \leq B$ für $i-1, \cdots, r$ \\
+Notation: $\beta(q,B):=max\{i\in\NN | q^i \leq B\}$ \\
+\\
+Wir setzen: \fbox{$k:=\prod q^{\beta(q,B)}$\\$q\in \PN$\\$q \leq B$} $\Ra a^k \equiv 1 \% p$ \\
+\\
+\textbf{Beispiel 1:} \\
+$n=1241143$, $B=13$, $\ra$ $q \in \{2,3,5,7,11,13\}$ \\
+$\beta(2,13)=3$, $\beta(3,13)=2$ \\
+$\beta(5,13)=\beta(7,13)=\beta(11,13)=\beta(13,13)=1$ \\
+\\
+$k:= \prod q^{\beta(9,13)}=2^3*3^2*5*7*11*13$, $q\in\PN$, $q\leq 13$ \\
+\\
+Berechne: $ggT(a^k-1,n)$, Wähle: a=2 \\
+\\
+Sage: gcd(2.powermod(k,n),n) =$547 \in \PN$ // $\frac{n}{547} = 2269 \in \PN$ \\
+\\
+\textbf{Beispiel 2:} \\
+$p=2^8*3^6*5^3*7^7*11^7*13^5+1$ // p.is\_prime(); \\
+$q=2^8*3^5*5^4*7^3*11^5*17^5*19^3+1$ \\
+$n=p*q$ \\
 
+\begin{lstlisting}
+def pMinusOne(n,B,a): 
+	k=factorial(B)
+	b=a.powermod(k,n)
+	return gcd(b-1,n)
+	
+pMinusOne(n,80,2)
+n.binary()
+len(_)
+\end{lstlisting}
+$|n|_2=171$\\
+\\
+\\
+\textbf{Beispiel 3:} \\
+$n=491389$ // $|n|_2=19$ \\ 
+\\
+pMinusOne(n,100,2) = 1\\
+pMinusOne(n,150,2) = 1\\
+pMinusOne(n,190,2) = 1\\
+pMinusOne(n,191,2) = 383\\
+\\
+$n=383*1282$
+
+\subsection{Fermat-Faktorisierung}
+Sei $n \in \NN^*$, $n=a*b$ ungerade, $a > b > 0$
+\begin{itemize}
+	\item Wir setzen: $t:=\frac{a+b}{2}$, $s:=\frac{a-b}{2} \Ra$ \fbox{$n=t^2-s^2$}
+	\item $n=t^2-s^2=(t+s)(t-s)$
+\end{itemize}
+Allgemein: \fbox{$t:=[\sqrt{n}]+1$}
 
 \pagebreak
 \section{Uebungen}
@@ -842,5 +908,39 @@ $\tilde{d_A}:=\alpha$ mod $h$\\
  m = 1337
 \end{lstlisting}
 
+\subsection*{Serie 7}
+\subsubsection*{Aufgabe 1}
+$exp_{\color{red}a} : \ZN_6 \ra \ZN_7$ \\
+$exp_{\color{red}a} : x \ra {\color{red}a}^x$ mod 7 \\
+\\
+$(\ZN_6,\oplus,0): \ZN_6 = \{0,1,2,3,4,5\}$\\
+$(\ZN_7,\oplus,1): \ZN^*_7 = \{1,2,3,4,5,6\}$\\
+\\
+${\color{red}\overbrace{\hspace{4.2cm}}^{\ZN_6}}$\\
+\begin{tabular}{| l | l | l | l | l | l | l |}
+	\hline
+	a & 0 & 1 & 2 & 3 & 4 & 5 \\
+	\hline
+	2 & 1 & 2 & 4 & 1 & 2 & 3 \\
+	\hline
+	3 & 1 & 3 & 2 & 6 & 4 & 5 \\
+	\hline
+\end{tabular} \\
+\\
+\Bold{a=3} $\Ra$ $exp_a$ beistz eine Umkehrbabbildung: $ind_a : \ZN^*_p \ra \ZN_{p-1}$ \\
+\\
+\begin{itemize}
+	\item[a)] $ind_3(5)=5$ 
+	\item[b)] $ind_3(3)=1$
+\end{itemize}
+
+
+\subsubsection*{Aufgabe 4}
+\begin{lstlisting}
+factor(n) = p * q
+phi = (p-1)(q-1)
+d=e.inverse_mod(phi)
+(n.nth_root(4)).n() // n() = numerisch
+\end{lstlisting}
 
 \end{document} 
