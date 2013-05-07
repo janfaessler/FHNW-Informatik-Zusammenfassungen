@@ -36,8 +36,9 @@
 \contentsline {subsubsection}{\numberline {3.2.1}RSA ist ein Blockcipher}{11}
 \contentsline {subsubsection}{\numberline {3.2.2}Beweis}{11}
 \contentsline {subsection}{\numberline {3.3}Hastad Attack}{12}
-\contentsline {section}{\numberline {4}Keltenbr\IeC {\"u}che}{13}
-\contentsline {subsection}{\numberline {4.1}Wiener's Angriff}{13}
+\contentsline {subsection}{\numberline {3.4}Wiener's Angriff}{12}
+\contentsline {subsection}{\numberline {3.5}de Wenger - Spezialfall: RSA-Schl\IeC {\"u}ssel}{13}
+\contentsline {section}{\numberline {4}Keltenbr\IeC {\"u}che}{14}
 \contentsline {section}{\numberline {5}Faktorisierungsalgorithmen}{15}
 \contentsline {subsection}{\numberline {5.1}Pollard's (p-1)-Methode}{15}
 \contentsline {subsection}{\numberline {5.2}Fermat-Faktorisierung}{16}

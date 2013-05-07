@@ -10,6 +10,8 @@
 \usepackage{tikz}
 
 \usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
@@ -696,46 +698,7 @@ $\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red
 \end{tabular} \\ \\
 \textbf{Chinesischer Restsatz}: $m^3= crt([m^3,m^3,m^3],[n_1,n_2,n_3])$ \\
 Es benötigt so viele Gleichungen für den Restsatz wie ${\color{red}e}$ gross ist.
-\newpage
-\section{Keltenbrüche}
-\begin{description}
-	\item[Definition] \hfill \\
-		Ein Ausdruck der From $a_0 + \frac{1}{a_1+\frac{1}{a_2+ \frac{1}{a_3+\frac{1}{a_n}}}}$ mit $a_0 \in \ZN$ \& $a_1,a_2,a_3$ \dots $\in \NN$* nennen wir endliche (reguläre) Keltenbrüche.
-	\item[Notation] \hfill \\
-		Wir schreiben dafür: $<a_0;a_1,a_2,a_2,$ \dots $,a_n>$
-	\item[Entwicklung (KE)] \hfill \\
-		Sei $a \in \QN \backslash \ZN$ // $\RN \backslash \ZN$ \\
-		$\xi_0:=a$ \\
-		$x_0:=[\xi_0]$ \\
-		{\color{red}if} $\xi_0-x_0 \neq 0$ \\
-		$\xi_1:=\frac{1}{\xi_0-x_0}$ \\
-		$x_1:=[\xi_1]$ \\
-		{\color{red}if} $\xi_1-x_1 \neq 0$ \\
-		$\xi_2:=\frac{1}{\xi_1-x_1}$ \\
-		$x_2:=[\xi_2]$
-	\item[Beispiel] \hfill \\
-		$\xi_0=\frac{37}{7}$ \\
-		$x_0=[\xi_0]={\color{red}5}$ \\
-		$\xi_1=\frac{1}{\xi_0-x_0}=\frac{1}{\frac{2}{7}}=\frac{7}{2}$ \\
-		$x_1=[\xi_1]={\color{red}3}$ \\
-		$\xi_2=\frac{1}{\xi_1-x_1}=\frac{1}{\frac{1}{2}}=2$ \\
-		$x_2=[\xi_2]={\color{red}2}$ \\
-		{\color{red} Ende} $\Rightarrow \frac{37}{7}=<5;3,2>$ \\
-	\item[euklidischer Algorithmus] \hfill \\
-		$\Brackar{l}{37={\color{red}5}*7+2 \\\\ 07={\color{red}3}*2+1 \\\\ 02={\color{red}2}*1}$
-		\begin{tabular}{l}
-			$\frac{37}{7}=5+\frac{2}{7}$ \\\\
-			$\frac{7}{2}=3+\frac{1}{2}$ // $\frac{1}{\frac{7}{2}}=\frac{1}{3+\frac{1}{2}}$\\\\
-			$\frac{2}{1}=2+\frac{0}{1}$ \\
-		\end{tabular}  
-	\item[Konvergente] \hfill \\
-		Sei $a \in \QN \backslash \ZN (\RN \backslash \ZN)$ durch die KE gegeben: $a = <a_0;a_1,a_2,a_3,$ \dots, $a_n>$ \\
-		Die Brüche: $<a_0>$, $<a_0;a_1>$, $<a_0;a_1,a_2>$,$<a_0;a_1,a_2,a_3>$, \dots, $<a_0;a_1,a_2,a_3,$\dots,$a_n>$ heissen die Konvergenten a.
-	\item[Beispiel] \hfill \\
-		$a=\frac{37}{7}$ \\
-		Konvergenten: $5, 5+\frac{1}{3}=\frac{16}{3},\frac{37}{7}$ \\
-		Sage: continued\_fraction\_list(37/7, partial\_convergents=True)
-\end{description}
+
 \subsection{Wiener's Angriff}
 $\frac{5}{3}=$\\
 \begin{tabular}{l|c|l}\cline{2-1}
@@ -790,6 +753,62 @@ $1+\frac{1}{1+\frac{1}{2}}=\frac{5}{3}$\\
  (139917965, 307246241)]
 
 \end{lstlisting}
+
+\subsection{de Wenger - Spezialfall: RSA-Schlüssel}
+\Bold{Vor.}
+\begin{itemize}
+	\item[1.] $n=p*q$, $p,q \in \PN^*$, $p>q$ 
+	\item[2.] $\delta=p-q$
+\end{itemize}
+\Bold{Beh.} $0 < p+q - 2 * \sqrt{n} < \frac{\delta^2}{4 * \sqrt{n}}$ \\
+\Bold{Bew.}
+\begin{itemize}
+	\item[1.] $\delta^2= (p-q)^2=(p+q)^2-4*n=(p+q-2*\sqrt{n})(p+q+2*\sqrt{n})>0$ 
+	\item[2.] $p+q-2*\sqrt{n} = \frac{\delta^2}{(p+q)+2*\sqrt{n}} < \frac{\delta^2}{2*\sqrt{n}+2*\sqrt{n}}= \frac{\delta^2}{4 * \sqrt{n}}$
+\end{itemize}
+
+
+\newpage
+\section{Keltenbrüche}
+\begin{description}
+	\item[Definition] \hfill \\
+		Ein Ausdruck der From $a_0 + \frac{1}{a_1+\frac{1}{a_2+ \frac{1}{a_3+\frac{1}{a_n}}}}$ mit $a_0 \in \ZN$ \& $a_1,a_2,a_3$ \dots $\in \NN$* nennen wir endliche (reguläre) Keltenbrüche.
+	\item[Notation] \hfill \\
+		Wir schreiben dafür: $<a_0;a_1,a_2,a_2,$ \dots $,a_n>$
+	\item[Entwicklung (KE)] \hfill \\
+		Sei $a \in \QN \backslash \ZN$ // $\RN \backslash \ZN$ \\
+		$\xi_0:=a$ \\
+		$x_0:=[\xi_0]$ \\
+		{\color{red}if} $\xi_0-x_0 \neq 0$ \\
+		$\xi_1:=\frac{1}{\xi_0-x_0}$ \\
+		$x_1:=[\xi_1]$ \\
+		{\color{red}if} $\xi_1-x_1 \neq 0$ \\
+		$\xi_2:=\frac{1}{\xi_1-x_1}$ \\
+		$x_2:=[\xi_2]$
+	\item[Beispiel] \hfill \\
+		$\xi_0=\frac{37}{7}$ \\
+		$x_0=[\xi_0]={\color{red}5}$ \\
+		$\xi_1=\frac{1}{\xi_0-x_0}=\frac{1}{\frac{2}{7}}=\frac{7}{2}$ \\
+		$x_1=[\xi_1]={\color{red}3}$ \\
+		$\xi_2=\frac{1}{\xi_1-x_1}=\frac{1}{\frac{1}{2}}=2$ \\
+		$x_2=[\xi_2]={\color{red}2}$ \\
+		{\color{red} Ende} $\Rightarrow \frac{37}{7}=<5;3,2>$ \\
+	\item[euklidischer Algorithmus] \hfill \\
+		$\Brackar{l}{37={\color{red}5}*7+2 \\\\ 07={\color{red}3}*2+1 \\\\ 02={\color{red}2}*1}$
+		\begin{tabular}{l}
+			$\frac{37}{7}=5+\frac{2}{7}$ \\\\
+			$\frac{7}{2}=3+\frac{1}{2}$ // $\frac{1}{\frac{7}{2}}=\frac{1}{3+\frac{1}{2}}$\\\\
+			$\frac{2}{1}=2+\frac{0}{1}$ \\
+		\end{tabular}  
+	\item[Konvergente] \hfill \\
+		Sei $a \in \QN \backslash \ZN (\RN \backslash \ZN)$ durch die KE gegeben: $a = <a_0;a_1,a_2,a_3,$ \dots, $a_n>$ \\
+		Die Brüche: $<a_0>$, $<a_0;a_1>$, $<a_0;a_1,a_2>$,$<a_0;a_1,a_2,a_3>$, \dots, $<a_0;a_1,a_2,a_3,$\dots,$a_n>$ heissen die Konvergenten a.
+	\item[Beispiel] \hfill \\
+		$a=\frac{37}{7}$ \\
+		Konvergenten: $5, 5+\frac{1}{3}=\frac{16}{3},\frac{37}{7}$ \\
+		Sage: continued\_fraction\_list(37/7, partial\_convergents=True)
+\end{description}
+
 
 \pagebreak
 \section{Faktorisierungsalgorithmen}
@@ -857,7 +876,27 @@ Sei $n \in \NN^*$, $n=a*b$ ungerade, $a > b > 0$
 	\item $n=t^2-s^2=(t+s)(t-s)$
 \end{itemize}
 Allgemein: \\
-Flussdiagram \\ \\
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+   text width=5.8em, text badly centered, node distance=2.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+   text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, color=black!50, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=2.5cm,
+   minimum height=2em]
+
+\begin{tikzpicture}[scale=2, node distance = 3.5cm, auto]
+   % Place nodes
+   \node [block] (init) {$t:=[\sqrt{n}]+1$};
+   \node [decision, below of=init] (quadrat) {Ist $t^2-n$ eine Quadratzahl?};
+   \node [block, left of=quadrat] (nein) {$t:=t+1$};
+   \node [block, right of=quadrat] (ja) {$s:=\sqrt{t^2-n}$\\$a:=t+s$\\$b:=t-s$};
+
+   % Draw edges
+   \path [line] (init) -- (quadrat);
+   \path [line] (quadrat) -- node [, color=black] {nein} (nein);
+   \path [line] (quadrat) -- node [, color=black] {ja} (ja);
+   \path [line] (nein) |- (init);
+\end{tikzpicture} \\ \\
 Bemerkung: Der Alg. terminiert immer, spätestens bei $t=\frac{n+1}{2}$ \\
 $t^2-n=(\frac{n+1}{2})^2-n$ \\
 
