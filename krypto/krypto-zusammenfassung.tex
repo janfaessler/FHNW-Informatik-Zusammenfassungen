@@ -30,8 +30,8 @@
 \newcommand{\NN}{\mathbb{N}} %Natural Number
 \newcommand{\QN}{\mathbb{Q}} %Rational Number
 \newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
-\newcommand{\CN}{\mathbb{C}}
-\newcommand{\PN}{\mathbb{P}}
+\newcommand{\CN}{\mathbb{C}} %Komplexi Zahle lawl
+\newcommand{\PN}{\mathbb{P}} %Primzahle Bitches
 \newcommand{\Teilt}{\mid} %|
 \newcommand{\Teiltn}{\nmid} %kein teiler
 \newcommand{\Potp}{\mathcal{P}} %Potenzmenge
@@ -930,7 +930,101 @@ Beweis: \\
 Initialisierung $t:=[\sqrt{n}]+1$ \\
 $t:=t+1$ bis n Differenz von Quadraten : $n=t_0^2-s_0^2 \Ra t_0=\frac{p+q}{2}$. $s_0=\frac{p-q}{2}$ \\
 $A:=\#$ Schleifendurchgänge \\
-$A=t_0-[\sqrt{n}] \gtrsim t_0 -\sqrt{n} = \frac{p+q}{2}-\sqrt{n}=\frac{1}{2}{\color{green}(p+q-2*\sqrt{n})}$ ${\color{red} \Oben{\T{Lemma}}{<}}$ $\frac{1}{2}(\frac{\delta^2}{4*\sqrt{n}})$ ${\color{red} \Oben{\T{Vor. 2}}{<}}$ $\frac{1}{2}*\frac{c^2*(\sqrt[4]{n})^2}{4*\sqrt{n}}$ {\color{red} $=\frac{c^2}{8} < \lceil\frac{c^2}{8}\rceil$}
+$A=t_0-[\sqrt{n}] \gtrsim t_0 -\sqrt{n} = \frac{p+q}{2}-\sqrt{n}=\frac{1}{2}{\color{green}(p+q-2*\sqrt{n})}$ ${\color{red} \Oben{\T{Lemma}}{<}}$ $\frac{1}{2}(\frac{\delta^2}{4*\sqrt{n}})$ ${\color{red} \Oben{\T{Vor. 2}}{<}}$ $\frac{1}{2}*\frac{c^2*(\sqrt[4]{n})^2}{4*\sqrt{n}}$ {\color{red} $=\frac{c^2}{8} < \lceil\frac{c^2}{8}\rceil$}$> A$\\
+\section{Signaturen}
+\subsection{Einführung}
+Was macht eine Unterschrift aus?\\
+\tikzstyle{stuff} = [rectangle, draw, fill=blue!20,
+   text width=8em, text centered, rounded corners, minimum height=4em]
+\begin{tikzpicture}[scale=2, node distance = 3.5cm, auto]
+   % Place nodes
+   \node [stuff] (init) {Urheber abhängig};
+   \node [stuff, below left of=init] (aut) {Authentifikation};
+   \node [stuff, below right of=init] (wieder) {Nicht-Wiederholbar};
+   \node [stuff, right of=init] (nachricht) {Nachrichten abhängig};
+   \node [stuff, below right of=nachricht] (integ) {Integrität};
+ 
+   % Draw edges
+   \path [line] (init) -- (wieder);
+   \path [line] (nachricht) -- (wieder);
+   \path [line] (init) -| node [, color=black] {unfälschbar} (aut);
+   \path [line] (nachricht) -| node [, color=black] {nicht veränderbar} (integ);
+\end{tikzpicture}
+
+\subsection*{Bsp.}
+\begin{enumerate}
+ \item \Bold{RSA-Signatur}
+ Alice $(m,h(m))$\\
+ Alice $\to$ Bob: $(m,sig(h(m)))=d(SK_{\T{Alice}},h(m))=h(m)^d\mod n$\\
+ \Bold{Bem:} Das Verfahren funktioniert, weil $d()$, $e()$ kommutivieren, d.h.\\
+ \begin{equation*}
+ e(PK,sig(h(m)))=(h(m)^d\mod n)^e\mod n\equiv h(m)^{de}\equiv h(m)^{ed}\equiv h(m)\mod n
+ \end{equation*}
+ \item \Bold{Das Lamport-Schema (One-time-Signatur}\\
+ \Bold{Gegeben:} Ein-weg-Funktion: $f:Y\to Z$\\
+ $m=x=(x_1,x_2,\dots,x_n)$ mit $x_i\in\{0,1\}$\\
+ Jedes Bit wird einzeln signiert!
+ \begin{enumerate}
+  \item Wähle \Bold{zufällig} Elemente aus $Y$\\
+  $\Brackar{|cc|}{\hline
+   y_{10}&y_{11}\\
+   y_{20}&y_{21}\\
+   \vdots&\vdots\\
+   y_{k0}&y_{k1}\\\hline
+  }$\Bold{Geheim}
+  \item Berechne und publiziere: $f(y_{j,j})=:z_{j,j}$\\
+  \begin{tabular}{|cc|}\hline
+   $z_{10}$&$z_{11}$\\
+   $z_{20}$&$z_{21}$\\
+   $\vdots$&$\vdots$\\
+   $z_{k0}$&$z_{k1}$\\\hline
+  \end{tabular}
+  \item Signieren von $x_i$: $sig(x_i)=\Brackal{c}{y_{i0}\T{, falls }x_i=0\\y_{i1}\T{, falls }x_i=1}$
+ \end{enumerate}
+ \Bold{Bsp:} $x=(0,0,1)$
+   \begin{tabular}{|cc|}\hline
+   $z_{10}$&$z_{11}$\\
+   $z_{20}$&$z_{21}$\\
+   $z_{30}$&$z_{31}$\\\hline
+  \end{tabular}
+  $sig(X)=y_{10}$, $y_{20}$, $y_{31}\Oben{f}{\to}f(y_{10})$
+  \item \Bold{El-Gamal-Signatur 1987} (DSS: NIST)\\
+  \Bold{Initialisierung:} Wähle grosse Primzahl $p\in\PN^*$.\\
+  $\Ra \ZN_p^*$ zyklisch. Sei $\omega$ ein erzeugendes Element von $\ZN_p^*$\\
+  $\Ra\fbox{(p,w)}$ für alle Teilnehmer gleich\\
+  \Bold{Teilnehmer T}
+  Wähle $a_T$ mit $0<a_T<p-1$ (geheimer Schlüssel)\\
+  Berechne den öffentlichen Schlüssel: $b_T=\omega^{a_T}\mod p$ ($a_T$ ist der index von $b_T$ zur Basis $\omega$ bzgl $p$)\\
+  $sig:$ 
+  \begin{tabular}{ccc}
+   $p$&$\longmapsto$&$S$\\
+   $\shortparallel$&&$\shortparallel$\\
+   $\ZN_p^*$&&$Z_p^*\times\ZN_{p-1}$\\
+   $m$&$\longmapsto$&$(x,y)$
+  \end{tabular}\\
+  Wähle zufällig $r\in\ZN_{p-1}^*$\\
+  \begin{align*}
+   x&=\omega^r\mod p\in\ZN\\
+   y&=(m-a_T\cdot x)\cdot r^{-1}\mod p-1\in\ZN_{p-1}
+  \end{align*}
+  \Bold{Verifikationsfunktion}\\
+  \fbox{$(m,sig(m))=(m,x,y)\T{ ist gütig }\Lra b_T^x\cdot x^y\equiv\omega^m\mod p$}\\ \\
+  \Bold{Bsp:} $p=41$\\
+  $\omega:=7\in Gen_p$\\
+  $m=13$ zu signieren:
+  \begin{align*}
+   a_t:=&5\\
+   b_t:=&\omega^{a_T}\mod p=7^5\mod 41=38
+  \end{align*}\\
+  Wähle $r\in\ZN_{p-1}^*=\ZN_{40}^*$: Sei $r=3$, $r^{-1}=27\mod40$\\
+  \begin{align*}
+   x&=\omega^r\mod p=7^3\mod41=15\\
+   y&=(m-a_T\cdot x)\cdot r^{-1}\mod p-1=(13-5\cdot 15)27\mod40=6
+  \end{align*}
+  $\Ra(m,sig(m))=(13,15,6)$
+
+\end{enumerate}
+
 
 \pagebreak
 \section{Uebungen}
