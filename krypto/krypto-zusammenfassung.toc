@@ -42,4 +42,4 @@
 \contentsline {section}{\numberline {5}Faktorisierungsalgorithmen}{15}
 \contentsline {subsection}{\numberline {5.1}Pollard's (p-1)-Methode}{15}
 \contentsline {subsection}{\numberline {5.2}Fermat-Faktorisierung}{16}
-\contentsline {section}{\numberline {6}Uebungen}{17}
+\contentsline {section}{\numberline {6}Uebungen}{18}

@@ -877,7 +877,7 @@ Sei $n \in \NN^*$, $n=a*b$ ungerade, $a > b > 0$
 \end{itemize}
 Allgemein: \\
 \tikzstyle{decision} = [diamond, draw, fill=blue!20,
-   text width=5.8em, text badly centered, node distance=2.5cm, inner sep=0pt]
+   text width=5.8em, text badly centered, node distance=3.5cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20,
    text width=5em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, very thick, color=black!50, -latex']
@@ -887,18 +887,50 @@ Allgemein: \\
 \begin{tikzpicture}[scale=2, node distance = 3.5cm, auto]
    % Place nodes
    \node [block] (init) {$t:=[\sqrt{n}]+1$};
-   \node [decision, below of=init] (quadrat) {Ist $t^2-n$ eine Quadratzahl?};
-   \node [block, left of=quadrat] (nein) {$t:=t+1$};
-   \node [block, right of=quadrat] (ja) {$s:=\sqrt{t^2-n}$\\$a:=t+s$\\$b:=t-s$};
+   \node [block, below of=init] (tquadrat) {$t^2-n$};
+   \node [decision, below of=tquadrat] (fquadrat) {Ist eine Quadratzahl?};
+   \node [block, left of=fquadrat] (nein) {$t:=t+1$};
+   \node [block, right of=fquadrat] (ja) {$s:=\sqrt{t^2-n}$\\$a:=t+s$\\$b:=t-s$};
 
    % Draw edges
-   \path [line] (init) -- (quadrat);
-   \path [line] (quadrat) -- node [, color=black] {nein} (nein);
-   \path [line] (quadrat) -- node [, color=black] {ja} (ja);
-   \path [line] (nein) |- (init);
+   \path [line] (init) -- (tquadrat);
+   \path [line] (tquadrat) -- (fquadrat);
+   \path [line] (fquadrat) -- node [, color=black] {nein} (nein);
+   \path [line] (fquadrat) -- node [, color=black] {ja} (ja);
+   \path [line] (nein) |- (tquadrat);
 \end{tikzpicture} \\ \\
-Bemerkung: Der Alg. terminiert immer, spätestens bei $t=\frac{n+1}{2}$ \\
-$t^2-n=(\frac{n+1}{2})^2-n$ \\
+\textbf{Bemerkung}: \\
+Der Alg. terminiert immer, spätestens bei $t=\frac{n+1}{2}$ \\
+$t^2-n=(\frac{n+1}{2})^2-n$
+
+\begin{description}
+	\item[Lemma] \hfill 
+		\begin{description}
+			\item[Vor.] \hfill
+				\begin{enumerate}
+					\item $n=p*q$, $p,q \in \PN^*$, $p>q$
+					\item $\delta :=p-q$
+				\end{enumerate}
+			\item[Beh.] \hfill \\
+				$0<Q+p-2*\sqrt{n} < \frac{\delta^2}{4*\sqrt{n}}$
+		\end{description}
+	\item[Satz] \hfill
+		\begin{description}
+			\item[Vor.] \hfill
+				\begin{enumerate}
+					\item $n=p*q$, $p,q\in \PN^*$, $p>q$
+					\item $\delta = p-q$ ${\color{red}< c \sqrt[4]{n}}$
+				\end{enumerate}
+			\item[Beh.] \hfill \\
+				Der Alg. "Fermat" faktorisiert n in höchstens $\lceil\frac{c^2}{8}\rceil$ Schlüssellänge.
+		\end{description}
+\end{description}
+{\color{red} Bemerkung: Resultat ist unabhängig von n!!!} \\
+Beweis: \\
+Initialisierung $t:=[\sqrt{n}]+1$ \\
+$t:=t+1$ bis n Differenz von Quadraten : $n=t_0^2-s_0^2 \Ra t_0=\frac{p+q}{2}$. $s_0=\frac{p-q}{2}$ \\
+$A:=\#$ Schleifendurchgänge \\
+$A=t_0-[\sqrt{n}] \gtrsim t_0 -\sqrt{n} = \frac{p+q}{2}-\sqrt{n}=\frac{1}{2}{\color{green}(p+q-2*\sqrt{n})}$ ${\color{red} \Oben{\T{Lemma}}{<}}$ $\frac{1}{2}(\frac{\delta^2}{4*\sqrt{n}})$ ${\color{red} \Oben{\T{Vor. 2}}{<}}$ $\frac{1}{2}*\frac{c^2*(\sqrt[4]{n})^2}{4*\sqrt{n}}$ {\color{red} $=\frac{c^2}{8} < \lceil\frac{c^2}{8}\rceil$}
 
 \pagebreak
 \section{Uebungen}
@@ -976,13 +1008,49 @@ ${\color{red}\overbrace{\hspace{4.2cm}}^{\ZN_6}}$\\
 	\item[b)] $ind_3(3)=1$
 \end{itemize}
 
+\subsubsection*{Aufgabe 2}
+\subsubsection*{a)}
+n=403 \\
+$[\sqrt{403}]=20$ \\ \\
+\begin{tabular}{l | l | l}
+	t & $t^2-n$ & $t^2-n=s^2, s \in \NN$?  \\
+	\hline
+	21 & 441-403 = 23 & nein \\
+	22 & 484 - 403 = 81 & $81=9^2$ : ja
+\end{tabular} \\
+${\color{red}\Ra t=22, s=9}$ ${\color{blue}\ra a=(t+s)=31, b=(t-s)=13}$\\
+$\Ra n= 403=13*31$  
+\subsubsection*{b)}
+$n=187$ $a=2$ $k=10$ \\
+Berechne: $ggT(a^k-1,n)=ggT(1023,187)=11$ \\
+$p:=11$ \\
+$q:=\frac{n}{p}=\frac{187}{11}=17$ \\
+
+{\color{green}
+\textbf{Ergänzung}: B=10 \\
+\textbf{Gesucht}: \\
+$\Brackar{l}{q\in \PN mit q \leq 10 : \{2,3,5,7\}\\
+\beta(q,B):q^{\beta(q,B)} \leq \beta < q^{\beta(q,B)+1} \\
+\beta(2,10)=3$, $\beta(2,10)=2, \beta(5,10)=\beta(7,10)=1} $
+ $k:=\prod q^{\beta(q,B)}=2^3*3^2*5*7=72*35=2520$
+} \\
+
+Sage: \\
+$gcd(\underbrace{2.powermod(k,n)-1}_{0},n)$ 
+
+\subsubsection*{Aufgabe 3}
+$factor(n)$ \\
+$10000993$\\
+$1000003$
 
 \subsubsection*{Aufgabe 4}
 \begin{lstlisting}
 factor(n) = p * q
 phi = (p-1)(q-1)
 d=e.inverse_mod(phi)
-(n.nth_root(4)).n() // n() = numerisch
+(n.nth_root(4)).n() // *.n() = numerisch
 \end{lstlisting}
+{\color{red}Wieners Attacke: $0<d\leq \frac{1}{3} * \sqrt[4]{n}$} \\\\
+$e=18439769619$
 
 \end{document} 
