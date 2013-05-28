@@ -1024,6 +1024,35 @@ Was macht eine Unterschrift aus?\\
   $\Ra(m,sig(m))=(13,15,6)$
 
 \end{enumerate}
+\subsection{Verifikation}
+Signatur $sig(m)=(m,x,y)$ ist gültig $\Lra$ (*)\fbox{$b_T^x\cdot x^y\equiv\omega^m\mod p$}\\
+\\
+\Bold{Bem:} $y\equiv(m-a_T\cdot x)\cdot r^{-1}\mod p-1\Lra a_T\cdot x+r\cdot y\equiv m\mod p-1\Lra\exists k\in\ZN:a_T\cdot x+r\cdot=m+k(p-1)$\\
+$\alpha\equiv\beta\mod n\Lra n\mid\alpha-\beta$\\
+\\
+\Bold{Bew:} $\Ra\underbrace{\underbrace{b_T^x}_{(\omega^{a_T})^x}\cdot\underbrace{x^y}_{\cdot(\omega^r)^y}}_{\omega^{a_T\cdot x+r\cdot y}=\omega^{m+k(p-1)}=\omega^m\cdot(\omega^{p-1})^k\Oben{\T{Fermat}}{\equiv}\omega^m\cdot1\mod p}\equiv\omega^m\mod p$\\
+$\omega$ Erzeugendes von $\ZN_p^*$: $\omega^i\equiv\omega^j\mod p$ und $0<i,j<p-1\Ra i=j$
+\section{Diffie-Hellman-Protokoll}
+Alice$\Oben{?}{\longleftrightarrow}$Bob\\
+\Bold{Gegeben:} \fbox{$p\in\PN^*$ (gross), $\omega\in Gen_P$ Erzeugendes von $\ZN_p^*$} bekannt\\
+\begin{tabular}{l|l|l|l}
+ &Alice&Bob\\\cline{1-3}
+ Wähle&$\alpha$&$\beta$&zufällig $1<\alpha,\beta<p-1$\\
+ Berechne&$\alpha=\omega^\alpha\mod p$&$b=\omega^\beta\mod p$\\
+ Sende&$\to$Bob: $a$&$\to$Alice: $b$&öffentlich bekannt!\\
+ Berechne&$k_a=b^\alpha\mod p$&$k_b=a^\beta\mod p$\\
+\end{tabular}\\
+\Bold{Behauptung:} $k:=k_a=k_b$\\
+\Bold{Beweis:} $k_a=b^\alpha=(\omega^\beta)^\alpha=\omega^{\beta\cdot\alpha}=\omega^{\alpha\cdot\beta}=(\omega^\alpha)^\beta=a^\beta=k_\beta$ in $\ZN_p^*$\\
+\Bold{Aufgabe:} Gegeben: $(p,\omega,a,b)$\\
+\begin{lstlisting}
+ p = nth_prime(2000) = 17389
+ w = 2
+ a = 1000 = w^alpha = 2^alpha mod p => k = b^alpha mod p
+ b = 500
+\end{lstlisting}
+
+
 
 
 \pagebreak
@@ -1146,5 +1175,38 @@ d=e.inverse_mod(phi)
 \end{lstlisting}
 {\color{red}Wieners Attacke: $0<d\leq \frac{1}{3} * \sqrt[4]{n}$} \\\\
 $e=18439769619$
+\subsection*{Serie 8}
+\subsubsection*{Aufgabe 1}
+\Bild{hash.png}
+\subsubsection*{Aufgabe 2}
+$\overbrace{
+\begin{tabular}{cc}
+ \multicolumn{2}{c}{\begin{tabular}{|c|c|l|c|}\hline
+  0&\hspace*{2cm}&\hspace*{1cm}&511\\\hline
+ \end{tabular}}\\
+ $\underbrace{\hspace*{3cm}}_{448}$&$\underbrace{\hspace*{2cm}}_{64}$
+\end{tabular}}^{512}$\\
+$\underbrace{0110011011001010}_m10\dots010000$, $\Abs{m}=16=(10000)_2$\\
+\begin{tabular}{|c|c|}
+ \multicolumn{1}{c}{Nr.}&\multicolumn{1}{c}{Bit}\\\hline
+ 0&0\\\hline
+ 8&1\\\hline
+ 13&0\\\hline
+ 15&0\\\hline
+ 16&0\\\hline
+ 17&0\\\hline
+ 401&0\\\hline
+ 500&0\\\hline
+ 510&0\\\hline
+ 511&0\\\hline
+\end{tabular}
+\subsubsection*{Aufgabe 3}
+\begin{enumerate}
+ \item 11
+ \item Padding-Block
+ \item $c_3$ und $c_4$
+ \item 53
+ \item
+\end{enumerate}
 
 \end{document} 
