@@ -42,4 +42,8 @@
 \contentsline {section}{\numberline {5}Faktorisierungsalgorithmen}{15}
 \contentsline {subsection}{\numberline {5.1}Pollard's (p-1)-Methode}{15}
 \contentsline {subsection}{\numberline {5.2}Fermat-Faktorisierung}{16}
-\contentsline {section}{\numberline {6}Uebungen}{18}
+\contentsline {section}{\numberline {6}Signaturen}{17}
+\contentsline {subsection}{\numberline {6.1}Einf\IeC {\"u}hrung}{17}
+\contentsline {subsection}{\numberline {6.2}Verifikation}{18}
+\contentsline {section}{\numberline {7}Diffie-Hellman-Protokoll}{18}
+\contentsline {section}{\numberline {8}Uebungen}{20}
