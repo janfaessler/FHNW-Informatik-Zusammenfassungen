@@ -278,6 +278,8 @@ Die Menge $\ZN^*_n$ ist definiert als: $\{a \in \ZN_n|ggT(a,n,=)1\}$.
 Die Anzahl der Elemente in der Gruppe wird Ordnung genannt. Für eine Gruppe $\ZN^*_n$ gilt $\phi(n)$
 \subsubsection{Erzeugende Elemente, zyklische Gruppen}
 Die Menge $<a>$ ist definiert als: $<a>:= \{an|n \in \ZN\}$. Enthält die daraus erzeugte Menge aller Elemente der Gruppe, so wird die Gruppe als zyklisch bezeichnet. Zusätzlich wird definiert das $a^0 = e$ und $a^{-1} =$ invereses von $a$.
+\subsubsection{Gruppenhomomorphismus}
+Der Gruppenhomomorphismus ist eine strukturerhaltenden Abbildung. Seien $(G,\bullet,e_g)$ und $(H,\bullet,e_h)$. Das heisst, es gibt eine Abbildung $f$ für die gilt: $f(x*y) = f(x) \bullet f(y)$. Das neutrale Element muss immer auf das neutrale Element der anderen Gruppe abgebildet werden!
 \subsubsection{Satz Euler Fermart}
 Der Satz lautet: $a^{\phi(n)} = 1\T{ mod }n$
 \subsection{Faktorisierung}
@@ -573,8 +575,8 @@ Abarbeiten der Blöcke ohne spezielles Verfahren {\color{gray} // \Bold{Bem:} $m
  $m=\Unten{\T{Länge n}}{m_1}|m_2$, $n:$ Blocklänge / $IV=$Initialvektor (i.a. bekannt)\\
  $c_0:=IV$, $c_1:=e_k(c_0\oplus m_1)$, $c_2:=e_k(c_1\oplus m_2)$\\
  $c_1\oplus d_k(c_2)=d_k(e_k(c_1\oplus m_2))=c_1\oplus m_2\oplus c_1=m_2$ \\
- \Bold{Bem:} $m_1=m_3\nRightarrow c_1=c_3$
- 
+ \Bold{Bem:} $m_1=m_3\nRightarrow c_1=c_3$\\
+ \Bold{Bem:} Wenn ein C-Block korrupt ist, ist der M-Block und der danach folgende auch korrupt, alle anderen aber wieder richtig.
 \subsubsection{CFB-Modus (cipher feedback)}
  $m=\underbrace{\tilde{m_1}}_{\T{Länge}=r}|\tilde{m_2}|\tilde{m_3}|\dots$, $n$: Cipher Block-Länge (DES: 64) und \fbox{$0<r\leq n$}
 \begin{multicols}{2}
@@ -593,8 +595,6 @@ Abarbeiten der Blöcke ohne spezielles Verfahren {\color{gray} // \Bold{Bem:} $m
  \end{tabular}
 \end{multicols} 
 
-
- 
  \newpage
 \section{RSA}
 \subsection{Schlüsselerzeugung}

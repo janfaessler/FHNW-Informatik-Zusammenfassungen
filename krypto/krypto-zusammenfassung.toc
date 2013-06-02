@@ -16,7 +16,8 @@
 \contentsline {subsubsection}{\numberline {1.4.2}Spezielle Mengen}{3}
 \contentsline {subsubsection}{\numberline {1.4.3}Ordnung der Gruppe}{3}
 \contentsline {subsubsection}{\numberline {1.4.4}Erzeugende Elemente, zyklische Gruppen}{3}
-\contentsline {subsubsection}{\numberline {1.4.5}Satz Euler Fermart}{3}
+\contentsline {subsubsection}{\numberline {1.4.5}Gruppenhomomorphismus}{3}
+\contentsline {subsubsection}{\numberline {1.4.6}Satz Euler Fermart}{3}
 \contentsline {subsection}{\numberline {1.5}Faktorisierung}{3}
 \contentsline {subsubsection}{\numberline {1.5.1}Fermat}{3}
 \contentsline {subsubsection}{\numberline {1.5.2}Polard $p -1$}{4}
@@ -47,24 +48,24 @@
 \contentsline {subsubsection}{\numberline {4.2.1}ECB-Modus (electronic code block)}{10}
 \contentsline {subsubsection}{\numberline {4.2.2}CBC-Modus (cipher block chaining)}{10}
 \contentsline {subsubsection}{\numberline {4.2.3}CFB-Modus (cipher feedback)}{10}
-\contentsline {section}{\numberline {5}RSA}{11}
-\contentsline {subsection}{\numberline {5.1}Schl\IeC {\"u}sselerzeugung}{11}
-\contentsline {subsection}{\numberline {5.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{11}
-\contentsline {subsection}{\numberline {5.3}Attacken}{11}
-\contentsline {subsubsection}{\numberline {5.3.1}3 Primzahlen f\IeC {\"u}r zwei Schl\IeC {\"u}ssel}{11}
-\contentsline {subsubsection}{\numberline {5.3.2}Gleicher Modul}{11}
-\contentsline {subsubsection}{\numberline {5.3.3}Hastad Attack}{11}
-\contentsline {subsubsection}{\numberline {5.3.4}Wiener's Angriff}{11}
-\contentsline {subsubsection}{\numberline {5.3.5}de Wenger - Spezialfall: RSA-Schl\IeC {\"u}ssel}{12}
-\contentsline {subsubsection}{\numberline {5.3.6}SK-Such-Algorithmus}{12}
-\contentsline {section}{\numberline {6}Signaturen}{13}
-\contentsline {subsection}{\numberline {6.1}RSA}{13}
-\contentsline {subsection}{\numberline {6.2}Das Lamport-Schema}{13}
-\contentsline {subsection}{\numberline {6.3}El-Gamal}{13}
-\contentsline {subsubsection}{\numberline {6.3.1}Verifikation}{14}
-\contentsline {section}{\numberline {7}Hashfunktionen}{15}
-\contentsline {subsection}{\numberline {7.1}Angriff}{15}
-\contentsline {subsection}{\numberline {7.2}SHA-1}{15}
-\contentsline {section}{\numberline {8}Kryptographische Protokolle}{16}
-\contentsline {subsection}{\numberline {8.1}Needham-Schroeder}{16}
-\contentsline {subsection}{\numberline {8.2}Diffie-Hellman-Protokoll}{16}
+\contentsline {section}{\numberline {5}RSA}{12}
+\contentsline {subsection}{\numberline {5.1}Schl\IeC {\"u}sselerzeugung}{12}
+\contentsline {subsection}{\numberline {5.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{12}
+\contentsline {subsection}{\numberline {5.3}Attacken}{12}
+\contentsline {subsubsection}{\numberline {5.3.1}3 Primzahlen f\IeC {\"u}r zwei Schl\IeC {\"u}ssel}{12}
+\contentsline {subsubsection}{\numberline {5.3.2}Gleicher Modul}{12}
+\contentsline {subsubsection}{\numberline {5.3.3}Hastad Attack}{12}
+\contentsline {subsubsection}{\numberline {5.3.4}Wiener's Angriff}{12}
+\contentsline {subsubsection}{\numberline {5.3.5}de Wenger - Spezialfall: RSA-Schl\IeC {\"u}ssel}{13}
+\contentsline {subsubsection}{\numberline {5.3.6}SK-Such-Algorithmus}{13}
+\contentsline {section}{\numberline {6}Signaturen}{14}
+\contentsline {subsection}{\numberline {6.1}RSA}{14}
+\contentsline {subsection}{\numberline {6.2}Das Lamport-Schema}{14}
+\contentsline {subsection}{\numberline {6.3}El-Gamal}{14}
+\contentsline {subsubsection}{\numberline {6.3.1}Verifikation}{15}
+\contentsline {section}{\numberline {7}Hashfunktionen}{16}
+\contentsline {subsection}{\numberline {7.1}Angriff}{16}
+\contentsline {subsection}{\numberline {7.2}SHA-1}{16}
+\contentsline {section}{\numberline {8}Kryptographische Protokolle}{17}
+\contentsline {subsection}{\numberline {8.1}Needham-Schroeder}{17}
+\contentsline {subsection}{\numberline {8.2}Diffie-Hellman-Protokoll}{17}
