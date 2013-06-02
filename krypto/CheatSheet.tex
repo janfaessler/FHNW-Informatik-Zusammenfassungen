@@ -24,6 +24,8 @@
 \usepackage{tikz}
 
 \usepackage{multirow}
+\usepackage{multicol}
+
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
@@ -43,6 +45,7 @@
 \newcommand{\QN}{\mathbb{Q}} %Rational Number
 \newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
 \newcommand{\CN}{\mathbb{C}}
+\newcommand{\PN}{\mathbb{P}} %Primzahle Bitches
 \newcommand{\Teilt}{\mid} %|
 \newcommand{\Teiltn}{\nmid} %kein teiler
 \newcommand{\Potp}{\mathcal{P}} %Potenzmenge
@@ -127,6 +130,14 @@
  showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
 }
 
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+   text width=5.8em, text badly centered, node distance=3.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+   text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, color=black!50, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=2.5cm,
+   minimum height=2em]
+
 %Config
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{15.2pt}
@@ -142,8 +153,20 @@
 
 % hier beginnt das Dokument
 \begin{document}
+
 \section{Mathematische Grundlagen}
-\subsection{Euklid}
+\subsection{Grundlagen}
+\subsubsection{Einwegfunktion}
+In der Informatik ist eine Einwegfunktion eine mathematische Funktion, die komplexitätstheoretisch „leicht“ berechenbar, aber „schwer“ umzukehren ist. 
+\subsubsection{Eigenschaften Funkionen}
+\begin{description}
+\item [Injektiv] Jedes x hat sein eigenes y.
+\item [Surjektiv] Wenn das Bild der Wertemenge entspricht.
+\item [Bijektiv] Wenn Injektiv wie Surjektiv 
+\end{description}
+\subsubsection{Kombinatorik}
+$\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+\subsubsection{(erweiterter) Euklid}
 \textbf{ggT(a,b):} \\
 $a=q*b+b_{neu}$ \hspace*{1cm} $s_1=1$ \& $t_1=0$ \hspace*{0.75cm} $s=t_{\T{alt}}$ \& $t=s_{\T{alt}}-q\cdot t_{\T{alt}}$\\
 \begin{tabular}{| c | c | c | c | c |}
@@ -181,102 +204,136 @@ $a=q*b+b_{neu}$ \hspace*{1cm} $s_1=1$ \& $t_1=0$ \hspace*{0.75cm} $s=t_{\T{alt}}
 \end{tabular}\\
 \\
 Daraus folgt dann $3=-11\cdot99+14\cdot78$
-\subsection{Modulare Division}
-Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$}. Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$. \textbf{Beispiel}: $23/27$ mod $31$
-\\\\
-$31 = 1 * {\color{red}27} + {\color{blue}4}$ \hspace{2cm} {\color{gray}//$ggT(27,31)$ mittels euklidischem Algorithmus} \\
-${\color{red}27} = 6 * {\color{blue}4} + {\color{green}3}$ \\
-${\color{blue}4} = 1 * {\color{green}3} + {\color{brown}1}$\\
-${\color{green}3} = 3 * {\color{brown}1} + 0 \Longrightarrow$ $ggT(27,31) = 1 \rightarrow$  modulare Division möglich \\
+\subsubsection{Diophantische Gleichungen}
+Die Gleichung $ax + by = c$ ist eine diophantische Gleichung. Sie besitzt nur eine ganzahlige Lösung, wenn $ggT(a, b)\|c$. Gibt es eine Lösung, gibt es unendlich viele Lösungen. Eine mögliche Lösung kann mit dem erweiterten euklidischen Algo. gefunden werden. Soll x oder y in einem bestimmten Bereich liegen, kann man sie mit folgender Formel shiften: $c = ax + by$, $0 = kab - kab$ addiert: $c = ax + kab + by - kab$, $c = a(x + kb) + b(y - ka)$
+\subsection{Modulares Rechnen}
+\subsubsection{Division}
+Eine modulare Division hat die Form \fbox{$a/b$ mod $n$} , gesucht wird die ganze Zahl $c$ im Intervall $[0,n-1]$, welche die Gleichung \fbox{$bc\equiv a$ mod $n$}. Die modulare Division ist nur möglich, wenn $ggT(b,n)=1$. \\
 \\
-Jetzt fahren wir mit dem erweiterten euklidischen Algorithmus fort, um $c$ ($23 = 27c + 31x$) zu ermitteln:\\
-${\color{brown}1} = {\color{blue}4} - 1 * {\color{green}3}$\\
-${\color{brown}1} = {\color{blue}4} - 1 * ({\color{red}27} - 6 * {\color{blue}4})$  {\color{gray}// ersetze $3$ durch Klammer, obigen Algorithmus rückwärts}\\
-${\color{brown}1} = {\color{blue}4} - 1 * {\color{red}27} + 6 * {\color{blue}4} = 7 * {\color{blue}4} - 1 * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
-${\color{brown}1} = 7 * (31 - 1 * {\color{red}27}) - 1 * {\color{red}27}$  {\color{gray}// ersetze {\color{blue}4} durch Klammer}\\
-${\color{brown}1} = 7 * 31 - 7 * {\color{red}27}) - 1 * {\color{red}27} = \textbf{7} * 31 \textbf{ -8} * {\color{red}27}$  {\color{gray}// ausmultiplizieren}\\
-$23 * 1 = 23 * \textbf{7} * 31 + 23 * \textbf{(-8)} * {\color{red}27}$  {\color{gray}// erweitern mit 23}\\
-$\Longrightarrow$ uns interessiert nur $c = 23 * (-8) = -184$ was der \textbf{Restklasse 2} (von Modulo 31) entspricht. Dies ermittelt man, indem man zu -184 so oft 31 addiert, bis man eine positive Zahl erhält. Die gesuchte Gleichung lautet also: $27 * 2 \equiv 23$ mod $31$.
-
-\subsection{Modulares Potenzieren}
-Seien $a,b,n \in \ZN$ und $b,n > 1$. Berechnen Sie $a^b$ mod $n$. \\
-Da es für grosse $b$ für den Taschenrechner nicht möglich ist dies zu berechnen verwenden wir ein spezielles Verfahren:
+\textbf{Beispiel}: $23/27$ mod $31$ {\color{gray} // wenn ($ggT(27,31) = 1 \rightarrow$  modulare Division möglich) }\\
+erweiterten euklidischen Algorithmus: $23 * \textbf{7} * 31 + 23 * \textbf{(-8)} * {\color{red}27}$  {\color{gray}// erweitern mit 23}\\
+\\
+$\Longrightarrow$ Uns interessiert nur $c = 23 * (-8) = -184$ was der \textbf{Restklasse 2} (von Modulo 31) entspricht. Dies ermittelt man, indem man zu -184 so oft 31 addiert, bis man eine positive Zahl erhält. Die gesuchte Gleichung lautet also: $27 * 2 \equiv 23$ mod $31$.
+\subsubsection{Potenzieren}
+Seien $a,b,n \in \ZN$ und $b,n > 1$. Berechnen Sie $a^b$ mod $n$.
 \begin{itemize}
-	\item[1.)] binäre Darstellung von b: \\
-		$b=\sum_{i=0}^k \alpha_i2^i$ mit $\alpha \in \{0,1\}$.
+	\item[1.)] binäre Darstellung von b: $b=\sum_{i=0}^k \alpha_i2^i$ mit $\alpha \in \{0,1\}$.
 	\item[2.)] Anwendung auf a: \\
-		$a^b$ = $a^{\sum_{i=0}^k \alpha_i2^i}$\\
-		$a^b$ = $\prod_{i=0}^{k} a^{\alpha_i2^i}$ \\
-		$a^b$ = $a^{\alpha_k2^k}*a^{\alpha_{k-1}2^{k-1}}*a^{\alpha_{k-2}2^{k-2}} \dots  a^{\alpha_12}*a^{\alpha_0}$ \\
-		$a^b$ = $($\dots$((a^{a_k})^2*a^{a_{k-1}})^2$\dots$*a^{\alpha_1})^2*a^{\alpha_0}$
+		$a^{\sum_{i=0}^k \alpha_i2^i}$ = $\prod_{i=0}^{k} a^{\alpha_i2^i}$ = $a^{\alpha_k2^k}*a^{\alpha_{k-1}2^{k-1}}*a^{\alpha_{k-2}2^{k-2}} \dots  a^{\alpha_12}*a^{\alpha_0}$ = $($\dots$((a^{a_k})^2*a^{a_{k-1}})^2$\dots$*a^{\alpha_1})^2*a^{\alpha_0}$
 	\item[3.)] Das Verfahren besteht nun darin, den letzten Ausdruck von innen nach aussen auszuwerten und nach jeder Multiplikation das Resultat modulo $n$ zu rechnen.
 \end{itemize}
-\textbf{Beispiel:} \\
-$977^{2222}$ mod $11$
+\textbf{Beispiel:}  $977^{2222}$ mod $11$
 \begin{itemize}
 	\item[1.)] $2222_{10} \blacktriangleright$ bin $= 100010101110_2$
 	\item[2.)] ( \dots $ (977)^2)^2)^2)^2*977)^2)^2*977)^2)^2*977)^2*977)^2*977)^2 {\color{gray} *(0*977)}$
 	\item[3.)] Anwendung des Verfahren: \\
-	\begin{tabular}{l l l}
-	 977 & mod 11 & = 9 \\
-	 $9^2$ & mod 11 & = 4 \\
-	 $4^2$ & mod 11 & = 5 \\
-	 $5^2$ & mod 11 & = 3 \\
-	 $3^2$ & mod 11 & = 9 \\
-	 $9*977$ & mod 11 & = 4\\
-	 $4^2$ & mod 11 & = 5\\
-	 $5^2$ & mod 11 & = 3\\
+	\begin{tabular}{l l l p{3cm} l l l}
+	 977 & mod 11 & = 9     & $5^2$ & mod 11 & = 3 \\
+	 $9^2$ & mod 11 & = 4   && $3^2$ & mod 11 & = 9 \\
+	 $4^2$ & mod 11 & = 5   && $9*977$ & mod 11 & = 4 \\
+	 $5^2$ & mod 11 & = 3   && $4^2$ & mod 11 & = 5 \\
+	 $3^2$ & mod 11 & = 9   && $5*977$ & mod 11 & = 1 \\
+	 $9*977$ & mod 11 & = 4 && $1^2$ & mod 11 & = 1 \\
+	 $4^2$ & mod 11 & = 5   && $1*977$ & mod 11 & = 9 \\
+	 $5^2$ & mod 11 & = 3   && $9^2$ & mod 11 & = \textbf{4} \\
 	 $3*977$ & mod 11 & = 5\\
-	 $5^2$ & mod 11 & = 3\\
-	 $3^2$ & mod 11 & = 9\\
-	 $9*977$ & mod 11 & = 4\\
-	 $4^2$ & mod 11 & = 5\\
-	 $5*977$ & mod 11 & = 1\\
-	 $1^2$ & mod 11 & = 1\\
-	 $1*977$ & mod 11 & = 9\\
-	 $9^2$ & mod 11 & = \textbf{4}
+
 	\end{tabular}
 \end{itemize}
-
-\subsection{Chinesischer Restsatz}
-\begin{tabular}{l c l}
- $x\equiv {\color{blue}m_1}\T{ mod }{\color{purple}n_1}$ & $\Ra$ & $x\equiv {\color{blue}2}\T{ mod }{\color{purple}3}$\\
- $x\equiv {\color{blue}m_2}\T{ mod }{\color{purple}n_2}$ & $\Ra$ & $x\equiv {\color{blue}3}\T{ mod }{\color{purple}4}$\\
- $x\equiv {\color{blue}m_3}\T{ mod }{\color{purple}n_3}$ & $\Ra$ & $x\equiv {\color{blue}2}\T{ mod }{\color{purple}5}$\\
-\end{tabular}\\ \\
-$N={\color{purple}n_1\cdot n_2 \cdot n_3} = {\color{purple}3\cdot4\cdot5}=60$, 
-${\color{brown}N_1}=\frac{N}{\color{purple}n_1}={\color{brown}20}$, ${\color{brown}N_2}=\frac{N}{\color{purple}n_2}={\color{brown}15}$, ${\color{brown}N_3}=\frac{N}{\color{purple}n_3}={\color{brown}12}$\\
+\subsubsection{Chinesischer Restsatz}
+ $x\equiv {\color{blue}m_1}\T{ mod }{\color{purple}n_1}$ \\
+ $x\equiv {\color{blue}m_2}\T{ mod }{\color{purple}n_2}$\\
+ $x\equiv {\color{blue}m_3}\T{ mod }{\color{purple}n_3}$\\
+\\
+$N={\color{purple}n_1\cdot n_2 \cdot n_3}$, 
+${\color{brown}N_i}=\frac{N}{\color{purple}n_i}$\\
 \\
 $ggT({\color{brown}N_i},{\color{purple}n_i})=x\cdot {\color{purple}n_i}+y\cdot {\color{brown}N_i} = 1 \to {\color{red}e_i}=y\cdot {\color{brown}N_i}$ \hspace{1cm}{\color{gray}// erweiterter Euklid}\\
-$ggT({\color{brown}20},3)=7\cdot3+(-1)\cdot{\color{brown}20} = 1 \to {\color{red}e_1}=-20$\\
-$ggT({\color{brown}15},4)=4\cdot4+(-1)\cdot{\color{brown}15} = 1 \to {\color{red}e_2}=-15$\\
-$ggT({\color{brown}12},5)=5\cdot5+(-2)\cdot{\color{brown}12} = 1 \to {\color{red}e_3}=-24$\\
  \\
- $x={\color{blue}m_1}\cdot {\color{red}e_1}+{\color{blue}m_2}\cdot {\color{red}e_2}+{\color{blue}m_3}\cdot {\color{red}e_3}={\color{blue}2}\cdot {\color{red}-20}+{\color{blue}3}\cdot {\color{red}-15}+{\color{blue}2}\cdot {\color{red}-24}=-133\T{ mod }60=47$ 
-
-\subsection{Fermat Faktorisierung}
-$n=527$ \\
-$t:=23$ \hspace{2cm} {\color{gray} // auspropieren $t^2>n$}\\
-$t^2-n=2$ \hspace{2cm} {\color{gray} // 2 ist kein Quadrat $\Ra$ t erhöhen}\\
-$t:=t+1$ \hspace{2cm} {\color{gray} // $=24$}\\
-$t^2-n=49$ \hspace{2cm} {\color{gray} // 2 ist Quadrat}\\
-$\Ra s:= \sqrt{t^2-n}=7$ \\
+ $x={\color{blue}m_1}\cdot {\color{red}e_1}+{\color{blue}m_2}\cdot {\color{red}e_2}+{\color{blue}m_3}\cdot {\color{red}e_3}\T{ mod } N$ 
+ 
+\subsection{Kettenbruch}
+$x=a_0+\frac{1}{a_1+\frac{1}{a_2+\frac{1}{\quad\stackrel{\vdots}{a_{n-1}+\frac{1}{a_n}}}}}$. Für diesen Ausdruck schreiben wir auch: $<a_0;a_1,a_2,a_3,\ldots,a_n>$ \\
+Berechnen mittels Euklid. Bsp: $\frac{37}{7}$ $\rightarrow$ $\text{ggt}(37, 7)$\\
+$37 = \textbf{5}*7 + 2$\\
+$7 = \textbf{3}*2 + 1$\\
+$2 = \textbf{2}*1 + 0$ $\rightarrow$ $<5;3,2>$ \\
 \\
-$\Brackar{l}{a:=t+s = 24+7=31 \\ b:=t-s = 24-7=17}$ $n=a\cdot b = 31 \cdot 17 = 527$
- 
- 
+Sei: $\alpha \in \mathbb{Q} \backslash \mathbb{Z}$ dann sei $<x_0; x_1, x_2, \ldots, x_n>$ Approximation von $\alpha$.
+
+\subsection{Gruppen}
+\subsubsection{Notation}
+Eine Gruppe ist ein Tripel $(G, *, e)$. $G$ ist eine Menge, $*$ eine Binärverknüpfung und $e$ ein ausgezeichnetes Element der Menge $G$. Das Tripel muss folgende Eigenschaften erfüllen um eine Gruppe zu sein:
+\begin{enumerate}
+	\item Assozivität: $\forall a,b,c \in G : f(f(a,b),c) = f(a,f(b,c))$
+	\item Neutrales Element: $\forall a \in G : f(a,e) = f(e,a) = a$
+	\item Inverses Element: $\forall a \in G:\exists b \in G:f(a,b)=e$
+\end{enumerate}
+Die Abbildung $f$ ist die Vorhinbezeichnete Abbildung $*$ zwischen den Mengen. Ist Gruppe zu dem noch Kommutativ, ist es eine abelsche Gruppe: $\forall a, b \in G : a * b = b * a$
+\subsubsection{Spezielle Mengen}
+Die Menge $\ZN^*_n$ ist definiert als: $\{a \in \ZN_n|ggT(a,n,=)1\}$.
+\subsubsection{Ordnung der Gruppe}
+Die Anzahl der Elemente in der Gruppe wird Ordnung genannt. Für eine Gruppe $\ZN^*_n$ gilt $\phi(n)$
+\subsubsection{Erzeugende Elemente, zyklische Gruppen}
+Die Menge $<a>$ ist definiert als: $<a>:= \{an|n \in \ZN\}$. Enthält die daraus erzeugte Menge aller Elemente der Gruppe, so wird die Gruppe als zyklisch bezeichnet. Zusätzlich wird definiert das $a^0 = e$ und $a^{-1} =$ invereses von $a$.
+\subsubsection{Satz Euler Fermart}
+Der Satz lautet: $a^{\phi(n)} = 1\T{ mod }n$
+\subsection{Faktorisierung}
+\subsubsection{Fermat}
+$n=ab$, $n$ soll faktorisiert werden. 
+\begin{enumerate}
+\item $t = \lfloor \sqrt n \rfloor + 1$. 
+\item Wenn $t^2 - n$ ein Quadrat weiter bei 4.
+\item $t = t + 1$ Weiter bei 2.
+\item $s := \sqrt{t^2 -n}, a = t + s, b = t - s$
+\end{enumerate}
+Bemerkung: Der Alog terminiert immer, da gilt: $t \le \frac{n+1}{2}$
+Aufwand: $\frac{c^2}{8}$ und $c$ ist eine geeignete Konstante. $\Delta := p-q < c \sqrt[4]{n}$ {\color{red} $\Ra$ Resultat ist unabhängig von n!!!} 
+
+\subsubsection{Polard $p -1$}
+\begin{enumerate}
+\item Alle Primzahlen $q$ mit $q \le B$
+\item $\beta(q, B) = \text{max}\{B \in \mathbb{N}: q^\beta \le B\}$
+\end{enumerate}
+Beispiel:
+$n=1241143$, $B=13$ Das $B$ ist willkürlich gewählt. $a$ wählen: $ 1 < a < n$ und $ggT(a, n)$ $= 1$. \\
+Menge bilden: $\{2, 3, 5, 7, 11, 13\}$ ($\forall$ $\PN<=B$). Nun alle Exponenten suchen: $\beta (2, 13) = 3$, da $2^3 < 13$. Dann $\beta (3, 13) = 2)$, 
+$\beta (5, 13) = \beta (7, 13) = \beta (11, 13) = \beta (13, 13) = 1$ \\
+$k = 2^3 * 3^2 * 5 * 7 * 11 * 13$ einsetzen in $ggT(a^k-1, n)$ $= 557 \in \PN$
+
+\section{Definition eines Kryptosystems}
+\subsection{Passiver Angreifer}
+Einer, der nur mithört.
+\subsection{Prinzip von Kerkhoffs}
+\begin{itemize}
+	\item Trennung von Verschlüsselungsmaschine und Schlüssel
+	\item Die Verschlüsselungsmaschine ist dem Gegner bekannt
+	\item Das zu schützende Geheimnis ist der Schlüssel
+\end{itemize}
+\subsection{Formale Beschreibung Kryptosystems}
+System: $(P, C, K, e, d)$, $P$ Menge der Klartexte, $C$ Menger der Geheimtexte, $K$ Menge der Schlüssel:
+$e: K \times P \rightarrow C$; $d: K \times C \rightarrow P$
+Es gilt: $\forall k \in K \forall p \in P: d (k, e (k, p)) = p$ $\implies$ $\forall k \in K : e(k, -)$ ist injektiv; $\forall k \in K: d(k, -)$ ist surjektiv.
+\subsection{Attacken auf Kryptosystem}
+\begin{enumerate}
+\item \textbf{Ciphertext-onlyattack} \\
+Gegeben $c_i= ek(p_i)$ , i = 1, ... , n \\
+Gesucht: $p_i$, i = 1, ... , n oder k
+\item \textbf{Known-plaintextattack}\\
+Gegeben $( p_i, c_i= ek(p_i))$ , i = 1, ... , n \\
+Gesucht: k 
+\item \textbf{Chosen-plaintextattack}\\
+Gegeben: $( p_i, c_i= ek(p_i))$ , i = 1, ... , n \\
+pinach Wahl des Kryptoanalytikers \\
+Gesucht: k 
+\item \textbf{Chosen-ciphertextattack}\\
+Gegeben: $( c_i,p_i= dk(c_i))$ , i = 1, ... , n \\
+$c_i$ nach Wahl des Kryptoanalytikers \\
+Gesucht: k
+\end{enumerate}
+
 \section{Klassische Kryptographie}
-\setcounter{subsection}{-1}
-\subsection{Repetition}
-\begin{description}
-	\item[Alphabet] endliche Mengen von Zeichen
-	\item[Beispiel] \hfill \\
-		$\Pota := \{A,B,C, ..., Z\}$, $|\Pota|=26$ \\
-		$\Sigma := \{0,1\}$, $|\Sigma|=2$\\
-		$\Pota ^*:=\{\T{endliche Wörter über }\Pota\}$
-\end{description}
-Sprachen über $\Pota$: $L\subset\Pota ^*$
-\subsection{Klassische Verschlüsselungsverfahren}
+\subsection{Klassen}
 \begin{tabular}{l | l}
 	\textbf{Substitution Cipher} & \textbf{Transposition Cipher} \\
 	\hline \\
@@ -298,24 +355,14 @@ Sprachen über $\Pota$: $L\subset\Pota ^*$
  $E:\Pota\ra B$, $x\mapsto E(x)$&$E:\Pota\ra P(B)$, $x\mapsto E(x)$\\\hline
  \Bold{monographisch}&\Bold{polygraphisch}\\
  Buchstaben&Gruppen von Buchstaben
-\end{tabular}\\
-\subsection{Spezielles Bsp für Substitution Homophone Verschlüsselung}
-\Bold{Gegeben:} $\Sigma:=\{0,1\}$, $B:=\{a,b,c\}$\\
-Information über die Sprache des Klartextes:
-\begin{tabular}{l}
- Häufigkeit von $0:\Oneover{3}$\\
- Häufigkeit von $1:\frac{2}{3}$
 \end{tabular}
-\begin{align*}
-	E: & \Sigma \to P(B) \\
-	& 0 \mapsto \{b\} \\
-	& 1 \mapsto \{a,c\}
-\end{align*}
-\Bold{Bsp:}
-\begin{tabular}{l}
- 10110110011\\
- abccbacbbaa
-\end{tabular}
+
+\subsection{Caesar Cipher}
+Einfacher substitions Cipher bei welchem das Alphabet ``verschoben'' wird. Beispiel: A B \ldots Z $\rightarrow$ B C \ldots A. Sei $ord(c)$ eine Funktion, welche jedem Buchstaben einen numerischen Wert zuweise. Beispiel: $ord(a) = 0, ord(b) = 1$ etc. Weiter sei offset der Wert um welchen verschoeben werden soll. So kann mit $ord(\text{mc}) + offset \mod 26$ der Index des Buchstabens der Geheimnachricht bestummen berechnet. Auf gleiche Weise lässt sich ein Text entschlüsseln.
+
+\subsubsection{Attacken}
+Mit dem Wissen, in welcher Sprache die Nachricht geschrieben wurde, lässt sich mittels Häufigkeitsanalysen die Verschiebung bestimmen. Zum Beispiel ist das ``e'' in der deutschen Sprache ein sehr häufiger Buchstabe. Wird in der Geheimnachricht gleich häufig wie ein ``e'' zum Beispiel ein ``i'' entdeckt, kann die Verschiebung bestimmt werden.
+
 \subsection{Kasiski-Text (monographisch \& polyalphabetisch)}
 \begin{description}
 	\item[Klartext] TO BE OR NOT TO BE
@@ -328,83 +375,87 @@ Information über die Sprache des Klartextes:
  GCX&RCN&ACP&GCX&R
 \end{tabular}\\
 GCX kommt 2x for so können wir eine Annahme zur Periode $p$ machen. Die Periode ist dann $c\cdot p$. Dies kann aber auch zufällig passieren.
-\subsection{Playfair-Cipher}
-\subsubsection{Beschreibung}
-Bei der Playfair-Methode handelt es sich um eine Substitution, die monoalphabetisch und bigraphisch ist, das heißt, es kommt nur ein einziges  festes Alphabet zur Anwendung und als zu verschlüsselnde Symbole werden Bigramme, also jeweils ein Paar (zwei) Buchstaben benutzt.
-\begin{itemize}
-	\item[1.)] \textbf{Vorbereitung des Schlüssel-Quadrates}:
-		\begin{itemize}
-			\item[a.)] Von links nach rechts alle Buchstaben streichen die bereits einmal vorgekommen sind im Schlüssel.
-			\item[b.)] Die Buchstaben in ein 5x5 Quadrat füllen und danach mit den restlichen Bustaben des Alphabetes der Reihe nach auffüllen. Die Buchstaben I und J kommen zusammen in ein Feld.
-		\end{itemize}
-	\item[2.)] \textbf{Preprocessing}: \\
-		Zwischen alle doppelten Buchstaben im Klartext ein X einsetzen und die Buchstaben in Zweierpaare unterteilen. Falls es nicht aufgeht kommt am Ende noch ein X.
-	\item[3.] \textbf{Verschlüsselung}:
-		\begin{itemize}
- 			\item Falls 2 auf gleicher Zeile: Beide Buchstaben um eins nach rechts
-			\item Falls 2 auf gleicher Spalte: Beide Buchstaben um eins nach unten
-			\item Falls 2 nicht auf gleicher Zeile/Spalte: Man nimmt die Buchstaben die auf seiner Zeile und auf des anderen Spalte liegen.\\
-				\begin{tabular}{lllll}
-  					L&\dots&$\Ra$&\dots&Q\\
-					\vdots &&&&\vdots\\
-  					U&\dots&$\La$&\dots&X\\
-				\end{tabular}
-		\end{itemize}
-\end{itemize}
-\subsubsection{Beispiel}
-\begin{tabular}{|c|}\hline
- HARYP\\
- OTEBC\\
- DFG$\frac{\T{I}}{\T{J}}$K\\
- LMNQS\\
- UVWXZ\\\hline
-\end{tabular}
-Schlüssel: Harry Potter, HAR$\Nicht{R}$Y POT$\Nicht{T}$E$\Nicht{R}$\\
-\Bold{Bsp:}
-\begin{tabular}{lllllllll}
- Klartext&HA&LL&O&ZU&SA&MM&EN\\
- Preprocessed&HA&LX&LO&ZU&SA&MX&ME&NX\\
- Secret&AR&QU&UD&UV&\dots\\
-\end{tabular}\\
 
+\subsection{Playfair}
+\subsubsection{Konstruktion Playfair-Quadrat}
+$\mathbf{Keyword}$ (Doppelte Streichen), dann der Rest des Alphabets ohne Buchstaben des Keywords.\\\\
+$\begin{matrix}
+\mathbf{D} & \mathbf{E} & \mathbf{A} & \mathbf{T} & \mathbf{H} \\
+B & C & F & G & I/J \\
+K & L & M & N & O \\
+P & Q & R & S & U \\
+V & W & X & Y & Z \\
+\end{matrix}$
+\subsubsection{Ver-/Entschlüsselung}
+\begin{tabbing}
+\hspace{16em} \= \kill
+Doppelbuchstaben durch X trennen \> (PA AR $\Rightarrow$ PA XA R)\\
+Klartext:  \>  LA BO UL AY EL AD YW IL LX \\
+Geheimtext: \> ME IK QO TX CQ TE ZX CO MW \\
+\end{tabbing}
+Es werden jeweils Paare verschlüsselt.\\
+(Entschlüsselung in entgegengesetzter Richtung der Verschlüsselung)\\
+Wrap around and den Kanten.
+\begin{multicols}{2}
+\subsubsection*{Selben Zeile oder Spalte}
+\begin{tabbing}
+\hspace{10em} \= \kill
+$\begin{matrix}
+* & E & * & * & * \\
+* & C & * & * & * \\
+* & L & * & * & * \\
+* & Q & * & * & * \\
+* & * & * & * & * \\
+\end{matrix}$ 
+\>
+$\begin{matrix}
+D & E & A & T & * \\
+* & * & * & * & * \\
+* & * & * & * & * \\
+* & * & * & * & * \\
+* & * & * & * & * \\
+\end{matrix}$
 
-\subsection{Koinzidenzindex (index of coincidence)}
-Der Koinzidenzindex ist die Grösse, die von der Sprache abhängt, aber invariant ist gegenüber Cäsar-Verschiebungen.
-\begin{description}
-	\item[Gegeben] \hfill \\
-		Alphabet Alphabet $\Pota:=\{A,B,C,\dots,Z\}$\\ 
-		$\Ra$ Buchstabenhäufigkeit: 
-		\begin{tabular}{c c c c}
-			$p_A$ & $p_B$ & ... & $p_Z$ \\
-			$\shortparallel$ & $\shortparallel$ & & $\shortparallel$ \\
-			$p_1$ & $p_2$ & ... & $p_3$ \\
-		\end{tabular} 
-		mit $0\leq p_i \leq 1$ und $\sum_{i=1}^{26} p_i=1$
-	\item[Bemerkung:] \hfill \\
-		Jede Sprache hat ihren eigenen Konzidenzindex \\
-		$IC_{German}=0.0766$ / $IC_{Arabic}=0.0759$ / $IC_{flat}=0.0385$ \\
-		\textbf{Je unregelmässiger die buchstabenhäufigkeit, umso grösser der Index.}
-	\item[Berechnung 1:] \hfill \\
-		 \fbox{$\mathbf{IC_L} = \sum_{i=1}^n p_i^2$} \\ \\
-		Denn der Erwartungswert $IC_L$ für die Sprache $S$ lässt sich aus den Buchstabenhäufigkeiten nach der Formel  berechnen, wobei $p_i$ die Wahrscheinlichkeit des $i$-ten Zeichens des Alphabets in Texten der entsprechenden Sprache angibt. \\
-		\\
-		$Sprache_{flat}$: $p_1=p_2=p_3=$ \dots $=p_{26}=\frac{1}{26}$: $IC_{flat}=\sum^{26}_{i=1}(\frac{1}{26})^2$
-	\item[Berechnung 2:] \hfill \\
-		\fbox{$\mathbf{IC_L} = \frac{\sum_{i=A}^{Z}n_i(n_i -1)}{N(N-1)}$} \\
-		In seiner grundlegenden Form wird der Koinzidenzindex ermittelt, indem man die Einzelanzahlen  der unterschiedlichen Einzelzeichen $n_i$ eines Geheimtextes zählt, also beispielsweise wie oft der Buchstabe A auftritt, wie oft B, und so weiter. Diese werden nach oben angegebener Formel mit den um 1 verminderten Einzelanzahlen multipliziert und für alle Buchstaben (beispielsweise von A bis Z) aufsummiert. Die Summe wird schließlich dividiert durch die Gesamtanzahl N der Buchstaben des Textes (also der Textlänge) sowie die um 1 verminderte Textlänge. \\
-	\\
-	Alphabet $\Sigma := \{0,1\}$ / F = 00110111101 \\
-	$\Brackar{l}{n_0=4 \\ n_1=7 \\ \hline n=11 }$ $IC_F=\frac{4*3+7*6}{11*10}=0.49$ \\
-	
-	\item[Frage:] Wie gross ist die Wahrscheinlichkeit zwei gleiche Buchstaben aus $F$ herauszugreifen?
-	\item[Definition] \fbox{$\mathbf{IC_F}=\frac{\Sum{26}{1}{n_i\choose2}}{{n\choose2}}$} {\color{gray}${n \choose k}=\frac{n!}{k!*(n-k)!}$}
-
-	\item[Bemerkung] \hfill \\
-		Permutation der Buchstaben: F $\mapsto$ Perm(F) \fbox{$IC_F=IC_{Perm(F)}$} \\
-		F = "{}AXCA\dots" $\mapsto$ Perm(F) = "{}CBYC\dots" \\
-		
-\end{description}
-
+\\ 
+$ EL \rightarrow CQ$\> $AD \rightarrow TE $ \\
+1 nach unten\>1 nach rechts
+\end{tabbing} 
+\subsubsection*{Untersch. Zeilen bzw. Spalten}
+$\begin{matrix}
+* & E & A & * & * \\
+* & * & * & * & * \\
+* & L & M & * & * \\
+* & * & * & * & * \\
+* & * & * & * & * \\
+\end{matrix}$\\
+$LA \rightarrow ME$\\
+Gleiche Zeile, Seite wechseln
+\end{multicols}
+\subsection{Vigenère Cipher}
+Funktioniert gleich wie der caesar cipher, nur wird der Geheimtext nicht nur mit einer Verschiebung erzeugt sondern mit einem geheimen Satz (Schlüssel): Die Nachricht und der Schlüssel werden untereinander geschrieben. Dabei wird der Schlüssel solange wiederholt, bis unter jedem Buchstaben der Nachricht ein Buchstaben des Schlüssels steht. Die Buchstaben des Schlüssels geben die Verschiebung des Buchstabens der Nachricht an.
+\subsubsection{Kasiski Test}
+\begin{multicols}{2}
+\begin{enumerate}
+\item Paare von min. Länge 3 finden
+\item Abstände innerhalb der Paare bestimmen
+\item Abstände Faktorisieren
+\item Häufigster Faktor $\Rightarrow$ Kandidat für Schlüssellänge
+\end{enumerate}
+\end{multicols}
+\subsubsection{Koinzidenz Index}
+\begin{multicols}{2}
+\fbox{$\mathbf{IC_{text}} = \sum_{i=1}^n p_i^2$} \\ \\
+\fbox{$\mathbf{IC_text} = \frac{\sum_{i=A}^{Z}n_i(n_i -1)}{N(N-1)}$} \\
+$IC_{eng} = 0.066895$\\
+$IC_{ger} = 0.076667$\\
+$IC_{flat}=0.0385$\\
+\end{multicols}
+Gegeben: Alphabet A mit $|A|=26$ $IC_{Lang} = \Sigma_{i=1}^{26} p_i^2$ \\
+Beispiel: Konsonanten gleiche Wahrscheinlichkeit $p$; I, O, U = doppelte Wahrscheinlichkeit $2p$; E,A = vierfache Wahrscheinlichkeit $4p$. Zusammen zählen: $21p + 3*2p + 2*4p = 35p$. Für die Formel gilt dann: $21\frac{1}{35}^2 + 3\frac{2}{35}^2 + 2\frac{4}{35}^2$
+\subsubsection{Berechnung der Schlüssellänge}
+Gegeben: $C$: Vigenère-Chiffrat der Länge $n$ mit der Schlüssellänge $p$.
+$\gamma = \alpha IC_L + \beta IC_{flat}$ $\alpha$:Anzahl Buchstabenpaare aus der selben Spalte. $\beta$ Anzahl Buchstabenpaare aus verschiedenen Spalten. $\gamma$ Anzahl gleicher Buchstaben aus $C$. $IC$: Koinzidenzindex des Chiffrats, $IC_L$ Koinzidenzindex der Sprache.\\
+Formel: $p = \frac{n * (IC_L - IC_{Flat})}{IC(n-1) + IC_L - n*IC_{Flat}}$
 \subsection{Vigenères Chipres}
 \subsubsection{Beschreibung}
 Das Schlüsselwort sei „AKEY“, der Text „geheimnis“. Vier Caesar-Substitutionen verschlüsseln den Text. Die erste Substitution ist eine Caesar-Verschlüsselung mit dem Schlüssel „A“. „A“ ist der erste Buchstabe im Alphabet. Er verschiebt den ersten Buchstaben des zu verschlüsselnden Textes, das „g“, um 0 Stellen, es bleibt „G“. Der zweite Buchstabe des Schlüssels, das „K“, ist der elfte Buchstabe im Alphabet, er verschiebt das zweite Zeichen des Textes, das „e“, um zehn Zeichen. Aus „e“ wird ein „O“ (siehe Tabelle). Das dritte Zeichen des Schlüssels („E“) verschiebt um 4, „Y“ um 24 Stellen. Die Verschiebung des nächsten Buchstabens des Textes beginnt wieder bei „A“, dem ersten Buchstaben des Schlüssels: \\ \\
@@ -413,37 +464,6 @@ Das Schlüsselwort sei „AKEY“, der Text „geheimnis“. Vier Caesar-Substit
 	\textbf{Schlüssel}: & A & K & E & Y & A & K & E & Y & A \\
 	\textbf{Geheimtext}: & G & O & L & C & I & W & R & G & S 
 \end{tabular}
-
-\subsubsection{Berechnung der Schlüssellänge eines Vigen\`{e}re-Cipher}
-\begin{description}
-	\item[Gegeben] \hfill \\
-		C Vigenère-Chiffrat der Länge n \\
-		Die Schlüssellänge sei p (unbekannt) \\ \\
-$\overbrace{\hspace{6.8cm}}^p$\\
-$\Brackar{|c|c|c|c|c|c|}{ \hline
- C_1&C_2&C_3&C_4&\cdots&C_p\\\hline
- C_{p+1}&C_{p+2}&C_{p+3}&C_{p+4}&\cdots&C_{2p}\\\hline
- C_{2p+1}&C_{2p+2}&C_{2p+3}&C_{2p+4}&\cdots&C_{3p}\\\hline
- \cdots&\cdots&\cdots&\cdots&\cdots&\cdots\\\hline
- C_{n-2}&C_{n-1}&C_n&\Bold{-}&\Bold{-}&\Bold{-}\\\hline
-}\frac{n}{p}$\\
-\begin{tabular}{lll}
- $\uparrow$&\hspace{0.5cm}$\nearrow$&\hspace{0.7cm}$\nearrow$\\
- \multicolumn{3}{l}{monoalphabetisch}
-\end{tabular}
-\\
-alle Spalten = $p$, alle Zeilen = $\frac{n}{p}$, letzte Zeile = monoalphabetisch!\\
-$\alpha:=$ Anzahl Buchstabenpaare aus gleicher Spalte, $\alpha=\frac{n(\frac{n}{p}-1)}{2}=\frac{n(n-p)}{2p}$\\
-$\beta:=$ Anzahl Buchstabenpaare aus verschiedenen Spalten, $\beta=\frac{n(n-\frac{n}{p})}{2}=\frac{n^2(p-1)}{2p}$\\
-$\gamma:=$ Anzahl gleicher Buchstabenpaare aus $C$, $IC_L=\frac{\gamma}{{n\choose2}}$\\
-\begin{center}
- \fbox{$\gamma=\alpha\cdot IC_L+\beta\cdot IC_{\T{flat}}$}
-\end{center}
-\begin{center}
- $p=\frac{n(IC_L-IC_{flat})}{IC_C\cdot(n-1)+IC_L-n\cdot IC_{\T{flat}}}$
-\end{center}
-\end{description}
-
 \subsubsection{Kryptoanalysis des Vigen\`{e}re-Cipher}
 \begin{description}
 	\item[1)] Schlüssellänge p=1,2,3,\dots
@@ -517,92 +537,24 @@ $\Sigma=\{0,1\}$
 Klartext:& $p_1p_2p_3p_4p_5\dots=$&$0$&$0101\dots$\\
 Schlüssel:& $k_1k_2k_3k_4k_5\dots=$&$1$&$0110\dots$\\
 ciphertext:& $\Unten{p_1\oplus k_1}{c_1}c_2c_3c_4c_5\dots=$&$1$&$0011\dots$\\\cline{3-3}
-\end{tabular}
-\subsection{Kryptosysteme}
-\begin{description}
-	\item[Kryptosystem:] (P, C, K, e, d)
-	\item[P] Menge der {\color{blue}Klartexte}
-	\item[C] Menge der {\color{red}Geheimtexte}
-	\item[K] Menge der Schlüssel \\
-		$e:K\times P \ra C$ \\
-		$d:K\times C \ra P$ \\ \\
-		$\forall k \varepsilon K$ $\forall p \varepsilon P: d( k, e (k,p))=p$ \\
-		$\ra$ $\forall k \varepsilon K : e (k,-)$ ist {\color{blue}injektiv} \\
-		$\ra$ $\forall k \varepsilon K : d (k,-)$ ist {\color{red}surjektiv} \\
-\end{description}
+\end{tabular} \\
+One-Time-Pad gilt als sicher, da es zu einem Ciphertext mehr als nur eine verständliche Nachricht gibt. Der Angreifer kann nicht entscheiden, welcher mögliche Schlüssel nun der richtige ist, vorausgesetzt, der Schlüssel ist solange wie die Nachricht selbst und wurde zufällig erzeugt.
 
-\subsection{Kryptoanalysis}
-\subsubsection{Ciphertext-only attack}
-\begin{description}
-	\item[Gegeben] $c_i=e_k(p_i)$, i=1, ..., n
-	\item[Gesucht] $p_i$, i= 1, ...,n oder k
-\end{description}
-
-\subsubsection{known-plaintext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n
-	\item[Gesucht] k
-\end{description}
-
-\subsubsection{chosen-plaintext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $c_i=e_k(p_i)$), i=1, ..., n \\
-		$p_i$ nach Wahl des Kryptoanalytikers
-	\item[Gesucht] k
-	\item[Verwendung] DIE Attacke gegen jedes Public-Key System
-\end{description}
-
-\subsubsection{chosen-ciphertext attack}
-\begin{description}
-	\item[Gegeben] ($p_i$, $p_i=d_k(c_i)$), i=1, ..., n \\
-		$c_i$ nach Wahl des Kryptoanalytikers
-	\item[Gesucht] k
-\end{description}
 \section{Block-Cipher}
-\begin{description}
-	\item[Alphabet] \hfill \\
-		$\Sigma$=$\{0,1\}$ \\
-		$\Sigma^n := \Sigma \times \Sigma \times \dots \times \Sigma$ 
-	\item[Definition] \hfill \\
-		Ein Block - Cipher ist eine \textbf{injektive} Abbildung \\
-		$C: K \ra Perm(\Sigma^n)$ \\
-		wobei K der Schlüsselraum ist.
-	\item[Bsp.] \hfill \\
-		$n=3$ \\
-		$\Sigma^3=\Sigma\times\Sigma\times\Sigma$\\
-$p\Brackal{c}{000\\001\\\dots\\111}\Brackar{cc}{\nearrow&000\\\to&001\\&\dots\\\searrow&111}l$\\
-\hspace*{1.8cm}$\uparrow$Schlüssel\\
-	\item[Frage:] \hfill \\
-		Wie gross ist der Schlüsselraum K maximal? \\
-		$|K| \leq (2^n)!$
-\end{description}
+Definition Block-Cipher: $C: K \rightarrow Perm(\Sigma^n)$. $K$ ist der Schlüsselraum. $\Sigma$ = Alphabet.\\
+Maximale Grösse Schlüsselraum: $|\Sigma|^n!$ wobei $n = $ Schlüssellänge. 
 \subsection{Data Encription Standard (DES)}
-\begin{tabular}{clc}
- Lucifer&Schlüssellänge& 128\\
- $\downarrow$\\
- DES&Schlüssellänge& 56\\
- &Blocklänge& 64
-\end{tabular}\\
-
+Die Schlüssellänge von DES beträgt $56$.
 \begin{tabular}{l | l l}
 	\multirow{4}{*}{\includegraphics[scale=0.12]{horst-feistel.png}} & $L_1$ & $:= R_0$ \\
 	&$R_1$ & $:= f(R_0,k_1) \oplus L_0$ \\
 	&$L_0$ & $:= f(L_1,k_1) \oplus R_1$ \\
 	&$R_0$ & $:= L_1$ \\
 \end{tabular} \\
-\subsection{Modi von Block-Cipher}
-Sei $\Sigma:=\{0,1\}$\\ 
-$p=c=\Sigma^4=\{\square\square\square\square\}$\\
-$k=$ Permutation von $\Sigma^4$\\
-$k=\pi=\Array{cccc}{1&2&3&4\\2&1&4&3}$\\
-\subsubsection*{Vor- und Entschlüsselung}
-Sei $m=0101\in p$ (Klartext)\\ 
-$e_k(m)=e_k(0101)=1010=c$
+\subsection{Betriebsmodi}
 \subsubsection{ECB-Modus (electronic code block)}
- $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2}|\underbrace{1100}_{m_3}|101^*$\\
- $\Unten{m_1}{\longrightarrow}$\fbox{$e_k$}$\Unten{c_1}{\longrightarrow}$\\
- \\
- \Bold{Bem:} $m_1=m_3\Ra c_1=c_3$
+Abarbeiten der Blöcke ohne spezielles Verfahren {\color{gray} // \Bold{Bem:} $m_1=m_3\Ra c_1=c_3$} \\
+ $m=\underbrace{1100}_{m_1}|\underbrace{0110}_{m_2}|\underbrace{1100}_{m_3}|101^*$ $\Unten{m_1}{\longrightarrow}$\fbox{$e_k$}$\Unten{c_1}{\longrightarrow}$ 
 \subsubsection{CBC-Modus (cipher block chaining)}
 \begin{tabular}{p{7.5cm}  l}
 	$m=\Unten{\T{Länge n}}{m_1}|m_2|\dots$, $n:$ Blocklänge &\Bold{Bsp:} $m=\underbrace{1100}_{m_1} | \underbrace{0110}_{m_2} | \underbrace{1100}_{m_3} | 101$ \\
@@ -615,80 +567,46 @@ $e_k(m)=e_k(0101)=1010=c$
  ${\color{red}c_1\oplus} d_k(c_2)={\color{red}c_1\oplus}d_k(e_k(c_1\oplus m_2))= c_1\oplus m_2 {\color{red}\oplus c_1 = m_2}$ \\
  $m=\Unten{\T{Länge n}}{m_1}|m_2$, $n:$ Blocklänge / $IV=$Initialvektor (i.a. bekannt)\\
  $c_0:=IV$, $c_1:=e_k(c_0\oplus m_1)$, $c_2:=e_k(c_1\oplus m_2)$\\
- $c_1\oplus d_k(c_2)=d_k(e_k(c_1\oplus m_2))=c_1\oplus m_2\oplus c_1=m_2$\\
-
+ $c_1\oplus d_k(c_2)=d_k(e_k(c_1\oplus m_2))=c_1\oplus m_2\oplus c_1=m_2$ \\
  \Bold{Bem:} $m_1=m_3\nRightarrow c_1=c_3$
  
 \subsubsection{CFB-Modus (cipher feedback)}
  $m=\underbrace{\tilde{m_1}}_{\T{Länge}=r}|\tilde{m_2}|\tilde{m_3}|\dots$, $n$: Cipher Block-Länge (DES: 64) und \fbox{$0<r\leq n$}
-\begin{center}
-\includegraphics[scale=0.225]{cfb-encryption.png}
-\end{center}
 
- \Bold{Bsp:} $m=110|001|101|100|101$, $IV=1110$, \fbox{$r=3$, $n=4$}\\
- \begin{tabular}{cccccc}
+\subsubsection*{Beispiel ($r=3$, $n=4$)}
+ \begin{tabular}{ccc|ccc}
+  \multicolumn{6}{c}{$m=110|001|101|100|101$, $IV=1110$} \\
   $I_1=$&$1110$&&$I_2=$&$\overbrace{111\mathbf{0}}^{I_1}\overbrace{\mathbf{000}}^{c_1}$\\
   &$\downarrow$&&&$\downarrow$\\
   &\fbox{$e_k$}&&&\fbox{$e_k$}\\
   &$\downarrow$&&&$\downarrow$\\
   $O_1$&$\mathbf{110}1$&&$O_2$&$\mathbf{000}0$\\
-  &$\oplus$&$\to c_1=000$&&$\oplus$&$\to c_2=001$\\
+  &$\oplus$&$\to c_1$&&$\oplus$&$\to c_2$\\
   $\tilde{m_1}=$&$110$&&$\tilde{m_2}=$&$001$
  \end{tabular}
+
+
 \section{RSA}
 \subsection{Schlüsselerzeugung}
-PK = (n,e) und SK = (n,d) \\
-Wir wählen zwei (grosse) Primzahlen p,q $\in \RN$*. $\varphi\neq q$ \\
-$n=p*q$ \\
-$\varphi(n)=(p-1)(q-1)$ {\color{blue}// $\varphi(n) = |\ZN^*_n|$ }\\
-{\color{blue}Wir wählen $e \in \ZN^*_{\varphi(n)}$} // ggT(e,$\varphi(n))=1$ \\
-{\color{blue} $d:=e^{-1}$ in $\ZN^*_{\varphi(n)}$} // ed=1 in $\ZN^*_{\varphi(n)} \Leftrightarrow$ ed $\equiv$ 1 mod $\varphi(n)$\\ \\
-$\Longrightarrow\varphi(n) | (ed-1)$\\ \\
-$\Longrightarrow$ \fbox{$\exists k \in \ZN:e{\color{red}*d}+{\color{red}k*}\varphi(n))=1$} \\ \\
-$d:=e^{-1}\in \ZN^*_{120}$ : \fbox{$ed+k\varphi(n)=1$} \\
-\\
-\textbf{Beispiel}: \\
-$p=11$, $q=13$ \\
-$n=p*q=143$ \\
-$\varphi(n)=120=2^3*3*5$ \\
-{\color{blue} e:=7} $\Rightarrow$ PK=(143,7) \\
-$\ZN_n=\{0,1,2,3,\dots,n-1\}$ \\
-
-\begin{tabular}{| c | c | c | c | c |}
-	\hline
-	i & $q_i$ & $r_i$ & $s_i$ & $t_i$ \\
-	\hline
-	0 & - & {\color{blue} 120} & {\color{red} 1} & {\color{red} 0} \\
-	1 & {\color{red} 17} & {\color{blue} 7} & {\color{red} 0} & {\color{red} 1}\\
-	\hline
-	&&{\color{red} 1}&{\color{red} 1}&{\color{red} -17} \\
-	\hline
-\end{tabular} {\color{blue} 120=}{\color{red} q}$*${\color{blue} 7+}{\color{red} r} \\ \\
-{\color{blue}$\Longrightarrow (*) \underbrace{e}_{7}*(-17)+1*\underbrace{\varphi(n)}_{120})=1$} {\color{red} // mod $\varphi(n) \Rightarrow$ \fbox{$d \equiv (-17)$ mod $\varphi(n)$}}
-
+PK = (n,e) und SK = (n,d) 
+\begin{enumerate}
+	\item Wähle $p,q \in \PN :p \neq q$
+	\item $n=pq$
+	\item Wähle $e \in \NN^* : 1<e<\phi(n)\T{ und }ggT(e,\phi(n))=1$ {\color{gray}// $\phi(n)=(p-1)(q-1) = |\ZN^*_n|$ }
+	\item Finde: $d \in \NN^* :1<d<\phi(n)\T{ und }ggT(d,\phi(n))=1$ {\color{gray}// $d:=e^{-1}$ in $\ZN^*_{\varphi(n)}$} 
+\end{enumerate}
 \subsection{Verschlüsselung und Entschlüsselung}
-\subsubsection{RSA ist ein Blockcipher}
 \begin{description}
-	\item[encryption] : enc \\
-		$\ZN_n \longrightarrow \ZN_n$ \\
-		$m \longrightarrow m^e$ mod n
-	\item[decyption] : dec \\
-		$\ZN_n \longrightarrow \ZN_n$ \\
-		$m \longrightarrow c^d$ mod n
+	\item[encryption] : $m \longrightarrow m^e$ mod n
+	\item[decyption] : $m \longrightarrow c^d$ mod n
 \end{description} 
-$\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red}SK}((enc_{\color{red}PK}(m)))=m$}
-
-\subsubsection{Beweis}
-\begin{description}
-	\item[Fall 1:] ggT(m,n)=1 und $(m^e)^d=m$ in $\ZN_n$ \\
-		Weil ggT(m,n)=1 existiert das Inverse von m: $\underbrace{m^{ed-1}=1}_{\text{Das ist zu Zeigen!}}$ in $\ZN_n$ \\
-		$e*d+k*\varphi(n)=1$ // Konstruktion des Schlüssel \\
-		$\Rightarrow e*d-1=-k*\varphi(n) : m^{ed-1}=m^{-k*\varphi(n)}=(m^{-k})=1$ // Satz von Euler-Fermat  
-	\item[Fall 2:] \hfill \\
-		ggT(m,n)$\neq$1 $\Rightarrow m=l*p$ oder $m=k*q$
-\end{description}
-
-\subsection{Hastad Attack}
+\subsection{Attacken}
+\subsubsection{3 Primzahlen für zwei Schlüssel}
+Der RSA Provider verwendet $p_1, q_1, p_2$ um zwei Schlüssel zu erzeugen. Es gilt: $n_a = p_1 q_1$ $n_b = p_2*q_1$ Dies impliziert: $ggt(n_a, n_b) = q_1$
+\subsubsection{Gleicher Modul}
+$h$ berechnen: $ h = \frac{e_b d_b - 1}{ggt(e_a, e_b d_b -1)}$. Der
+Angreiffer muss nun nur noch folgende Gleichung lösen: $\alpha h + \beta e_a = 1$ $\beta$ ist die Zahl, mit welcher der Angreifer die Nachrichten von Alice entschlüsseln kann. Ist $\beta < 0$ dann muss $+h$ gerechnet werden.
+\subsubsection{Hastad Attack}
 \begin{tabular}{l l l l l}
     & & {\color{red} $e=3$} & & $=x$ \\
 	&  & Bob $(n_1,e)$ & : {\color{red}$c_1$} & $= m^3$ mod $n_1$\\
@@ -699,8 +617,68 @@ $\Brackar{l}{PK=(u,e) \\ SK=(u,d)}$ \fbox{$\forall m \in \ZN_n : dec_{\color{red
 \end{tabular} \\ \\
 \textbf{Chinesischer Restsatz}: $m^3= crt([m^3,m^3,m^3],[n_1,n_2,n_3])$ \\
 Es benötigt so viele Gleichungen für den Restsatz wie ${\color{red}e}$ gross ist.
+\subsubsection{Wiener's Angriff}
+\begin{description}
+ \item [Voraussetzung] \hfill
+    \begin{itemize}
+      \item $(n,e),(n,d)$ RSA-Schlüssel mit $n=p\cdot q$, $p<q<2p$
+      \item $0<d\leqslant\Oneover{3}\sqrt[4]{n}$
+    \end{itemize}
+ \item [Behauptung] $\exists$ schneller Alg. zur Faktorisierung von $n$
+\end{description}
+Konvergenten von $\frac{e}{n} = \frac{K}{\delta}$ $\phi = \frac{e \delta_{i}-1}{K_i}$\\
+Bsp: $(n,e) = (2021, 773)$, $(n,d) = (2021, ?)$\\
 
-\subsection{SK-Such-Algorithmus}
+\begin{multicols}{2}
+Kettenbruch von $\frac{e}{n}$\\
+\begin{align*}
+773 =& 0 * 2021 + 773 \\
+2021 =& 2*773 + 475 \\
+773 =& 1*475 + 298 \\
+475 =& 1*298 + 177 \\
+298 =& 1*177 + 121 \\
+\end{align*}
+Konvergenten: $0, \frac{1}{2}, \frac{1}{3}, \frac{2}{5}, \frac{4}{7}, \ldots$
+\begin{align*}
+\phi_1 =& \frac{e*2-1}{1} = 1545\\
+\phi_2 =& \frac{e*3-1}{1} = 2318\\
+\phi_3 =& \frac{e*5-1}{1} = 1932\\
+\phi_4 =& \frac{e*7-1}{4} = 1352.5 \notin \mathbb{Z}\\
+\end{align*}
+\end{multicols}
+$\frac{5}{3}=$\\
+\begin{tabular}{l|c|l}\cline{2-1}
+ $5=$&$1$&$\cdot3+2$\\
+ $3=$&$1$&$\cdot2+1$\\
+ $2=$&$2$&$\cdot1$\\\cline{2-1}
+\end{tabular}\\\linebreak
+{\color{red}KE von $\frac{5}{3}=<1,1,2>$}\\
+$1+\frac{1}{1+\frac{1}{2}}=\frac{5}{3}$\\
+\begin{description}
+ \item [Voraussetzung] \hfill \\
+    \begin{itemize}
+      \item $(n,e),(n,d)$ RSA-Schlüssel mit $n=p\cdot q$, $p<q<2p$
+      \item $0<d\leqslant\Oneover{3}\sqrt[4]{n}$
+    \end{itemize}
+ \item [Behauptung] $\exists$ schneller Alg. zur Faktorisierung von $n$
+\end{description}
+\begin{lstlisting}
+ e = d.invers_mod(phi)
+ con = continued_fraction_list(e/n, partial_convergents = true)
+\end{lstlisting}
+\subsubsection{de Wenger - Spezialfall: RSA-Schlüssel}
+\Bold{Vor.}
+\begin{itemize}
+	\item[1.] $n=p*q$, $p,q \in \PN^*$, $p>q$ 
+	\item[2.] $\delta=p-q$
+\end{itemize}
+\Bold{Beh.} $0 < p+q - 2 * \sqrt{n} < \frac{\delta^2}{4 * \sqrt{n}}$ \\
+\Bold{Bew.}
+\begin{itemize}
+	\item[1.] $\delta^2= (p-q)^2=(p+q)^2-4*n=(p+q-2*\sqrt{n})(p+q+2*\sqrt{n})>0$ 
+	\item[2.] $p+q-2*\sqrt{n} = \frac{\delta^2}{(p+q)+2*\sqrt{n}} < \frac{\delta^2}{2*\sqrt{n}+2*\sqrt{n}}= \frac{\delta^2}{4 * \sqrt{n}}$
+\end{itemize}
+\subsubsection{SK-Such-Algorithmus}
 {
 \textbf{Gegeben}: Bob: $(n,e)$, $(n,d)$ und Alice: $(n,d_A)$ \\
 \textbf{unbekannt}: $d_A,p,q,\varphi(n)$ Finde $d_A$ \\
@@ -711,47 +689,199 @@ Es benötigt so viele Gleichungen für den Restsatz wie ${\color{red}e}$ gross i
     $h:=\frac{h}{ggT(h,e_A)}$ \\
     $e_A\cdot\alpha+h\cdot\beta=1 $ {\color{red}$\Ra d_A:=\alpha$ mod $h$}
 }
+\section{Signaturen}
+\subsection{RSA}
+Alice: $(m, h(m)) \mapsto (m, sig(h(m)))$. $d(sig_{Alice}, h(m)$ \\ Alice signiert mit: $h(m)^d_{\text{Alice}} \mod n = s$ \\
+Der Empfänger prüft: $s^e \mod n$
+\subsection{Das Lamport-Schema}
+ \Bold{Gegeben:} Ein-weg-Funktion: $f:Y\to Z$\\
+ $m=x=(x_1,x_2,\dots,x_n)$ mit $x_i\in\{0,1\}$\\
+ Jedes Bit wird einzeln signiert!
+ \begin{enumerate}
+  \item Wähle \Bold{zufällig} Elemente aus $Y$\\
+  $\Brackar{|cc|}{\hline
+   y_{10}&y_{11}\\
+   y_{20}&y_{21}\\
+   \vdots&\vdots\\
+   y_{k0}&y_{k1}\\\hline
+  }$\Bold{Geheim}
+  \item Berechne und publiziere: $f(y_{j,j})=:z_{j,j}$\\
+  \begin{tabular}{|cc|}\hline
+   $z_{10}$&$z_{11}$\\
+   $z_{20}$&$z_{21}$\\
+   $\vdots$&$\vdots$\\
+   $z_{k0}$&$z_{k1}$\\\hline
+  \end{tabular}
+  \item Signieren von $x_i$: $sig(x_i)=\Brackal{c}{y_{i0}\T{, falls }x_i=0\\y_{i1}\T{, falls }x_i=1}$
+ \end{enumerate}
+ \Bold{Bsp:} $x=(0,0,1)$
+   \begin{tabular}{|cc|}\hline
+   $z_{10}$&$z_{11}$\\
+   $z_{20}$&$z_{21}$\\
+   $z_{30}$&$z_{31}$\\\hline
+  \end{tabular}
+  $sig(X)=y_{10}$, $y_{20}$, $y_{31}\Oben{f}{\to}f(y_{10})$
+\subsection{El-Gamal}
+Ein Signaturverfahren besteht aus $4$ Mengen: $P$ Nachrichtenmenge, $S$ Signaturmenge, $SK$ der geheime Schlüssel, $PK$ der öffentliche Schlüssel. Dazu gibt es das Signaturverfahren:
+\begin{align*}
+sig: P \times SK \rightarrow& S \\
+(m,k) \mapsto sig(m, k)
+\end{align*}
+und ein Verifikationsverfahren: $ver: P \times S \times SK \rightarrow {0,1}$\\
+\textbf{Vorgehen}:
+\begin{itemize}
+	\item Man wähle ein grosses $p \in \mathbb{P}$
+	\item Man wähle ein Erzeugens: $\omega \in \mathbb{Z}_p^*$. $p$ und $\omega$ sind öffentlich bekannt.
+	\item Jeder Teilnehmer (T) wählt zufällig $a_T < p-1 \mod p$. Diese Zahl ist der geheime Schlüssel!
+	\item T berechnet $b_T = \omega^{a_T}$ und veröffentlicht diese Zahl.
+	\item T wählt zufällig $r \in \mathbb{Z}_{p-1}^*$
+\end{itemize}
+\textbf{Die Mengen sind dann wie folgt definiert}:
+\begin{itemize}
+	\item $P = \mathbb{Z}_p^*$, $S = \mathbb{Z}_p^* \times \mathbb{Z}_{p-1}$ 
+	\item Einer Nachricht $m \in \mathbb{Z}_p^*$ wird ein Paar $(x, y) \in \mathbb{Z}_p^* \times \mathbb{Z}_{p-1}$ zugeordnet. 
+	\item T berechnet: $x = \omega ^r \mod p$ 
+	\item T berechnet: $y = (m-a_T x)r^{-1} \mod p-1$. 
+	\item Das Tripel (m,x,y) ist das signierte Dokument. Verifikation: $b_T^x x^y \equiv \omega ^m \mod p$
+	\item $r^{-1} = rx \equiv 1 \mod p-1$
+\end{itemize}
+  \Bold{Bsp:} $p=41$\\
+  $\omega:=7\in Gen_p$\\
+  $m=13$ zu signieren:
+  \begin{align*}
+   a_t:=&5\\
+   b_t:=&\omega^{a_T}\mod p=7^5\mod 41=38
+  \end{align*}\\
+  Wähle $r\in\ZN_{p-1}^*=\ZN_{40}^*$: Sei $r=3$, $r^{-1}=27\mod40$\\
+  \begin{align*}
+   x&=\omega^r\mod p=7^3\mod41=15\\
+   y&=(m-a_T\cdot x)\cdot r^{-1}\mod p-1=(13-5\cdot 15)27\mod40=6
+  \end{align*}
+  $\Ra(m,sig(m))=(13,15,6)$
+\subsubsection{Verifikation}
+Signatur $sig(m)=(m,x,y)$ ist gültig $\Lra$ (*)\fbox{$b_T^x\cdot x^y\equiv\omega^m\mod p$}\\
+\\
+\Bold{Bem:} $y\equiv(m-a_T\cdot x)\cdot r^{-1}\mod p-1\Lra a_T\cdot x+r\cdot y\equiv m\mod p-1\Lra\exists k\in\ZN:a_T\cdot x+r\cdot=m+k(p-1)$\\
+$\alpha\equiv\beta\mod n\Lra n\mid\alpha-\beta$\\
+\\
+\Bold{Bew:} $\Ra\underbrace{\underbrace{b_T^x}_{(\omega^{a_T})^x}\cdot\underbrace{x^y}_{\cdot(\omega^r)^y}}_{\omega^{a_T\cdot x+r\cdot y}=\omega^{m+k(p-1)}=\omega^m\cdot(\omega^{p-1})^k\Oben{\T{Fermat}}{\equiv}\omega^m\cdot1\mod p}\equiv\omega^m\mod p$\\
+$\omega$ Erzeugendes von $\ZN_p^*$: $\omega^i\equiv\omega^j\mod p$ und $0<i,j<p-1\Ra i=j$
 
-\section{Primzahlen}
-{2, 3, 5, 7,    11,    13,    17,    19,    23,    29,    31,    37,    41,    43,47,    53,    59,    61,    67,    71,    73,    79,    83,    89,    97,   101,   103,   107,
-  109,   113,   127,   131,   137,   139,   149,   151,   157,   163,   167,   173,   179,   181,
-  191,   193,   197,   199,   211,   223,   227,   229,   233,   239,   241,   251,   257,   263,
-  269,   271,   277,   281,   283,   293,   307,   311,   313,   317,   331,   337,   347,   349,
-  353,   359,   367,   373,   379,   383,   389,   397,   401,   409,   419,   421,   431,   433,
-  439,   443,   449,   457,   461,   463,   467,   479,   487,   491,   499}
- 
-\section{Künzlerischi-Tabelle}
-{
-\setlength{\tabcolsep}{0.15em}
-\begin{tabular}{l l| l l l l l l l l l l l l l l l l l l l l l l l l l l}
-\# &  & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z\\
-\hline
-01 & A & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z\\
-02 & B & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A\\
-03 & C & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B\\
-04 & D & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C\\
-05 & E & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D\\
-06 & F & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E\\
-07 & G & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F\\
-08 & H & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G\\
-09 & I & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H\\
-10 & J & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I\\
-11 & K & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J\\
-12 & L & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K\\
-13 & M & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L\\
-14 & N & N & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M\\
-15 & O & O & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N\\
-16 & P & P & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O\\
-17 & Q & Q & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P\\
-18 & R & R & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q\\
-19 & S & S & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R\\
-20 & T & T & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S\\
-21 & U & U & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T\\
-22 & V & V & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U\\
-23 & W & W & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V\\
-24 & X & X & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W\\
-25 & Y & Y & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X\\
-26 & Z & Z & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y\\
+\section{Hashfunktionen}
+$h: \Sigma^* \rightarrow \Sigma^n$
+\begin{description}
+	\item[One-way Funktion:] Gegeben $y \in \Sigma^n$ Gesucht $x \in \Sigma^*: h(x) = y$
+	\item[Weak collision free:]nGegeben: $x_1 \in \Sigma^*$ Gesucht: $x_2 \in \Sigma^*$ mit $x_1 \neq x_2$ und $h(x_1) = h(x_2)$
+	\item[Strong collision free:] Gesucht: $x_1, x_2 \in \Sigma^*, x_1 \neq x_2$ mit $h(x_1) = h(x_2)$ Eigenschaften gegeben, wenn Problem(e) nicht lösbar.
+\end{description}
+Das One-Way Problem ist das schwiriegste Problem von allen dreien, daher ist eine Funktion 'relativ schnell eine One-Way-Function'.
+
+\subsection{Angriff}
+Wenn $\sqrt{n}$ in nützlicher Frist berechnet werden kann. $n$ Bezeichnet die Grösse der Menge der möglichen Hashes. Bekannt unter 'Birthday Attack'.
+
+\subsection{SHA-1}
+Die Länge des Hash-Strings ist immer $160$ Zeichen. Internt arbeitet SHA-1 mit $512$er Blöcken. Bsp Block: \\
+$\overbrace{
+\begin{tabular}{cc}
+ \multicolumn{2}{c}{\begin{tabular}{|c|c|l|c|}\hline
+  0&\hspace*{2cm}&\hspace*{1cm}&511\\\hline
+ \end{tabular}}\\
+ $\underbrace{\hspace*{3cm}}_{448}$&$\underbrace{\hspace*{2cm}}_{64}$
+\end{tabular}}^{512}$\\
+$\underbrace{0110011011001010}_m10\dots010000$, $\Abs{m}=16=(10000)_2$\\
+
+\section{Kryptographische Protokolle}
+\subsection{Needham-Schroeder}
+Ziel: Nur eine Instanz, die Kenntnis von $K_{A,TTP}$ hat, kann isch als Alice ausgeben\\
+Zweck: Alice Bob möchte sich authentifizieren.\\
+
+\begin{tabbing}
+\hspace{2em}\=\kill
+TTP \> := Trusted Third Party\\
+$r$ \> := Randomzahl\\
+$\{\}_K$ \> := Inhalt verschlüsselt mit Schlüssel K\\
+\end{tabbing} 
+
+\begin{enumerate}
+\item $A \rightarrow TTP: (A,B,r_A)$
+\item $TTP \rightarrow A: \{r_A,B,K_{A,B},\{K_{A,B},A\}_{K_{B,TTP}}\}_{K_{A,TTP}}$
+\item $A \rightarrow B: \{K_{A,B},A\}_{K_{B,TTP}}$
+\item $B \rightarrow A: \{r_B\}_{K_{A,B}}$
+\item $A \rightarrow B: \{r_B+1\}_{K_{A,B}}$
+\end{enumerate}
+\subsection{Diffie-Hellman-Protokoll}
+Alice$\Oben{?}{\longleftrightarrow}$Bob\\
+\Bold{Gegeben:} \fbox{$p\in\PN^*$ (gross), $\omega\in Gen_P$ Erzeugendes von $\ZN_p^*$} bekannt\\
+\begin{tabular}{l|l|l|l}
+ &Alice&Bob\\\cline{1-3}
+ Wähle&$\alpha$&$\beta$&zufällig $1<\alpha,\beta<p-1$\\
+ Berechne&$a=\omega^\alpha\mod p$&$b=\omega^\beta\mod p$\\
+ Sende&$\to$Bob: $a$&$\to$Alice: $b$&öffentlich bekannt!\\
+ Berechne&$k_a=b^\alpha\mod p$&$k_b=a^\beta\mod p$\\
+\end{tabular}\\
+\Bold{Behauptung:} $k:=k_a=k_b$\\
+\Bold{Beweis:} $k_a=b^\alpha=(\omega^\beta)^\alpha=\omega^{\beta\cdot\alpha}=\omega^{\alpha\cdot\beta}=(\omega^\alpha)^\beta=a^\beta=k_\beta$ in $\ZN_p^*$\\
+\Bold{Aufgabe:} Gegeben: $(p,\omega,a,b)$\\
+\begin{lstlisting}
+ p = nth_prime(2000) = 17389
+ w = 2
+ a = 1000 = w^alpha = 2^alpha mod p => k = b^alpha mod p
+ b = 500
+\end{lstlisting}
+
+
+
+\section{Tabellen}
+\subsection{Primzahlen 1-1000}
+2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1009
+\subsection{Zweier Potenzen}
+\begin{tabular}{l l l l l l l l l l l l l l}
+$2^0$ & $2^1$ & $2^2$ & $2^3$ & $2^4$ & $2^5$ & $2^6$ & $2^7$ & $2^8$ & $2^9$ & $2^{10}$ & $2^{11}$ & $2^{12}$ & $2^{13}$
+\\ 
+1 & 2 & 4 & 8 & 16 & 32 & 64 & 128 & 256 & 512 & 1024 & 2048 & 4096 & 8192
+\\
 \end{tabular}
-}
+\subsection{1x1}
+\setlength{\tabcolsep}{0.15em}
+\begin{tabular}{r||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|r}
+* & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 \\\hline
+11 & 121 & 132 & 143 & 154 & 165 & 176 & 187 & 198 & 209 & 220 & 231 & 242 & 253 & 264 & 275 & 286 & 297 & 308 & 319 & 330
+\\ 
+12 & 132 & 144 & 156 & 168 & 180 & 192 & 204 & 216 & 228 & 240 & 252 & 264 & 276 & 288 & 300 & 312 & 324 & 336 & 348 & 360
+\\ 
+13 & 143 & 156 & 169 & 182 & 195 & 208 & 221 & 234 & 247 & 260 & 273 & 286 & 299 & 312 & 325 & 338 & 351 & 364 & 377 & 390
+\\ 
+14 & 154 & 168 & 182 & 196 & 210 & 224 & 238 & 252 & 266 & 280 & 294 & 308 & 322 & 336 & 350 & 364 & 378 & 392 & 406 & 420
+\\ 
+15 & 165 & 180 & 195 & 210 & 225 & 240 & 255 & 270 & 285 & 300 & 315 & 330 & 345 & 360 & 375 & 390 & 405 & 420 & 435 & 450
+\\ 
+16 & 176 & 192 & 208 & 224 & 240 & 256 & 272 & 288 & 304 & 320 & 336 & 352 & 368 & 384 & 400 & 416 & 432 & 448 & 464 & 480
+\\ 
+17 & 187 & 204 & 221 & 238 & 255 & 272 & 289 & 306 & 323 & 340 & 357 & 374 & 391 & 408 & 425 & 442 & 459 & 476 & 493 & 510
+\\ 
+18 & 198 & 216 & 234 & 252 & 270 & 288 & 306 & 324 & 342 & 360 & 378 & 396 & 414 & 432 & 450 & 468 & 486 & 504 & 522 & 540
+\\ 
+19 & 209 & 228 & 247 & 266 & 285 & 304 & 323 & 342 & 361 & 380 & 399 & 418 & 437 & 456 & 475 & 494 & 513 & 532 & 551 & 570
+\\ 
+20 & 220 & 240 & 260 & 280 & 300 & 320 & 340 & 360 & 380 & 400 & 420 & 440 & 460 & 480 & 500 & 520 & 540 & 560 & 580 & 600
+\\ 
+21 & 231 & 252 & 273 & 294 & 315 & 336 & 357 & 378 & 399 & 420 & 441 & 462 & 483 & 504 & 525 & 546 & 567 & 588 & 609 & 630
+\\ 
+22 & 242 & 264 & 286 & 308 & 330 & 352 & 374 & 396 & 418 & 440 & 462 & 484 & 506 & 528 & 550 & 572 & 594 & 616 & 638 & 660
+\\ 
+23 & 253 & 276 & 299 & 322 & 345 & 368 & 391 & 414 & 437 & 460 & 483 & 506 & 529 & 552 & 575 & 598 & 621 & 644 & 667 & 690
+\\ 
+24 & 264 & 288 & 312 & 336 & 360 & 384 & 408 & 432 & 456 & 480 & 504 & 528 & 552 & 576 & 600 & 624 & 648 & 672 & 696 & 720
+\\ 
+25&275&300&325&350&375&400&425&450&475&500&525&550&575&600&625&650&675&700&725&750\\
+26&286&312&338&364&390&416&442&468&494&520&546&572&598&624&650&676&702&728&754&780\\
+27 & 297 & 324 & 351 & 378 & 405 & 432 & 459 & 486 & 513 & 540 & 567 & 594 & 621 & 648 & 675 & 702 & 729 & 756 & 783 & 810
+\\ 
+28 & 308 & 336 & 364 & 392 & 420 & 448 & 476 & 504 & 532 & 560 & 588 & 616 & 644 & 672 & 700 & 728 & 756 & 784 & 812 & 840
+\\ 
+29 & 319 & 348 & 377 & 406 & 435 & 464 & 493 & 522 & 551 & 580 & 609 & 638 & 667 & 696 & 725 & 754 & 783 & 812 & 841 & 870
+\\ 
+30 & 330 & 360 & 390 & 420 & 450 & 480 & 510 & 540 & 570 & 600 & 630 & 660 & 690 & 720 & 750 & 780 & 810 & 840 & 870 & 900
+\\ 
+\end{tabular}
 \end{document} 

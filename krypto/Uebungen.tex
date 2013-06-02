@@ -1,0 +1,297 @@
+\documentclass[10pt]{article}
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+\usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
+\usepackage{tikz}
+
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[utf8]{inputenc} 
+\usepackage{fancyhdr, graphicx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage[a4paper,top=2cm]{geometry}
+\setlength{\textwidth}{17cm}
+\setlength{\oddsidemargin}{-0.5cm}
+
+
+%My Commands
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}} %Komplexi Zahle lawl
+\newcommand{\PN}{\mathbb{P}} %Primzahle Bitches
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 über igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas über etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+\newcommand{\Bild}[1]{\includegraphics[width=0.4\textwidth]{#1}} %Bilder jpg!!
+%Beispiel für lstlisting \lstinputlisting[label=Aufgabe 4a,caption=Aufgabe 4a]{4a.java}
+
+% Code listenings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+   text width=5.8em, text badly centered, node distance=3.5cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+   text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, color=black!50, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=2.5cm,
+   minimum height=2em]
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+
+%Metadata
+\title{
+	\vspace{5cm}
+	Kryptographie
+}
+\author{Fabio Oesch,  Michael Künzli \& Jan Fässler}
+\date{4. Semester (FS 2013)}
+
+
+% hier beginnt das Dokument
+\begin{document}
+
+\section{Uebungen}
+\subsection*{Serie 4}
+\subsubsection*{Aufgabe 1}
+$m=$\begin{tabular}{|c|c|c|c|}\hline
+ 0011&0101&0110&0000\\\hline
+\end{tabular}\\
+\underline{Padding} 
+\begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
+ 1&1&1&1&0&0&0&0\\\hline
+\end{tabular} $IV=c_0$ (bekannt)
+\subsection*{Aufgabe 4 (Broadcast-attack)}
+\Bold{Bem:} Sei $n=100$, $e=3$, $m\in\{0,1,2,3,4\}$, $m^e=(m^e$ mod $n)$\\
+\Bold{Annahme:} 
+\begin{tabular}{lll}
+ &$\nearrow$&$c_1:=m^3$ mod $n_1$\\
+ Alice&$\to$&$c_2:=m^3$ mod $n_2$\\
+ $m$&$c_3:=m^3$ mod $n_3$
+\end{tabular}\\
+\Bold{$e=3$ für alle Teilnehmer}\\
+$ggT(n_i,n_j)=1$, wenn $i\neq j$\\
+$m<min(n_1,n_2,n_3)$
+
+\subsection*{Serie 5}
+\subsubsection*{Aufgabe 1}
+$(n,e)$, $(n,d)$ RSA-Schlüssel Oscar\\
+$(n,e_A)$, $(n,?)$ RSA-Schlüssel Alice\\
+\Bold{unbekannt} $p,q$ $(n=p\cdot q)$ bzw. $\varphi(n)$\\
+\Bold{Ziel:} Finde $\tilde{d_A}$ mit falls $c=m^{m_A}$ mod $n$ ist, gilt $m=c^{\tilde{d_A}}$ mod $n$\\
+\Bold{Oscar:} $h:=e\cdot d-1$ (Es gilt $ed-k\varphi(n)=1$, $\varphi(n)\mid h$)\\
+$h:=\frac{\Oben{k\varphi(n)}{h}}{ggT(\Unten{k\varphi(n)}{ed-1},e_A)}$ \hspace*{2cm}($ggT(e_A,\varphi(n))=1$, $\varphi(n)\mid h$)\\
+$d:=ggT(h,e_A)$, $h:=\frac{h}{d}$ \hspace*{2cm}($\varphi(n)\mid h$)\\
+$e_A\cdot\alpha+h\cdot\beta=1$\\
+\fbox{$e_A\cdot\tilde{\alpha}+\varphi(n)\cdot\tilde{\beta}=1$} löst der Provider\\
+$\tilde{d_A}:=\alpha$ mod $h$\\
+\Bold{Behauptung:} $m = c^{\tilde{d_A}}$ mod $n=(m^{e_A})^{\tilde{d_A}}$ mod $n=m^{e_A\cdot \tilde{d_A}}$ mod $n=m^{1+h^{\tilde{\beta}}}=m\cdot (m^h)^{\tilde{\beta}}$ mod $n$ ($(m^h)^{\tilde{\beta}} = $
+\begin{lstlisting}
+ n = 78654787
+ e = 11
+ d = 64339331
+ ea = 17
+ c = m. power_mod(ea, n)
+ h = e * d - 1
+ gcd(h, ea) //1
+ xgcd(ea, h) //1, alpha, beta
+ dd = a % h
+ mm = c. power_mod(dd, n)
+ m = 1337
+\end{lstlisting}
+
+\subsection*{Serie 7}
+\subsubsection*{Aufgabe 1}
+$exp_{\color{red}a} : \ZN_6 \ra \ZN_7$ \\
+$exp_{\color{red}a} : x \ra {\color{red}a}^x$ mod 7 \\
+\\
+$(\ZN_6,\oplus,0): \ZN_6 = \{0,1,2,3,4,5\}$\\
+$(\ZN_7,\oplus,1): \ZN^*_7 = \{1,2,3,4,5,6\}$\\
+\\
+${\color{red}\overbrace{\hspace{4.2cm}}^{\ZN_6}}$\\
+\begin{tabular}{| l | l | l | l | l | l | l |}
+	\hline
+	a & 0 & 1 & 2 & 3 & 4 & 5 \\
+	\hline
+	2 & 1 & 2 & 4 & 1 & 2 & 3 \\
+	\hline
+	3 & 1 & 3 & 2 & 6 & 4 & 5 \\
+	\hline
+\end{tabular} \\
+\\
+\Bold{a=3} $\Ra$ $exp_a$ beistz eine Umkehrbabbildung: $ind_a : \ZN^*_p \ra \ZN_{p-1}$ \\
+\\
+\begin{itemize}
+	\item[a)] $ind_3(5)=5$ 
+	\item[b)] $ind_3(3)=1$
+\end{itemize}
+
+\subsubsection*{Aufgabe 2}
+\subsubsection*{a)}
+n=403 \\
+$[\sqrt{403}]=20$ \\ \\
+\begin{tabular}{l | l | l}
+	t & $t^2-n$ & $t^2-n=s^2, s \in \NN$?  \\
+	\hline
+	21 & 441-403 = 23 & nein \\
+	22 & 484 - 403 = 81 & $81=9^2$ : ja
+\end{tabular} \\
+${\color{red}\Ra t=22, s=9}$ ${\color{blue}\ra a=(t+s)=31, b=(t-s)=13}$\\
+$\Ra n= 403=13*31$  
+\subsubsection*{b)}
+$n=187$ $a=2$ $k=10$ \\
+Berechne: $ggT(a^k-1,n)=ggT(1023,187)=11$ \\
+$p:=11$ \\
+$q:=\frac{n}{p}=\frac{187}{11}=17$ \\
+
+{\color{green}
+\textbf{Ergänzung}: B=10 \\
+\textbf{Gesucht}: \\
+$\Brackar{l}{q\in \PN mit q \leq 10 : \{2,3,5,7\}\\
+\beta(q,B):q^{\beta(q,B)} \leq \beta < q^{\beta(q,B)+1} \\
+\beta(2,10)=3$, $\beta(2,10)=2, \beta(5,10)=\beta(7,10)=1} $
+ $k:=\prod q^{\beta(q,B)}=2^3*3^2*5*7=72*35=2520$
+} \\
+
+Sage: \\
+$gcd(\underbrace{2.powermod(k,n)-1}_{0},n)$ 
+
+\subsubsection*{Aufgabe 3}
+$factor(n)$ \\
+$10000993$\\
+$1000003$
+
+\subsubsection*{Aufgabe 4}
+\begin{lstlisting}
+factor(n) = p * q
+phi = (p-1)(q-1)
+d=e.inverse_mod(phi)
+(n.nth_root(4)).n() // *.n() = numerisch
+\end{lstlisting}
+{\color{red}Wieners Attacke: $0<d\leq \frac{1}{3} * \sqrt[4]{n}$} \\\\
+$e=18439769619$
+\subsection*{Serie 8}
+\subsubsection*{Aufgabe 1}
+\Bild{hash.png}
+\subsubsection*{Aufgabe 2}
+$\overbrace{
+\begin{tabular}{cc}
+ \multicolumn{2}{c}{\begin{tabular}{|c|c|l|c|}\hline
+  0&\hspace*{2cm}&\hspace*{1cm}&511\\\hline
+ \end{tabular}}\\
+ $\underbrace{\hspace*{3cm}}_{448}$&$\underbrace{\hspace*{2cm}}_{64}$
+\end{tabular}}^{512}$\\
+$\underbrace{0110011011001010}_m10\dots010000$, $\Abs{m}=16=(10000)_2$\\
+\begin{tabular}{|c|c|}
+ \multicolumn{1}{c}{Nr.}&\multicolumn{1}{c}{Bit}\\\hline
+ 0&0\\\hline
+ 8&1\\\hline
+ 13&0\\\hline
+ 15&0\\\hline
+ 16&0\\\hline
+ 17&0\\\hline
+ 401&0\\\hline
+ 500&0\\\hline
+ 510&0\\\hline
+ 511&0\\\hline
+\end{tabular}
+\subsubsection*{Aufgabe 3}
+\begin{enumerate}
+ \item 11
+ \item Padding-Block
+ \item $c_3$ und $c_4$
+ \item 53
+ \item
+\end{enumerate}
+
+\end{document} 

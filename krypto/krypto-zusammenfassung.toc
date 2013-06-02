@@ -1,49 +1,70 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {0}Mathematische Grundlagen}{1}
-\contentsline {subsection}{\numberline {0.1}Euklid}{1}
-\contentsline {subsection}{\numberline {0.2}Modulare Division}{1}
-\contentsline {subsection}{\numberline {0.3}Modulares Potenzieren}{1}
-\contentsline {subsection}{\numberline {0.4}Chinesischer Restsatz}{2}
-\contentsline {section}{\numberline {1}Klassische Kryptographie}{3}
-\contentsline {subsection}{\numberline {1.0}Repetition}{3}
-\contentsline {subsection}{\numberline {1.1}Klassische Verschl\IeC {\"u}sselungsverfahren}{3}
-\contentsline {subsection}{\numberline {1.2}Spezielles Bsp f\IeC {\"u}r Substitution Homophone Verschl\IeC {\"u}sselung}{3}
-\contentsline {subsection}{\numberline {1.3}Kasiski-Text (monographisch \& polyalphabetisch)}{3}
-\contentsline {subsection}{\numberline {1.4}Playfair-Cipher}{4}
-\contentsline {subsubsection}{\numberline {1.4.1}Beschreibung}{4}
-\contentsline {subsubsection}{\numberline {1.4.2}Beispiel}{4}
-\contentsline {subsection}{\numberline {1.5}Koinzidenzindex (index of coincidence)}{4}
-\contentsline {subsection}{\numberline {1.6}Vigen\IeC {\`e}res Chipres}{5}
-\contentsline {subsubsection}{\numberline {1.6.1}Beschreibung}{5}
-\contentsline {subsubsection}{\numberline {1.6.2}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge eines Vigen\`{e}re-Cipher}{6}
-\contentsline {subsubsection}{\numberline {1.6.3}Kryptoanalysis des Vigen\`{e}re-Cipher}{6}
-\contentsline {subsection}{\numberline {1.7}One-Time-Pad}{7}
-\contentsline {subsection}{\numberline {1.8}Kryptosysteme}{7}
-\contentsline {subsection}{\numberline {1.9}Kryptoanalysis}{7}
-\contentsline {subsubsection}{\numberline {1.9.1}Ciphertext-only attack}{7}
-\contentsline {subsubsection}{\numberline {1.9.2}known-plaintext attack}{8}
-\contentsline {subsubsection}{\numberline {1.9.3}chosen-plaintext attack}{8}
-\contentsline {subsubsection}{\numberline {1.9.4}chosen-ciphertext attack}{8}
-\contentsline {section}{\numberline {2}Block-Cipher}{9}
-\contentsline {subsection}{\numberline {2.1}Data Encription Standard (DES)}{9}
-\contentsline {subsection}{\numberline {2.2}Modi von Block-Cipher}{9}
-\contentsline {subsubsection}{\numberline {2.2.1}ECB-Modus (electronic code block)}{9}
-\contentsline {subsubsection}{\numberline {2.2.2}CBC-Modus (cipher block chaining)}{10}
-\contentsline {subsubsection}{\numberline {2.2.3}CFB-Modus (cipher feedback)}{10}
-\contentsline {section}{\numberline {3}RSA}{11}
-\contentsline {subsection}{\numberline {3.1}Schl\IeC {\"u}sselerzeugung}{11}
-\contentsline {subsection}{\numberline {3.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{11}
-\contentsline {subsubsection}{\numberline {3.2.1}RSA ist ein Blockcipher}{11}
-\contentsline {subsubsection}{\numberline {3.2.2}Beweis}{11}
-\contentsline {subsection}{\numberline {3.3}Hastad Attack}{12}
-\contentsline {subsection}{\numberline {3.4}Wiener's Angriff}{12}
-\contentsline {subsection}{\numberline {3.5}de Wenger - Spezialfall: RSA-Schl\IeC {\"u}ssel}{13}
-\contentsline {section}{\numberline {4}Keltenbr\IeC {\"u}che}{14}
-\contentsline {section}{\numberline {5}Faktorisierungsalgorithmen}{15}
-\contentsline {subsection}{\numberline {5.1}Pollard's (p-1)-Methode}{15}
-\contentsline {subsection}{\numberline {5.2}Fermat-Faktorisierung}{16}
-\contentsline {section}{\numberline {6}Signaturen}{17}
-\contentsline {subsection}{\numberline {6.1}Einf\IeC {\"u}hrung}{17}
-\contentsline {subsection}{\numberline {6.2}Verifikation}{18}
-\contentsline {section}{\numberline {7}Diffie-Hellman-Protokoll}{18}
-\contentsline {section}{\numberline {8}Uebungen}{20}
+\contentsline {section}{\numberline {1}Mathematische Grundlagen}{1}
+\contentsline {subsection}{\numberline {1.1}Grundlagen}{1}
+\contentsline {subsubsection}{\numberline {1.1.1}Einwegfunktion}{1}
+\contentsline {subsubsection}{\numberline {1.1.2}Eigenschaften Funkionen}{1}
+\contentsline {subsubsection}{\numberline {1.1.3}Kombinatorik}{1}
+\contentsline {subsubsection}{\numberline {1.1.4}(erweiterter) Euklid}{1}
+\contentsline {subsubsection}{\numberline {1.1.5}Diophantische Gleichungen}{1}
+\contentsline {subsection}{\numberline {1.2}Modulares Rechnen}{1}
+\contentsline {subsubsection}{\numberline {1.2.1}Division}{1}
+\contentsline {subsubsection}{\numberline {1.2.2}Potenzieren}{2}
+\contentsline {subsubsection}{\numberline {1.2.3}Chinesischer Restsatz}{2}
+\contentsline {subsection}{\numberline {1.3}Kettenbruch}{2}
+\contentsline {subsection}{\numberline {1.4}Gruppen}{3}
+\contentsline {subsubsection}{\numberline {1.4.1}Notation}{3}
+\contentsline {subsubsection}{\numberline {1.4.2}Spezielle Mengen}{3}
+\contentsline {subsubsection}{\numberline {1.4.3}Ordnung der Gruppe}{3}
+\contentsline {subsubsection}{\numberline {1.4.4}Erzeugende Elemente, zyklische Gruppen}{3}
+\contentsline {subsubsection}{\numberline {1.4.5}Satz Euler Fermart}{3}
+\contentsline {subsection}{\numberline {1.5}Faktorisierung}{3}
+\contentsline {subsubsection}{\numberline {1.5.1}Fermat}{3}
+\contentsline {subsubsection}{\numberline {1.5.2}Polard $p -1$}{4}
+\contentsline {section}{\numberline {2}Definition eines Kryptosystems}{5}
+\contentsline {subsection}{\numberline {2.1}Passiver Angreifer}{5}
+\contentsline {subsection}{\numberline {2.2}Prinzip von Kerkhoffs}{5}
+\contentsline {subsection}{\numberline {2.3}Formale Beschreibung Kryptosystems}{5}
+\contentsline {subsection}{\numberline {2.4}Attacken auf Kryptosystem}{5}
+\contentsline {section}{\numberline {3}Klassische Kryptographie}{6}
+\contentsline {subsection}{\numberline {3.1}Klassen}{6}
+\contentsline {subsection}{\numberline {3.2}Caesar Cipher}{6}
+\contentsline {subsubsection}{\numberline {3.2.1}Attacken}{6}
+\contentsline {subsection}{\numberline {3.3}Kasiski-Text (monographisch \& polyalphabetisch)}{6}
+\contentsline {subsection}{\numberline {3.4}Playfair}{7}
+\contentsline {subsubsection}{\numberline {3.4.1}Konstruktion Playfair-Quadrat}{7}
+\contentsline {subsubsection}{\numberline {3.4.2}Ver-/Entschl\IeC {\"u}sselung}{7}
+\contentsline {subsection}{\numberline {3.5}Vigen\IeC {\`e}re Cipher}{7}
+\contentsline {subsubsection}{\numberline {3.5.1}Kasiski Test}{7}
+\contentsline {subsubsection}{\numberline {3.5.2}Koinzidenz Index}{7}
+\contentsline {subsubsection}{\numberline {3.5.3}Berechnung der Schl\IeC {\"u}ssell\IeC {\"a}nge}{8}
+\contentsline {subsection}{\numberline {3.6}Vigen\IeC {\`e}res Chipres}{8}
+\contentsline {subsubsection}{\numberline {3.6.1}Beschreibung}{8}
+\contentsline {subsubsection}{\numberline {3.6.2}Kryptoanalysis des Vigen\`{e}re-Cipher}{8}
+\contentsline {subsection}{\numberline {3.7}One-Time-Pad}{9}
+\contentsline {section}{\numberline {4}Block-Cipher}{10}
+\contentsline {subsection}{\numberline {4.1}Data Encription Standard (DES)}{10}
+\contentsline {subsection}{\numberline {4.2}Betriebsmodi}{10}
+\contentsline {subsubsection}{\numberline {4.2.1}ECB-Modus (electronic code block)}{10}
+\contentsline {subsubsection}{\numberline {4.2.2}CBC-Modus (cipher block chaining)}{10}
+\contentsline {subsubsection}{\numberline {4.2.3}CFB-Modus (cipher feedback)}{10}
+\contentsline {section}{\numberline {5}RSA}{11}
+\contentsline {subsection}{\numberline {5.1}Schl\IeC {\"u}sselerzeugung}{11}
+\contentsline {subsection}{\numberline {5.2}Verschl\IeC {\"u}sselung und Entschl\IeC {\"u}sselung}{11}
+\contentsline {subsection}{\numberline {5.3}Attacken}{11}
+\contentsline {subsubsection}{\numberline {5.3.1}3 Primzahlen f\IeC {\"u}r zwei Schl\IeC {\"u}ssel}{11}
+\contentsline {subsubsection}{\numberline {5.3.2}Gleicher Modul}{11}
+\contentsline {subsubsection}{\numberline {5.3.3}Hastad Attack}{11}
+\contentsline {subsubsection}{\numberline {5.3.4}Wiener's Angriff}{11}
+\contentsline {subsubsection}{\numberline {5.3.5}de Wenger - Spezialfall: RSA-Schl\IeC {\"u}ssel}{12}
+\contentsline {subsubsection}{\numberline {5.3.6}SK-Such-Algorithmus}{12}
+\contentsline {section}{\numberline {6}Signaturen}{13}
+\contentsline {subsection}{\numberline {6.1}RSA}{13}
+\contentsline {subsection}{\numberline {6.2}Das Lamport-Schema}{13}
+\contentsline {subsection}{\numberline {6.3}El-Gamal}{13}
+\contentsline {subsubsection}{\numberline {6.3.1}Verifikation}{14}
+\contentsline {section}{\numberline {7}Hashfunktionen}{15}
+\contentsline {subsection}{\numberline {7.1}Angriff}{15}
+\contentsline {subsection}{\numberline {7.2}SHA-1}{15}
+\contentsline {section}{\numberline {8}Kryptographische Protokolle}{16}
+\contentsline {subsection}{\numberline {8.1}Needham-Schroeder}{16}
+\contentsline {subsection}{\numberline {8.2}Diffie-Hellman-Protokoll}{16}
