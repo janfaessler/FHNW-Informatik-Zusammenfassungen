@@ -1,5 +1,8 @@
-def testfunc():
-  print "this is a working script"
+def helpfunc():
+  print "Available Functions: wiener2, pminus1, disc_log_diffie"
+  print "wiener2 takes two arguments: n and e"
+  print "pminus1 takes three arguments: n, B, a"
+  print "disc_log_diffie takes four arguments: p, w(Omega), a, b"
 
 
 def wiener2 ( n, e):
