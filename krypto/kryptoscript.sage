@@ -35,11 +35,14 @@ def pminus1(n,B,a):
 
       
 def fermatfactor(N):
+  print "t   2^2-n   quadrat?"
   if N <= 0: return [N]
   if is_even(N): return [2,N/2]
   a = ceil(sqrt(N))
   while not is_square(a^2-N):
+    print a,a^2-N,"nein"
     a = a + 1
+  print a,a^2-N,"ja"
   b = sqrt(a^2-N)
   return [a - b,a + b]
 
