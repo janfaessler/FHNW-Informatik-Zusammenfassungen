@@ -295,7 +295,7 @@ Aufwand: $\frac{c^2}{8}$ und $c$ ist eine geeignete Konstante. $\Delta := p-q < 
 \subsubsection{Polard $p -1$}
 \begin{enumerate}
 \item Alle Primzahlen $q$ mit $q \le B$
-\item $\beta(q, B) = \text{max}\{B \in \mathbb{N}: q^\beta \le B\}$
+\item $\beta(q, B) = \text{max}\{\beta \in \mathbb{N}: q^\beta \le B\}$
 \end{enumerate}
 Beispiel:
 $n=1241143$, $B=13$ Das $B$ ist willkürlich gewählt. $a$ wählen: $ 1 < a < n$ und $ggT(a, n)$ $= 1$. \\
@@ -657,14 +657,6 @@ $\frac{5}{3}=$\\
 \end{tabular}\\\linebreak
 {\color{red}KE von $\frac{5}{3}=<1,1,2>$}\\
 $1+\frac{1}{1+\frac{1}{2}}=\frac{5}{3}$\\
-\begin{description}
- \item [Voraussetzung] \hfill \\
-    \begin{itemize}
-      \item $(n,e),(n,d)$ RSA-Schlüssel mit $n=p\cdot q$, $p<q<2p$
-      \item $0<d\leqslant\Oneover{3}\sqrt[4]{n}$
-    \end{itemize}
- \item [Behauptung] $\exists$ schneller Alg. zur Faktorisierung von $n$
-\end{description}
 \begin{lstlisting}
  e = d.invers_mod(phi)
  con = continued_fraction_list(e/n, partial_convergents = true)
@@ -735,8 +727,8 @@ und ein Verifikationsverfahren: $ver: P \times S \times SK \rightarrow {0,1}$\\
 \begin{itemize}
 	\item Man wähle ein grosses $p \in \mathbb{P}$
 	\item Man wähle ein Erzeugens: $\omega \in \mathbb{Z}_p^*$. $p$ und $\omega$ sind öffentlich bekannt.
-	\item Jeder Teilnehmer (T) wählt zufällig $a_T < p-1 \mod p$. Diese Zahl ist der geheime Schlüssel!
-	\item T berechnet $b_T = \omega^{a_T}$ und veröffentlicht diese Zahl.
+	\item Jeder Teilnehmer (T) wählt zufällig $0 < a_T < p-1$. Diese Zahl ist der geheime Schlüssel!
+	\item T berechnet $b_T = \omega^{a_T} \mod p$ und veröffentlicht diese Zahl.
 	\item T wählt zufällig $r \in \mathbb{Z}_{p-1}^*$
 \end{itemize}
 \textbf{Die Mengen sind dann wie folgt definiert}:
@@ -789,7 +781,7 @@ $\overbrace{
  \multicolumn{2}{c}{\begin{tabular}{|c|c|l|c|}\hline
   0&\hspace*{2cm}&\hspace*{1cm}&511\\\hline
  \end{tabular}}\\
- $\underbrace{\hspace*{3cm}}_{448}$&$\underbrace{\hspace*{2cm}}_{64}$
+ $\underbrace{\hspace*{3cm}}_{448 (m + Padding)}$&$\underbrace{\hspace*{2cm}}_{64(|m|)}$
 \end{tabular}}^{512}$\\
 $\underbrace{0110011011001010}_m10\dots010000$, $\Abs{m}=16=(10000)_2$\\
 
