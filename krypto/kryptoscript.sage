@@ -3,6 +3,7 @@ def helpfunc():
   print "wiener2 takes two arguments: n and e"
   print "pminus1 takes three arguments: n, B, a"
   print "disc_log_diffie takes four arguments: p, w(Omega), a, b"
+  print "fermatfactor takes one argument: n"
 
 
 def wiener2 ( n, e):
@@ -32,10 +33,19 @@ def pminus1(n,B,a):
   b = a.powermod(k,n)
   return gcd(b-1,n)
 
+      
+def fermatfactor(N):
+  if N <= 0: return [N]
+  if is_even(N): return [2,N/2]
+  a = ceil(sqrt(N))
+  while not is_square(a^2-N):
+    a = a + 1
+  b = sqrt(a^2-N)
+  return [a - b,a + b]
+
+
 def disc_log_diffie(p,w,a,b):
   for i in range(p):
     if w.powermod(i,p) == a:
       print i
       break
-
-
