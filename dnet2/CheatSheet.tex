@@ -13,6 +13,7 @@
 \titlespacing*{\subsection}{0pt}{0pt}{-5pt}
 \titlespacing*{\subsubsection}{0pt}{0pt}{-5pt}
 
+
 %Math
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -23,6 +24,8 @@
 \usepackage{tikz}
 
 \usepackage{multirow}
+\usepackage{multicol}
+
 
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
@@ -299,10 +302,29 @@ $R(config-subif)\#ip$ $address$ $[IP]$ $[SUBNET]$\\
 $R(config-subif)\#frame-relay$ $interface-dlci$ $115$
 
 
-%\section{Access Control Lists ACLs}
-%\subsection{Sicherung von IP-Netzen}
-%\begin{itemize}
-%	\item 
-%\end{itemize}
+\section{Access Control Lists ACLs}
+TBD!!!
+
+\section{IP Adressierungsdienste (DHCP, NAT, IPv6)}
+\subsection{DHCP}
+\subsubsection{Einführung}
+Folgendes wird für Kommunikation benötigt:
+\begin{itemize}
+	\item MAC-Adresse (Schicht 2)
+	\item eine Schicht-3-Adresse
+	\item eine Subnetz-Maske
+	\item ein Default Gateway und
+	\item die Adresse eines DNS Servers
+\end{itemize}
+DHCP Server hat Aufgabe, Arbeitsstationen beim Aufstarten mit nötigen Parametern zu versorgen. Er verwaltet die IP-Adressen.
+\subsubsection{Funktion von DHCP}
+Drei verschiedene Mechanismen:
+\begin{itemize}
+	\item Manuelle Vergabe: Admin vergibt Host gezielt IP-Adresse, DHCP teilt Adresse dem Client mit.
+	\item Automatische Vergabe: DHCP vergibt Host statische IP aus Pool. Es wird keine Lease-Time vereinbart! -> permanente Vergabe
+	\item Dynamische Vergabe: DHCP vergibt IPs aus Pool dynamisch. Lease-Time wird von DHCP-Server bestimmt. Wird IP nicht mehr gebraucht, teilt dies der Client am Server mit.
+\end{itemize}
+Ablauf der dynamischen Vergabe:\\
+\includegraphics[scale=0.5]{ablauf-dhcp-protokoll.png}
 \end{footnotesize}
 \end{document} 
