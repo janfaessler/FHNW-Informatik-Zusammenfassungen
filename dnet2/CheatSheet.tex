@@ -175,6 +175,7 @@ Praxis: Erst alle Switches konfigurieren, die \underline{NICHT} VTP-Server sein 
 \subsubsection{VTP advertisments}
 %\includegraphics[scale=0.5]{vtp-ieee-header.png}\\
 3 Arten von Advertisments:
+\vspace{-3mm}
 \begin{itemize}
 	\item Summary Advertisments: alle 5 Minuten mit aktueller Config
 	\item Subset Advertisments: Änderungen von VLANs werden bekannt gegeben
@@ -196,6 +197,7 @@ Praxis: Erst alle Switches konfigurieren, die \underline{NICHT} VTP-Server sein 
 \subsection{Der ST Algorithmus}
 \includegraphics[scale=0.40]{stp.png}\\\\\\
 \textbf{Ablauf:}
+\vspace{-3mm}
 \begin{itemize}
 	\item[1.)] Bestimmung Root Bridge (RB) (tiefste Bridge ID [Standard: MAC Adresse]).
 	\item[2.)] Bestimmung der "root ports" (kürzester Weg zur Root Bridge [Link Metrik]).
@@ -271,6 +273,7 @@ $R(config$--$if)\#ppp$ $authentication$ $chap$
 
 \section{Frame Relay}
 FR erledigt:
+\vspace{-3mm}
 \begin{itemize}
 	\item Rahmenbildung
 	\item Zugang zum Netz
@@ -281,15 +284,18 @@ FR erledigt:
 \includegraphics[scale=0.3]{hub-spoke-logisch.png}
 \includegraphics[scale=0.3]{hub-spoke-physikalisch.png}
 \includegraphics[scale=0.3]{vollvermascht-logisch.png}
-\includegraphics[scale=0.3]{vollvermascht-physikalisch.png}\\
+\includegraphics[scale=0.3]{vollvermascht-physikalisch.png}
+
 \subsection{Zuordnung FR VC zu IP}
 Local Management Interface LMI umfasst:
+\vspace{-3mm}
 \begin{itemize}
 	\item Virtual Circuit (VC) status message: sollte VC gelöscht werden wird Frame Relay Access Device (FRAD), welches beim Kunden steht, informiert.
 	\item Multicasting: Rahmen wird an eine Gruppe von Zielen gesendet
 	\item Global Addressing: Gibt Data Link Connection Identifiers (DLCIs) [da FR verbindungsorientiert ist], die globale Bedeutung haben
 	\item Simple flow control: Xon/Xoff Mechanismus für Protokoll-Suiten ohne Flusskontrollen
 \end{itemize}
+
 \subsection{Konfiguration}
 Inverses ARP ausschalten:\\
 $R(config$--$if)\#encapsulation$ $frame$--$relay$ $ietf$\\
@@ -301,14 +307,18 @@ $R(config$--$subif)\#encapsulation$ $frame$--$relay$ $ietf$\\
 $R(config$--$subif)\#ip$ $address$ $[IP]$ $[SUBNET]$\\
 $R(config$--$subif)\#frame$--$relay$ $interface$--$dlci$ $115$
 
+\newpage
 
 \section{Access Control Lists ACLs}
 TBD!!!
+
 \newpage
+
 \section{IP Adressierungsdienste (DHCP, NAT, IPv6)}
 \subsection{DHCP}
 \subsubsection{Einführung}
 Folgendes wird für Kommunikation benötigt:
+\vspace{-3mm}
 \begin{itemize}
 	\item MAC-Adresse (Schicht 2)
 	\item eine Schicht-3-Adresse
@@ -316,6 +326,7 @@ Folgendes wird für Kommunikation benötigt:
 	\item ein Default Gateway und
 	\item die Adresse eines DNS Servers
 \end{itemize}
+\vspace{-3mm}
 DHCP Server hat Aufgabe, Arbeitsstationen beim Aufstarten mit nötigen Parametern zu versorgen. Er verwaltet die IP-Adressen.
 \subsubsection{Funktion von DHCP}
 Drei verschiedene Mechanismen:
@@ -333,6 +344,7 @@ Ablauf der dynamischen Vergabe:\\
 \includegraphics[scale=0.4]{dhcp-ablauf-1.png}
 \includegraphics[scale=0.4]{dhcp-ablauf-2.png}\\
 Danach folgt ein DHCP Acknowledge Paket.
+
 \subsubsection{Konfiguration DHCP (1./2. = Server; 3. = Client)}
 \begin{itemize}
 	\item[1.)] Reserv. Adressbereich:
@@ -345,10 +357,50 @@ Danach folgt ein DHCP Acknowledge Paket.
 	$R1(config)\#netbios$--$name$--$server$ $[ADDR]$
 	\item[3.)] $S1(config$--$if)\#ip$ $address$ $dhcp$
 \end{itemize}
+
 \subsubsection{DHCP Relay}
 Dient dazu Anfragen von zwei Netzen weiterzuleiten (Bsp. 192.168.10.X nach 192.168.11.5).\\
 $R1(config)\#int$ $fa0/0$ $\Ra$ (192.168.10.X-Netz)\\
 $R1(config$--$if)\#ip$ $helper$--$address$ $192.168.11.5$
+
+\subsection{NAT (Network Address Translation)}
+\subsubsection{Allgemein}
+NAT dient dazu private (interne) in öffentliche Adressen zu übersetzen. \textbf{Zwecke:} spart IPv4 Adressen; verbirgt interne Adressen vor Kommunikationspartner.\\
+\textbf{NAT--PAT:} NAT $\Ra$ 1:1 Übersetzung von priv. in öff. Adr.; PAT $\Ra$ $n$ priv. in $m$ öff. Adr., wobei $n>m$, wobei meistens $m=1$
+\subsubsection{Vor-/Nachteile von NAT}
+Vorteile:
+\vspace{-3mm}
+\begin{itemize}
+	\item Adressierungsschema mit öff. IPv4-Adr. kann beibehalten werden, Adressknappheit entschärft, Firmen mit priv. Adr. in ihren Netzen
+	\item Wechsel ISP ohne Neunummerierung der Rechner
+	\item NAT gibt Sicherheit, ersetzt aber nicht Firewall
+\end{itemize}
+\vspace{-3mm}
+Nachteile:
+\vspace{-3mm}
+\begin{itemize}
+	\item Performance
+	\item verstösst gegen grundl. Internet-Prinzip: Veränderung der Adr.! $\Ra$ Entschärfung durch stat. Adr.
+	\item Traceability schwierig
+	\item Tunneling-Protokolle können beeinträchtigt werden
+	\item Anwendungen, die TCP-Verbindung von aussen verlangen, funktionieren meist nicht.
+\end{itemize}
+
+\subsubsection{Konfiguration von statischem NAT}
+\begin{itemize}
+	\item[1.)] statisches Mapping: $R1(config)\#ip$ $nat$ $inside$ $source$ $static$ $[LOCAL$ $IP]$ $[GLOBAL$ $IP]$
+	\item[2.)] inside/outside IF: $R1(config)\#int$ $[fa|s]$ $[NUM]\Ra$
+	$R1(config$--$if)\#ip$ $nat$ $[inside|outside]$
+\end{itemize}
+
+\subsection{Konfiguration von dynamischem NAT}
+\begin{itemize}
+	\item[1.)] Pool v. Adr. nach aussen: $R1(config)\#ip$ $nat$ $pool$ $[poolname]$ $[START$ $IP]$ $[END$ $IP]$ $netmask$ $[SUBNET]\Ra$ Bspw: 209.165.200.226 (Start), 209.165.200.24 (End) mit 255.255.255.224
+	\item[2.)] Zu übersetzende Adr.: $R1(config)\#ip$ $access$--$list$ $[NUM]$ $[permit|deny]$ $[iprange]$ $[InvertedSubnet]\Ra$ Bswp: 1 (NUM), 192.168.0.0 mit 0.0.255.255
+	\item[3.)]Übersetzung: $R1(config)\#ip$ $nat$ $inside$ $source$ $list$ $[NUM]$ $pool$ $[POOLNAME]$
+	\item[4.)] Auf IFs anwenden: $R1(config)\#int$ $[fa|s]$ $[NUM]\Ra$
+	$R1(config$--$if)\#ip$ $nat$ $[inside|outside]$
+\end{itemize}
 
 
 \end{footnotesize}
