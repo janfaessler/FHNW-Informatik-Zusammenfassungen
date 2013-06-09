@@ -402,6 +402,20 @@ Nachteile:
 	$R1(config$--$if)\#ip$ $nat$ $[inside|outside]$
 \end{itemize}
 
-
+\subsubsection{Konfiguration von NAT overload}
+\begin{itemize}
+	\item[a)] Nur \textit{eine}, ev. unbekannte, öffentliche Adresse
+	\begin{itemize}
+		\item[1.)] ACL für internes Netz (siehe Konfiguration dynamisches NAT Punkt 2.))
+		\item[2.)] Definiere PAT: $R1(config)\#ip$ $nat$ $inside$ $source$ $list$ $[NUM]$ $int$ $[zB$ $s0/1/0]$ $overload$
+		\item[3.)] IFs konfigurieren (siehe Konfiguration dynamisches NAT Punkt 4.))
+	\end{itemize}
+	\item[b)] Pool von öffentlichen Adressen
+	\begin{itemize}
+		\item[1.)] ACL und Pool (siehe Konfiguration dynamisches NAT Punkte 2.) und 3.))
+		\item[2.)] Übersetzung: $R1(config)\#ip$ $nat$ $inside$ $source$ $list$ $[NUM]$ $pool$ $[POOLNAME]$ $overload$
+		\item[3.)] IFs konfigurieren (siehe Konfiguration dynamisches NAT Punkt 4.))
+	\end{itemize}
+\end{itemize}
 \end{footnotesize}
 \end{document} 
