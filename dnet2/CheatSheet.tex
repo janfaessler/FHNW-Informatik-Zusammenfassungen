@@ -215,14 +215,14 @@ Praxis: Erst alle Switches konfigurieren, die \underline{NICHT} VTP-Server sein 
 \subsection{Port-Rollen \& STP Zustände}
 \begin{itemize}
 	\item Ermittlung des Root Ports (nächster zur Root Bridge [Link-Kosten])\\
-	Kosten manipulieren: $S(config-if)\#spanning-tree$ $cost$ $25$
+	Kosten manipulieren: $S(config$--$if)\#spanning$--$tree$ $cost$ $25$
 	\item Ermittlung des Designated Ports ("nächster" Port zur Root) | Falls $"$unentschieden":
 	\begin{itemize}
 		\item tiefere BID
 		\item tiefere Port ID
 	\end{itemize}
 	\item Beeinflussbar durch höhere Priority:\\
-	$S(config-if)\#spanning-tree$ $port-priority$ $112$
+	$S(config$--$if)\#spanning$--$tree$ $port$--$priority$ $112$
 	\item Zustände: Disabled$\ra$Blocking$\ra$Listening$\ra$Learning$\ra$Forwarding
 	\item Nachrichten: Topology Change Notification (TCN), Topology Change Acknowledgement (TCA), Topology Change (TC)
 	\item Topologieänderung: Switch [TCN]$\ra$ RB | RB [TCA]$\ra$Switch | RB [TC]$\ra$All Switches
@@ -258,15 +258,15 @@ Praxis: Erst alle Switches konfigurieren, die \underline{NICHT} VTP-Server sein 
 \end{itemize}
 
 \subsubsection{PPP Konfiguration}
-$R(config-if)\#encapsulation$ $ppp$\\
-$R(config-if)\#compress$ $[stack$ $|$ $predictor]$\\
-$R(config-if)\#ppp$ $quality$ $80$\\
-$R(config-if)\#ppp$ $multilink$
+$R(config$--$if)\#encapsulation$ $ppp$\\
+$R(config$--$if)\#compress$ $[stack$ $|$ $predictor]$\\
+$R(config$--$if)\#ppp$ $quality$ $80$\\
+$R(config$--$if)\#ppp$ $multilink$
 
 \subsubsection{PPP Authentication}
 Password Authentication Protocol (PAP) und Challenge Handshake Authentication Protocol (CHAP) (PAP \underline{NICHT} mehr sicher, da Passwort Klartext gesendet wird)\\
 $R1(config)\#username$ $R3$ $password$ $cisco$\\
-$R(config-if)\#ppp$ $authentication$ $chap$
+$R(config$--$if)\#ppp$ $authentication$ $chap$
 
 
 \section{Frame Relay}
@@ -292,19 +292,19 @@ Local Management Interface LMI umfasst:
 \end{itemize}
 \subsection{Konfiguration}
 Inverses ARP ausschalten:\\
-$R(config-if)\#encapsulation$ $frame-relay$ $ietf$\\
-$R(config-if)\#no$ $frame-relay$ $inverse-arp$\\
+$R(config$--$if)\#encapsulation$ $frame$--$relay$ $ietf$\\
+$R(config$--$if)\#no$ $frame$--$relay$ $inverse$--$arp$\\
 Statisches Mapping:\\
-$R(config-if)\#frame-relay$ $map$ $ip$ $XXX.XXX.XXX.XXX$ $102$ $broadcast$\\
-$R(config-if)\#int$ $s0/0/1.112$ $point-to-point$\\
-$R(config-subif)\#encapsulation$ $frame-relay$ $ietf$\\
-$R(config-subif)\#ip$ $address$ $[IP]$ $[SUBNET]$\\
-$R(config-subif)\#frame-relay$ $interface-dlci$ $115$
+$R(config$--$if)\#frame$--$relay$ $map$ $ip$ $XXX.XXX.XXX.XXX$ $102$ $broadcast$\\
+$R(config$--$if)\#int$ $s0/0/1.112$ $point$--$to$--$point$\\
+$R(config$--$subif)\#encapsulation$ $frame$--$relay$ $ietf$\\
+$R(config$--$subif)\#ip$ $address$ $[IP]$ $[SUBNET]$\\
+$R(config$--$subif)\#frame$--$relay$ $interface$--$dlci$ $115$
 
 
 \section{Access Control Lists ACLs}
 TBD!!!
-
+\newpage
 \section{IP Adressierungsdienste (DHCP, NAT, IPv6)}
 \subsection{DHCP}
 \subsubsection{Einführung}
@@ -321,13 +321,35 @@ DHCP Server hat Aufgabe, Arbeitsstationen beim Aufstarten mit nötigen Parameter
 Drei verschiedene Mechanismen:
 \begin{itemize}
 	\item Manuelle Vergabe: Admin vergibt Host gezielt IP-Adresse, DHCP teilt Adresse dem Client mit.
-	\item Automatische Vergabe: DHCP vergibt Host statische IP aus Pool. Es wird keine Lease-Time vereinbart! -> permanente Vergabe
+	\item Automatische Vergabe: DHCP vergibt Host statische IP aus Pool. Es wird keine Lease-Time vereinbart! $\ra$ permanente Vergabe
 	\item Dynamische Vergabe: DHCP vergibt IPs aus Pool dynamisch. Lease-Time wird von DHCP-Server bestimmt. Wird IP nicht mehr gebraucht, teilt dies der Client am Server mit.
 \end{itemize}
 Ablauf der dynamischen Vergabe:\\
-\includegraphics[scale=0.5]{ablauf-dhcp-protokoll.png}\\
+\includegraphics[scale=0.5]{ablauf-dhcp-protokoll.png}
+
 \subsubsection{BOOTP \& DHCP}
 \includegraphics[scale=0.5]{bootp-dhcp.png}\\
 \includegraphics[scale=0.5]{dhcp-message-format.png}\\
+\includegraphics[scale=0.4]{dhcp-ablauf-1.png}
+\includegraphics[scale=0.4]{dhcp-ablauf-2.png}\\
+Danach folgt ein DHCP Acknowledge Paket.
+\subsubsection{Konfiguration DHCP (1./2. = Server; 3. = Client)}
+\begin{itemize}
+	\item[1.)] Reserv. Adressbereich:
+	$R1(config)\#ip$ $dhcp$ $exclude$--$address$ $[LOW ADDR]$ $[HIGH ADDR]$
+	\item[2.)] Pool: $R1(config)\#ip$ $dhcp$ $pool$ $[POOLNAME]$\\
+	$R1(config)\#network$ $[ADDR]$ $[MASK]$\\
+	$R1(config)\#default$--$router$ $[ADDR]$\\
+	$R1(config)\#dns$--$server$ $[ADDR]$\\
+	$R1(config)\#domain$--$name$ $[NAME]$\\
+	$R1(config)\#netbios$--$name$--$server$ $[ADDR]$
+	\item[3.)] $S1(config$--$if)\#ip$ $address$ $dhcp$
+\end{itemize}
+\subsubsection{DHCP Relay}
+Dient dazu Anfragen von zwei Netzen weiterzuleiten (Bsp. 192.168.10.X nach 192.168.11.5).\\
+$R1(config)\#int$ $fa0/0$ $\Ra$ (192.168.10.X-Netz)\\
+$R1(config$--$if)\#ip$ $helper$--$address$ $192.168.11.5$
+
+
 \end{footnotesize}
 \end{document} 
