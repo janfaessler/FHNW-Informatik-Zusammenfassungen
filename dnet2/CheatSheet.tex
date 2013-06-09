@@ -417,5 +417,77 @@ Nachteile:
 		\item[3.)] IFs konfigurieren (siehe Konfiguration dynamisches NAT Punkt 4.))
 	\end{itemize}
 \end{itemize}
+
+\subsection{IPv6}
+\subsubsection{Allgemein}
+Verbesserungen gegenüber IPv4
+\vspace{-3mm}
+\begin{itemize}
+	\item einfacherer Header
+	\item keine Broadcast Adressen, stattdessen Multicast
+	\item Wegfall der Checksumme im IP Header
+	\item Keine Fragmentierung von IPv6 Paketen, ausser durch den Absender selbst
+	\item IPv6 Header kann durch Optionen erweitert werden
+	\item Autokonfiguration von IPv6 Adressen
+	\item Security (IPsec) ist Teil der Basisspezifikation
+	\item Mobility (Mobile IP) kann besser unterstützt werden.
+\end{itemize}
+\vspace{-3mm}
+\includegraphics[scale=0.5]{ipv4-ipv6-headers.png}
+
+\subsubsection{IPv6 Adressierung}
+\begin{itemize}
+	\item acht Gruppen an je vier Hex-Zahlen, getrennt durch Doppelpunkt getrennt
+	\item führende Nullen können weggelassen werden
+	\item aufeinanderfolgende Nullen können EINMAL durch zwei Doppelpunkte "::"\ ersetzt werden
+\end{itemize}
+\vspace{-3mm}
+Prefixes:\\
+\includegraphics[scale=0.5]{ipv6-prefixes.png}\\
+\vspace{-3mm}
+\begin{itemize}
+	\item Private Adressen: FC00:: /7 Unique local addresses
+	\item Link-lokale Adressen: FE80:: /10, gelten nur für einen Link, werden von Router nicht weitergeleitet
+	\item Spezielle Adressen: \textbf{Loopback} 0:0:0:0:0:0:0:1 oder ::1, \textbf{Unspecified} 0:0:0:0:0:0:0:0: oder ::
+\end{itemize}
+\vspace{-3mm}
+\textbf{Zuteilung IPv6 Adressen:}
+\vspace{-3mm}
+\begin{itemize}
+	\item Manuell auf Router IF: $R1(config$--$if)\#ipv6$ $address$ $[ipv6$--$addr]/[prefix$--$length]$
+	\item EUI--64--Zuweisung: $R1(config$--$if)\#ipv6$ $address$ $[ipv6$--$addr]/[prefix$--$length]$ $eui$--$64$\\
+	Nur Prefix wird von Hand konfiguriert. 8--Byte IF--ID wird aus 6--Byte MAC--Adresse generiert
+\end{itemize}
+\vspace{-3mm}
+\textbf{Stateless Autoconfiguration:} Einfaches Anschliessen an Netz ("Plug\&Play"\ für Adressvergabe)\\
+\textbf{DHCPv6:} Ergänzend oder konkurrierend zu Stateless Autoconfiguration
+\subsubsection{IPv6 Übergangsstrategien}
+\begin{itemize}
+	\item Dual Stack: auf einem Rechner laufen IPv4-- und IPv6--Stack parallel
+	\item Manuelle Tunnels: IPv6--Paket wird in IPv4--Paket eingepackt
+	\item 6to4--Tunnel: wie manueller Tunnel, aber automatisch aufgesetzt
+	\item 6rd: Basierend auf 6to4, aber mit IPv6 Adressbereich und IPv4 Tunnelendpunkt
+	\item ISATAP--Tunnel: weiteres automatisches Tunnelverfahren
+	\item Teredo--Tunnel: Automatisches Aufsetzen von End-- zu Endgerät (Vorauss.: Dual Stack Hosts)
+	\item NAT: Übersetzung von IPv6 zu IPv6 und umgekehrt
+\end{itemize}
+
+\subsubsection{Konfiguration von IPv6 Adressen}
+$R1(config)\#ipv6$ $unicast$--$routing$\\
+$R1(config)\#int$ $[fa|s]$ $[NUM]$\\
+$R1(config$--$if)\#ipv6$ $address$ $[ipv6Prefix]/[prefixLength]$ $[(eui$--$64)]$\\
+\textbf{Achtung:} Wenn Router--IF mit EUI--64 konfiguriert, ist es schwierig dieses zu pingen.\\
+\textbf{Namensauflösung konfigurieren:}
+\vspace{-3mm}
+\begin{itemize}
+	\item Entweder: $R1(config)\#ipv6$ $host$ $[name]$ $[(port)]$ $[ipv6addr]$ $[({ipv6addr}...)]$
+	\item Oder: $R1(config)\#ip$ $name$--$server$ $[addr]$
+\end{itemize}
+
+\subsubsection{Konfiguration von RIPng mit IPv6}
+$R1(config)\#ipv6$ $router$ $rip$ $[NAME]$\\
+$R1(config$--$if)\#ipv6$ $rip$ $[NAME]$ $enable$\\
+Wobei $[NAME]$ eine ID für den Routing--Prozess ist.\\
+\includegraphics[scale=0.5]{ipv6-ripng.png}
 \end{footnotesize}
 \end{document} 
