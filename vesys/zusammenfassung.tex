@@ -8,6 +8,8 @@
 \usepackage{ulem}
 \usepackage{stmaryrd} %f\UTF{00FC}r Blitz!
 
+\usepackage{wrapfig}
+
 %PageStyle
 \usepackage[ngerman]{babel} % deutsche Silbentrennung
 \usepackage[utf8]{inputenc} 
@@ -920,6 +922,914 @@ BarObject barObj = (BarObject) u.unmarshal(new File("bar.xml"));
 \begin{lstlisting}[language=Java, caption=Marshalling, style=JavaStyle]
 Marshaller m = jc.createMarshaller();
 m.marshal(fooObj, System.out);
+\end{lstlisting}
+
+\newpage
+\section{Remote Method Invocation}
+\subsection{Einleitung}
+Remote Method Invocation (RMI) ist der Aufruf einer Methode eines entfernten Java-Objekts und realisiert die Java Art des Remote Procedure Call.\\
+Auf der Client-Seite kümmert sich der sogenannte Stub um den Netzwerktransport. Der Stub muss entweder lokal oder über das Netz für den Client verfügbar sein. Das Erstellen des Stubs wird von der Java Virtual Machine übernommen. \\
+Entfernte Objekte können zwar auch von einem bereits im Programm bekannten entfernten Objekt bereitgestellt werden, für die erste Verbindungsaufnahme werden aber die Adresse des Servers und ein Bezeichner (ein RMI-URL) benötigt. Für den Bezeichner liefert ein Namensdienst auf dem Server eine Referenz auf das entfernte Objekt zurück. Damit dies funktioniert, muss sich das entfernte Objekt im Server zuvor unter diesem Namen beim Namensdienst registriert haben. Der RMI-Namensdienst wird über statische Methoden der Klasse java.rmi.Naming angesprochen. Der Namensdienst ist als eigenständiges Programm implementiert und wird RMI Registry genannt.
+\subsection{Ablauf}
+\begin{wrapfigure}{r}{7cm}
+	\centering
+	\includegraphics[scale=0.35]{rmi-schema.png}%
+\end{wrapfigure}
+Der Ablauf bei RMI:
+\begin{enumerate}
+	\item Der Server registriert ein Remote Object bei der RMI-Registry unter einem eindeutigen Namen.
+	\item Der Client sieht bei der RMI-Registry unter diesem Namen nach und bekommt eine Objektreferenz, die seinem Remote Interface entsprechen muss.
+	\item Der Client ruft eine Methode aus der Objektreferenz auf. Dabei kann ein Objekt einer Klasse X übergeben werden, die der JVM des Servers bisher nicht bekannt ist. In diesem Fall lädt die Server-JVM die Klasse X dynamisch nach, beispielsweise vom Webserver des Client.
+	\item Die Server-JVM führt die Methode auf dem Remote Object aus, wobei evtl. dynamisch geladener Fremdcode benutzt wird, der im Allgemeinen Sicherheitsrestriktionen unterliegt. Dem Client werden die Rückgabewerte dieses Aufrufes gesendet, oder der Client bekommt eine Fehlermeldung.
+\end{enumerate}
+\subsection{Naming / Registry}
+\begin{description}
+	\item[bind] (String, Remote)\hfill 
+		\begin{itemize}
+			\item {\color{red} can only be called on localhost}
+			\item Binds a specified name to a remote object
+			\item May throw AlreadyBoundException
+		\end{itemize}
+	\item[rebind] (String, Remote)\hfill 
+		\begin{itemize}
+			\item {\color{red} can only be called on localhost}
+			\item Rebinds a specified name to a remote object
+		\end{itemize}
+	\item[unbind] (String)\hfill 
+		\begin{itemize}
+			\item {\color{red} can only be called on localhost}
+			\item Destroys the binding for a specified name
+		\end{itemize}
+	\item[lookup] (String)\hfill 
+		\begin{itemize}
+			\item Returns a reference to the remote object associated with the name
+		\end{itemize}
+	\item[list] (String)\hfill 
+		\begin{itemize}
+			\item Lists the names present in a registry
+		\end{itemize}
+\end{description}
+\subsection{Using RMI}
+\subsubsection{Remote Interfaces}
+Define interfaces for remote classes:
+\begin{itemize}
+	\item All remotable interfaces must extend interface java.rmi.Remote
+	\item All methods must throw a java.rmi.RemoteException
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Remote Interfaces, style=JavaStyle]
+package ch.fhnw.ds.rmi.calculator;
+public interface Calculator extends java.rmi.Remote {
+   long add(long a, long b) throws java.rmi.RemoteException;
+   long sub(long a, long b) throws java.rmi.RemoteException;
+   long mul(long a, long b) throws java.rmi.RemoteException;
+   long div(long a, long b) throws java.rmi.RemoteException;
+}
+\end{lstlisting}
+\subsubsection{Implementation}
+UnicastRemoteObject:
+\begin{itemize}
+	\item Implementation extends class Unicast- RemoteObject or calls explicitly UnicastRemoteObject.exportObject
+	\item Implementation must implement the defined remote interface
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Implementation, style=JavaStyle]
+package ch.fhnw.ds.rmi.calculator;
+public class CalculatorImpl extends java.rmi.server.UnicastRemoteObject implements Calculator {
+	public CalculatorImpl() throws java.rmi.RemoteException { }
+	public long add(long a, long b) { return a + b; } 
+	public long sub(long a, long b) { return a - b; } 
+	public long mul(long a, long b) { return a * b; } 
+	public long div(long a, long b) { return a / b; }
+}
+\end{lstlisting}
+\subsubsection{stub and skeleton}
+Create stub and skeleton classes using the rmic compiler:
+\begin{itemize}
+	\item No longer necessary in Java5 because Java5 adds support for the dynamic generation of stub classes at runtime
+	\item rmic must still be used to pregenerate stub classes for remote objects that need to support clients running on earlier versions
+	\item Dynamic Proxies
+		\begin{itemize}
+			\item Implemented using java.lang.reflect.Proxy
+			\item Dynamic proxy is only used if no pregenerated stub class is available or if the system property java.rmi.server.ignoreStubClasses=true is set
+			\item nly possible if clients run on Java 5 (or later)
+		\end{itemize}
+\end{itemize}
+\subsubsection{Server}
+Create and compile the server application (registration):
+\begin{itemize}
+	\item RMI service must be hosted in a server process
+	\item RMI can use different naming services
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Server, style=JavaStyle]
+package ch.fhnw.ds.rmi.calculator;
+import java.rmi.Naming;
+public class Server {
+public static void main(String args[]) throws Exception {
+      Calculator c = new CalculatorImpl();
+      Naming.rebind("CalculatorService", c);
+   }
+}
+\end{lstlisting}
+\subsubsection{Client}
+Create and compile a client program to access the remote objects:
+\begin{lstlisting}[language=Java, caption=Client, style=JavaStyle]
+package ch.fhnw.ds.rmi.calculator;
+import java.rmi.Naming;
+public class CalculatorClient {
+	public static void main(String[] args) throws Exception {
+    		Calculator c = (Calculator)Naming.lookup("rmi://localhost/CalculatorService");
+		System.out.println( c.sub(4, 3) ); 
+		System.out.println( c.add(4, 5) ); 
+		System.out.println( c.mul(3, 6) ); 
+		System.out.println( c.div(9, 3) );
+	}
+}
+\end{lstlisting}
+\subsubsection{Start of RMI-Registry \& Server}
+\begin{lstlisting}[language=Java, caption=Example Variant, style=JavaStyle]
+package ch.fhnw.ds.rmi.calculator;
+public class Server {
+   public static void main(String args[]) throws Exception {
+		try {
+			LocateRegistry.createRegistry(1099);
+      	} catch (RemoteException e) {
+			System.out.println(">> registry could not be exported");
+			System.out.println(">> probably another registry already runs on 1099");
+		}
+      	Calculator c = new CalculatorImpl(0x7777);
+		Naming.rebind("rmi://localhost:1099/CalculatorService", c);
+		System.out.println("Calculator server started...");
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=List of all registered objects, style=JavaStyle]
+public class ListRMIRegistry {
+   public static void main(String[] args) throws Exception {
+      if (args.length>0) {
+         String host = args[0];
+         if(args.length>1){
+			host = host + ":" + Integer.parseInt(args[1]);
+		 }
+         String s[] = Naming.list("rmi://"+host);
+         for(int i=0; i<s.length; i++) System.out.println(s[i]);
+	  } else {
+         System.out.println("Usage: java ListRMIREgistry " + "<host> [<port>]");
+	  }
+  }
+}
+\end{lstlisting}
+\subsection{Marshalling}
+Transfer of parameters to remote object (input or output):
+\begin{description}
+	\item[Parameters of primitive type] (int, double, ...) \hfill \\
+		passed by value, in a machine-independent format
+	\item[Parameters which are Serializable] (e.g. String) \hfill \\
+		serializable objects are copied $\Ra$ call by value
+	\item[Parameters which are Remote] \hfill \\
+		only the reference to the remote object is passed, i.e. a new proxy is generated $\Ra$ call by reference
+	\item[Parameters which are neither Serializable nor Remote] \hfill \\
+		cannot be transferred (checked at runtime)
+\end{description}
+\begin{lstlisting}[language=Java, caption=QuoteServer, style=JavaStyle]
+public void addQuoteListener(QuoteListener c) {
+   synchronized (clients) { clients.add(c); }
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=QuoteClient, style=JavaStyle]
+QuoteServer server = (QuoteServer)Naming.lookup("rmi://localhost/QuoteServer");
+server.addQuoteListener(new AbstractQuoteListener() {
+	public void update(String s) {
+		System.out.println(s);
+	}
+});
+\end{lstlisting}
+\subsection{Export / Unexport}
+UnicastRemoteObject:
+\begin{description}
+	\item[Remote exportObject(Remote obj, int port)] \hfill
+		\begin{itemize}
+			\item Exports remote object
+			\item Makes it available to receive remote calls
+			\item Returns the remote object stub
+		\end{itemize}
+	\item[boolean unexportObject(Remote obj, boolean force)] \hfill
+		\begin{itemize}
+			\item Removes remote object from the RMI runtime
+			\item If force==false, object is only unexported if no calls are in progress or pending
+			\item Returns true if operation is successful, false otherwise
+		\end{itemize}
+\end{description}
+\begin{lstlisting}[language=Java, caption=Example Interface, style=JavaStyle]
+public interface Counter extends Remote {
+	public int getValue() throws RemoteException(); 
+	public int increment() throws RemoteException; 
+	public int reset() throws RemoteException;
+	// copies instance to a server 
+	public Counter migrateTo(String host) throws RemoteException; 
+	// copies counter back to the caller
+	public Counter migrateBack() throws RemoteException; 
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Migrator interface, style=JavaStyle]
+public interface Migrator extends Remote {
+	public Counter migrate(Counter counter) throws RemoteException;
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Migrator implementation, style=JavaStyle]
+public class MigratorImpl extends UnicastRemoteObject implements Migrator {
+	public MigratorImpl() throws RemoteException { }
+	public Counter migrate(Counter counter) throws RemoteException {
+		UnicastRemoteObject.exportObject(counter, 0);
+		return counter; // Variant: return the proxy
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Counter implementation, style=JavaStyle]
+public class CounterImpl implements Counter, Serializable { 
+	private int value;
+	public int getValue() { return value; }
+	public int increment() { value++; return value; } 
+	public int reset() { value = 0; return value; }
+	public Counter migrateTo(String host) throws RemoteException {
+		try {
+			Migrator migrator = (Migrator) Naming.lookup("rmi://" + host + "/Migrator");
+			return migrator.migrate(this);
+		} catch(Exception e) { throw new RuntimeException(e); }
+	}
+	public Counter migrateBack() throws RemoteException {
+		UnicastRemoteObject.unexportObject(this, true); 
+		return this;
+	}
+}
+\end{lstlisting}
+\subsection{Threads}
+\subsubsection{Specification}
+A method dispatched by the RMI runtime to a remote object implemen- tation may or may not execute in a separate thread. The RMI runtime makes no guarantees with respect to mapping remote object invocations to threads. Since remote method invocation on the same remote object may execute concurrently, a remote object implementation needs to make sure its implementation is thread-safe \\
+\subsubsection{Consequence}
+\begin{itemize}
+	\item You have to assume that your objects are called from different threads
+	\item You have to implement objects thread-safe
+\end{itemize}
+\subsection{Dynamically Loaded Classes}
+\begin{description}
+	\item[Required classes can be loaded over the network] \hfill \\
+		E.g. provided by a webserver
+	\item[Class Loading / Security] \hfill
+		\begin{itemize}
+			\item A special class loader is provided: RMIClassLoader
+			\item Security manager has to support remote class loading \\
+				System.setSecurityManager(new RMISecurityManager())
+		\end{itemize}
+	\item[Start of RMI-Registry] \hfill
+		\begin{itemize}
+			\item rmiregistry must not contain the needed classes in its path!!
+			\item Specify the java.rmi.server.useCodebaseOnly=false option (since Java7) \\
+				rmiregistry -J-Djava.rmi.server.useCodebaseOnly=false
+		\end{itemize}
+	\item[Start of Server] \hfill
+		\begin{itemize}
+			\item Specify codebase for downloading class files
+			\item java -Djava.rmi.server.codebase=http://localhost:8080 ch.fhnw.ds.rmi.calculator.Server
+		\end{itemize}
+	\item[Start of Client] \hfill
+		\begin{itemize}
+			\item permission to access server has to be provided (due to security manager)	\\
+				java -Djava.security.policy=policy.txt ch.fhnw.ds.rmi.calculator.Client localhost
+			\item policy file \\
+				grant \{ permission java.net.SocketPermission "10.223.240.137:1024-",  "connect,resolve"; \}; 
+		\end{itemize}
+\end{description}
+\subsection{Socket Factories}
+\begin{description}
+	\item[RMI Servers] \hfill
+		\begin{itemize}
+			\item When RMI object is exported, then a ServerSocket is created
+			\item Access to a RMI object is established over a Socket
+			\item Several objects may be exported over the same ServerSocket
+		\end{itemize}
+	\item[Socket Factories] \hfill
+		\begin{itemize}
+			\item Provide your own ServerSockets and Sockets to RMI
+			\item Applications \\
+				Authentication, Encryption, Compression, HTTP tunneling, time-out control
+			\item Factories	\\
+				ServerSocketFactory (returns ServerSocket), ClientSocketFacotory (returns Socket, is downloaded to client)
+			\item Specified with exportObject
+		\end{itemize}
+\end{description}
+\subsection{Example: XOR encoding}
+\begin{center}
+	\includegraphics[scale=0.3]{rmi-factory.png}
+\end{center}
+\begin{lstlisting}[language=Java, caption=XorServerSocketFactory, style=JavaStyle]
+public class XorServerSocketFactory implements RMIServerSocketFactory {
+	private final byte pattern;
+	public XorServerSocketFactory(byte pat) {this.pattern = pat;}
+	public ServerSocket createServerSocket(int port) throws IOException {
+		return new XorServerSocket(port, pattern);
+	}
+	public int hashCode() { return (int) pattern; }
+	public boolean equals(Object obj) {
+		return obj != null && getClass() == obj.getClass() && pattern == ((XorServerSocketFactory)obj).pattern);
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XorClientSocketFactory, style=JavaStyle]
+public class XorClientSocketFactory implements RMIClientSocketFactory, Serializable {
+	private final byte pattern;
+	public XorClientSocketFactory(byte pat) {this.pattern = pat;}
+	public Socket createSocket(String host, int port) throws IOException {
+		return new XorSocket(host, port, pattern);
+	}
+	public int hashCode() {return (int) pattern;}
+	public boolean equals(Object obj) {
+	return obj != null && getClass() == obj.getClass() && pattern == ((XorClientSocketFactory) obj).pattern;
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XorServerSocket, style=JavaStyle]
+class XorServerSocket extends ServerSocket { private final byte pattern;
+	public XorServerSocket(int port, byte pattern) throws IOException {
+		super(port); this.pattern = pattern;
+	}
+	public Socket accept() throws IOException {
+		Socket s = new XorSocket(pattern); implAccept(s); return s;
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XorSocket, style=JavaStyle]
+class XorSocket extends Socket { 
+	private final byte pat;
+	private InputStream in = null;
+	private OutputStream out = null;
+	public XorSocket(byte pat) throws IOException {
+		super(); this.pat = pat;
+	}
+	public XorSocket(String host, int port, byte pat) throws IOException {
+		super(host, port); this.pat = pat;
+	}
+	public synchronized InputStream getInputStream() throws IOException {
+		if (in == null) 
+			in  = new XorInputStream(super.getInputStream(), pat);
+		return in;
+	}
+	public synchronized OutputStream getOutputStream() throws IOException {
+    		if (out == null)
+    			out = new XorOutputStream(super.getOutputStream(),pat);
+		return out;
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XorOutputStream, style=JavaStyle]
+class XorOutputStream extends FilterOutputStream { private final byte pattern;
+	public XorOutputStream(OutputStream out, byte pattern) {
+		super(out); this.pattern = pattern;
+	}
+	public void write(int b) throws IOException { 
+		out.write((b ^ pattern) & 0xFF);
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=XorOutputStream, style=JavaStyle]
+class XorInputStream extends FilterInputStream {
+	private final byte pattern;
+	public XorInputStream(InputStream in, byte pattern) {
+		super(in); this.pattern = pattern;
+	}
+	public int read() throws IOException {
+		int b = in.read();
+		if (b != -1) // if not EOF or an error
+      		b = (b ^ pattern) & 0xFF;
+    		return b;
+	}
+	public int read(byte b[], int off, int len) throws IOException {
+		int numBytes = in.read(b, off, len);
+		for (int i = 0; i < numBytes; i++) {
+			b[off + i] = (byte) ((b[off + i] ^ pattern) & 0xFF);
+		return numBytes;
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Use XorFactories, style=JavaStyle]
+public class CalculatorImpl extends java.rmi.server.UnicastRemoteObject implements rmi.calculator.Calculator {
+	public CalculatorImpl(int port) throws java.rmi.RemoteException{
+		this(port, (byte)0xAC);
+  	}
+	public CalculatorImpl(int port, byte pat) throws java.rmi.RemoteException {
+		super(port, new XorClientSocketFactory(pat), new XorServerSocketFactory(pat));
+	}
+	public long add(long a, long b) { return a + b; } 
+	public long sub(long a, long b) { return a - b; } 
+	public long mul(long a, long b) { return a * b; } 
+	public long div(long a, long b) { return a / b; }
+}
+\end{lstlisting}
+
+\newpage
+\section{Java Message Service}
+\subsection{Asynchronous Communication}
+\textbf{Advantages:}
+\begin{itemize}
+	\item Loosely coupled communication
+	\item Sender/receiver do not have to be active at the same time and may be disconnected
+	\item Sender/receiver only have to agree on message format, no dependency on interfaces
+\end{itemize}
+\textbf{Communication Model:}
+\begin{itemize}
+	\item Producer sends a message to a virtual channel
+	\item Producer does not have to wait for a reply
+	\item Producer does not know who will receive the message
+	\item Producer is not dependent on the availability of consumers
+	\item Transaction and security context of a producer are not propagated to the consumer of a message
+\end{itemize}
+\subsection{Point-to-Point Messaging Domain}
+\textbf{Queue:}
+\begin{itemize}
+	\item Every message is sent to a particular queue
+	\item Consumer fetches message at a particular queue
+	\item Message is kept until it is consumed/expired
+\end{itemize}
+\textbf{Characteristics:}
+\begin{itemize}
+	\item Each message is consumed by only one client
+	\item No time dependency between sender and consumer
+	\item Consumer acknowledges consumption of a message
+	\item Queues are persistent
+\end{itemize}
+\subsection{Publish/Subscribe Messaging Domain}
+\begin{center}
+	\includegraphics[scale=0.25]{jms-messaging-domain.png}
+\end{center}
+\textbf{Characteristics:}
+\begin{itemize}
+	\item Every message can be consumed by several clients
+	\item Time dependency, only those messages are consumed which arrived after registration
+	\item Consumer has to stay active
+	\item A durable connection allows con- sumers to disconnect and later re- connect and collect messages that were published meanwhile
+\end{itemize}
+\subsection{Destinations}
+\begin{tabular}{l p{2cm} l}
+	\textbf{Queue} && \textbf{Topic} \\
+	\includegraphics[scale=0.3]{jms-destination-queue.png} && \includegraphics[scale=0.3]{jms-destination-topic.png} \\
+	One-to-one message paradigm && One-to-many message paradigm	
+\end{tabular}
+\subsection{Message Consumption}
+\begin{description}
+	\item[Synchronously] \hfill \\
+		JMS Client can receive messages explicitly
+		\begin{itemize}
+			\item[blocking mode] receive()
+			\item[time-out mode] receive(int timeout)
+		\end{itemize}
+	\item[Asynchronously] \hfill \\
+		JMS Client can register a message listener which is invoked when a message arrives \\
+		setMessageListener()
+\end{description}
+\subsection{JMS API}
+\subsubsection{Overview}
+\begin{center}
+	\includegraphics[scale=0.25]{jms-api-overview.png}
+\end{center}
+\subsubsection{Destinations}
+\begin{wrapfigure}{r}{4cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-destination.png}%
+\end{wrapfigure}
+Destinations:
+\begin{itemize}
+	\item Destination where messages are delivered to or received from
+		\begin{description}
+			\item[Queue] point-to-point messaging domain destination
+			\item[Topic] publish/subscribe messaging domain destination
+		\end{description}
+	\item A JMS application can work with several destinations
+	\item New destinations are created using an administration tool
+	\item Destinations are accessed using JNDI
+\end{itemize}
+
+
+\subsubsection{Connections}
+\begin{wrapfigure}{r}{4cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-connection.png}%
+\end{wrapfigure}
+Connections:
+\begin{itemize}
+	\item Represents a communication channel to the JMS provider
+	\item Connection has to be started before use (before receiving messages)
+	\item Connection has to be closed when the program is done using it
+\end{itemize}
+\textbf{Connection Factories:}
+\begin{itemize}
+	\item Connections are created from connection factories
+	\item Factories are accessed via JNDI	
+	\item Java EE: two factories preconfigured
+\end{itemize}
+\textbf{Connection.start:}
+\begin{itemize}
+	\item Until connection is started, message flow does not occur
+	\item Connection has to be started before messages can be transmitted or received
+\end{itemize}
+\textbf{Connection.close:}
+\begin{itemize}
+	\item Clients should close a connection as a provider typically allocates significant resources outside the JVM on behalf of a connection
+	\item There is no need to close the sessions, producers, and consumers of a closed connection
+	\item Closing a connection causes all temporary destinations to be deleted
+\end{itemize}
+\subsubsection{Sessions}
+\begin{wrapfigure}{r}{4cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-session.png}%
+\end{wrapfigure}
+Sessions:
+\begin{itemize}
+	\item Single-threaded context to deliver and consume message \\
+		Any message sending and receiving happens in a serial order, one-by-one
+	\item Transactional \\
+		A set of send and receive operations can be packed in an atomic operation
+	\item Sessions are created from connections \\
+		createQueueSession(boolean transacted, int acknowledgeMode)	 \\
+		createTopicSession(boolean transacted, int acknowledgeMode)
+\end{itemize}
+
+\subsubsection{Message Producers}
+\begin{wrapfigure}{r}{4cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-message-producer.png}%
+\end{wrapfigure}
+Message Producers:
+\begin{itemize}
+	\item Used to send or publish message
+	\item TCreated from session object (createSender / createPublisher)
+	\item Producer is associated with a destination (queue or topic) \\
+		queueSession.createSender(queue)	 \\
+		topicSession.createPublisher(topic) 
+	\item Delivery of message with send / publish
+\end{itemize}
+
+\subsubsection{Message Consumers}
+\begin{wrapfigure}{r}{4cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-message-consumer.png}%
+\end{wrapfigure}
+Message Consumers:
+\begin{itemize}
+	\item Used to receive messages
+	\item Created from session object (createReceiver / createSubscriber)
+	\item Consumer is associated with a destination (queue or topic)
+	\item Receipt of message with receive()/receiveNoWait()
+	\item Deactivation with close()
+	\item Messages are received after the connection is started
+	\item Message filter can be specified for message consumers
+\end{itemize}
+\subsubsection{Message Listeners}
+\begin{itemize}
+	\item comparable to event listener (interface MessageListener \{ void onMessage(Message msg); \})
+	\item Can be registered both in a QueueReceiver and a TopicSubscriber
+	\item Per session only one listener is active
+\end{itemize}
+\subsubsection{Messages}
+\begin{wrapfigure}{r}{8cm}
+	\centering
+	\includegraphics[scale=0.2]{jms-api-message.png}%
+\end{wrapfigure}
+Message Parts:
+\begin{itemize}
+	\item Header
+	\item Properties [optional]
+	\item Body [optional]
+\end{itemize}
+\textbf{Header Fields:} \\ \\
+\begin{tabular}{l l l l}
+	JMSDestination & send/publish \\
+	JSMDeliveryMode & send/publish & int & persistency \\
+	JMSExpiration & send/publish & long & time() + TTL msec \\
+	JMSPriority & send/publish & int & 0 (low) .. 9 (high) \\
+	JMSMessageID & send/publish \\
+	JMSTimestamp & send/publish \\
+	JMSCorrelationID & client \\
+	JMSReplyTo & client \\
+	JMSType	 & client & String \\
+	JMSRedelivered & JMS provider \\
+\end{tabular} \\ \\ \\
+\textbf{Properties: }
+\begin{itemize}
+	\item additional properties can be specified by client (String/primitive - pairs)
+\end{itemize}
+\textbf{Body depends on message type:}
+\begin{description}
+	\item[TextMessage] String (getText/setText)
+	\item[MapMessage] set of name/value pairs (String/primitive)
+	\item[BytesMessage] byte stream
+	\item[StreamMessage] sequence of primitive data types
+	\item[ObjectMessage] contains one serializable object
+	\item messages are created over a session object, there exist 5 factory methods:
+		\begin{itemize}
+			\item TextMessage m = session.createTextMessage();
+			\item MapMessage m = session.createMapMessage();
+			\item BytesMessage m = session.createBytesMssage();
+			\item StreamMessage m = session.createStreamMessage();
+			\item ObjectMessage m = session.createObjectMessage();
+		\end{itemize}
+\end{description}
+\subsection{Sending / Receiving a Message}
+\begin{enumerate}
+	\item Obtain a connection factory that provides JMS connections to the messaging system
+	\item Obtain a topic or a queue that represents a destination address for the message
+	\item Create an connection to the JMS provider using the factory
+	\item Create a session that is used to group the actions of sending and receiving messages (single-threaded context)
+	\item Create a publisher or a sender that sends messages to the specified topic or queue
+	\item create a subscriber or a receiver and optionally register a MessageListener that receives messages from the specified topic or queue
+\end{enumerate}
+\subsection{Examples}
+\subsubsection{Simple Example}
+\begin{lstlisting}[language=Java, caption=Simple Example Sender, style=JavaStyle]
+public class SimpleQueueSender {
+	public static void main(String[] args) throws Exception {
+		Context jndiContext = new InitialContext(); 
+		QueueConnectionFactory queueConnectionFactory = (QueueConnectionFactory) jndiContext.lookup("QueueConnectionFactory");
+		Queue queue = (Queue) jndiContext.lookup(args[0]);
+		QueueConnection qconn = null;
+		try {
+			qconn = queueConnectionFactory.createQueueConnection(); 
+			QueueSession queueSession = qconn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+			QueueSender queueSender=queueSession.createSender(queue);
+			TextMessage m = queueSession.createTextMessage();
+			for (int i = 0; i < 3; i++) {
+				m.setText("This is message " + (i + 1));
+				queueSender.send(m);
+			}
+		} finally {
+			if (qconn != null)
+				try { qconn.close(); } catch(JMSException e){}
+		}
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Simple Example Receiver, style=JavaStyle]
+public class SimpleQueueReceiver {
+	public static void main(String[] args)  throws Exception {
+		Context jndiContext = new InitialContext();
+		QueueConnectionFactory queueConnectionFactory = (QueueConnectionFactory) jndiContext.lookup("QueueConnectionFactory");
+		Queue queue = (Queue) jndiContext.lookup(args[0]);
+		QueueConnection qConn = null;
+		try {
+			qConn = queueConnectionFactory.createQueueConnection(); 
+			QueueSession queueSession = qConn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+			QueueReceiver queueReceiver = queueSession.createReceiver(queue);
+			qConn.start(); 
+			while (true) {
+				Message m = queueReceiver.receive();
+				if (m instanceof TextMessage) {
+					TextMessage message = (TextMessage) m;
+					System.out.println("Reading message: " + message.getText());
+				}
+			}
+		} finally {
+			if (qConn != null)
+				try {qConn.close();} catch (JMSException e) {}
+		}
+	}
+}
+\end{lstlisting}
+\subsubsection{Echo}
+\begin{lstlisting}[language=Java, caption=Echo Client, style=JavaStyle]
+public static void main(String[] args) throws Exception{ 
+	Hashtable<String,String> properties = new Hashtable<String,String>();
+  ...
+	Context context = new InitialContext(properties);
+	QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
+	Queue queue = (Queue) context.lookup("ECHO");
+	QueueConnection connection=factory.createQueueConnection("","");
+	QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+	QueueSender sender  = session.createSender(queue);
+	TemporaryQueue tempQueue = session.createTemporaryQueue();
+	QueueReceiver receiver = session.createReceiver(tempQueue);
+	connection.start();
+	TextMessage request = session.createTextMessage(); 
+	request.setText("Hello World [" + new Date() + "]");
+	request.setJMSReplyTo(tempQueue); sender.send(request);
+	TextMessage response = (TextMessage) receiver.receive();
+	System.out.println("Response: " + response.getText());
+	connection.close();
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Echo Server, style=JavaStyle]
+public static void main(String[] args) throws Exception{ 
+	Hashtable<String,String> properties = new Hashtable<String,String>();
+   ...
+	Context context = new InitialContext(properties);
+	QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup("ConnectionFactory");
+	Queue queue = (Queue) context.lookup("ECHO");
+	QueueConnection connection=factory.createQueueConnection("","");
+	QueueSession session = connection.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
+	QueueReceiver receiver = session.createReceiver(queue); 
+	connection.start();
+	System.out.println("Echo service is running..."); 
+	while(true){
+		TextMessage request = (TextMessage)receiver.receive();
+		Queue replyQueue = (Queue) request.getJMSReplyTo(); 
+		TextMessage response = session.createTextMessage(); 
+		response.setText("Echo: "+request.getText()); 
+		QueueSender sender = session.createSender(replyQueue); 
+		sender.send(response);
+		System.out.println("Handled "+request.getText());
+	}
+}
+\end{lstlisting}
+\subsection{Guaranteed Messaging and Transactions}
+\subsubsection{Delivery Mode}
+\begin{description}
+	\item[PERSISTENT] (Default)\hfill \\
+		Instructs the JMS provider to take extra care to ensure that message is not lost in case of a JMS provider failure
+	\item[NON\_PERSISTENT] \hfill \\
+		Does not require the JMS provider to store the message
+\end{description}
+\subsubsection{Specification of delivery mode:}
+\begin{description}
+	\item[On MessageProducer] \hfill \\
+		producer.setDeliveryMode(DeliveryMode.NON\_PERSISTENT)
+	\item[On send or publish method] \hfill \\
+		producer.send(msg, DeliveryMode.NON\_PERSISTENT, 4, 10000)
+		\begin{itemize}
+			\item Priority level: 0 (lowest), 4 (default), 9 (highest)
+			\item Message expiration in msec
+		\end{itemize}
+\end{description}
+\subsubsection{Durable Subscribers}
+\begin{description}
+	\item[Nondurable subscribers] \hfill \\
+		Receive messages only when they are actively listening on a topic
+	\item[Durable subscribers] \hfill
+		\begin{itemize}
+			\item Receive all messages sent to that topic (store-and-forward messaging)
+			\item Messages are stored under a subscriber ID (ClientID-SubscriptionName)
+			\item Durable subscribers must perform two initial steps:
+				\begin{itemize}
+					\item Set the ClientID on the connection (before creating any sessions).\\ The ClientID is part of the durable subscriber's name (a client can only be connected once)
+					\item Use the createDurableSubscriber factory method of the topic session. This method requires a second parameter with the name of the durable subscriber
+				\end{itemize}
+			\item Durable subscribers may be unsubscribed
+		\end{itemize}
+\end{description}
+\subsubsection{Message Acknowledgements}
+\begin{itemize}
+	\item Servers acknowledge the receipt of messages from producers
+	\item Consumers acknowledge the receipt of messages from servers
+\end{itemize}
+\textbf{Modes:}
+\begin{description}
+	\item conn.createQueueSession(false, Session.CLIENT\_ACKNOWLEDGE);
+	\item conn.createTopicSession(false, Session.CLIENT\_ACKNOWLEDGE);
+	\item[AUTO\_ACKNOWLEDGE] \hfill \\
+		Session automatically acknowledges receipt of a message
+	\item[DUPS\_OK\_ACKNOWLEDGE] \hfill \\
+		Same as AUTO, but messages may be delivered more than once
+	\item[CLIENT\_ACKNOWLEDGE] \hfill
+		\begin{itemize}
+			\item Client acknowledges message by calling the message's acknowledge method
+			\item Acknowledging a message acknowledges the receipt of ALL messages of that session
+		\end{itemize}
+\end{description}
+\textbf{Duplicate Messages:}
+\begin{itemize}
+	\item With AUTO / DUPS\_OK acknowledgement modes acknowledgement may get lost
+	\item To guard against duplicate messages an application must check whether a redelivered message was already processed
+	\item JMSMessageId header is unique and can be used as a key in a table
+\end{itemize}
+\subsubsection{JMS Transactions}
+\begin{itemize}
+	\item conn.createQueueSession(true, Session. SESSION\_TRANSACTED);
+	\item conn.createTopicSession(true, Session. SESSION\_TRANSACTED);
+	\item All messages sent or received using such a session are automatically grouped in a transaction
+	\item The transactioni remains open until either a session.rollback() or a session.commit() is invoked (which also starts a new transaction)
+	\item Transactions guarantee
+		\begin{itemize}
+			\item That message is delivered from the client to the JMS provider
+			\item That message is delivered from the JMS provider to the consumer
+		\end{itemize}
+\end{itemize}
+
+\newpage
+\section{WebSockets}
+\subsection{Spec}
+\subsubsection{Bidirectional Communication}
+\begin{center}
+	\includegraphics[scale=0.2]{websockets-server-push-solutions.png}
+\end{center}
+\subsubsection{Format}
+\begin{center}
+	\includegraphics[scale=0.3]{websocket-spec-format.png}
+\end{center}
+\subsubsection{Handshake}
+\begin{lstlisting}
+GET /examples/websocket/echoStream HTTP/1.1 Host: server.example.com
+Connection: Upgrade
+Upgrade: websocket
+Sec-Websocket-Key: mqn5Pm7wtXEX6BzqDInLjw==
+Sec-Websocket-Version: 13
+\end{lstlisting}
+\begin{lstlisting}
+HTTP/1.1 101 Switching Protocols
+Server: Apache-Coyote/1.1
+Upgrade: websocket
+Connection: upgrade
+Sec-WebSocket-Accept: +TdGPOkAq62+toDOhVGj2QZWwg8= Date: Thu, 04 Apr 2013 19:21:39 GMT
+\end{lstlisting}
+\subsubsection{Negotiation}
+\begin{lstlisting}
+GET /examples/websocket/echoStream HTTP/1.1 Host: server.example.com
+Connection: Upgrade
+Upgrade: websocket
+Sec-Websocket-Key: mqn5Pm7wtXEX6BzqDInLjw==
+Sec-WebSocket-Protocol: chat, superchat
+Sec-Websocket-Version: 13
+\end{lstlisting}
+\begin{lstlisting}
+HTTP/1.1 101 Switching Protocols
+Server: Apache-Coyote/1.1
+Upgrade: websocket
+Connection: upgrade
+Sec-WebSocket-Accept: +TdGPOkAq62+toDOhVGj2QZWwg8= Sec-WebSocket-Protocol: chat
+Date: Thu, 04 Apr 2013 19:21:39 GMT
+\end{lstlisting}
+\subsection{Java-WebSocket}
+\begin{lstlisting}[language=Java, caption=Echo Server, style=JavaStyle]
+public class EchoServer extends WebSocketServer {
+	public static void main(String[] args) {
+		WebSocketServer server = new EchoServer(80);
+		server.start();
+	}
+	public EchoServer( int port ) {
+		super( new InetSocketAddress(port) );
+	}
+	public void onOpen(WebSocket c, ClientHandshake handshake) {
+		System.out.println("onOpen " + c.getRemoteSocketAddress());
+	}
+	public void onClose(WebSocket c, int id, String s, boolean rem){
+    		System.out.println("closed " + c.getRemoteSocketAddress());
+  	}
+	public void onMessage(WebSocket c, String message) {
+		System.out.println("onMessage from" + c.getRemoteSocketAddress() + ": " + message );
+		c.send("Echo: " + message);
+	}
+	public void onError(WebSocket c, Exception ex) {
+		System.out.println("onError " + c + ":" + ex );
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Echo Client, style=JavaStyle]
+public class EchoClient {
+	public static void main(String[] args) throws Exception {
+		final URI url = new URI("ws://echo.websocket.org/");
+		final WebSocketClient c = new WebSocketClient(url, new Draft_17()) {
+			public void onOpen(ServerHandshake handshakedata) {
+				System.out.println("onOpen");
+				send("Hello");
+			}
+			public void onMessage(String message) {
+        			System.out.println("onMessage "+message);
+				close();
+			}
+			public void onError(Exception ex) {
+				System.out.println("onError");
+			}
+			public void onClose(int code, String txt, boolean remote) {
+				System.out.println("onClose");
+			}
+		};
+    		c.connect();
+	}
+}
+\end{lstlisting}
+\subsubsection{Tomcat}
+\begin{lstlisting}[language=Java, caption=Echo Server, style=JavaStyle]
+public abstract class WebSocketServlet() {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {...}
+	protected abstract StreamInbound createWebSocketInbound( String subProtocol, HttpServletRequest request);
+	protected String selectSubProtocol(List<String> subProtocols)
+	protected boolean verifyOrigin(String origin)
+}
+public abstract class MessageInbound extends StreamInbound {
+	protected abstract void onBinaryMessage(ByteBuffer message);
+	protected abstract void onTextMessage(CharBuffer message);
+	protected void onOpen(WsOutbound outbound) {} 
+	protected void onClose(int status) {} 	
+	protected void onPong(ByteBuffer payload) {}
+}
+public class EchoMessage extends WebSocketServlet {
+	protected StreamInbound createWebSocketInbound(
+		String subProtocol, HttpServletRequest request) {
+			return new EchoMessageInbound();
+		}
+		private class EchoMessageInbound extends MessageInbound {
+		protected void onBinaryMessage(ByteBuffer message) throws IOException {
+			getWsOutbound().writeBinaryMessage(message);
+    		}
+    		protected void onTextMessage(CharBuffer message) throws IOException {
+    			getWsOutbound().writeTextMessage(message);
+		}
+	}
+}
 \end{lstlisting}
 
 \newpage

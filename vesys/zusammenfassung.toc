@@ -39,8 +39,60 @@
 \contentsline {subsubsection}{\numberline {4.3.3}Content Negotiation}{16}
 \contentsline {subsection}{\numberline {4.4}Data Binding}{17}
 \contentsline {subsection}{\numberline {4.5}JAXB}{17}
-\contentsline {section}{\numberline {5}Code Samples}{19}
-\contentsline {subsection}{\numberline {5.1}Socket}{19}
-\contentsline {subsection}{\numberline {5.2}Internet}{20}
-\contentsline {subsection}{\numberline {5.3}XmlRpc}{21}
-\contentsline {subsection}{\numberline {5.4}REST}{22}
+\contentsline {section}{\numberline {5}Remote Method Invocation}{19}
+\contentsline {subsection}{\numberline {5.1}Einleitung}{19}
+\contentsline {subsection}{\numberline {5.2}Ablauf}{19}
+\contentsline {subsection}{\numberline {5.3}Naming / Registry}{19}
+\contentsline {subsection}{\numberline {5.4}Using RMI}{20}
+\contentsline {subsubsection}{\numberline {5.4.1}Remote Interfaces}{20}
+\contentsline {subsubsection}{\numberline {5.4.2}Implementation}{20}
+\contentsline {subsubsection}{\numberline {5.4.3}stub and skeleton}{20}
+\contentsline {subsubsection}{\numberline {5.4.4}Server}{21}
+\contentsline {subsubsection}{\numberline {5.4.5}Client}{21}
+\contentsline {subsubsection}{\numberline {5.4.6}Start of RMI-Registry \& Server}{21}
+\contentsline {subsection}{\numberline {5.5}Marshalling}{22}
+\contentsline {subsection}{\numberline {5.6}Export / Unexport}{22}
+\contentsline {subsection}{\numberline {5.7}Threads}{23}
+\contentsline {subsubsection}{\numberline {5.7.1}Specification}{23}
+\contentsline {subsubsection}{\numberline {5.7.2}Consequence}{23}
+\contentsline {subsection}{\numberline {5.8}Dynamically Loaded Classes}{24}
+\contentsline {subsection}{\numberline {5.9}Socket Factories}{24}
+\contentsline {subsection}{\numberline {5.10}Example: XOR encoding}{25}
+\contentsline {section}{\numberline {6}Java Message Service}{27}
+\contentsline {subsection}{\numberline {6.1}Asynchronous Communication}{27}
+\contentsline {subsection}{\numberline {6.2}Point-to-Point Messaging Domain}{27}
+\contentsline {subsection}{\numberline {6.3}Publish/Subscribe Messaging Domain}{27}
+\contentsline {subsection}{\numberline {6.4}Destinations}{28}
+\contentsline {subsection}{\numberline {6.5}Message Consumption}{28}
+\contentsline {subsection}{\numberline {6.6}JMS API}{28}
+\contentsline {subsubsection}{\numberline {6.6.1}Overview}{28}
+\contentsline {subsubsection}{\numberline {6.6.2}Destinations}{28}
+\contentsline {subsubsection}{\numberline {6.6.3}Connections}{29}
+\contentsline {subsubsection}{\numberline {6.6.4}Sessions}{29}
+\contentsline {subsubsection}{\numberline {6.6.5}Message Producers}{29}
+\contentsline {subsubsection}{\numberline {6.6.6}Message Consumers}{29}
+\contentsline {subsubsection}{\numberline {6.6.7}Message Listeners}{30}
+\contentsline {subsubsection}{\numberline {6.6.8}Messages}{30}
+\contentsline {subsection}{\numberline {6.7}Sending / Receiving a Message}{31}
+\contentsline {subsection}{\numberline {6.8}Examples}{31}
+\contentsline {subsubsection}{\numberline {6.8.1}Simple Example}{31}
+\contentsline {subsubsection}{\numberline {6.8.2}Echo}{32}
+\contentsline {subsection}{\numberline {6.9}Guaranteed Messaging and Transactions}{33}
+\contentsline {subsubsection}{\numberline {6.9.1}Delivery Mode}{33}
+\contentsline {subsubsection}{\numberline {6.9.2}Specification of delivery mode:}{33}
+\contentsline {subsubsection}{\numberline {6.9.3}Durable Subscribers}{33}
+\contentsline {subsubsection}{\numberline {6.9.4}Message Acknowledgements}{33}
+\contentsline {subsubsection}{\numberline {6.9.5}JMS Transactions}{34}
+\contentsline {section}{\numberline {7}WebSockets}{35}
+\contentsline {subsection}{\numberline {7.1}Spec}{35}
+\contentsline {subsubsection}{\numberline {7.1.1}Bidirectional Communication}{35}
+\contentsline {subsubsection}{\numberline {7.1.2}Format}{35}
+\contentsline {subsubsection}{\numberline {7.1.3}Handshake}{35}
+\contentsline {subsubsection}{\numberline {7.1.4}Negotiation}{35}
+\contentsline {subsection}{\numberline {7.2}Java-WebSocket}{36}
+\contentsline {subsubsection}{\numberline {7.2.1}Tomcat}{36}
+\contentsline {section}{\numberline {8}Code Samples}{38}
+\contentsline {subsection}{\numberline {8.1}Socket}{38}
+\contentsline {subsection}{\numberline {8.2}Internet}{39}
+\contentsline {subsection}{\numberline {8.3}XmlRpc}{40}
+\contentsline {subsection}{\numberline {8.4}REST}{41}
