@@ -199,7 +199,7 @@ $-1\cdot 2^7+0\cdot 2^6+1\cdot 2^5+0\cdot 2^4+0\cdot 2^3+1\cdot 2^2+1\cdot 2^1+1
 \begin{tabular}{l c c l l}
 	Name & Byte & Bit & kleinste Zahl & gr\"osste Zahl \\
 	\hline
-	\Bold {byte} & 1 & 8 & -127 & 128 \\
+	\Bold {byte} & 1 & 8 & -128 & 127 \\
 	\Bold {short} & 2 & 16 &-32.768 & 32.767 \\
 	\Bold {char} & 2 & 16 & $\backslash$u0000 (0) & 	$\backslash$uFFFF (65.535) \\
 	\Bold {int} & 4 & 32 & -2.147.483.648 & 2.147.483.647 \\
@@ -216,7 +216,7 @@ IEEE 754 Float: $(-1)^V * (1+M) * 2^{E-127}$ \\
 IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \begin{description}
 	\item[V] - Vorzeichen (float 1Bit / double 1 Bit)
-	\item[M] - normalisierte Mantrisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
+	\item[M] - normalisierte Mantisse $(0 \leq M \leq 1)$ (float: 23 Bits / double: 52 Bits)
 	\item[E] - Exponent (float: Signed-8-Bit $-$ 127  / double: Signed-11-Bit $-$ 1023)
 \end{description} 
 \begin{tabular}{|c|l|l|}
@@ -240,8 +240,9 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 			0.25&$\times 2 = 0.5$ &\Bold{0}\\
 			0.5&$\times 2=1.0$ &\Bold{1}\\
 		\end{tabular}
-		\item $1313.3125_{10}=10100100001.0101_2$
-		\item Normen $10100100001.0101_2=1.01001000010101_2\times2^{10}$
+		\item Ganzzahlteil$.$Nachkommateil=$1313.3125_{10}=10100100001.0101_2$
+		\item Normen \begin{flushleft}
+		Komma verschieben bis nur noch eine 1 vor dem Komma steht. Exponent entspricht der Anzahl verschobener Stellen. \linebreak Verschiebung des Kommas nach links: positiver Exponent.\linebreak Verschiebung des Kommas nach rechts: negativer Exponent. \end{flushleft} $10100100001.0101_2=1.01001000010101_2\times2^{10}$
 		\item Mantisse ist $01001000010101$, Exponent ist $10 + 127 = 137 = 10001001_2$, Vorzeichen ist 1.
 		\item -1313.3125 ist 
 		\begin{tabular}{|c|l|l|}
