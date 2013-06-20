@@ -58,41 +58,99 @@
 \contentsline {subsection}{\numberline {5.8}Dynamically Loaded Classes}{24}
 \contentsline {subsection}{\numberline {5.9}Socket Factories}{24}
 \contentsline {subsection}{\numberline {5.10}Example: XOR encoding}{25}
-\contentsline {section}{\numberline {6}Java Message Service}{27}
-\contentsline {subsection}{\numberline {6.1}Asynchronous Communication}{27}
-\contentsline {subsection}{\numberline {6.2}Point-to-Point Messaging Domain}{27}
-\contentsline {subsection}{\numberline {6.3}Publish/Subscribe Messaging Domain}{27}
-\contentsline {subsection}{\numberline {6.4}Destinations}{28}
-\contentsline {subsection}{\numberline {6.5}Message Consumption}{28}
-\contentsline {subsection}{\numberline {6.6}JMS API}{28}
-\contentsline {subsubsection}{\numberline {6.6.1}Overview}{28}
-\contentsline {subsubsection}{\numberline {6.6.2}Destinations}{28}
-\contentsline {subsubsection}{\numberline {6.6.3}Connections}{29}
-\contentsline {subsubsection}{\numberline {6.6.4}Sessions}{29}
-\contentsline {subsubsection}{\numberline {6.6.5}Message Producers}{29}
-\contentsline {subsubsection}{\numberline {6.6.6}Message Consumers}{29}
-\contentsline {subsubsection}{\numberline {6.6.7}Message Listeners}{30}
-\contentsline {subsubsection}{\numberline {6.6.8}Messages}{30}
-\contentsline {subsection}{\numberline {6.7}Sending / Receiving a Message}{31}
-\contentsline {subsection}{\numberline {6.8}Examples}{31}
-\contentsline {subsubsection}{\numberline {6.8.1}Simple Example}{31}
-\contentsline {subsubsection}{\numberline {6.8.2}Echo}{32}
-\contentsline {subsection}{\numberline {6.9}Guaranteed Messaging and Transactions}{33}
-\contentsline {subsubsection}{\numberline {6.9.1}Delivery Mode}{33}
-\contentsline {subsubsection}{\numberline {6.9.2}Specification of delivery mode:}{33}
-\contentsline {subsubsection}{\numberline {6.9.3}Durable Subscribers}{33}
-\contentsline {subsubsection}{\numberline {6.9.4}Message Acknowledgements}{33}
-\contentsline {subsubsection}{\numberline {6.9.5}JMS Transactions}{34}
-\contentsline {section}{\numberline {7}WebSockets}{35}
-\contentsline {subsection}{\numberline {7.1}Spec}{35}
-\contentsline {subsubsection}{\numberline {7.1.1}Bidirectional Communication}{35}
-\contentsline {subsubsection}{\numberline {7.1.2}Format}{35}
-\contentsline {subsubsection}{\numberline {7.1.3}Handshake}{35}
-\contentsline {subsubsection}{\numberline {7.1.4}Negotiation}{35}
-\contentsline {subsection}{\numberline {7.2}Java-WebSocket}{36}
-\contentsline {subsubsection}{\numberline {7.2.1}Tomcat}{36}
-\contentsline {section}{\numberline {8}Code Samples}{38}
-\contentsline {subsection}{\numberline {8.1}Socket}{38}
-\contentsline {subsection}{\numberline {8.2}Internet}{39}
-\contentsline {subsection}{\numberline {8.3}XmlRpc}{40}
-\contentsline {subsection}{\numberline {8.4}REST}{41}
+\contentsline {section}{\numberline {6}Asynchronous Communication}{27}
+\contentsline {subsection}{\numberline {6.1}Prinzip}{27}
+\contentsline {subsubsection}{\numberline {6.1.1}Synchronous Communication Model}{27}
+\contentsline {subsubsection}{\numberline {6.1.2}Asynchronous Communication Model}{27}
+\contentsline {subsection}{\numberline {6.2}Advantages}{27}
+\contentsline {subsection}{\numberline {6.3}Model}{27}
+\contentsline {section}{\numberline {7}Java Message Service}{28}
+\contentsline {subsection}{\numberline {7.1}Point-to-Point Messaging Domain}{28}
+\contentsline {subsection}{\numberline {7.2}Publish/Subscribe Messaging Domain}{28}
+\contentsline {subsection}{\numberline {7.3}Destinations}{28}
+\contentsline {subsection}{\numberline {7.4}Message Consumption}{29}
+\contentsline {subsection}{\numberline {7.5}JMS API}{29}
+\contentsline {subsubsection}{\numberline {7.5.1}Overview}{29}
+\contentsline {subsubsection}{\numberline {7.5.2}Destinations}{29}
+\contentsline {subsubsection}{\numberline {7.5.3}Connections}{29}
+\contentsline {subsubsection}{\numberline {7.5.4}Sessions}{30}
+\contentsline {subsubsection}{\numberline {7.5.5}Message Producers}{30}
+\contentsline {subsubsection}{\numberline {7.5.6}Message Consumers}{30}
+\contentsline {subsubsection}{\numberline {7.5.7}Message Listeners}{31}
+\contentsline {subsubsection}{\numberline {7.5.8}Messages}{31}
+\contentsline {subsection}{\numberline {7.6}Sending / Receiving a Message}{31}
+\contentsline {subsection}{\numberline {7.7}Examples}{32}
+\contentsline {subsubsection}{\numberline {7.7.1}Simple Example}{32}
+\contentsline {subsubsection}{\numberline {7.7.2}Echo}{33}
+\contentsline {subsection}{\numberline {7.8}Guaranteed Messaging and Transactions}{33}
+\contentsline {subsubsection}{\numberline {7.8.1}Delivery Mode}{33}
+\contentsline {subsubsection}{\numberline {7.8.2}Specification of delivery mode:}{34}
+\contentsline {subsubsection}{\numberline {7.8.3}Durable Subscribers}{34}
+\contentsline {subsubsection}{\numberline {7.8.4}Message Acknowledgements}{34}
+\contentsline {subsubsection}{\numberline {7.8.5}JMS Transactions}{35}
+\contentsline {section}{\numberline {8}WebSockets}{36}
+\contentsline {subsection}{\numberline {8.1}Spec}{36}
+\contentsline {subsubsection}{\numberline {8.1.1}Bidirectional Communication}{36}
+\contentsline {subsubsection}{\numberline {8.1.2}Format}{36}
+\contentsline {subsubsection}{\numberline {8.1.3}Handshake}{36}
+\contentsline {subsubsection}{\numberline {8.1.4}Negotiation}{36}
+\contentsline {subsection}{\numberline {8.2}Java-WebSocket}{37}
+\contentsline {subsubsection}{\numberline {8.2.1}Tomcat}{37}
+\contentsline {section}{\numberline {9}Tuple Spaces}{39}
+\contentsline {subsection}{\numberline {9.1}Prinzip}{39}
+\contentsline {subsubsection}{\numberline {9.1.1}Distributed Shared Associative Memory Space}{39}
+\contentsline {subsubsection}{\numberline {9.1.2}Uncoupling}{39}
+\contentsline {subsection}{\numberline {9.2}Overview}{39}
+\contentsline {subsection}{\numberline {9.3}Basic Definitions}{39}
+\contentsline {subsubsection}{\numberline {9.3.1}Tuple }{39}
+\contentsline {subsubsection}{\numberline {9.3.2}Field}{39}
+\contentsline {subsubsection}{\numberline {9.3.3}TupleSpace}{40}
+\contentsline {subsection}{\numberline {9.4}Primitive operations}{40}
+\contentsline {subsection}{\numberline {9.5}Tuple}{40}
+\contentsline {subsubsection}{\numberline {9.5.1}Ways to create a tuple}{40}
+\contentsline {subsubsection}{\numberline {9.5.2}Ways to read a tuple}{41}
+\contentsline {subsubsection}{\numberline {9.5.3}Echo Example}{41}
+\contentsline {subsubsection}{\numberline {9.5.4}Factorial Example}{41}
+\contentsline {subsection}{\numberline {9.6}Transactions}{42}
+\contentsline {subsection}{\numberline {9.7}Event Registration}{43}
+\contentsline {subsubsection}{\numberline {9.7.1}Event notifications}{43}
+\contentsline {section}{\numberline {10}Remoting Patterns}{44}
+\contentsline {subsection}{\numberline {10.1}Remoting Styles}{44}
+\contentsline {subsubsection}{\numberline {10.1.1}Remote Procedure Calls}{44}
+\contentsline {subsubsection}{\numberline {10.1.2}Message Passing}{44}
+\contentsline {subsubsection}{\numberline {10.1.3}Shared Repository}{44}
+\contentsline {subsection}{\numberline {10.2}Pattern Language for RPC-like communication}{45}
+\contentsline {subsubsection}{\numberline {10.2.1}Pattern Language}{45}
+\contentsline {subsubsection}{\numberline {10.2.2}Remote Object Access}{45}
+\contentsline {subsection}{\numberline {10.3}Basic Remoting Patterns}{45}
+\contentsline {subsubsection}{\numberline {10.3.1}Overview}{45}
+\contentsline {subsubsection}{\numberline {10.3.2}Interactions}{46}
+\contentsline {subsubsection}{\numberline {10.3.3}CLIENT PROXY}{47}
+\contentsline {subsubsection}{\numberline {10.3.4}REQUESTOR}{47}
+\contentsline {subsubsection}{\numberline {10.3.5}CLIENT REQUEST HANDLER}{47}
+\contentsline {subsubsection}{\numberline {10.3.6}SERVER REQUEST HANDLER}{48}
+\contentsline {subsubsection}{\numberline {10.3.7}INVOKER}{49}
+\contentsline {subsubsection}{\numberline {10.3.8}MARSHALLER}{49}
+\contentsline {subsubsection}{\numberline {10.3.9}INTERFACE DESCRIPTION}{50}
+\contentsline {subsubsection}{\numberline {10.3.10}REMOTING ERROR}{50}
+\contentsline {subsection}{\numberline {10.4}Identification Patterns}{50}
+\contentsline {subsubsection}{\numberline {10.4.1}Overview}{50}
+\contentsline {subsubsection}{\numberline {10.4.2}Interactions}{50}
+\contentsline {subsubsection}{\numberline {10.4.3}OBJECT ID}{51}
+\contentsline {subsubsection}{\numberline {10.4.4}ABSOLUTE OBJECT REFERENCE}{51}
+\contentsline {subsubsection}{\numberline {10.4.5}LOOKUP}{52}
+\contentsline {subsection}{\numberline {10.5}Invocation Asynchrony Patterns}{52}
+\contentsline {subsubsection}{\numberline {10.5.1}Overview}{52}
+\contentsline {subsubsection}{\numberline {10.5.2}FIRE AND FORGET}{52}
+\contentsline {subsubsection}{\numberline {10.5.3}SYNC WITH SERVER}{53}
+\contentsline {subsubsection}{\numberline {10.5.4}POLL OBJECT (Future)}{53}
+\contentsline {subsubsection}{\numberline {10.5.5}RESULT CALLBACK}{53}
+\contentsline {subsubsection}{\numberline {10.5.6}MESSAGE QUEUE}{54}
+\contentsline {subsubsection}{\numberline {10.5.7}Relation among invocation asynchrony patterns}{54}
+\contentsline {subsection}{\numberline {10.6}Lifecycle Management Patterns}{55}
+\contentsline {subsection}{\numberline {10.7}Extension Patterns}{55}
+\contentsline {section}{\numberline {11}Code Samples}{56}
+\contentsline {subsection}{\numberline {11.1}Socket}{56}
+\contentsline {subsection}{\numberline {11.2}Internet}{57}
+\contentsline {subsection}{\numberline {11.3}XmlRpc}{58}
+\contentsline {subsection}{\numberline {11.4}REST}{59}

@@ -1325,15 +1325,25 @@ public class CalculatorImpl extends java.rmi.server.UnicastRemoteObject implemen
 \end{lstlisting}
 
 \newpage
-\section{Java Message Service}
-\subsection{Asynchronous Communication}
-\textbf{Advantages:}
+\section{Asynchronous Communication}
+\subsection{Prinzip}
+\subsubsection{Synchronous Communication Model}
+Client and Server are directly coupled (Telephone Connection)
+\begin{center}
+	\includegraphics[scale=0.25]{communication-synchron.png}
+\end{center}
+\subsubsection{Asynchronous Communication Model}
+ Client and Server communicate over a 3rd party Message Oriented Middleware (MOM). (SMS, Email)
+ \begin{center}
+	\includegraphics[scale=0.25]{communication-asynchron.png}
+\end{center}
+\subsection{Advantages}
 \begin{itemize}
 	\item Loosely coupled communication
 	\item Sender/receiver do not have to be active at the same time and may be disconnected
 	\item Sender/receiver only have to agree on message format, no dependency on interfaces
 \end{itemize}
-\textbf{Communication Model:}
+\subsection{Model}
 \begin{itemize}
 	\item Producer sends a message to a virtual channel
 	\item Producer does not have to wait for a reply
@@ -1341,6 +1351,9 @@ public class CalculatorImpl extends java.rmi.server.UnicastRemoteObject implemen
 	\item Producer is not dependent on the availability of consumers
 	\item Transaction and security context of a producer are not propagated to the consumer of a message
 \end{itemize}
+
+\newpage
+\section{Java Message Service}
 \subsection{Point-to-Point Messaging Domain}
 \textbf{Queue:}
 \begin{itemize}
@@ -1831,6 +1844,598 @@ public class EchoMessage extends WebSocketServlet {
 	}
 }
 \end{lstlisting}
+
+\newpage
+\section{Tuple Spaces}
+\subsection{Prinzip}
+\subsubsection{Distributed Shared Associative Memory Space}
+\begin{itemize}
+	\item Provides a repository of tuples that can be accessed concurrently \\
+		Associative: items are selected by reference to their contents 
+	\item Implements blackboard metaphor
+		\begin{itemize}
+			\item Producers post their data as tuples in the space
+			\item Consumers retrieve data from the space that match a certain pattern
+		\end{itemize}
+\end{itemize}
+\subsubsection{Uncoupling}
+\begin{description}
+	\item[Time:] Tuples have their own life span (independent of producers and consumers)
+	\item[Destination:] The producer requires no knowledge about the future of a tuple, i.e. tuple space communication is fully anonymous
+	\item[Space:] Tuple space provides a globally shared data space to all processes
+\end{description}
+\subsection{Overview}
+\begin{itemize}
+	\item Java implementation of the Linda coordination model
+	\item Enables communication between applications in a network of heterogeneous computers and operating systems
+	\item Features:
+		\begin{itemize}
+			\item Blocking and non-blocking tuple set operators
+			\item Persistent data repository
+			\item Database indexing and query capabilities
+			\item Event notifications
+			\item Access controls
+		\end{itemize}
+\end{itemize}
+\subsection{Basic Definitions}
+\subsubsection{Tuple	}
+\begin{itemize}
+	\item A tuple is an ordered sequence of fields
+	\item Template tuple is a tuple used for matching
+\end{itemize}
+\subsubsection{Field}
+\begin{itemize}
+	\item Type	
+	\item Value
+	\item Name (optional) \\
+		If a name is specified, then this field is indexed
+\end{itemize}
+\subsubsection{TupleSpace}
+\begin{itemize}
+	\item Implements a space where tuples can be added/removed
+	\item It is stored and administered across a network on one or more "TSpace Servers" (a TSpace server may contain many TupleSpaces)
+	\item Several threads on the same or different machines can be accessing the space simultaneously
+	\item For each different TupleSpace a client wishes to access, it requires a separate instance of this class, even if they are managed by the same server
+	\item In order to obtain an instance of a specific tuple space you need the name of the space, and the name of a server that manages that space (and a port)
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=TupleSace, style=JavaStyle]
+TupleSpace(String name, String host);
+TupleSpace(String name, String host, int port);
+\end{lstlisting}
+\subsection{Primitive operations}
+\begin{description}
+	\item[write(Tuple tuple)] \hfill \\ Adds a tuple to the store
+	\item[take(Tuple template)] non-blocking \hfill
+		\begin{itemize}
+			\item Searches for a tuple that matches the template
+			\item When found, the tuple is removed from the space and returned
+			\item If none is found, returns null
+		\end{itemize}
+	\item[waitToTake(Tuple template)] blocking \hfill \\
+		Like take, but blocks until a match is found
+	\item[read(Tuple template)] non-blocking \hfill \\
+		 Like take, except that the tuple is not removed from the space
+	\item[waitToRead(Tuple template)] blocking \hfill \\
+		Like waitToTake, except that the tuple is not removed from the space
+	\item[scan(Tuple template)] non-blocking \hfill
+		\begin{itemize}
+			\item Like read, except that it returns all tuples that match
+			\item The tuples read are returned in one tuple (with the tuples as fields)	
+		\end{itemize}
+	\item[countN(Tuple template)] non-blocking \hfill
+		\begin{itemize}
+			\item Like scan, except that it returns the number of matching tuples only
+			\item Not that useful as the number of tuples may have changed after invocation
+		\end{itemize}
+\end{description}
+\subsection{Tuple}
+\subsubsection{Ways to create a tuple}
+\begin{lstlisting}[language=Java, caption=Ways to create a tuple, style=JavaStyle]
+Tuple t = new Tuple("key", "value");
+Tuple t = new Tuple(); t.add("key"); t.add("value");
+Tuple t = new Tuple(new Field("key"), new Field("value"));
+Tuple t = new Tuple(new Field(String.class, "key"), "value");
+Tuple t = new Tuple(new Field("key", String.class, "key"),new Field("value", String.class, "value"));
+ts.write("key", "value");
+\end{lstlisting}
+\subsubsection{Ways to read a tuple}
+\begin{itemize}
+	\item  In order to read a tuple you must create a template Tuple
+	\item A template Tuple is a Tuple that is used to select matching Tuples
+	\item It will contain 0 or more fields that are either actual fields or formal fields
+	\item Actual fields	\\
+		have a value that must be matched exactly against the corresponding Fields in the tuples that are in the space
+	\item Formal fields
+		\begin{itemize}
+			\item have a class but no value and only describe the type of value that is to be returned
+			\item Basically they act as wildcards
+		\end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Ways to read a tuple, style=JavaStyle]
+Tuple template = new Tuple("key", "value"); Tuple t = ts.read(template);
+Tuple template = new Tuple("key", new Field(String.class));
+Tuple t = ts.read(template);
+Tuple template = new Tuple(new Field(String.class),
+                           new Field(String.class));
+Tuple t = ts.read(template);
+Tuple t = ts.read(new Field(String.class),
+                  new Field(String.class));
+\end{lstlisting}
+\subsubsection{Echo Example}
+\begin{lstlisting}[language=Java, caption=Echo Client, style=JavaStyle]
+public class Client {
+  public static void main(String[] args) throws Exception {
+    TupleSpace ts = new TupleSpace("Echo", "localhost");
+    UUID uuid = UUID.randomUUID();
+    TupleID id = ts.write(new Tuple(uuid, "Hello World"));
+    Tuple res = ts.waitToTake(new Tuple(new Field(String.class), uuid, new Field(String.class)));
+    System.out.println(res.getField(2).getValue());
+  }
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Echo Server, style=JavaStyle]
+public class Server {
+	public static void main(String[] args) throws Exception {
+		TupleSpace ts = new TupleSpace("Echo", "localhost");
+		while (true) {
+    			Tuple template = ts.waitToTake(new Field(UUID.class), new Field(String.class));
+			String text = (String) template.getField(1).getValue(); 
+			ts.write(new Tuple("Response", template.getField(0), "Echo: " + text));
+		}
+	}
+}
+\end{lstlisting}
+\subsubsection{Factorial Example}
+\begin{lstlisting}[language=Java, caption=Master, style=JavaStyle]
+public class Master {
+	public static void main(String[] args) throws Exception {
+		TupleSpace ts = new TupleSpace("Factorial", "localhost");
+		ts.deleteAll();
+		int n = 100;
+		ts.write("counter", 1);
+		for (int i = 0; i < n; i++) {
+			ts.write("x", BigInteger.valueOf(i + 1));
+			if (i > 0) ts.write("task");
+		}
+		Tuple res = ts.waitToTake(new Tuple("counter", n));
+		res = ts.take(new Tuple("x", new Field(BigInteger.class)));
+		System.out.println(n+"! = " + res.getField(1).getValue());
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Worker, style=JavaStyle]
+public class Worker {
+	public static void main(String[] args) throws Exception {
+		TupleSpace ts = new TupleSpace("Factorial", "localhost"); while (true) {
+			ts.waitToTake("task");
+			Tuple a1=ts.waitToTake("x", new Field(BigInteger.class));
+			Tuple a2=ts.waitToTake("x", new Field(BigInteger.class)); 
+			BigInteger x1 = (BigInteger) (a1.getField(1).getValue()); 
+			BigInteger x2 = (BigInteger) (a2.getField(1).getValue()); 
+			ts.write("x", x1.multiply(x2));
+			Tuple c = ts.waitToTake("counter",new Field(Integer.class));
+			ts.write("counter",(Integer) c.getField(1).getValue()+1);
+		}
+	}
+}
+\end{lstlisting}
+\subsection{Transactions}
+\begin{itemize}
+	\item Create an instance of Transaction class
+	\item Call method {\color{red}beginTrans} on the transaction
+	\item Add a TupleSpace object to the transaction object using {\color{red}addSpace}
+	\item Perform operations (write, read, ..) on the TupleSpace object added to the transaction
+	\item Call {\color{red}commitTrans} on the transaction to make the effects of operations persistent
+	\item Call {\color{red}abortTrans} method of Transaction object to undo all operations that belong to the current transaction
+	\item A transaction may be added to several tuple spaces!
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Transaction Example, style=JavaStyle]
+Transaction trans = new Transaction();
+TupleSpace ts = new TupleSpace("testing");
+trans.addSpace(ts);
+trans.beginTrans(); // start of transaction 
+ts.write("email", "to", "stefan.hoechli@fhnw.ch"); 
+ts.write("email", "text", "Hello"); 
+ts.write("email", "from", "dominik.gruntz@fhnw.ch"); 
+trans.commitTrans(); // end of transaction
+\end{lstlisting}
+\subsection{Event Registration}
+\subsubsection{Event notifications}
+\begin{itemize}
+	\item A mechanism that enables clients to register with the server in order to be informed when specific types of events are available
+		\begin{itemize}
+			\item WRITE
+			\item DELETE
+		\end{itemize}
+	\item Event registration can be cancelled with eventDeRegister
+\end{itemize}
+\begin{lstlisting}[language=Java, caption=Event notifications Example, style=JavaStyle]
+TupleSpace ts = new TupleSpace("testing");
+Tuple template = new Tuple(new Field(String.class));
+boolean newThread = false;
+int id = ts.eventRegister("WRITE", template, callback, newThread);
+...
+ts.eventDeRegister(id);
+\end{lstlisting}
+\begin{lstlisting}[language=Java, caption=Callback interface, style=JavaStyle]
+interface Callback {
+	public boolean call(
+		String commandName, 	// e.g. WRITE or DELETE
+		String tsName, 				// the name of the tuple space this
+                          // command was executed on.
+		int sequenceNumber,		// the registration id for the
+													// executed command
+		SuperTuple tuple,			// the returned tuple or a tuple
+													// which contains an exception boolean 
+		isException 					// indicates whether the command
+													// was processed normally or with
+													// an exception
+	);
+}
+\end{lstlisting}
+
+\newpage
+\section{Remoting Patterns}
+\subsection{Remoting Styles}
+\subsubsection{Remote Procedure Calls}
+\begin{description}
+	\item[Synchronous call] \hfill \\
+		Client waits until invocation succeeds (asynchronous variants exist)
+	\item[Remoting errors] \hfill \\
+		In contrast to in-process operations remoting errors may occur
+	\item[Procedure-RPC vs. OO-RPC] \hfill
+		\begin{description}
+			\item[Procedural:] \hfill
+				\begin{itemize}
+					\item  Server provides a set of operations
+					\item Typically stateless services
+				\end{itemize}
+			\item[OO-RPC:] \hfill
+				\begin{itemize}
+					\item  Server hosts a set of objects $\Ra$ object identity
+					\item Distributed object typically have their own state
+ 				\end{itemize}
+		\end{description}
+\end{description}
+\subsubsection{Message Passing}
+\begin{description}
+	\item[Message Queue Service] \hfill
+		\begin{itemize}
+			\item Sender and Receiver decoupled by message queue servic
+			\item Sender and receiver do not need to know each other
+			\item Reliability
+				\begin{itemize}
+					\item Exactly-once-semantics for queues
+					\item Acknowledgement of message consumption
+				\end{itemize}
+		\end{itemize}
+	\item[Message Styles] \hfill
+		\begin{itemize}
+			\item Queue $\Ra$ one receiver
+			\item Topic $\Ra$ many receivers 
+		\end{itemize}
+\end{description}
+\begin{center}
+	\includegraphics[scale=0.4]{remote-message-passing.png}
+\end{center}
+\subsubsection{Shared Repository}
+\begin{itemize}
+	\item Provides a small interface consisting of access primitives to the clients (CRUD)
+	\item Idea based on (Linda's) Tuple Spaces
+\end{itemize}
+\textbf{Samples:} TupleSpaces, DataBases, REST
+\subsection{Pattern Language for RPC-like communication}
+\subsubsection{Pattern Language}
+\begin{itemize}
+	\item Collection of design patterns for a particular application domain
+	\item Describes how to build a complex system of a certain type -- too complicated to be described in one pattern
+	\item Patterns describe roles, need not necessarily form its own component, a component may play multiple roles at the same time
+\end{itemize}
+\subsubsection{Remote Object Access}
+\textbf{Remote Object:}
+\begin{itemize}
+	\item Is accessed from client (over a well-defined interface) across machine boundary
+	\item Has a unique object ID in its local address space
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{remote-objects.png}
+\end{center}
+\textbf{Server Application:}
+\begin{itemize}
+	\item Creates and configures remote object
+	\item Activates remote object and makes it available to remote clients
+	\item Publishes remote object in a naming service
+	\item Destroys remote instances not needed anymore
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{server-application.png}
+\end{center}
+\subsection{Basic Remoting Patterns}
+\subsubsection{Overview}
+\begin{center}
+	\includegraphics[scale=0.25]{basic-remote-patterns.png}
+\end{center}
+\subsubsection{Interactions}
+\begin{center}
+	\includegraphics[scale=0.25]{interactions.png}
+\end{center}
+\textbf{Basic invocation sequence on client side:}
+\begin{center}
+	\includegraphics[scale=0.25]{invocation-client.png}
+\end{center}
+\textbf{Basic invocation sequence on server side:}
+\begin{center}
+	\includegraphics[scale=0.25]{invocation-server.png}
+\end{center}
+\textbf{Remoting Error Propagation:}
+\begin{center}
+	\includegraphics[scale=0.25]{remoting-error-propagation.png}
+\end{center}
+\subsubsection{CLIENT PROXY}
+\begin{itemize}
+	\item Local object within the client process that offers the same interface as the remote object
+	\item Simplifies the usage of the REQUESTOR
+	\item Provides type safety on top of the REQUESTOR
+	\item CLIENT PROXY is specific to the type of the remote object, typically generated from the INTERFACE DESCRIPTION
+	\item Needs to be available on client side, either statically linked or dynamically loaded
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{client-proxy.png}
+\end{center}
+\subsubsection{REQUESTOR}
+\begin{itemize}
+	\item Constructs a remote invocation on the client side from parameters such as remote object location, remote object type, operation name and arguments and sends the invocation to the remote object
+	\item Client should not need to perform these tasks itself
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{requestor.png}
+\end{center}
+\begin{itemize}
+	\item Used by the client directly or by the client proxy object
+	\item Tasks
+		\begin{enumerate}
+			\item Accepts parameters from client (or from client proxy)
+			\item Delegates task of marshalling the arguments to the MARSHALLER
+			\item Sends the request using the CLIENT REQUEST HANDLER
+			\item Throws REMOTING ERRORS in case of communication problems
+			\item Delegates task of unmarshalling results to the MARSHALLER
+			\item Returns result
+		\end{enumerate}
+	\item  Independent of the specific remote object details (such as type, etc)
+	\item Concurrent access to REQUESTOR needs to be synchronized
+\end{itemize}
+\subsubsection{CLIENT REQUEST HANDLER}
+\begin{itemize}
+	\item Responsible for handling network communication in client application
+		\begin{itemize}
+			\item Opening and closing network connections to server applications
+			\item Sending requests and receiving replies
+			\item Dispatching replies back to appropriate REQUESTOR (in case of asynchronous invocations)
+			\item Handling of timeouts and threading issues
+			\item Handling of invocation errors
+		\end{itemize}
+	\item Connection handling \\
+		Connections to a particular server / port may be shared with other invocations
+	\item Typically shared between multiple REQUESTORS
+	\item Tasks
+		\begin{itemize}
+			\item Sending of requests
+			\item Receiving and dispatching of responses
+			\item Handling of timeouts, threading issues, and invocation errors
+		\end{itemize}
+	\item Deals with all the communication issues of a server application
+		\begin{itemize}
+			\item Receives messages from the network
+			\item Combines the message fragments to complete messages
+			\item Dispatches the messages to the correct INVOKER for further processing
+		\end{itemize}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{client-request-handler.png}
+\end{center}
+\subsubsection{SERVER REQUEST HANDLER}
+\begin{itemize}
+	\item Deals with all the communication issues of a server application
+		\begin{itemize}
+			\item Receives messages from the network
+			\item Combines the message fragments to complete messages
+			\item Dispatches the messages to the correct INVOKER for further processing
+		\end{itemize}
+	\item Deals with messages, whereas the INVOKER deals with requests
+	\item Must contact the correct INVOKER, i.e. message must contain information about the INVOKER as e.g. a name or ID
+	\item Must be able to handle concurrent requests efficiently
+		\begin{itemize}
+			\item One thread per connection
+			\item Connection-independent thread pool
+		\end{itemize}
+	\item Connection establishment
+		\begin{itemize}
+			\item New connection for each invocation
+			\item Reuse of existing connections (open connections consume resources)		
+		\end{itemize}
+	\item Tasks
+		\begin{enumerate}
+			\item Receives data from network and combines them to a complete message
+			\item Dispatches the message to the correct INVOKER (uses MARSHALLER to determine the correct INVOKER)
+			\item Manages the required resources (connections, threads, ...)
+		\end{enumerate}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{server-request-handler.png}
+\end{center}
+\subsubsection{INVOKER}
+\begin{itemize}
+	\item Dispatches remote invocations from REQUESTORS to the relevant remote object using the received invocation information
+		\begin{itemize}
+			\item Static dispatch: generated skeletons
+			\item Dynamic dispatch: reflection and dynamic lookup table
+		\end{itemize}
+	\item Remote object might not be available all the time and only be activated on demand, which requires some part of the system to accept invocations and trigger the (re-)activation of the target remote object
+	\item On server side, one or several INVOKER may exist (depends on CONFIGURATION GROUPS)
+	\item Low-level network communications are handled by SERVER REQUEST HANDLER
+	\item More than one servant might be used to implement a single remote object at runtime ($\Ra$ POOLING) or might have to be activated ($\Ra$ LIFECYCLE MANAGER)
+	\item Tasks
+		\begin{enumerate}
+			\item Accepts parameters from SERVER REQUEST HANDLER
+			\item Delegates task of unmarshalling the arguments to the MARSHALLER
+			\item Sends the request using the remote object (or its servant)
+			\item Delegates task of marshalling results to the MARSHALLER
+			\item Returns result to SERVER REQUEST HANDLER
+		\end{enumerate}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{invoker.png}
+\end{center}
+\subsubsection{MARSHALLER}
+\begin{itemize}
+	\item Used to serialize invocation information into a byte stream (or into XML)
+	\item Must be able to handle Cyclic structures, Alias references and Remote references
+	\item Conversion from/to byte stream should be defined only once per type
+	\item Hooks might be supported to provide custom marshallers
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{marshaller.png}
+\end{center}
+\subsubsection{INTERFACE DESCRIPTION}
+\begin{itemize}
+	\item Describes the interface of a remote object
+	\item Serves as the contract between CLIENT PROXY and INVOKER.
+	\item Client and Server use either code generation or runtime configuration techniques to meet the interface contract
+	\item Allows that client and server code are written in different programming languages
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{interface-description.png}
+\end{center}
+\subsubsection{REMOTING ERROR}
+\begin{itemize}
+	\item Used to report problems that occur during a remote invocation, client must be able to distinguish between Distribution/communication related errors and Application-logic related errors
+	\item Remoting errors detected inside the server application need to be transported back to the client
+	\item Client might handle errors transparently (e.g. invoking another server)
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{remoting-error.png}
+\end{center}
+\subsection{Identification Patterns}
+\subsubsection{Overview}
+\begin{center}
+	\includegraphics[scale=0.3]{identification-patterns.png}
+\end{center}
+\subsubsection{Interactions}
+\textbf{Registration in Lookup:}
+\begin{center}
+	\includegraphics[scale=0.3]{interactions-registration.png}
+\end{center}
+\textbf{Marshalling of absolute object references: p1.anOperation(p2):}
+\begin{center}
+	\includegraphics[scale=0.2]{interactions-marshalling.png}
+\end{center}
+\subsubsection{OBJECT ID}
+Refer to remote objects, rather than the servants realizing the remote
+object at runtime
+\begin{center}
+	\includegraphics[scale=0.2]{objectId.png}
+\end{center}
+\subsubsection{ABSOLUTE OBJECT REFERENCE}
+\begin{itemize}
+	\item Contains the information necessary for a client to connect the INVOKER
+	\item Uniquely identifies invoker and remote object, typically contains Endpoint information, ID of the INVOKER Object ID
+	\item Used by clients to exchange references to remote objects
+	\item If several protocols are supported by the server, the protocol to be used by the client has to be included in the reference
+	\item May be transient or persistent
+		\begin{itemize}
+			\item Transient: only valid as long as server has not been restarted
+			\item Persistent: valid even after restart of the server application
+		\end{itemize}
+	\item Client invokes an operation with a reference to another remote object
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{absolute-object-reference.png}
+\end{center}
+\subsubsection{LOOKUP}
+\begin{itemize}
+	\item Provides ABOLUE OBJECT REFERENCES to remote objects
+	\item Associates object references with properties (typically names)
+	\item Used by clients to query for object references based on properties
+	\item Provides an interface to bind and lookup object references
+	\item Implemented as a remote object itself
+	\item Only factory objects should be registered in the LOOKUP
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{lookup.png}
+\end{center}
+\subsection{Invocation Asynchrony Patterns}
+\subsubsection{Overview}
+\begin{center}
+	\includegraphics[scale=0.3]{invocation-asynchrony-patterns.png}
+\end{center}
+\subsubsection{FIRE AND FORGET}
+\begin{itemize}
+	\item Requestor sends the invocation across the network and returns control immediately to the caller
+	\item Applicable if
+		\begin{itemize}
+			\item Client does neither expect a return value (void method) nor an exception
+			\item Client simply needs to notify remote object of an event
+			\item Reliability of the invocation is not critical (client does not get an acknowledgement from remote object)
+		\end{itemize}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{fire-and-forget.png}
+\end{center}
+\subsubsection{SYNC WITH SERVER}
+\begin{itemize}
+	\item Requestor sends the invocation across the network and waits for a reply from the server acknowledging the successful receipt of the invocation
+	\item Acknowledgement is returned before operation is performed on server
+	\item Applicable if
+		\begin{itemize}
+			\item Client does neither expect a return value (void method) nor an exception
+			\item Fire-and-forget is too unreliable
+		\end{itemize}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{sync-with-server.png}
+\end{center}
+\subsubsection{POLL OBJECT (Future)}
+\begin{itemize}
+	\item Requestor returns poll object immediately which is used by client to query result (client may block on poll object until result is available)
+	\item Client can continue with other tasks asynchronously as long as result is not available on poll object
+	\item Applicable if Client does not need result immediately to continue its execution
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{poll-object.png}
+\end{center}
+\subsubsection{RESULT CALLBACK}
+\begin{itemize}
+	\item Provides a callback-based interface for remote invocations on the client
+		\begin{itemize}
+			\item Client passes result-callback to the requestor
+			\item Invocation returns immediately after sending the invocation
+			\item Callback method is invoked on result-callback when the result is available
+		\end{itemize}
+	\item Client is informed immediately when the result becomes available
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{result-callback.png}
+\end{center}
+\subsubsection{MESSAGE QUEUE}
+\begin{itemize}
+	\item Guarantees invocation and result delivery order
+	\item Queues local to client/server request handler (no external message queue)
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.2]{message-queue.png}
+\end{center}
+\subsubsection{Relation among invocation asynchrony patterns}
+\begin{center}
+	\includegraphics[scale=0.2]{asynchrony-pattern-compare.png}
+\end{center}
+\subsection{Lifecycle Management Patterns}
+\begin{center}
+	\includegraphics[scale=0.4]{lifecycle-management-pattern.png}
+\end{center}
+\subsection{Extension Patterns}
+\begin{center}
+	\includegraphics[scale=0.4]{extention-pattern.png}
+\end{center}
 
 \newpage
 \section{Code Samples}
