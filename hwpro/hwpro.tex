@@ -481,5 +481,45 @@ $(,\%eax,4)$ wird übersetzt in $(0+ \%eax)\cdot4$, somit haben wir unseren Offs
 	}
 \end{lstlisting}
 
+\section{Recursion}
+Die Rekursion wird anhand des Beispiels Fakultät gezeigt.\\
+\subsection{Einfache Rekursion}
+\begin{lstlisting}
+int rfact(int x)
+{
+  int rval;
+  if (x <= 1) return 1;
+  rval = rfact(x - 1);
+  return rval * x;
+}
+\end{lstlisting}
+in Assembler:
+\begin{lstlisting}
+rfact:
+    pushl %ebp
+    movl %esp, %ebp
+    pushl %ebx
+    movl 8(%ebp), %ebx 		// ebx = x
+    cmpl $1, %ebx		// Compare x : 1
+    jle .L78			// If <= goto Term
+    leal -1(%ebx), %eax		// eax = x - 1
+    pushl %eax			// Push x- 1
+    call rfact			// rfact (x - 1)
+    imull %ebx, %eax		// rval * x
+    jmp .L79			// Goto done
+    .align 4
+.L78: 				// Term:
+    movl $1, %eax		// return val = 1
+.L79:				// Done:
+    movl -4(%ebp), %ebx
+    movl %ebp, %esp
+    popl %ebp
+    ret
+\end{lstlisting}
+Linien die mit ``.'' beginnen sind Assembler Ordner
+\subsection{Multi-Way recursion}
+sinnvolles Beispiel ist Quicksort\\
+
+
 
 \end{document}
