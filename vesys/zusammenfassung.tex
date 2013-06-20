@@ -317,7 +317,7 @@ sockets which immediately receive data)
 	\item[WWW-Authenticate] information about authentication method
 \end{description}
 \subsection{Servlet}
-\includegraphics[scale=0.5]{tomcat-structure.png}
+\includegraphics[scale=0.5]{images/tomcat-structure.png}
 \begin{lstlisting}[language=Java, caption=Servlet Example, style=JavaStyle]
 public class Converter extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -807,7 +807,7 @@ References to other resources may be used in representations
 	GET requests can be cached in a proxy & All requests are POST requests, no caching!
 \end{tabular}
 \begin{center}
-	\includegraphics[scale=0.5]{soap-rest.png}
+	\includegraphics[scale=0.5]{images/soap-rest.png}
 \end{center}
 
 \subsection{JAX-RS}
@@ -933,7 +933,7 @@ Entfernte Objekte können zwar auch von einem bereits im Programm bekannten entf
 \subsection{Ablauf}
 \begin{wrapfigure}{r}{7cm}
 	\centering
-	\includegraphics[scale=0.35]{rmi-schema.png}%
+	\includegraphics[scale=0.35]{images/rmi-schema.png}%
 \end{wrapfigure}
 Der Ablauf bei RMI:
 \begin{enumerate}
@@ -1218,7 +1218,7 @@ A method dispatched by the RMI runtime to a remote object implemen- tation may o
 \end{description}
 \subsection{Example: XOR encoding}
 \begin{center}
-	\includegraphics[scale=0.3]{rmi-factory.png}
+	\includegraphics[scale=0.3]{images/rmi-factory.png}
 \end{center}
 \begin{lstlisting}[language=Java, caption=XorServerSocketFactory, style=JavaStyle]
 public class XorServerSocketFactory implements RMIServerSocketFactory {
@@ -1330,12 +1330,12 @@ public class CalculatorImpl extends java.rmi.server.UnicastRemoteObject implemen
 \subsubsection{Synchronous Communication Model}
 Client and Server are directly coupled (Telephone Connection)
 \begin{center}
-	\includegraphics[scale=0.25]{communication-synchron.png}
+	\includegraphics[scale=0.25]{images/communication-synchron.png}
 \end{center}
 \subsubsection{Asynchronous Communication Model}
  Client and Server communicate over a 3rd party Message Oriented Middleware (MOM). (SMS, Email)
  \begin{center}
-	\includegraphics[scale=0.25]{communication-asynchron.png}
+	\includegraphics[scale=0.25]{images/communication-asynchron.png}
 \end{center}
 \subsection{Advantages}
 \begin{itemize}
@@ -1370,7 +1370,7 @@ Client and Server are directly coupled (Telephone Connection)
 \end{itemize}
 \subsection{Publish/Subscribe Messaging Domain}
 \begin{center}
-	\includegraphics[scale=0.25]{jms-messaging-domain.png}
+	\includegraphics[scale=0.25]{images/jms-messaging-domain.png}
 \end{center}
 \textbf{Characteristics:}
 \begin{itemize}
@@ -1382,7 +1382,7 @@ Client and Server are directly coupled (Telephone Connection)
 \subsection{Destinations}
 \begin{tabular}{l p{2cm} l}
 	\textbf{Queue} && \textbf{Topic} \\
-	\includegraphics[scale=0.3]{jms-destination-queue.png} && \includegraphics[scale=0.3]{jms-destination-topic.png} \\
+	\includegraphics[scale=0.3]{images/jms-destination-queue.png} && \includegraphics[scale=0.3]{images/jms-destination-topic.png} \\
 	One-to-one message paradigm && One-to-many message paradigm	
 \end{tabular}
 \subsection{Message Consumption}
@@ -1400,12 +1400,12 @@ Client and Server are directly coupled (Telephone Connection)
 \subsection{JMS API}
 \subsubsection{Overview}
 \begin{center}
-	\includegraphics[scale=0.25]{jms-api-overview.png}
+	\includegraphics[scale=0.25]{images/jms-api-overview.png}
 \end{center}
 \subsubsection{Destinations}
 \begin{wrapfigure}{r}{4cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-destination.png}%
+	\includegraphics[scale=0.2]{images/jms-api-destination.png}%
 \end{wrapfigure}
 Destinations:
 \begin{itemize}
@@ -1423,7 +1423,7 @@ Destinations:
 \subsubsection{Connections}
 \begin{wrapfigure}{r}{4cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-connection.png}%
+	\includegraphics[scale=0.2]{images/jms-api-connection.png}%
 \end{wrapfigure}
 Connections:
 \begin{itemize}
@@ -1451,7 +1451,7 @@ Connections:
 \subsubsection{Sessions}
 \begin{wrapfigure}{r}{4cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-session.png}%
+	\includegraphics[scale=0.2]{images/jms-api-session.png}%
 \end{wrapfigure}
 Sessions:
 \begin{itemize}
@@ -1467,7 +1467,7 @@ Sessions:
 \subsubsection{Message Producers}
 \begin{wrapfigure}{r}{4cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-message-producer.png}%
+	\includegraphics[scale=0.2]{images/jms-api-message-producer.png}%
 \end{wrapfigure}
 Message Producers:
 \begin{itemize}
@@ -1482,7 +1482,7 @@ Message Producers:
 \subsubsection{Message Consumers}
 \begin{wrapfigure}{r}{4cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-message-consumer.png}%
+	\includegraphics[scale=0.2]{images/jms-api-message-consumer.png}%
 \end{wrapfigure}
 Message Consumers:
 \begin{itemize}
@@ -1503,7 +1503,7 @@ Message Consumers:
 \subsubsection{Messages}
 \begin{wrapfigure}{r}{8cm}
 	\centering
-	\includegraphics[scale=0.2]{jms-api-message.png}%
+	\includegraphics[scale=0.2]{images/jms-api-message.png}%
 \end{wrapfigure}
 Message Parts:
 \begin{itemize}
@@ -1727,11 +1727,11 @@ public static void main(String[] args) throws Exception{
 \subsection{Spec}
 \subsubsection{Bidirectional Communication}
 \begin{center}
-	\includegraphics[scale=0.2]{websockets-server-push-solutions.png}
+	\includegraphics[scale=0.2]{images/websockets-server-push-solutions.png}
 \end{center}
 \subsubsection{Format}
 \begin{center}
-	\includegraphics[scale=0.3]{websocket-spec-format.png}
+	\includegraphics[scale=0.3]{images/websocket-spec-format.png}
 \end{center}
 \subsubsection{Handshake}
 \begin{lstlisting}
@@ -2116,7 +2116,7 @@ interface Callback {
 		\end{itemize}
 \end{description}
 \begin{center}
-	\includegraphics[scale=0.4]{remote-message-passing.png}
+	\includegraphics[scale=0.4]{images/remote-message-passing.png}
 \end{center}
 \subsubsection{Shared Repository}
 \begin{itemize}
@@ -2138,7 +2138,7 @@ interface Callback {
 	\item Has a unique object ID in its local address space
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{remote-objects.png}
+	\includegraphics[scale=0.2]{images/remote-objects.png}
 \end{center}
 \textbf{Server Application:}
 \begin{itemize}
@@ -2148,28 +2148,28 @@ interface Callback {
 	\item Destroys remote instances not needed anymore
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{server-application.png}
+	\includegraphics[scale=0.2]{images/server-application.png}
 \end{center}
 \subsection{Basic Remoting Patterns}
 \subsubsection{Overview}
 \begin{center}
-	\includegraphics[scale=0.25]{basic-remote-patterns.png}
+	\includegraphics[scale=0.25]{images/basic-remote-patterns.png}
 \end{center}
 \subsubsection{Interactions}
 \begin{center}
-	\includegraphics[scale=0.25]{interactions.png}
+	\includegraphics[scale=0.25]{images/interactions.png}
 \end{center}
 \textbf{Basic invocation sequence on client side:}
 \begin{center}
-	\includegraphics[scale=0.25]{invocation-client.png}
+	\includegraphics[scale=0.25]{images/invocation-client.png}
 \end{center}
 \textbf{Basic invocation sequence on server side:}
 \begin{center}
-	\includegraphics[scale=0.25]{invocation-server.png}
+	\includegraphics[scale=0.25]{images/invocation-server.png}
 \end{center}
 \textbf{Remoting Error Propagation:}
 \begin{center}
-	\includegraphics[scale=0.25]{remoting-error-propagation.png}
+	\includegraphics[scale=0.25]{images/remoting-error-propagation.png}
 \end{center}
 \subsubsection{CLIENT PROXY}
 \begin{itemize}
@@ -2180,7 +2180,7 @@ interface Callback {
 	\item Needs to be available on client side, either statically linked or dynamically loaded
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{client-proxy.png}
+	\includegraphics[scale=0.2]{images/client-proxy.png}
 \end{center}
 \subsubsection{REQUESTOR}
 \begin{itemize}
@@ -2188,7 +2188,7 @@ interface Callback {
 	\item Client should not need to perform these tasks itself
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{requestor.png}
+	\includegraphics[scale=0.2]{images/requestor.png}
 \end{center}
 \begin{itemize}
 	\item Used by the client directly or by the client proxy object
@@ -2231,7 +2231,7 @@ interface Callback {
 		\end{itemize}
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{client-request-handler.png}
+	\includegraphics[scale=0.2]{images/client-request-handler.png}
 \end{center}
 \subsubsection{SERVER REQUEST HANDLER}
 \begin{itemize}
@@ -2261,7 +2261,7 @@ interface Callback {
 		\end{enumerate}
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{server-request-handler.png}
+	\includegraphics[scale=0.2]{images/server-request-handler.png}
 \end{center}
 \subsubsection{INVOKER}
 \begin{itemize}
@@ -2284,7 +2284,7 @@ interface Callback {
 		\end{enumerate}
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{invoker.png}
+	\includegraphics[scale=0.2]{images/invoker.png}
 \end{center}
 \subsubsection{MARSHALLER}
 \begin{itemize}
@@ -2294,7 +2294,7 @@ interface Callback {
 	\item Hooks might be supported to provide custom marshallers
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{marshaller.png}
+	\includegraphics[scale=0.2]{images/marshaller.png}
 \end{center}
 \subsubsection{INTERFACE DESCRIPTION}
 \begin{itemize}
@@ -2304,7 +2304,7 @@ interface Callback {
 	\item Allows that client and server code are written in different programming languages
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{interface-description.png}
+	\includegraphics[scale=0.2]{images/interface-description.png}
 \end{center}
 \subsubsection{REMOTING ERROR}
 \begin{itemize}
@@ -2313,27 +2313,27 @@ interface Callback {
 	\item Client might handle errors transparently (e.g. invoking another server)
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{remoting-error.png}
+	\includegraphics[scale=0.2]{images/remoting-error.png}
 \end{center}
 \subsection{Identification Patterns}
 \subsubsection{Overview}
 \begin{center}
-	\includegraphics[scale=0.3]{identification-patterns.png}
+	\includegraphics[scale=0.3]{images/identification-patterns.png}
 \end{center}
 \subsubsection{Interactions}
 \textbf{Registration in Lookup:}
 \begin{center}
-	\includegraphics[scale=0.3]{interactions-registration.png}
+	\includegraphics[scale=0.3]{images/interactions-registration.png}
 \end{center}
 \textbf{Marshalling of absolute object references: p1.anOperation(p2):}
 \begin{center}
-	\includegraphics[scale=0.2]{interactions-marshalling.png}
+	\includegraphics[scale=0.2]{images/interactions-marshalling.png}
 \end{center}
 \subsubsection{OBJECT ID}
 Refer to remote objects, rather than the servants realizing the remote
 object at runtime
 \begin{center}
-	\includegraphics[scale=0.2]{objectId.png}
+	\includegraphics[scale=0.2]{images/objectId.png}
 \end{center}
 \subsubsection{ABSOLUTE OBJECT REFERENCE}
 \begin{itemize}
@@ -2349,7 +2349,7 @@ object at runtime
 	\item Client invokes an operation with a reference to another remote object
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{absolute-object-reference.png}
+	\includegraphics[scale=0.2]{images/absolute-object-reference.png}
 \end{center}
 \subsubsection{LOOKUP}
 \begin{itemize}
@@ -2361,12 +2361,12 @@ object at runtime
 	\item Only factory objects should be registered in the LOOKUP
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{lookup.png}
+	\includegraphics[scale=0.2]{images/lookup.png}
 \end{center}
 \subsection{Invocation Asynchrony Patterns}
 \subsubsection{Overview}
 \begin{center}
-	\includegraphics[scale=0.3]{invocation-asynchrony-patterns.png}
+	\includegraphics[scale=0.3]{images/invocation-asynchrony-patterns.png}
 \end{center}
 \subsubsection{FIRE AND FORGET}
 \begin{itemize}
@@ -2379,7 +2379,7 @@ object at runtime
 		\end{itemize}
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{fire-and-forget.png}
+	\includegraphics[scale=0.2]{images/fire-and-forget.png}
 \end{center}
 \subsubsection{SYNC WITH SERVER}
 \begin{itemize}
@@ -2392,7 +2392,7 @@ object at runtime
 		\end{itemize}
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{sync-with-server.png}
+	\includegraphics[scale=0.2]{images/sync-with-server.png}
 \end{center}
 \subsubsection{POLL OBJECT (Future)}
 \begin{itemize}
@@ -2401,7 +2401,7 @@ object at runtime
 	\item Applicable if Client does not need result immediately to continue its execution
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{poll-object.png}
+	\includegraphics[scale=0.2]{images/poll-object.png}
 \end{center}
 \subsubsection{RESULT CALLBACK}
 \begin{itemize}
@@ -2414,7 +2414,7 @@ object at runtime
 	\item Client is informed immediately when the result becomes available
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{result-callback.png}
+	\includegraphics[scale=0.2]{images/result-callback.png}
 \end{center}
 \subsubsection{MESSAGE QUEUE}
 \begin{itemize}
@@ -2422,34 +2422,34 @@ object at runtime
 	\item Queues local to client/server request handler (no external message queue)
 \end{itemize}
 \begin{center}
-	\includegraphics[scale=0.2]{message-queue.png}
+	\includegraphics[scale=0.2]{images/message-queue.png}
 \end{center}
 \subsubsection{Relation among invocation asynchrony patterns}
 \begin{center}
-	\includegraphics[scale=0.2]{asynchrony-pattern-compare.png}
+	\includegraphics[scale=0.2]{images/asynchrony-pattern-compare.png}
 \end{center}
 \subsection{Lifecycle Management Patterns}
 \begin{center}
-	\includegraphics[scale=0.4]{lifecycle-management-pattern.png}
+	\includegraphics[scale=0.4]{images/lifecycle-management-pattern.png}
 \end{center}
 \subsection{Extension Patterns}
 \begin{center}
-	\includegraphics[scale=0.4]{extention-pattern.png}
+	\includegraphics[scale=0.4]{images/extention-pattern.png}
 \end{center}
 
 \newpage
 \section{Code Samples}
 \subsection{Socket}
-\lstinputlisting[caption=Client,style=JavaStyle]{SocketBankDriver.java}
-\lstinputlisting[caption=Server,style=JavaStyle]{SocketBankServer.java}
+\lstinputlisting[caption=Client,style=JavaStyle]{code/SocketBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{code/SocketBankServer.java}
 \subsection{Internet}
-\lstinputlisting[caption=Client,style=JavaStyle]{HttpBankDriver.java}
-\lstinputlisting[caption=Server,style=JavaStyle]{HttpBankServer.java}
+\lstinputlisting[caption=Client,style=JavaStyle]{code/HttpBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{code/HttpBankServer.java}
 \subsection{XmlRpc}
-\lstinputlisting[caption=Client,style=JavaStyle]{XmlRpcBankDriver.java}
-\lstinputlisting[caption=Server,style=JavaStyle]{XmlRpcBankServer.java}
+\lstinputlisting[caption=Client,style=JavaStyle]{code/XmlRpcBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{code/XmlRpcBankServer.java}
 \subsection{REST}
-\lstinputlisting[caption=Client,style=JavaStyle]{RestBankDriver.java}
-\lstinputlisting[caption=Server,style=JavaStyle]{RestBankServer.java}
+\lstinputlisting[caption=Client,style=JavaStyle]{code/RestBankDriver.java}
+\lstinputlisting[caption=Server,style=JavaStyle]{code/RestBankServer.java}
 % Inhalt Ende 
 \end{document} 
