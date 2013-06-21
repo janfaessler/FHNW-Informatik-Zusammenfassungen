@@ -28,3 +28,6 @@
 \contentsline {subsubsection}{\numberline {5.2.3}For Loops}{9}
 \contentsline {subsection}{\numberline {5.3}Select Case}{9}
 \contentsline {section}{\numberline {6}Bitwise Magix}{11}
+\contentsline {section}{\numberline {7}Recursion}{11}
+\contentsline {subsection}{\numberline {7.1}Einfache Rekursion}{11}
+\contentsline {subsection}{\numberline {7.2}Multi-Way recursion}{12}
