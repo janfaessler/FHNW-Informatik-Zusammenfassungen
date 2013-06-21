@@ -481,6 +481,7 @@ $(,\%eax,4)$ wird übersetzt in $(0+ \%eax)\cdot4$, somit haben wir unseren Offs
 	}
 \end{lstlisting}
 
+\newpage
 \section{Recursion}
 Die Rekursion wird anhand des Beispiels Fakultät gezeigt.\\
 \subsection{Einfache Rekursion}
@@ -518,8 +519,17 @@ rfact:
 \end{lstlisting}
 Linien die mit ``.'' beginnen sind Assembler Ordner
 \subsection{Multi-Way recursion}
-sinnvolles Beispiel ist Quicksort\\
-
+sinnvolles Beispiel ist Quicksort
+\begin{lstlisting}
+int r_prod(int from, int to) {
+	int middle, prodA, prodB;
+	if (from >= to) return from;
+	middle = (from + to) >> 1;
+	prodA = r_prod(from, middle);
+	prodB = r_prod(middle+1, to);
+	return prodA * prodB;
+}
+\end{lstlisting}
 
 
 \end{document}
