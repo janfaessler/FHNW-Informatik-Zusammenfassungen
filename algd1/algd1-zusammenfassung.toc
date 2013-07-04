@@ -6,118 +6,119 @@
 \contentsline {subsubsection}{\numberline {1.3.1}Positive Zahlen}{1}
 \contentsline {subsubsection}{\numberline {1.3.2}Ganze Zahlen (2er - Komplement)}{1}
 \contentsline {subsubsection}{\numberline {1.3.3}Zahlendarstellung mit beliebiger Basis}{1}
-\contentsline {subsection}{\numberline {1.4}Datentypen in JAVA}{1}
+\contentsline {subsubsection}{\numberline {1.3.4}Modulo mit Int}{1}
+\contentsline {subsection}{\numberline {1.4}Datentypen in JAVA}{2}
 \contentsline {subsection}{\numberline {1.5}Gleitkommazahlen}{2}
 \contentsline {subsubsection}{\numberline {1.5.1}Beispiele (IEEE 754 32bit Float)}{2}
-\contentsline {subsubsection}{\numberline {1.5.2}Spezialf\"alle}{2}
-\contentsline {subsubsection}{\numberline {1.5.3}Division mit Null}{2}
-\contentsline {section}{\numberline {2}Operationen \& Ausdr\"ucke}{3}
-\contentsline {subsection}{\numberline {2.1}Auswertungsreihenfolge}{3}
-\contentsline {subsection}{\numberline {2.2}Bitoperatoren}{4}
-\contentsline {subsection}{\numberline {2.3}Schiebeoperatoren}{4}
-\contentsline {subsection}{\numberline {2.4}Logische Operatoren}{4}
-\contentsline {subsection}{\numberline {2.5}Beispiele}{4}
-\contentsline {section}{\numberline {3}Konvertierung von Datentypen}{6}
-\contentsline {subsubsection}{\numberline {3.0.1}explizite Typkonvertierung}{6}
-\contentsline {subsubsection}{\numberline {3.0.2}implizite (automatische) Typkonvertierung}{6}
-\contentsline {subsubsection}{\numberline {3.0.3}erweiternde Typkonvertierungen}{6}
-\contentsline {subsubsection}{\numberline {3.0.4}einschr\"ankende Typkonvertierungen}{6}
-\contentsline {subsubsection}{\numberline {3.0.5}Integer-Erweiterung}{7}
-\contentsline {subsubsection}{\numberline {3.0.6}Konvertierungsvorschriften}{7}
-\contentsline {subsection}{\numberline {3.1}Beispiele}{7}
-\contentsline {section}{\numberline {4}Zeichen und Strings}{8}
-\contentsline {subsection}{\numberline {4.1}Zeichen in Java}{8}
-\contentsline {subsection}{\numberline {4.2}Standardisierte Zeichencodierungen}{8}
-\contentsline {subsubsection}{\numberline {4.2.1}ASCII (American Standard Code for Information Interchange)}{8}
-\contentsline {subsubsection}{\numberline {4.2.2}ISO 8859-1 (Latin-1)}{8}
-\contentsline {subsubsection}{\numberline {4.2.3}Unicode}{8}
-\contentsline {subsection}{\numberline {4.3}Universal Character Encoding Standard (Unicode)}{8}
-\contentsline {subsubsection}{\numberline {4.3.1}UTF-32}{9}
-\contentsline {subsubsection}{\numberline {4.3.2}UTF-16}{9}
-\contentsline {subsubsection}{\numberline {4.3.3}UTF-8}{9}
-\contentsline {subsubsection}{\numberline {4.3.4}Codierungsschemen}{10}
-\contentsline {subsection}{\numberline {4.4}Java}{10}
-\contentsline {subsubsection}{\numberline {4.4.1}Unicode in JAVA}{10}
-\contentsline {subsubsection}{\numberline {4.4.2}Zeichenketten (Strings)}{11}
-\contentsline {subsubsection}{\numberline {4.4.3}String Funktionen}{11}
-\contentsline {subsubsection}{\numberline {4.4.4}Umwandlungen}{11}
-\contentsline {subsection}{\numberline {4.5}ASCII-Zeichentabelle}{12}
-\contentsline {section}{\numberline {5}Suchen}{13}
-\contentsline {subsection}{\numberline {5.1}Zahlensuche}{13}
-\contentsline {subsubsection}{\numberline {5.1.1}Lineare Suche}{13}
-\contentsline {subsubsection}{\numberline {5.1.2}Lineare Suche mit W\"{a}chter (Sentinel)}{13}
-\contentsline {subsubsection}{\numberline {5.1.3}Bin\"are Suche}{13}
-\contentsline {subsubsection}{\numberline {5.1.4}Analyse}{13}
-\contentsline {subsection}{\numberline {5.2}Textsuche}{14}
-\contentsline {subsubsection}{\numberline {5.2.1}Naive Textsuche}{14}
-\contentsline {subsubsection}{\numberline {5.2.2}Knuth-Morris-Pratt (KMP)}{14}
-\contentsline {section}{\numberline {6}Sortieren}{16}
-\contentsline {subsection}{\numberline {6.1}\"Uberpr\"ufen, ob das Array sortiert ist}{16}
-\contentsline {subsection}{\numberline {6.2}Sortieren durch direktes Ausw\"ahlen (selection sort)}{16}
-\contentsline {subsection}{\numberline {6.3}Sortierten durch direktes einf\"ugen (insertion sort)}{16}
-\contentsline {subsection}{\numberline {6.4}Enumeration Sort}{17}
-\contentsline {subsection}{\numberline {6.5}Quicksort (randomisierter Algorightmus)}{17}
-\contentsline {subsubsection}{\numberline {6.5.1}Implementierung}{17}
-\contentsline {subsubsection}{\numberline {6.5.2}Aufwand Quicksort}{18}
-\contentsline {subsection}{\numberline {6.6}Mergesort}{19}
-\contentsline {subsection}{\numberline {6.7}Laufzeiten}{19}
-\contentsline {section}{\numberline {7}Halbdynamische Datenstrukturen}{20}
-\contentsline {subsection}{\numberline {7.1}Halbdynamische Datenstruktur}{20}
-\contentsline {subsection}{\numberline {7.2}Datennutzung \"uber die Zeit}{20}
-\contentsline {subsection}{\numberline {7.3}Datenstruktur: ArrayList}{20}
-\contentsline {subsection}{\numberline {7.4}Generics Wildcards}{21}
-\contentsline {subsubsection}{\numberline {7.4.1}Unbounded Wildcard $<$?$>$}{21}
-\contentsline {subsubsection}{\numberline {7.4.2}Upper Bound Wildcard $<$? extends T$>$}{21}
-\contentsline {subsubsection}{\numberline {7.4.3}Low Bound Wildcard $<$? super T$>$}{22}
-\contentsline {subsubsection}{\numberline {7.4.4}Interner Aufbau (bis Java 1.4.2)}{22}
-\contentsline {subsubsection}{\numberline {7.4.5}Interner Aufbau (seit Java 5.0)}{22}
-\contentsline {section}{\numberline {8}Programmverifikation}{23}
-\contentsline {subsection}{\numberline {8.1}Korrektheit eines Algorithmus}{23}
-\contentsline {subsection}{\numberline {8.2}Aussagenlogik}{23}
-\contentsline {subsubsection}{\numberline {8.2.1}Syntax}{23}
-\contentsline {subsubsection}{\numberline {8.2.2}Semantik}{23}
-\contentsline {subsubsection}{\numberline {8.2.3}Modell}{23}
-\contentsline {subsubsection}{\numberline {8.2.4}Erf\"ullbarkeit}{23}
-\contentsline {subsubsection}{\numberline {8.2.5}\"Aquivalenz}{24}
-\contentsline {subsection}{\numberline {8.3}Pr\"adikatenlogik}{24}
-\contentsline {subsubsection}{\numberline {8.3.1}Syntax}{24}
-\contentsline {subsubsection}{\numberline {8.3.2}Semantik}{24}
-\contentsline {subsubsection}{\numberline {8.3.3}\"Aquivalenz}{25}
-\contentsline {subsubsection}{\numberline {8.3.4}Beispiele}{25}
-\contentsline {subsection}{\numberline {8.4}Verifikation}{25}
-\contentsline {subsubsection}{\numberline {8.4.1}Hoare-Tribble}{25}
-\contentsline {subsubsection}{\numberline {8.4.2}Ablauf der Verifikation}{26}
-\contentsline {subsection}{\numberline {8.5}Weakest Precondition: Rechenregeln}{26}
-\contentsline {subsubsection}{\numberline {8.5.1}Zuweisung}{26}
-\contentsline {subsubsection}{\numberline {8.5.2}Weakest Precondition herausfinden (Beispiel)}{27}
-\contentsline {subsubsection}{\numberline {8.5.3}Sequenz}{27}
-\contentsline {subsubsection}{\numberline {8.5.4}Selektion}{27}
-\contentsline {subsubsection}{\numberline {8.5.5}Iteration}{28}
-\contentsline {subsection}{\numberline {8.6}Invarianten-Anwendung}{28}
-\contentsline {subsubsection}{\numberline {8.6.1}Ist INV wirklich eine korrekte Invariante?}{28}
-\contentsline {subsubsection}{\numberline {8.6.2}Was ist die schw\"achste Vorbedingung WP?}{28}
-\contentsline {subsubsection}{\numberline {8.6.3}Welches ist die Nachbedingung S?}{29}
-\contentsline {section}{\numberline {9}Komplexit\"at}{30}
-\contentsline {subsection}{\numberline {9.1}Zeit- und Speicherbedarf}{30}
-\contentsline {subsection}{\numberline {9.2}Worst-Case vs. Average-Case}{30}
-\contentsline {subsection}{\numberline {9.3}Gross-O und Gross-Omega}{30}
-\contentsline {subsubsection}{\numberline {9.3.1}Gross-O}{30}
-\contentsline {subsubsection}{\numberline {9.3.2}Gross-Omega}{30}
-\contentsline {subsection}{\numberline {9.4}Reihen}{31}
-\contentsline {subsubsection}{\numberline {9.4.1}Wichtige Reihen}{31}
-\contentsline {subsubsection}{\numberline {9.4.2}Rechenregeln}{31}
-\contentsline {section}{\numberline {10}Rekursion}{31}
-\contentsline {subsection}{\numberline {10.1}Rekursionsschema}{31}
-\contentsline {subsection}{\numberline {10.2}Backtracking}{32}
-\contentsline {subsubsection}{\numberline {10.2.1}3 Voraussetzungen f\"ur Backtracking}{32}
-\contentsline {subsubsection}{\numberline {10.2.2}8-Damen-Problem}{32}
-\contentsline {subsection}{\numberline {10.3}Code}{33}
-\contentsline {section}{\numberline {11}Divide-and-Conquer}{34}
-\contentsline {subsection}{\numberline {11.1}Code}{34}
-\contentsline {subsection}{\numberline {11.2}Analyse}{34}
-\contentsline {subsubsection}{\numberline {11.2.1}Schritte}{34}
-\contentsline {subsubsection}{\numberline {11.2.2}Aufwandsformel}{34}
-\contentsline {subsection}{\numberline {11.3}Berechnung}{34}
-\contentsline {subsubsection}{\numberline {11.3.1}Teleskopieren}{34}
-\contentsline {subsubsection}{\numberline {11.3.2}Verallgemeinerung}{35}
-\contentsline {subsection}{\numberline {11.4}Beispiel Teleskopieren}{35}
+\contentsline {subsubsection}{\numberline {1.5.2}Spezialf\"alle}{3}
+\contentsline {subsubsection}{\numberline {1.5.3}Division mit Null}{3}
+\contentsline {section}{\numberline {2}Operationen \& Ausdr\"ucke}{4}
+\contentsline {subsection}{\numberline {2.1}Auswertungsreihenfolge}{4}
+\contentsline {subsection}{\numberline {2.2}Bitoperatoren}{5}
+\contentsline {subsection}{\numberline {2.3}Schiebeoperatoren}{5}
+\contentsline {subsection}{\numberline {2.4}Logische Operatoren}{5}
+\contentsline {subsection}{\numberline {2.5}Beispiele}{5}
+\contentsline {section}{\numberline {3}Konvertierung von Datentypen}{7}
+\contentsline {subsubsection}{\numberline {3.0.1}explizite Typkonvertierung}{7}
+\contentsline {subsubsection}{\numberline {3.0.2}implizite (automatische) Typkonvertierung}{7}
+\contentsline {subsubsection}{\numberline {3.0.3}erweiternde Typkonvertierungen}{7}
+\contentsline {subsubsection}{\numberline {3.0.4}einschr\"ankende Typkonvertierungen}{7}
+\contentsline {subsubsection}{\numberline {3.0.5}Integer-Erweiterung}{8}
+\contentsline {subsubsection}{\numberline {3.0.6}Konvertierungsvorschriften}{8}
+\contentsline {subsection}{\numberline {3.1}Beispiele}{8}
+\contentsline {section}{\numberline {4}Zeichen und Strings}{9}
+\contentsline {subsection}{\numberline {4.1}Zeichen in Java}{9}
+\contentsline {subsection}{\numberline {4.2}Standardisierte Zeichencodierungen}{9}
+\contentsline {subsubsection}{\numberline {4.2.1}ASCII (American Standard Code for Information Interchange)}{9}
+\contentsline {subsubsection}{\numberline {4.2.2}ISO 8859-1 (Latin-1)}{9}
+\contentsline {subsubsection}{\numberline {4.2.3}Unicode}{9}
+\contentsline {subsection}{\numberline {4.3}Universal Character Encoding Standard (Unicode)}{9}
+\contentsline {subsubsection}{\numberline {4.3.1}UTF-32}{10}
+\contentsline {subsubsection}{\numberline {4.3.2}UTF-16}{10}
+\contentsline {subsubsection}{\numberline {4.3.3}UTF-8}{10}
+\contentsline {subsubsection}{\numberline {4.3.4}Codierungsschemen}{11}
+\contentsline {subsection}{\numberline {4.4}Java}{11}
+\contentsline {subsubsection}{\numberline {4.4.1}Unicode in JAVA}{11}
+\contentsline {subsubsection}{\numberline {4.4.2}Zeichenketten (Strings)}{12}
+\contentsline {subsubsection}{\numberline {4.4.3}String Funktionen}{12}
+\contentsline {subsubsection}{\numberline {4.4.4}Umwandlungen}{12}
+\contentsline {subsection}{\numberline {4.5}ASCII-Zeichentabelle}{13}
+\contentsline {section}{\numberline {5}Suchen}{14}
+\contentsline {subsection}{\numberline {5.1}Zahlensuche}{14}
+\contentsline {subsubsection}{\numberline {5.1.1}Lineare Suche}{14}
+\contentsline {subsubsection}{\numberline {5.1.2}Lineare Suche mit W\"{a}chter (Sentinel)}{14}
+\contentsline {subsubsection}{\numberline {5.1.3}Bin\"are Suche}{14}
+\contentsline {subsubsection}{\numberline {5.1.4}Analyse}{14}
+\contentsline {subsection}{\numberline {5.2}Textsuche}{15}
+\contentsline {subsubsection}{\numberline {5.2.1}Naive Textsuche}{15}
+\contentsline {subsubsection}{\numberline {5.2.2}Knuth-Morris-Pratt (KMP)}{15}
+\contentsline {section}{\numberline {6}Sortieren}{17}
+\contentsline {subsection}{\numberline {6.1}\"Uberpr\"ufen, ob das Array sortiert ist}{17}
+\contentsline {subsection}{\numberline {6.2}Sortieren durch direktes Ausw\"ahlen (selection sort)}{17}
+\contentsline {subsection}{\numberline {6.3}Sortierten durch direktes einf\"ugen (insertion sort)}{17}
+\contentsline {subsection}{\numberline {6.4}Enumeration Sort}{18}
+\contentsline {subsection}{\numberline {6.5}Quicksort (randomisierter Algorightmus)}{18}
+\contentsline {subsubsection}{\numberline {6.5.1}Implementierung}{18}
+\contentsline {subsubsection}{\numberline {6.5.2}Aufwand Quicksort}{19}
+\contentsline {subsection}{\numberline {6.6}Mergesort}{20}
+\contentsline {subsection}{\numberline {6.7}Laufzeiten}{20}
+\contentsline {section}{\numberline {7}Halbdynamische Datenstrukturen}{21}
+\contentsline {subsection}{\numberline {7.1}Halbdynamische Datenstruktur}{21}
+\contentsline {subsection}{\numberline {7.2}Datennutzung \"uber die Zeit}{21}
+\contentsline {subsection}{\numberline {7.3}Datenstruktur: ArrayList}{21}
+\contentsline {subsection}{\numberline {7.4}Generics Wildcards}{22}
+\contentsline {subsubsection}{\numberline {7.4.1}Unbounded Wildcard $<$?$>$}{22}
+\contentsline {subsubsection}{\numberline {7.4.2}Upper Bound Wildcard $<$? extends T$>$}{22}
+\contentsline {subsubsection}{\numberline {7.4.3}Low Bound Wildcard $<$? super T$>$}{23}
+\contentsline {subsubsection}{\numberline {7.4.4}Interner Aufbau (bis Java 1.4.2)}{23}
+\contentsline {subsubsection}{\numberline {7.4.5}Interner Aufbau (seit Java 5.0)}{23}
+\contentsline {section}{\numberline {8}Programmverifikation}{24}
+\contentsline {subsection}{\numberline {8.1}Korrektheit eines Algorithmus}{24}
+\contentsline {subsection}{\numberline {8.2}Aussagenlogik}{24}
+\contentsline {subsubsection}{\numberline {8.2.1}Syntax}{24}
+\contentsline {subsubsection}{\numberline {8.2.2}Semantik}{24}
+\contentsline {subsubsection}{\numberline {8.2.3}Modell}{24}
+\contentsline {subsubsection}{\numberline {8.2.4}Erf\"ullbarkeit}{24}
+\contentsline {subsubsection}{\numberline {8.2.5}\"Aquivalenz}{25}
+\contentsline {subsection}{\numberline {8.3}Pr\"adikatenlogik}{25}
+\contentsline {subsubsection}{\numberline {8.3.1}Syntax}{25}
+\contentsline {subsubsection}{\numberline {8.3.2}Semantik}{25}
+\contentsline {subsubsection}{\numberline {8.3.3}\"Aquivalenz}{26}
+\contentsline {subsubsection}{\numberline {8.3.4}Beispiele}{26}
+\contentsline {subsection}{\numberline {8.4}Verifikation}{26}
+\contentsline {subsubsection}{\numberline {8.4.1}Hoare-Tribble}{26}
+\contentsline {subsubsection}{\numberline {8.4.2}Ablauf der Verifikation}{27}
+\contentsline {subsection}{\numberline {8.5}Weakest Precondition: Rechenregeln}{27}
+\contentsline {subsubsection}{\numberline {8.5.1}Zuweisung}{27}
+\contentsline {subsubsection}{\numberline {8.5.2}Weakest Precondition herausfinden (Beispiel)}{28}
+\contentsline {subsubsection}{\numberline {8.5.3}Sequenz}{28}
+\contentsline {subsubsection}{\numberline {8.5.4}Selektion}{28}
+\contentsline {subsubsection}{\numberline {8.5.5}Iteration}{29}
+\contentsline {subsection}{\numberline {8.6}Invarianten-Anwendung}{29}
+\contentsline {subsubsection}{\numberline {8.6.1}Ist INV wirklich eine korrekte Invariante?}{29}
+\contentsline {subsubsection}{\numberline {8.6.2}Was ist die schw\"achste Vorbedingung WP?}{29}
+\contentsline {subsubsection}{\numberline {8.6.3}Welches ist die Nachbedingung S?}{30}
+\contentsline {section}{\numberline {9}Komplexit\"at}{31}
+\contentsline {subsection}{\numberline {9.1}Zeit- und Speicherbedarf}{31}
+\contentsline {subsection}{\numberline {9.2}Worst-Case vs. Average-Case}{31}
+\contentsline {subsection}{\numberline {9.3}Gross-O und Gross-Omega}{31}
+\contentsline {subsubsection}{\numberline {9.3.1}Gross-O}{31}
+\contentsline {subsubsection}{\numberline {9.3.2}Gross-Omega}{31}
+\contentsline {subsection}{\numberline {9.4}Reihen}{32}
+\contentsline {subsubsection}{\numberline {9.4.1}Wichtige Reihen}{32}
+\contentsline {subsubsection}{\numberline {9.4.2}Rechenregeln}{32}
+\contentsline {section}{\numberline {10}Rekursion}{32}
+\contentsline {subsection}{\numberline {10.1}Rekursionsschema}{32}
+\contentsline {subsection}{\numberline {10.2}Backtracking}{33}
+\contentsline {subsubsection}{\numberline {10.2.1}3 Voraussetzungen f\"ur Backtracking}{33}
+\contentsline {subsubsection}{\numberline {10.2.2}8-Damen-Problem}{33}
+\contentsline {subsection}{\numberline {10.3}Code}{34}
+\contentsline {section}{\numberline {11}Divide-and-Conquer}{35}
+\contentsline {subsection}{\numberline {11.1}Code}{35}
+\contentsline {subsection}{\numberline {11.2}Analyse}{35}
+\contentsline {subsubsection}{\numberline {11.2.1}Schritte}{35}
+\contentsline {subsubsection}{\numberline {11.2.2}Aufwandsformel}{35}
+\contentsline {subsection}{\numberline {11.3}Berechnung}{35}
+\contentsline {subsubsection}{\numberline {11.3.1}Teleskopieren}{35}
+\contentsline {subsubsection}{\numberline {11.3.2}Verallgemeinerung}{36}
+\contentsline {subsection}{\numberline {11.4}Beispiel Teleskopieren}{36}
