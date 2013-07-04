@@ -38,8 +38,8 @@
 \contentsline {subsubsection}{\numberline {4.3.4}Codierungsschemen}{10}
 \contentsline {subsection}{\numberline {4.4}Java}{10}
 \contentsline {subsubsection}{\numberline {4.4.1}Unicode in JAVA}{10}
-\contentsline {subsubsection}{\numberline {4.4.2}Zeichenketten (Strings)}{10}
-\contentsline {subsubsection}{\numberline {4.4.3}String Funktionen}{10}
+\contentsline {subsubsection}{\numberline {4.4.2}Zeichenketten (Strings)}{11}
+\contentsline {subsubsection}{\numberline {4.4.3}String Funktionen}{11}
 \contentsline {subsubsection}{\numberline {4.4.4}Umwandlungen}{11}
 \contentsline {subsection}{\numberline {4.5}ASCII-Zeichentabelle}{12}
 \contentsline {section}{\numberline {5}Suchen}{13}

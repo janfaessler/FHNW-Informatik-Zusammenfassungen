@@ -528,7 +528,20 @@ IEEE 754 Double: $(-1)^V * (1+M) * 2^{E-1023}$ \\
 \item Umsetzung: Zeichencodes der BMP werden durch eine einzelne 16-Bit Codierungseinheit gespeichert; Zeichencodes der zus\"atzlichen Ebenen werden durch zwei 16-Bit Codierungseinheiten gespeichert $\to$ Ersatzpaare; guter Kompromiss zwischen Speicherbedarf und einfacher Handhabung
 \item Ersatzpaare: beide Zeichen eines Ersatzpaares stammen aus der Surrogates Area; das erste Zeichen jeweils aus dem Bereich U+D800 bis U+DBFF; das zweite Zeichen jeweils aus dem Bereich U+DC00 und U+DFFF
 \item Bsp: U+1'0384 $\to$ D800, DF84
+    \begin{itemize}
+    \item[1.] BMP abziehen: U+10384 - U+10000 = U+0384
+    \item[2.] Umwandlung in bin\"ar und Aufteilung in 2*10 Bit Nutzdaten: \\
+    0b$\underbrace{0000'0000'00}_{1. Zeichen} \underbrace{11'1000'0100}_{2. Zeichen}$
+    \item[3.] Surrogate-Pr\"afixe hinzuf\"ugen\\
+        \begin{itemize}
+        \item 1. Zeichen: $\underbrace{1101'10}_{Praefix 1. Zeichen} \underbrace{0000'0000'00}_{1. Zeichen} $ = D800
+        \item 2. Zeichen: $\underbrace{1101'11}_{Praefix 2. Zeichen} \underbrace{11'1000'0100}_{2. Zeichen} $ = DF84
+        \end{itemize}
+    \end{itemize}
+
 \end{itemize}
+
+
 
 \subsubsection{UTF-8}
 \begin{itemize}
