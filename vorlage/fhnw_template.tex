@@ -1,0 +1,53 @@
+\documentclass[12pt]{scrartcl}
+ \usepackage{fancyhdr, graphicx}
+ \usepackage[english]{babel}
+ \usepackage[scaled=0.92]{helvet}
+ \usepackage{enumitem}
+ \usepackage{parskip}
+ \usepackage{lastpage} % for getting last page number
+ \renewcommand{\familydefault}{\sfdefault}
+ 
+ \fancypagestyle{firststyle}{ %Style of the first page
+ \fancyhf{}
+ \fancyheadoffset[L]{0.6cm}
+ \lhead{
+ \includegraphics[scale=0.8]{./fhnw_ht_e_10mm.jpg}}
+ \renewcommand{\headrulewidth}{0pt}
+ \lfoot{Institute of computer science,\linebreak www.fhnw.ch }
+}
+
+\fancypagestyle{documentstyle}{ %Style of the rest of the document
+ \fancyhf{}
+ \fancyheadoffset[L]{0.6cm}
+\lhead{
+ \includegraphics[scale=0.8]{./fhnw_ht_e_10mm.jpg}}
+ \renewcommand{\headrulewidth}{0pt}
+ \lfoot{\thepage\ / \pageref{LastPage} }
+}
+
+\pagestyle{firststyle} %different look of first page
+ 
+\title{ %Titel
+Titel
+\vspace{0.2cm}
+\Large more titel }
+
+ \begin{document}
+ \maketitle
+ \thispagestyle{firststyle}
+ \pagestyle{firststyle}
+ \begin{abstract}
+ \begin{center}
+  put abstract here  
+ \end{center}
+ \vspace{0.5cm}
+\hrulefill
+\end{abstract}
+
+ \pagestyle{documentstyle}
+ \tableofcontents
+ \pagebreak
+\section{first titel}
+\subsection{first subsection}
+ 
+ \end{document}
