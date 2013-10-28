@@ -1,0 +1,26 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Lapdance \& Kombinatorik}{1}
+\contentsline {subsection}{\numberline {1.1}Zufallsexperimente \& Wahrscheinlichkeiten}{1}
+\contentsline {subsection}{\numberline {1.2}Laplace-Experiment}{1}
+\contentsline {subsection}{\numberline {1.3}Kombinatorik}{2}
+\contentsline {subsubsection}{\numberline {1.3.1}Produkte}{2}
+\contentsline {subsubsection}{\numberline {1.3.2}Summen}{2}
+\contentsline {subsubsection}{\numberline {1.3.3}Fakult\IeC {\"a}t}{2}
+\contentsline {subsubsection}{\numberline {1.3.4}Binominalkoeffizient}{2}
+\contentsline {subsection}{\numberline {1.4}Urnenmodel}{2}
+\contentsline {section}{\numberline {2}Allgemeine Wahrscheinlichkeiten}{4}
+\contentsline {subsection}{\numberline {2.1}Einleitung}{4}
+\contentsline {subsection}{\numberline {2.2}bedingte Wahrscheinlichkeit}{4}
+\contentsline {subsection}{\numberline {2.3}stochastische Unabh\IeC {\"a}ngigkeit}{5}
+\contentsline {subsection}{\numberline {2.4}Mehrstufige Zufallsexperimente}{5}
+\contentsline {section}{\numberline {3}diskrete Zufallsvariablen}{6}
+\contentsline {subsection}{\numberline {3.1}Zufallsvariablen}{6}
+\contentsline {subsection}{\numberline {3.2}Verteilungsfunktion}{6}
+\contentsline {subsection}{\numberline {3.3}Erwartungswert}{6}
+\contentsline {subsection}{\numberline {3.4}Varianz und Standardabweichung}{6}
+\contentsline {section}{\numberline {4}diskrete Verteilung}{8}
+\contentsline {subsection}{\numberline {4.1}Bernoulli-Verteilung}{8}
+\contentsline {subsection}{\numberline {4.2}Binomial-Verteilung}{8}
+\contentsline {subsection}{\numberline {4.3}geometirsche-Verteilung}{8}
+\contentsline {subsection}{\numberline {4.4}Poisson-Verteilung}{9}
+\contentsline {subsection}{\numberline {4.5}Eigenschaften}{9}
