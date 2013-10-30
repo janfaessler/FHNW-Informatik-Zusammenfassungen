@@ -189,7 +189,7 @@ Beispiel: Eine Meitwagenfirma hat 5 Kleinwagen, 3 Mittelklassewagen und 2 Oberkl
 
 \subsubsection{Fakultät}
 Wir ziehen $n$ mal ohne Zurücklegen mit Beachtung der Reihenfolge aus einer Urne mit $n$ Kugeln. Dan gibt es $n*(n-1)*$ \dots $*2*1$ Möglichkeiten.
-\begin{definition}[Summenregel]
+\begin{definition}[Fakultät]
 Es sei $n \in \NN$. Dann Heisst $n!=n*(n-1)*$ \dots $*2*1$ Fakultät von $n$. Zudem ist $0! := 1$. 
 \end{definition}
 
@@ -197,9 +197,9 @@ Es gilt $n! \sim \sqrt{2*\pi*n}*(\frac{n}{e})^n$
 
 \subsubsection{Binominalkoeffizient}
 Wir ziehen $k$ mal aus einer Menge von $n$ Zahlen ohne Zurücklegen und ohne Beachtung der Reihenfolge. Es gibt also $\frac{n!}{(n-k)!*k!}$ Möglichkeiten.
-\begin{definition}[Summenregel]
+\begin{definition}[Binominalkoeffizient]
 Es sei $0 \leq k \leq n$. \\
-Dann ist der Binominalkoeffizient $\binom{n}{k}$ definiert als $n! \sim \sqrt{2*\pi*n}*(\frac{n}{e})^n$. \\
+Dann ist der Binominalkoeffizient $\binom{n}{k}$ definiert als $\frac{n!}{(n-k)!*k!}$. \\
 Für $k > n$ ist $\binom{n}{k} := 0$.
 \end{definition}
 $\binom{n}{k}$ gibt also die Anzahl aller $k$-elementigen Teilmengen einer $n$-elementigen Menge an.
