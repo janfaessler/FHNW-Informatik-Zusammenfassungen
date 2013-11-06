@@ -1,0 +1,1721 @@
+\documentclass[a4paper,10pt]{scrreprt}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[german]{babel}
+\usepackage{framed}
+%opening
+\title{Web Frameworks}
+\author{Roland Hediger}
+\usepackage{fancyhdr}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\pic}[2][figure]{\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.4]{#2}
+ % rsc.png: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+ \caption{#1}
+\end{figure}
+}
+% Code listenings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+\begin{document}
+\maketitle 
+\tableofcontents
+\pagestyle{fancy}
+\chapter{Das Servlet}
+\begin{lstlisting}[caption="Servlet Example]
+ WebServlet(urlPatterns={"/first/*"}) #1
+public class BasicServlet extends HttpServlet { #2
+private List<Questionnaire> questionnaires;
+private Logger logger = Logger.getLogger(this.getClass());
+protected void doGet(HttpServletRequest request,
+HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html;charset=ISO-8859-1");
+#3
+#4
+// get parameters from the request
+String answerRequest = request.getParameter("answer");
+#5
+String questionnaireRequest = request.getParameter("questionnaire");
+if ((questionnaireRequest != null) && (answerRequest == null)) {
+...
+} else {
+handleIndexRequest(request, response);
+}
+}
+private void handleIndexRequest(HttpServletRequest request,
+HttpServletResponse response) throws IOException {
+// create html response
+PrintWriter writer = response.getWriter();
+#6
+writer.append("<html><head><title>Example</title></head><body>");
+writer.append("<h3>Fragebögen</h3>");
+for (Questionnaire questionnaire : questionnaires) {
+String url = "?questionnaire=" + questionnaire.getSubject();
+writer.append("<a href=" + response.encodeURL(url) + ">"
++ questionnaire.getTitle() + "</a><br/>");
+}
+writer.append("</body></html>");
+}
+...
+@Override
+public void init(ServletConfig config) throws ServletException {
+#7
+super.init(config);
+questionnaires = QuestionnaireInitializer.createQuestionnaires();
+#8
+}
+}
+\end{lstlisting}
+
+\section{ Servlet Allgemein}
+\pic{dirstruct.png}
+Passt mi Build Path in Java Eclipse zusammen.
+\begin{description}
+ \item [Function von Web XML] Vor 3.0 notwendig nicht mehr weil Servlets jetzt Annotationsgesteurt sind. Container verwaltet die Application und muss notwendigen Informationen über die Komponenten davon wissen.
+ Man kann auf web.xml verzichten falls man jede xml Element in eine entsprechende Annotation umwandelt. \textbf{Eine mischung ist empfehlenswert.}
+ \item [URL Pattrns in web.xml] Servlet Mappings stellen die verschiedene Pfade dar worauf der Servlet wartet dar. \textbf{Welcome file ist eine liste von gemappte URL Patterns für den Index Fall}
+ \item [Servlet Context] ist alles unter app verzeichnis im webapps. Konkret: webapps/basic.
+ \item [Zeilen Erklärung] \begin{enumerate}
+                           \item Annotation
+                           \item Http Ausprägung von Servlet - kann auch andere Protokolle.
+                           \item Override von entsprechende methode doGet gibt HTTPResponse aus.
+                           \item Erste Zugriff auf Response muss sagen was für ein Typ der Content ist.
+                           \item Hohle get Parameter answer=bla, optional.
+                           \item Behandelt Index Request, Writer hohlen, html schreiben. Buffer/ZeichenOrientierte Antwort.
+                           \item LifeCycle Start, einmal aufgerufen.
+                           \item Custom Model Klasse.
+                          \end{enumerate}
+
+\end{description}
+
+\section{Servlet Komponenten}
+
+\subsection{Servlet Definitionen}
+
+\begin{description}
+\item [servlet Container:] Servlets sind zunächst einmal nichts anderes als ganz normale Java-Klassen, die ein bestimmtes
+Interface javax.servlet.Servlet implementieren. Damit diese Klassen wirklich auf HTTP-
+Anfragen eines Browsers reagieren und die gewünschte Antwort liefern können, müssen die
+Servlets in einer bestimmten Umgebung laufen. Diese Umgebung wird vom sogenannten Servlet-
+Container bereitgestellt.
+Der Container sorgt zunächst einmal für den korrekten Lebenszyklus der Servlets (siehe später).
+Zumeist arbeitet der Container im Zusammenspiel mit einem Webserver. Der Webserver bedient
+z.B. die Anfragen nach statischem HTML-Content, nach Bildern, multimedialen Inhalten oder
+Download-Angeboten. Kommt hingegen eine Anfrage nach einem Servlet oder einer JSP herein, so
+leitet der Webserver diese an den Servlet-Container weiter. Dieser ermittelt das zugehörige Servlet
+und ruft dieses mit den Umgebungsinformationen auf. Ist das Servlet mit seiner Abarbeitung des
+Requests fertig, wird das Ergebnis zurück an den Webserver geliefert, der dieses dem Browser wie
+gewöhnlich serviert. 
+ \item [Servlet:] javax.servlet.Servlet ist das Interface, das letztendlich entscheidet, ob eine Java-Klasse
+überhaupt ein Servlet ist. Jedes Servlet muss dieses Interface direkt oder indirekt implementieren.
+De facto wird man aber wohl in den meisten Fällen nicht das Interface selber implementieren,
+sondern auf javax.servlet.GenericServlet (falls man kein Servlet für HTTP-Anfragen
+schreibt), bzw. javax.servlet.http.HttpServlet für http-Anfragen zurückgreifen.
+HttpServlet implementiert alle wesentlichen Methoden bis auf die http-doXXX-Methoden wie
+doGet oder doPost. Man muss nur noch die Methoden doGet, doPost oder doXYZ
+überschreiben, je nachdem, welche HTTP-Methoden man unterstützen will.
+\item[ServletRequest und ServletResponse (HttpServletRequest und HttpServletResponse)]	In den Verarbeitungsmethoden von Servlets (service(), doGet(), doPost()...) hat man stets
+Zugriff auf ein Objekt vom Typ ServletRequest. Arbeitet man mit HttpServlet handelt es sich
+um das Interface javax.servlet.http.HttpServletRequest, ansonsten um das Interface
+javax.servlet.ServletRequest. Diese Interfaces stellen wesentliche Informationen über den
+Client-Request zur Verfügung.
+Man implementiert selber nie diese Interfaces, vielmehr stellt der jeweilig benutzte Container
+konkrete Implementierungen dieser Interfaces für die Entwickler transparent zur Verfügung.
+Grundlage des eigenen Codes sollten aber immer die Interfaces selbst sein, niemals die konkrete
+Implementierung eines Container-Herstellers, da sonst die Portabilität verloren geht.
+Letztlich geht es bei Servlets immer darum, auf einen Client-Request mit einer Antwort zu reagieren.
+Um diese Antwort generieren zu können, benötigt man ein Objekt vom Typ ServletResponse.
+Während man aber auf das ServletRequest-Objekt sehr häufig zurückgreift, benötigt man das
+ServletResponse-Objekt vergleichsweise selten. Es dient bspw. im Falle eines Fehlers dazu,
+einen anderen HTTP-Statuscode als "200" zu setzen. Des Weiteren kann man HTTP-Header mit
+dem Response-Objekt setzen. Ein paar Methoden sind aber doch wichtig:
+\begin{itemize}
+\item sendRedirect(String) zur Auslösung eines Redirects,
+\item setContentType(String) zur Setzung des Mime-Types der Antwort
+\item  setCharacterEncoding(String) zur Setzung des richtigen Zeichensatz-Encodings
+(bspw. UTF-8 oder ISO-8859-1).
+\end{itemize}
+Schlussendlich muss das Servlet seine Ausgabe auch irgendwohin schreiben. Dazu holt man sich
+aus dem Response-Objekt mit der Methode getOutputStream() ein Objekt vom Typ
+ServletOutputStream (für binäre Inhalte wie bspw. generierte PDF-Dateien oder Bilder) oder mit
+der Methode getWriter() ein Objekt vom Typ PrintWriter, wenn man als Antwort textuelle
+Daten generiert (bspw. HTML-Code oder XML-Daten).
+\item[ServletContext] Jedes Servlet wird im Kontext der Webapplikation ausgeführt. Dieser Kontext gilt für alle Servlets
+der entsprechenden Webapplikation. Deshalb werden Informationen die im Scope Webapplikation
+gelten hier abgelegt, so dass jedes Servlet auf diese zugreifen kann.
+Kontext-Parameter werden im Deployment-Deskriptor konfiguriert. Zum Beispiel:
+\begin{verbatim}
+ <webapp ...>
+<context-param>
+<param-name>DBUSER</param-name>
+<param-value>webfr</param-value>
+</context-param>
+
+protected void doGet(HttpServletRequest request, HttpServletRespones response)... {
+String dbuser = (String) request.getServletContext().getAttribute("DBUSER");
+...
+\end{verbatim}
+
+\item[Servlet Lebenszyklus] Ein Servlet wird von einem Servlet-Container verwaltet. Ein Servlet wird über den sogenannten
+Deployment-Deskriptor (DD) dem Container bekannt gemacht. Der Deployment-Deskriptor ist eine
+XML-Datei, die stets unter dem in der Servlet-Spezifikation festgelegten Namen "web.xml" im
+ebenfalls dort festgelegten Verzeichnis "WEB-INF" abgelegt werden muss. Nehmen wir an, wir
+hätten in einer Webapplikation „basic“ ein Servlet "BasicServlet" im Package "ch.fhnw.edu.basic".
+Dieses Servlet wollen wir unter der URL "first" aufrufen. Dann würden wir dazu folgenden
+Deployment-Deskriptor schreiben:
+
+\begin{verbatim}
+ <?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<servlet>
+#1
+<servlet-name>BasicServlet</servlet-name>
+<servlet-class>ch.fhnw.edu.basic.BasicServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+#2
+<servlet-name>BasicServlet</servlet-name>
+<url-pattern>/first/*</url-pattern>
+</servlet-mapping>
+</web-app>
+\end{verbatim}
+\begin{verbatim}
+ //Seit 3.0
+ @WebServlet(urlPatterns={"/first/*"})
+#1
+public class BasicServlet extends HttpServlet {
+...
+\end{verbatim}
+
+\begin{itemize}
+ \item Name \& Klasse konfiguration (muss) @Annotation nimmt als Default FQCN \footnote{Fully Qualified Class Name}
+ \item Mapping von URL auf Servlet. Annotation @WebServlet.
+\end{itemize}
+
+
+\end{description}
+
+\section{Servlet Lebenszyklus}
+\begin{description}
+ \item [Laden der Servlet-Klasse] unächst muss der Classloader des Containers die Servlet-Klasse
+laden. Wann der Container dies macht, bleibt ihm überlassen, es sei denn, man definiert den
+entsprechenden Servlet-Eintrag im Deployment-Deskriptor. Mit dem optionalen Eintrag "load-on-
+startup" wird definiert, dass der Servlet-Container die Klasse bereits beim Start des Containers lädt.
+Die Zahlen geben dabei die Reihenfolge vor (Servlets mit niedrigeren "load-on-startup"-Werten,
+werden früher geladen).
+\item[Instanziieren] nmittelbar nach dem Laden wird das Servlet instanziiert, d.h. der leere Konstruktor
+wird aufgerufen.
+\item [init(ServletConfig)] evor der erste Request an das Servlet weiter gereicht wird, wird dieses
+initialisiert. Dazu wird die Methode init(ServletConfig) des Servlets aufgerufen. Diese
+Methode wird genau einmal im Lebenszyklus eines Servlets und nicht etwa vor jedem Request
+aufgerufen und dient dazu, grundlegende Konfigurationen vorzunehmen. Dem Servlet wird dabei ein
+Objekt vom Typ javax.servlet.ServletConfig mitgegeben. In diesem ServletConfig-
+Objekt sind die Init-Parameter abgelegt. Diese Parameter können im web.xml oder über
+Annotationen gesetzt werden. Beispiel mit Parameter "email" im web.xml:
+\begin{verbatim}
+ <servlet>
+<servlet-name>ch.fhnw.edu.basic.BasicServlet</servlet-name>
+<servlet-class>BasicServlet</servlet-class>
+<init-param>
+<param-name>email</param-name>
+<param-value>hugo.tester@fhnw.ch</param-value>
+</init-param>
+</servlet>
+\end{verbatim}
+Nach Abarbeiten der init()-Methode ist das Servlet bereit, Anfragen entgegen zu nehmen und zu
+beantworten.
+\item[service(ServletRequest, ServletResponse)] Für jede Anfrage eines Clients an ein entsprechend
+definiertes Servlet, wird die Methode service(ServletRequest, ServletResponse)
+aufgerufen. Servlet-Container halten zumeist nur genau eine Instanz pro Servlet. Somit wir jeder
+Request in einem eigenen Thread aufgerufen. Die daraus entstehenden Threading-Issues müssen
+unbedingt beachtet werden!
+
+Alle wesentlichen Informationen, die die Client-Anfrage betreffen, befinden sich im
+ServletRequest-Objekt. Und zur Erzeugung der Antwort nutzt man Methoden des
+ServletResponse-Objekts. In eigenen Servlets für HTTP-Anfragen (und das ist sicherlich der
+Regelfall für selbstgeschriebene Servlets) sollte man allerdings nie die service()-Methode selber
+überschreiben. Vielmehr bietet es sich an, die eigene Klasse von HttpServlet abzuleiten und
+dessen Methoden doGet(), doPost() etc. zu überschreiben. Dadurch wird das korrekte
+Handling der diversen HTTP-Methoden automatisch vom Container übernommen.
+
+\item[destroy()] Der Container kann jederzeit eine Servlet-Instanz als überfällig ansehen und diese aus
+dem Request/Response-Zyklus entfernen. Dazu ruft er am Ende des Lebenszyklus der Servlet-
+Instanz deren destroy()-Methode auf und gibt damit dem Servlet die Möglichkeit z.B: Ressourcen
+wie Datenbank-Connections freizugeben. Der Container muss zuvor dem Servlet allerdings noch die
+Gelegenheit geben, seine in der Bearbeitung befindlichen Requests abzuarbeiten, bzw. zumindest
+einen definierten Timeout abwarten, bevor er die Abarbeitung unterbricht.
+Ist einmal die Methode destroy() aufgerufen, steht diese Servlet-Instanz nicht mehr für weitere
+Anfragen zur Verfügung.
+\end{description}
+
+\section{Filter}
+Servlet-Filter bieten eine Möglichkeit auf Request und Response zwischen Client und Servlet
+zuzugreifen (Abbildung 2). Dabei können mehrere Filter eine Filterkette bilden. Dabei wird mittels
+Mapping-Regeln bestimmt, welche Filter für welche Requests wann zuständig sind.
+%todo pic 6 10 ab 2.
+
+Es gibt zahlreiche Möglichkeiten, bei denen der Einsatz eines Filters sinnvoll sein kann. Der
+einfachste Anwendungsfall ist das Logging, um zu sehen welche Ressource angesprochen wurde
+und wie lange die Bereitstellung der Ressource gedauert hat. Weitere typische Anwendungsfälle
+umfassen die Security bspw. eine Entschlüsselung des Requests und die Verschlüsselung der
+Response.
+Filter sind im DD deklariert. Sie werden vom Container verwaltet und müssen das
+Interface javax.servlet.Filter implementieren. Es gibt drei Methoden, die den Lifecycle
+bestimmen:
+\begin{itemize}
+ \item  init(FilterConfig) - wird gerufen, nachdem der Container die Instanz der Filterklasse
+erzeugt hat
+\item doFilter(ServletRequest, ServletResponse, FilterChain) - wird bei der
+\item Abarbeitung der FilterChain gerufen
+\item destroy() - die Filterinstanz wird gleich beseitigt, bitte aufräumen
+\end{itemize}
+Ein oder mehrere deklarierte Filter bilden eine Filterkette. Die typische Implementierung
+von doFilter() macht dieses Konzept deutlich:
+\begin{verbatim}
+ doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+// Code der etwas vor Aufruf der Kette macht
+chain.doFilter(request, response); // weitere Abarbeitung im Filterstack
+// Code der etwas nach Aufruf der Kette macht
+}
+\end{verbatim}
+Damit der Container eine Filterinstanz erzeugen kann, muss jeder Filter einen parameterlosen
+Konstruktor besitzen.
+Im DD werden Filter deklariert und mittels Mappingregeln per URL-Pattern oder Servlet-Name bei
+der Abarbeitung eines Requests berücksichtigt:
+
+\begin{lstlisting}[caption=Filter Beispiel,language=xml] 
+ // Filter deklarieren
+<filter>
+<filter-name>My cool filter</filter-name>
+<filter-class>foo.bar.MyFilter</filter-class>
+<init-param> // kann im FilterConfig abgegriffen werden
+<param-name>loglevel</param-name>
+<param-value>10</param-value>
+</init-param>
+</filter>
+// Filter auf eine URL mappen
+<filter-mapping>
+<filter-name>My cool filter</filter-name>
+<url-pattern>*.do</url-pattern>
+</filter-mapping>
+// Filter auf ein Servlet mappen
+<filter-mapping>
+<filter-name>My cool filter</filter-name>
+<servlet-name>SomeServlet</servlet-name>
+</filter-mapping>
+\end{lstlisting}
+Die Reihenfolge mehrerer Filter im Filterstack bestimmt der Container nach folgenden Regeln:
+\begin{itemize}
+\item  Zunächt werden alle passenden url-pattern gesucht und in der Reihenfolge ihres
+Erscheinens im DD auf den Filterstack gelegt.
+\item  Nun wird das gleiche mit allen passenden servlet-name Filtern gemacht.
+\end{itemize}
+
+Filter werden, ähnlich wie Servlets, einmal pro Webapplikation instanziiert, sie sind Webapplikation-
+Singletons. Die Spezifikation sagt zwar, dass per JVM eine Instanz erzeugt wird, aber das wird nicht
+stimmen. Dann könnte man ja Informationen zwischen verschiedenen Webanwendungen, die in der
+gleichen JVM laufen, austauschen. Das klingt interessant, brächte aber erhebliche konzeptionelle
+Probleme mit sich, von denen in der Spezifikation keine Rede ist. Filter müssen für den
+nebenläufigen Einsatz designed werden, mit anderen Worten, nichttriviale Filter enthalten
+synchronisieren Code.
+
+
+\section{Listener}
+%todo 8 10 ab3 pic
+Listener sind Klassen, die das Servlet Listener Interface implementieren und die im Deployment
+Deskriptor (DD) (oder über die Annotation @WebListener) dem Container bekannt gemacht werden.
+In einer Webanwendung können problemlos mehrere Listener vorhanden sein. Sie werden bei
+Lifecycle-Ereignissen der Webanwendung vom Container aufgerufen. Listener werden pro
+Anwendung einmal in der Reihenfolge ihres Erscheinens im DD instanziiert, sie sind Singletons.
+Eine Listener-Klasse muss unbedingt den Standard-Konstruktor besitzen, damit der Container eine
+Instanz erzeugen kann.
+
+\begin{verbatim}
+ <listener>
+<listener-class>a.b.MyRequestListener</listener-class>
+</listener>
+\end{verbatim}
+
+Die Singletoneigenschaft der Listener-Instanzen erzwingt, dass Zustände der entsprechenden
+Scopes nicht in den Listener-Klassen gehalten werden dürfen. Die Listener Implementierungen
+müssen selbst dafür sorgen und es gilt ähnlich wie für Filter: nichttriviale Listener werden
+synchronisierten Code enthalten und die Synchronisation erfolgt am entsprechenden Scope. Ein
+typisches Codefragment für das Setzen eines Zustands im Scope der Session eines Nutzers sieht
+dann so aus:
+
+\begin{verbatim}
+ ..
+HttpSession session = event.getSession();
+synchronized (session) {
+session.setAttribute("SOME_STATE", new Integer(1));
+}
+..
+\end{verbatim}
+
+Für alle möglichen Ereignisse, welche in einer Webapplikation passieren können, gibt es insgesamt
+acht Listener-Interfaces. Sie bieten die Möglichkeit auf entsprechende Ereignisse zu reagieren.
+Folgende Listener Interfaces sind spezifiziert:
+
+\subsection{Listener Interfaces}
+\begin{description}
+ \item [ServletContextListener] Wird eine Webapplikation deployed, undeployed oder neu gestartet,
+wird deren ServletContextListener benachrichtigt. Typischerweise gibt es in einer
+Webapplikation eine Klasse die diesen Listener implementiert. Zum Beispiel hat die Klasse die
+Aufgabe die Webapplikation zu initialisieren, wie Datenbank-Connections herzustellen, Logger zu
+konfigurieren etc. Geht dabei irgendwas schief und die Webapplikation ist nicht lebensfähig, kann
+man eine RuntimeException werfen. Tomcat beendet die Webapplikation und ruft
+contextDestroyed() des Listeners auf.
+\item [ServletContextAttributeListener] Diese Listener werden benachrichtigt, wenn ein Attribut
+im ServletContext gesetzt, ersetzt oder entfernt wird.
+\item [HttpSessionListener:] Diese Listener werden benachrichtigt, wenn eine HttpSession erzeugt
+oder zerstört wurde. Damit kann man z.B. die Anzahl der aktiven Sessions (also User der
+Webapplikation) zählen, um z.B. mehr Ressourcen bereitstellen.
+\item[HttpSessionAttributeListener:] Diese Listener werden benachrichtigt, wenn irgendein
+Attribut einer Session gesetzt, ersetzt oder entfernt wird.
+\item[HttpSessionBindingListener:] Objekte einer Klasse, welche diesen Listener implementiert,
+werden vom Container benachrichtigt wenn sie als Attribut in einer HttpSession gespeichert werden
+bzw. wenn sie aus der Session entfernt werden.
+\item [HttpSessionActivationListener:] n verteilten WebApps darf es nur genau ein Session-Objekt
+pro Session-ID geben, egal über wieviel JVMs die WebApp verteilt ist. Durch Load-Balancing des
+Containers kann es passieren, dass jeder Request bei einer anderen Instanz des selben Servlets
+ankommt. Also muss die Session für diesen Request von einer JVM zu der anderen umziehen.
+\item[Der HttpSessionActivationListener:] wird wiederum von den Attributen der Session
+implementiert, sodass sie benachrichtigt werden bevor und nachdem eine Session-Migration
+stattfindet. Die Attribute können dann dafür sorgen, dass sie den Trip überleben.
+\item[ServletRequestListener] Dieser Listener wird benachrichtigt, wenn ein Request die
+Webapplikation erreicht. Damit kann man z.B. Requests loggen.
+\item[ServletRequestAttributeListener:]Dieser Listener wird benachrichtigt, wenn ein Attribute
+eines Requests gesetzt, ersetzt oder entfernt wird.
+\end{description}
+
+\chapter{MVC Design Pattern}
+
+Model-View-Controller ist ein Architekturmuster zur Strukturierung der Software in die drei
+Einheiten Datenmodell (engl. model), Präsentation (engl. view) und Programmsteuerung
+(engl. controller) (siehe Abbildung 1). Ziel des Musters ist ein flexibler Programmentwurf, der eine
+spätere Änderung oder Erweiterung erleichtert und eine Wiederverwendbarkeit der einzelnen
+Komponenten ermöglicht
+
+\pic[Spring MVC Controller]{controller.png}
+
+\section{Delegation von Arbeit}
+
+Der Begriff \textbf{FrontController} bezeichnet ein Architekturmuster in der Softwaretechnik zur Erweiterung
+des Model-View-Controller-Architekturmusters.
+Ein FrontController dient in einer Webanwendung als Router. Alle Anfragen an die Webanwendung
+werden deshalb vom Front-Controller empfangen und er wird den Request zur Weiterbearbeitung an
+andere Controller (PageController) weiterleiten (siehe Abbildung 2). Der FrontController kann vor der
+Delegierung allgemeine Funktionen durchführen, wie zum Beispiel das Auslesen der Request-
+Parameter.
+
+\pic[Spring FrontController]{spmvc.png}
+
+\begin{description}
+ \item [PageController] Der PageController ist ein Objekt, das eine spezifische Anfrage für eine bestimmte Seite oder Aktion
+einer Website bearbeitet. Er wird normalerweise vom FrontController aufgerufen.
+\item [FrontController] \hfill \\
+Der FrontController in SpringMVC
+Im File "web.xml" finden sie den Eintrag für den FrontController. Es ist das Servlet
+DispatcherServlet.
+Die Hauptaufgabe des FrontController ist es den Request entgegen zu nehmen (1), die Parameter
+zu verarbeiten und die Anfrage aufgrund einer entsprechenden Mapping Strategie (2) an eine
+dezidierte Klasse weiter zu leiten (3). Diese Klasse entspricht dem PageController. Der
+PageController wird schlussendlich mit dem Model und einem View Namen antworten (4).
+\pic{fctrl.png}
+\item[PageController] Der PageController übernimmt grundsätzlich 3
+Arbeitschritte:\\
+\begin{enumerate}
+\item  Mapping der Request URLs auf die Controller-Methoden
+Die Controller enthalten verschiedene Methoden, welche mit der Annotation @RequestMapping
+(mehr in Listing 1) einen entsprechenden Request entgegennehmen und diesen verarbeiten können.
+\item  Businesslogik aufrufen oder an Business-Services übergeben
+In der Regel wird nun die Verarbeitung an die Businesslogik (siehe in Listing 1 die
+Datenbankabfrage in den Zeilen \#5 und \#9) übergeben.
+\item Die Antwort: Model und View Name
+In der Antwort des PageController‘s ist das Model, das üblicherweise in Form einer
+java.util.Map realisiert wird. Das Model-Objekt umfasst die Daten, welche in einer
+entsprechenden View gerendert werden sollen. Damit der FrontController die korrekte View Klasse
+auswählen kann, muss der PageController zusätzlich zum Model auch einen logischen View Name
+zurückschicken.
+\end{enumerate}
+
+\end{description}
+
+\begin{lstlisting}[caption=Controller Example]
+ @Controller // Controller Tag
+@RequestMapping("/questionnaires") //Mapped URL innerhalb Servlet von FrontController.
+public class QuestionnaireController {
+@RequestMapping(method = RequestMethod.GET) //Welche HTTP Methode es drauf Antwortet.
+public String list(Model uiModel) {  // Automatische Object vom Typ Model, kann Key Value Paare beinhalten.
+uiModel.addAttribute(("questionnaires", 
+Questionnaire.findAllQuestionnaires()); //Key Value Setzung
+return "questionnaires/list"; //View Name
+} 
+@RequestMapping(value = "/{id}", method = RequestMethod.GET)  // questionnaires/id behandelung Id ist ein Parameter aus GET Request.
+public String show(@PathVariable("id") Long id, Model uiModel) {  // Konvertierung aus GET Request in gewunschten Typ mittels @PathVariable
+uiModel.addAttribute("questionnaire", 
+Questionnaire.findQuestionnaire(id)); //setzen von Key Value Paaren.
+uiModel.addAttribute("itemId", id); 
+return "questionnaires/show";  //View Name
+} 
+}
+\end{lstlisting}
+
+\section{Statische Inhalte}
+
+Statische Ressourcen wie Bilder oder CSS-Stylesheets sollten nicht als dynamische Inhalte
+behandelt werden, also nicht über einer Servlet geladen werden, sondern direkt vom Webserver
+geliefert werden. Tomcat kann statische Inhalte direkt liefern. Dies erfordert aber eine Konfiguration
+im File "web.xml". Spring stellt eine andere, flexiblere Variante zur Verfügung.
+In Spring gibt es zwei Konfigurationseinstellungen um die Requests nach statische Inhalte einfach
+verarbeiten zu können.
+
+\begin{lstlisting}[language=xml,caption=Statische Inhalt Konfiguration]
+ <!-- Handles HTTP GET requests for /resources/** by efficiently
+serving up static resources -->
+<mvc:resources location="/, classpath:/META-INF/web-resources/"
+mapping="/resources/**"/>
+#1
+<!-- Allows for mapping the DispatcherServlet to "/" by forwarding
+static resource requests to the container's default Servlet -->
+<mvc:default-servlet-handler/>
+\end{lstlisting}
+Sie finden diese Einstellungen im File "webmvc-config.xml".
+Im File "header.jspx" soll z.B. das Banner-Image "banner-graphic.png" angezeigt werden. Das
+Image selber ist im Ordner "webapp/images" abgelegt. Über die Mapping-Definition in \#1 wird die
+entsprechende URL zum Banner-Image zu /resources/images/banner-graphic.png
+
+\section{webmvc-config.xml}
+Damit ein PageController als Controller-Komponente von Spring erkannt werden kann, d.h. dass die
+Annotation @Controller korrekt interpretiert wird, muss Spring beim Bootstrap der Webapplikation
+ein Scanning durchführen und nach diesen Annotationen suchen. Dies erreicht man mit der
+Konfiguration \begin{verbatim}
+               <context:component-scan>
+              \end{verbatim}
+Damit der FrontController den Request an den PageController übergeben kann, muss der
+FrontController die Strategie kennen wie das HandlerMapping ausgeführt werden soll. Spring kennt
+mehrere solche Strategien und jede ist in einer konkreten Implementation wie z.B.
+BeanNameUrlHandlerMapping umgesetzt. Arbeitet man nun mit der @RequestMapping
+Annotationen, muss das Spring Bean DefaultAnnotationHandlerMapping aktiviert werden.
+Dies erreicht man mit der Zeile \begin{verbatim}
+                                 <mvc:annotation-driven/>
+                                \end{verbatim}
+ im Spring Konfigurationsfile
+"webmvc-config.xml".
+
+\chapter{Composite Views ( Apache Tiles)}
+
+\section{Motivation (bla)}
+Webseiten bestehen üblicherweise aus verschiedenen Content-Bereichen wie einem Header, einer
+Navigationsleiste oder einem Footer. Die Webseite selber setzt sich dann aus diesen verschiedenen
+Bereichen zusammen, wobei die Struktur mehrheitlich über alle Seiten gleich bleibt. Header, Footer
+oder auch Navigation bleiben unverändert oder ändern sich kaum - nur der zentrale Content
+wechselt je nach Kontext.
+Damit die Webapplikation gut erweiterbar bleibt und der Wartungsaufwand tief gehalten werden
+kann, ist auch hier ein komponentenorientierter Ansatz sinnvoll. Jeder Content-Bereich sollte als
+eine unabhängige Einheit vorliegen. Diese Einheiten können dann beliebig zu einer Komposition
+zusammengesetzt werden. Änderungen in der Einheit selber werden dann automatisch in allen
+Kompositionen sichtbar, welche die entsprechende Einheit nutzen.
+
+\section{Composite View Pattern}
+\begin{itemize}
+ \item bindet Unteransichten dynamisch zu einer zusammengesetzten Ansicht ein.
+ \item Code für jede Unteransicht nur einmal vorhanden sein und jede Anpassung schlägt sich automatisch in allen
+zusammengesetzten Ansichten nieder.
+\item Die Klasse BasicView stellt die allgemeine Form einer Ansicht dar und kann entweder eine View
+(einzelne Ansicht) oder eine CompositeView (zusammengesetzte Ansicht) sein. Die
+CompositeView ist aus BasicView's zusammengesetzt; das bedeutet, dass sie sowohl einzelne
+Views als auch andere CompositeView's beinhalten kann
+\end{itemize}
+\pic[Composite View Pattern] {compositeview.png}
+
+
+
+
+\section{Tiles Ansatz}
+Mit Hilfe von Tiles werden Design Vorlagen erstellt, in denen Referenzen zu Subviews
+überall dort stehen wo der eigentliche Inhalt in andere Views ausgelagert werden soll. Das hat den
+enormen Vorteil, dass man gleiche Vorlagen mehrfach verwenden kann. Dadurch wird es einfacher
+sein das komplette Design der Webapplikation bei Bedarf an neue Anforderungen anzupassen.
+
+SpringMVC unterstützt die Tiles Integration effizient. Ein entsprechender View Resolver kann aus
+dem logischen View-Namen - er wird von der Controller-Methode geliefert (wie in Arbeitsblatt 4
+erfahren) - die entsprechende Tiles Definitionen finden und das Tiles Framework generiert
+anschliessend die entsprechende Web-View mit allen notwendigen Subview's, die selber wiederum
+Tiles sind.
+
+Der View-Resolver wird im File "webmvc-config.xml" konfiguriert. Zusätzlich zur dieser
+Konfiguration muss Tiles selber auch konfiguriert werden. In erster Linie muss Tiles wissen, wo die
+Tiles-Definitionen liegen. Hier der Eintrag aus dem File "WEB-INF/spring/webmvc-config.xml":
+
+\begin{lstlisting}[caption=View Resolver Config Tiles,language=xml]
+ <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
+<property name="definitions">
+<list>
+<value>/WEB-INF/layouts/layouts.xml</value>
+#1
+<!-- Scan views directory for Tiles configurations -->
+<value>/WEB-INF/views/**/views.xml</value>
+#2
+</list>
+</property>
+</bean>
+\end{lstlisting}
+
+\begin{lstlisting}[language=html,caption=CompositeView mit Tiles(default.jspx)]
+//DEFINIERT SUBVIEW PLAZHALTER
+ <body class="tundra spring">
+<div id="wrapper">
+<tiles:insertAttribute name="header" ignore="true" />
+<tiles:insertAttribute name="menu" ignore="true" />
+<div id="main">
+<tiles:insertAttribute name="body"/>
+<tiles:insertAttribute name="footer" ignore="true"/>
+</div>
+</div>
+/body>
+\end{lstlisting}
+Zu diesen Referenzen müssen konkrete View's vorhanden sein, damit die gesamte Seite aufgebaut
+werden kann. Das Default-Layout der flashcard-Applikation findet man im File "WEB-
+INF/layouts/layouts.xml", mit folgenden Tiles Definitionen:
+
+\begin{lstlisting}[language=xml,caption=Layout Beschreibung]
+<!--
+FIXIERUNG VON GEWISSE ELEMENTE IN DEM DER ATTRIBUT EIN "DEFAULTWERT" BEKOMMT
+--!>
+ <definition name="default" template="/WEB-INF/layouts/default.jspx">
+<put-attribute name="header" value="/WEB-INF/views/header.jspx" /> 
+<put-attribute name="menu" value="/WEB-INF/views/menu.jspx" />
+<put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
+</definition>
+
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Auszug aus views.xml,language=xml]
+ <definition extends="default" name="index">
+<put-attribute name="body" value="/WEB-INF/views/index.jspx"/>
+</definition>
+\end{lstlisting}
+\begin{framed}
+ Die Wahl der Tiles-View durch den FrontController sollte nun klar sein. Gibt ein ApplicationController
+einen logischen View-Name zurück, wird dieser Name verwendet, um innerhalb der Tiles
+Konfiguration nach einer gleichnamigen Definition zu suchen. Wird diese Definition gefunden, kann
+die komplette Webseite aus den einzelnen Tiles (Kacheln) zusammengesetzt werden.
+\end{framed}
+
+\chapter{JSTL}
+"Template View" Design Pattern
+Renders information into HTML by embedding markers in an HTML page.
+Mit dem Template will man in einer Webapplikation eine Trennung zwischen HTML und
+Programmcode erwirken. Es gibt verschiedene Gründe, um eine solche Trennung anzustreben:
+\begin{itemize}
+\item HTML Design und Applikationsentwicklung verlangen unterschiedliches Know-how
+   HTML Design und Applikationsentwicklung sind unterschiedliche Rollen bei der Entwicklung
+  einer Webapplikation. Diese Rollen werden oft durch verschiedene Fachleute zu verschiedenen
+ Zeiten wahrgenommen. Durch die Separierung von HTML vom Programmcode kann jede
+Person an seinen eigenen Files arbeiten.
+\item Development Tool Support
+   Durch die Separierung von HTML vom Programmcode können HTML WYSIWYG Editoren
+   eingesetzt werden, welche die Gestaltung des User Interfaces stark unterstützen können.
+    Designer sind keine Programmierer!
+\end{itemize}
+
+Mit der Expression Language erhält man einen einfachen Zugriff auf dynamische Werte wie die
+Anfrageparameter oder die Ergebnisse der Geschäftslogik, d.h. das Model.
+Expression Language-Ausdrücke werden durch spezielle Delimiter gekennzeichnet. Sie
+beginnen entweder mit "\${" oder mit "\#\{" und enden mit "\}":
+
+Mit der Expression Language kann man den Zugriff auf das Modell vereinfachen. Jedoch fehlt
+bei der EL die Möglichkeiten einfache Kontrollstrukturen einzubinden, die es in der
+Präsentationslogik zum Teil braucht 
+
+\section{JSTL Java Tag Library}
+\begin{tabular}{l | l | l | p{5cm}}
+ \textbf{Name} & \textbf{Prefix} & \textbf{URI} & \textbf{Aufgabe} \\ \hline
+ core & c & http://java.sun.com/jsp/jstl/core & Basistags, die vor allem
+Programmablauf-Tags wie
+Schleifenkonstrukte oder Verzweigungen \\ \hline
+fmt & fmt & http://java.sun.com/jsp/jstl/fmt & Tags zur Formatierung von Datums-,
+Währungs- und Zahlwerten und zur
+Internationalisierung \\ \hline
+xml & x & http://java.sun.com/jsp/jstl/xml
+& Geeignet zur Bearbeitung von XML-
+Dokumenten. Enthält u.a. wie core
+Schleifen- und Verzweigungstags. Der
+Unterschied zu den core-Tags liegt darin,
+dass XPath-Ausdrücke zur
+Bedingungsentscheidung bzw. zur
+Feststellung der Menge dienen, über die
+iteriert werden soll \\ \hline
+sql & sql & http://java.sun.com/jsp/jstl/sql & Tag-Bibliothek zum Ansprechen einer
+Datenbank direkt aus der JSP heraus \\ \hline
+functions & fn & http://java.sun.com/jsp/jstl/functions & Die Tags dieser Bibliothek wenden
+Funktionen auf Expression Language-
+Ausdrücke an. Es handelt sich mit einer
+Ausnahme durchweg um String-
+Manipulationen \\ \hline
+\end{tabular}
+
+\begin{framed}
+ Mit Einführung der Servlet-API 2.4 und der Verabschiedung von JSP 2.0 ist es möglich, komplett
+auf JSP-Skriptelemente zu verzichten. JSPX-Dokumente entsprechen wohlgeformten XML-
+Dokumenten, deren Tag-Elemente durch eindeutige Namensräume definiert sind. So ist es
+beispielsweise möglich, XHTML-konforme Ausgaben zu erzeugen, ohne dass Tag-Bezeichner
+kollidieren.
+\end{framed}
+
+\section{JSP als Servlet}
+Für die Entwicklung mit JavaServer Pages ist es wichtig zu verstehen, welche Phasen eine JSP-
+Datei bei ihrem Weg durch den JSP-Container durchläuft. Es ist wichtig festzuhalten, dass jeder
+JSP-Container stets auch ein Servlet-Container sein muss. Jede JSP wird im Verlaufe ihres
+Lebenszyklus vom Container zunächst in ein Servlet transformiert. Zur Ausführung kommen
+anschliessend Servlets
+
+\begin{itemize}
+ \item Servlet Quellcode erstellt
+ \subitem Übernommen von Container am ersten Aufruf.
+ \item Änderung der JSP heisst neue Übersetzung wie oben.
+ \subitem Aber hier ist auch mitunter Vorsicht angebracht. Eine Datei erst umzubenennen, dann
+vorübergehend eine andere Datei gleichen Namens zu verwenden (bspw. eine spezielle Debug-
+Version oder eine andere Index-Seite zur Bekanntgabe von Wartungsarbeiten, etc.) und
+anschliessend die alte Datei zurück zu kopieren, funktioniert nicht.
+\item n dieser Phase erkennt der Übersetzer nur Fehler, die
+direkt mit der JSP-Syntax zusammenhängen. Bspw. wenn ein öffnender Skriptlet-Tag nicht
+geschlossen wird, falsche Direktiven verwendet werden, Tag-Libraries nicht gefunden werden etc.
+Fehler, die im Java-Code selber enthalten sind, werden in dieser Phase noch nicht gefunden. Daher
+ist die Anzeige der Fehler in dieser Phase und der Fehler der folgenden Phase auch häufig
+unterschiedlich detailliert.
+\item n der Compile-Phase wird vom Container der gewöhnliche Java-Compiler angeworfen, um aus dem
+generierten Servlet-Quellcode eine Java-Class Datei zu erzeugen. In dieser Phase werden nun die
+Fehler im ggf. vorhandenen Java-Code der JSP entdeckt, wie Syntax-Fehler, nicht vorhandene
+Klassen, die per import-Statements referenziert werden, usw.
+
+\end{itemize}
+\chapter{Formulare}
+
+\section{Motivation}
+
+Zu jedem Formular gehört ein Form Bean (oder Form Object oder Backing Bean). Hier ist es die
+Domain Entität Questionnaire:
+\begin{verbatim}
+ public class Questionnaire {
+private String subject;
+private String description;
+...
+\end{verbatim}
+
+\begin{description}
+ \item [Entität als Form Bean?] Es ist problemlos möglich das selbe POJO als Form Bean und als Domain Entität 
+einzusetzen. Jedoch, in
+bezug auf die Applikationsarchitektur und dem Paradima "Separation of conecrn" ist es eine bessere
+Praxis zwei unterschiedliche Klassen zu verwenden, vor allem dann wenn es keine eindeutige Beziehung
+zwischen Entität und Form Bean gibt. Ein Form Bean kann ja problemlos ein Aggregat verschiedener
+Entitäten sein!
+
+\item[Web Formular verarbeiten] \hfill \\
+\begin{lstlisting}[caption=Web Formular verarbeiten Spring]
+@Controller
+@RequestMapping("/questionnaires")
+public class QuestionnaireController {
+@RequestMapping(params = "form", method = RequestMethod.GET)#1
+public String createForm(Model uiModel) {#2
+uiModel.addAttribute("questionnaire", new Questionnaire());#3
+return "questionnaires/create";#4
+}
+...
+@RequestMapping(method = RequestMethod.POST) #5
+public String create(@Valid Questionnaire questionnaire, ...)#6 {
+...
+return "redirect:/";#7
+}
+}
+\end{lstlisting}
+\begin{enumerate}
+ \item Mapping für Handler-Methode, die auf einen GET-Request mit dem Parameter form gemappt
+wird. Zum Beispiel localhost:8080/flashcard/questionnaires?form
+\item Handler-Methode mit einem Model Objekt als Parameter, das an die View weitergegeben
+werden kann.
+\item Hier wird ein neues Form Bean erzeugt und unter dem Attribute questionnaire im Model
+abgelegt.
+\item Logischer View Name wird retourniert.
+\item Mapping für Handler-Methode, für den POST-Request. Das Mapping entspricht
+/questionnaires.
+Handler-Methode, um den Questionnaire zu verarbeiten. Der Questionnaire enthält die
+im Formular abgefüllten Daten.
+\item Redirect zu einer Resultat-Seite. (siehe Aufgabe 5 "Double Submit Problem")
+\end{enumerate}	
+
+\item[View für Controller Methode] \hfill \\
+\begin{lstlisting}[caption=View mit Form Spring,language=html]
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div ...
+xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields"
+xmlns:form="urn:jsptagdir:/WEB-INF/tags/form"
+... version="2.0">
+<form:create id="fc_ch_fhnw_edu_flashcard_domain_Questionnaire"#1
+modelAttribute="questionnaire" path="/questionnaires">#2
+<field:input field="subject"#3
+id="c_ch_fhnw_edu_flashcard_domain_Questionnaire_subject"
+required="true" />#4
+<field:input field="description"#5
+id="c_ch_fhnw_edu_flashcard_domain_Questionnaire_description"
+required="true" />
+</form:create>
+</div>
+\end{lstlisting}
+\begin{itemize}
+ \item form Tag (aus der Spring Roo Tag Library) erzeugt ein HTML Formular. Das Attribute id gibt
+dem Formular-Element eine Identifikation. Spring Roo nutzt diese Identifikation auch, um aus
+dem Wert das internationalisierte Label abzuleiten.
+\item Referenz auf das Model-Attribut questionnaire, das im Model entsprechend gesetzt wurde.
+URL-Path auf /questionnaires gesetzt, so dass der POST-Request auf die Methode
+create() des QuestionnaireController mappt. Das Attribut modelAttribute in Zeile \#2 referenziert das Form-Bean, 
+welches 
+im Model abgelegt
+ist. Das Model-Objekt wird beim Umgang mit dem Formular in beide Richtungen (Outbound -
+Inbound) eingesetzt.
+\item Hier wird ein HTML-Textfeld erzeugt, um das Thema subject eingeben zu können. Das
+Attribut field referenziert das Property subject des Form-Bean Questionnaire.
+Mit dem Attribut required kann eine Validierung mittels JavaScript bereits im Browser
+aktiviert werden.
+\item Hier wird ein HTML-Textfeld erzeugt, um die Beschreibung description zum Questionnaire
+eingeben zu können. Das Attribut field referenziert das Property description des Form-
+Bean Questionnaire.
+
+\end{itemize}
+\end{description}
+
+\pic[Form Bean]{fb.png}
+
+\section{Validierung von Formular Daten}
+Formular Daten können vom Benutzer falsch eingegeben werden. Um einen konsistenten
+Datenbestand halten zu können, ist es deshalb sehr wichtig, dass diese Daten validiert werden,
+bevor sie an die Geschäftslogik oder sogar in die Datenbank gehen. Und falls Fehler bei der
+Validierung auftreten, muss der Benutzer entsprechend orientiert werden.
+Mit dem JSR-303 “Bean Validation” hat Java nun seit Java EE Version 6 ein mächtiges und
+Schichten übergreifendes Mittel an die Hand bekommen, um komfortabel schon zur Entwurfszeit
+bekannte Constraints per Annotation auf Java-Beans zu legen. Die Java-Bean “weiss” damit also
+selbst, welche Daten sie annehmen darf oder nicht. Die Referenzimplementierung zum JSR-303
+kommt von Hibernate. Da der JSR-303 mit Java EE 6 eingeführt wurde, ist er natürlich Bestandteil
+aller zertifizierten Java EE 6 Application Server wie JBoss, Geronimo und weitere. Erfreulicherweise
+lässt sich der JSR-303 aber auch im Java SE Umfeld mit wenig Aufwand einsetzen und bietet auch
+hier allen Komfort und Flexibilität. Auch Spring 3 bietet eine vollständige Unterstützung von JSR
+303.
+
+\begin{tabular}{|c | p{5cm} | p{5cm} |}
+ Schicht & Vorteil & Nachteil \\ \hline
+ Datenbank & sehr zentrale Validierung.eine Umgehung der
+Validierung ist fast nicht möglich & Validierung sehr weit unten
+im Call-Stack.Netzwerk wird belastet, da eine Client-Server Kommunikation aufgebaut
+wird, die Antwort an den Benutzer kann dauern. \\ \hline
+Controller & keine Zugriff auf das Backend-System notwendig,unabhängig vom Client. &
+Validierung auf Web-Clients beschränkt Netzwerk wird belastet, da eine Client-Server Kommunikation aufgebaut
+wird \\ \hline
+View & sehr schnelles Feedback ist möglich, da keine  Netzwerkkommunikation  notwendig. Entlastung des Servers 
+ keine Netzwerkkommunikation & hier JavaScript als weitere Programmiersprache Client muss JavaScript unterstützen
+aus Sicherheitsgründen ist eine Validierung auf Serverseite immer noch notwendig - Aufwand. \\ \hline
+
+
+\end{tabular}
+
+\section{View Validierung} 
+Bei der flashcard-Applikation kann man ein erstes Validierungselement erkennen (siehe Abbildung
+2). Hier wird die Validierung bereits in der View vorgenommen. Der Benutzer erhält augenblicklich
+ein Feedback :
+DOJO Bibliothek : custom jstl tags eingesetzt die javascript code im View generieren.
+
+\textbf{Controller Validierung:}
+\begin{lstlisting}[caption=Controller Validierung Spring]
+ public String create(@Valid Questionnaire questionnaire, #1
+BindingResult bindingResult, Model uiModel) {#2
+if (bindingResult.hasErrors()) {
+populateEditForm(uiModel, questionnaire);#3
+return "questionnaires/create";#4
+}
+}
+\end{lstlisting}
+\begin{enumerate}
+ \item @Valid ist eine JSR-303 Annotation. Aufgrund der Annotationen im Form Bean (hier auch
+Domain Entität) wird der Parameter validiert.
+\item Das Validierungsresultat wird in bindingResult abgelegt
+\item Tritt bei der Validierung ein Fehler auf muss das uiModel neu gefüllt werden. Hier werden die
+Eingabewerte der Formulardaten wieder in das Form Bean zurückgeschrieben.
+\item Wiederum wird die View zum Formular selber referenziert. Das Formular enthält dank dem
+Modell die eingegeben aber falschen Werte, die nun korrigiert werden können.
+
+\end{enumerate}
+
+\section{Validierung auf Datenschicht}
+Forcieren sie eine Validation Exception auf der Datenbankschicht. Ergänzen sie dazu z.B. die
+Property "subject" der Entität Questionnaire mit der JSR-303 Annotation
+\begin{verbatim}
+@Size(mix = 1, max = 50)
+\end{verbatim}
+Entfernen sie in der Methode create() des QuestionnaireController die @Valid Annotation
+und setzen sie im File "WEB-INF/views/questionnaires/create.jspx" die required-Attribute auf "false".
+Die Applikation wird mit einer Exception unter dem logischen View Name "uncaughtException"
+antworten. Sie müssen in "views.xml" auch kontrollieren, ob unter diesem View-Name die
+Composite-View korrekt aufgebaut werden kann!
+Starten sie die flashcard-Applikation. Was können sie erkennen?
+Aus dem obigen Beispiel wird offensichtlich, dass die @Valid Annotation in einer Controller-Klasse
+(@Controller) eine zentrale Rolle bei der Validierung der Formulardaten einnimmt. Die mit @Valid
+versehenen Methodenparameter werden über das JSR-303 Framework validiert und das Spring
+Framework wird das Validierungsresultat in eine Instanz BindingResult schreiben. So kann
+bereits auf Schicht Controller eine Prüfung stattfinden, bevor ein Datenbankzugriff ausgelöst werden
+muss.
+
+\subsection{Validierung Config}
+Für die Validierung braucht es einen entsprechenden Validator. Dieser kann manuell instanziiert
+werden oder es kann ein JSR-303 Validator genutzt werden. Spring stellt einen Validator zur
+Verfügung, der in den meisten Fällen genügt. Konfiguriert wird dieser Validator mittels
+\begin{verbatim}
+<mvc:annotation-driven/> 
+\end{verbatim}
+
+Es kann jedoch die Situation auftreten, wo ein eigener Validator nützlich ist.
+
+\section{Formular Daten Speichern}
+\begin{lstlisting}[caption=Speichern mit POST Method Controller]
+ @RequestMapping(method = RequestMethod.POST)
+public String create(@Valid Questionnaire questionnaire,
+BindingResult bindingResult, Model uiModel,
+HttpSession session, HttpServletRequest httpServletRequest) {
+if (bindingResult.hasErrors()) {#1
+uiModel.addAttribute("questionnaire", questionnaire);
+return "questionnaires/create";
+}
+uiModel.asMap().clear();#2
+questionnaire.persist();#3
+return "redirect:/";
+}
+\end{lstlisting}
+\begin{enumerate}
+ \item Zuerst muss geprüft werden, ob das Binding und die Validierung fehlerlos verlief.
+ \item Das Model wird geleert.
+\item Die Entität wird gespeichert. Es ist in diesem Falle auch das Form Bean.
+\end{enumerate}
+
+\section{Double Submit Problem}
+Refresh auf View mit Formular über POST macht dann nochmals POST.
+Gelöst mit ein redirect nach post auf eine View die über GET im Controller funktioniert.
+
+\chapter{Sichere Webapps}
+
+
+\section{Spring Security}
+Eine deklarative Beschreibung der relevanten
+Sicherheitsaspekte wie Authentifizierung und Autorisierung bei einer SpringMVC-Applikation erlaubt.
+nhand der flashcard-Applikation wird besprochen, wie eine Webapplikation gesichert werden kann.
+Dabei ist zu beachten, dass in der Applikation alle sicherheits-relevanten Artefakten vorhanden sind.
+Diese sind mit dem ROO-Befehl security setup geladen worden und umfassen:
+\begin{itemize}
+\item spring-security-*.jar Bibliotheken. Sie werden mittels Maven geladen
+\item Konfigurationsdatei applicationContext-security.xml (in Directory META-INF/spring)
+\item Webpage login.jspx, mit den entsprechenden Updates für Tiles.
+\end{itemize}
+
+\subsection{Authenticationsschritte}
+
+\begin{description}
+	\item[Webapplikation empfängt einen nicht authentifizierten HTTP-Request]  Aus
+sicherheitstechnischen Überlegungen ist es deshalb sinnvoll, den Sicherheitsmechanismus um
+diese HTTP-Requests aufzubauen. Mit Spring Security ist dies durch eine einfache deklarative
+Beschreibung möglich. Mit Hilfe des Files applicationContext-security.xml erkannt man,
+wie eine URL geschützt wird. Der Eintrag
+\begin{verbatim}
+	<intercept-url pattern="/member/**" access="isAuthenticated()" />
+\end{verbatim}
+
+legt z.B. fest, dass jede URL, die mit /member startet, nur für authentifizierte Benutzer sichtbar sein
+soll.
+
+\subitem \begin{verbatim}
+<intercept-url pattern="/**" access="isAuthenticated()" method="POST" />
+\end{verbatim}
+Mit diesem Pattern wird ausgedrückt, dass alle POST-Requests authentifiziert sein müssen. Falls
+nun verschiedene Patterns auf einen HTTP-Request zutreffen, wird Spring Security dasjenige
+auswählen, das die strikteste Regel definiert.
+
+\begin{lstlisting}[caption=spring security xml,language=xml]
+	<intercept-url pattern="/questionnaires/**"
+access="isAuthenticated()" method="GET" />
+<intercept-url pattern="/resources/**"
+access="permitAll" />
+\end{lstlisting}
+
+\item[Authorizierung]  Bei alle URls wird ein springSecurityFilterChain benutzt mit mehreren Filter. Diese Filter sind z.B. LogoutFilter, AnonymousAuthenticationFilter,
+UsernamePasswordAuthenticationFilter, SessionManagementFilter. Innerhalb dieser
+Filterkette wird zuerst überprüft, ob ein SecurityContext in der Session abgelegt ist. Der
+SecurityContext enthält u.a. die Credentials wie Benutzername, Passwort oder Rolle. Ist kein
+SecurityContext vorhanden, wird der AnonymousAuthenticationFilter einen entsprechenden
+Context für den Anonymous-Benutzer anlegen. Mit diesem Context kann der Filter
+FilterSecurityInterceptor überprüfen, ob der entsprechende Benutzer die angeforderte
+Ressource nutzen darf. Ist dies nicht der Fall, wird eine AccessDeniedException geworfen.
+Diese Exception löst in der flashcard-Applikation ein Redirect auf die Login-Page aus.
+
+\item[Leitung der Request auf Login Page] \hfill \\
+\begin{lstlisting}[caption=security xml login weiterleitung,language=xml]
+<form-login
+login-processing-url="/resources/j_spring_security_check"
+login-page="/login"
+authentication-failure-url="/login?login_error=t"/>
+\end{lstlisting}
+	
+\begin{lstlisting}[caption=login jspx spring security,language=html]
+<spring:url value="/resources/j_spring_security_check" var="form_url" />
+<form name="f" action="${fn:escapeXml(form_url)}" method="POST">
+<div>
+...
+<input id="j_username" type='text' name='j_username' ... />
+...
+<input id="j_password" type='password' name='j_password' ... />
+...
+</form>
+\end{lstlisting}
+
+\begin{framed}
+j\_ variablen sind gemäss Spezifikation
+\end{framed}
+\begin{lstlisting}[caption=spring security tiles Änderungen,language=xml]
+<definition extends="public" name="login">
+<put-attribute name="body" value="/WEB-INF/views/login.jspx"/>
+<put-attribute name="header-center" value="/WEB-INF/views/welcome.jspx"/>
+<put-attribute name="header-right" value="/WEB-INF/views/empty.jspx"/>
+</definition>
+\end{lstlisting}
+
+\item[Verarbeitung Login Request] 
+Der Login-Request wird über die Logik hinter  / resources / j\_spring\_security\_check
+verarbeitet. Dabei wird die Filterkette hinter springSecurityFilterChain abgearbeitet. Der
+UsernamePasswordAuthenticationFilter überprüft, ob die eingegebenen Werte einem
+vorhandenen Account entsprechen. Trifft dies zu, wird der entsprechende SecurityContext erzeugt
+und mit dem Filter HttpSessionSecurityContextRepository in die Session abgespeichert.
+
+Es wird innerhalb der login.jspx-Seite einen Test auf den Request-Parameter "login\_error"
+vorgenommen. Falls ein Wert gesetzt ist - hier z.B. "t" (er kann beliebig sein!) - wird eine
+Fehlermeldung am Anfang der Login-Seite mit dem Fehlergrund angezeigt.
+
+\begin{lstlisting}[caption=error Behandelung spring security error output, language=html]
+	<c:if test="${not empty param.login_error}">
+<div class="errors">
+<p>
+<spring:message code="security_login_unsuccessful" />
+<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+.
+</p>
+</div>
+</c:if>
+\end{lstlisting}
+\item [Authorizierung HTTP Request] Nach einer erfolgreichen Authentifizierung ist der notwendige SecurityContext in der Session gespeichert und kann bei allen weiteren Requests für die Autorisierung beigezogen werden. Es ist
+auch in diesem Falle der Filter FilterSecurityInterceptor, der die Autorisierung mit Hilfe der
+Regeln aus dem File applicationContext-security.xml überprüft.
+
+\item[Logout] Security xml : \begin{verbatim} <logout logout-url="/resources/j_spring_security_logout" /> \end{verbatim}
+\begin{lstlisting}[caption=spring security tag lib, language=html]
+<security:authorize access="! isAuthenticated()">
+<c:out value=" | "/>
+<a href="login">Login</a>
+</security:authorize>
+<security:authorize access="isAuthenticated()">
+<c:out value=" | "/>
+<a href="resources/j_spring_security_logout">Logout</a>
+</security:authorize>
+\end{lstlisting}
+
+
+\end{description}
+
+\section{Sicherheit mit Servlet}
+
+Programmtechnisch definiert das Interface javax.servlet.http.HttpServletRequest die Methoden
+getRemoteUser()
+isUserInRole()
+getUserPrincipal()
+
+Tomcat verwendet das Konzept eines Realms (Gebiet, Reich). Ein Realm stellt einen Bestand von
+Benutzern, Passwörter und Rollen dar. Fünf Arten von Realms sind standardmässig vorhanden:
+JDBCRealm, DataSourceRealm, JNDIRealm, MemoryRealm und JAASRealm.
+Wir werden den MemoryRealm einsetzen. Hier sind die Authentifizierungsinformationen in einer
+XML-Datei abglegt (\begin{verbatim}$TOMCAT_HOME/conf/tomcat-users.xml\end{verbatim}). Hier ein Beispiel:
+\begin{lstlisting}[caption=users.xml servlet,language=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users>
+<role rolename="admin"/>
+<role rolename="user"/>
+<user username="admin" password="admin" roles="admin,user"/>
+<user username="user" password="user" roles="user"/>
+</tomcat-users>
+
+<security-constraint>
+<web-resource-collection>
+<web-resource-name>Questionnaires Resource</web-resource-name>
+<url-pattern>/questionnaires/*</url-pattern>
+<http-method>GET</http-method>
+<http-method>POST</http-method>
+</web-resource-collection>
+<auth-constraint>
+<role-name>admin</role-name>
+<role-name>user</role-name>
+</auth-constraint>
+</security-constraint>
+
+<security-role>
+<role-name>admin</role-name>
+</security-role>
+<security-role>
+<role-name>user</role-name>
+</security-role>
+<login-config>
+<auth-method>FORM</auth-method>
+<form-login-config>
+<form-login-page>/login</form-login-page>
+<form-error-page>/login?login_error=t</form-error-page>
+</form-login-config>
+</login-config>
+
+\end{lstlisting}
+\chapter{Sessions}
+For example, when clients at an online store add an item to their shopping carts, how
+does the server know what’s already in the carts? Similarly, when clients decide to proceed to checkout, how can the
+server determine which previously created shop- ping carts are theirs? These questions seem very simple, yet,
+because of the inadequacies of HTTP, answering them is surprisingly complicated.
+There are three typical solutions to this problem: cookies, URL rewriting, and hidden form fields. The following
+subsections quickly summarize what would be required if you had to implement session tracking yourself (without
+using the built-in session-tracking API) for each of the three ways.
+
+\section{Cookies}
+\begin{lstlisting}[caption=Java Using Session]
+String sessionID = makeUniqueString(); HashMap sessionInfo = new
+HashMap();
+HashMap globalTable = findTableStoringSessions();
+globalTable.put(sessionID, sessionInfo);
+Cookie sessionCookie = new Cookie("JSESSIONID", sessionID);
+sessionCookie.setPath("/"); response.addCookie(sessionCookie);
+\end{lstlisting}
+
+Then, in later requests the server could use the globalTable hash table to asso- ciate a session ID from the
+JSESSIONID cookie with the sessionInfo hash table of user-specific data.
+Using cookies in this manner is an excellent solution and is the most widely used approach for session handling.
+Still, it is nice that servlets have a higher-level API that handles all this plus the following tedious tasks:
+
+
+\begin{itemize}
+\item Extracting the cookie that stores the session identifier from the other cookies (there may be
+many cookies, after all).
+\item Determining when idle sessions have expired, and reclaiming them.
+\item Associating the hash tables with each request.Generating the unique session identifiers.
+\end{itemize}
+
+\section{URL Rewriting}
+For example, with
+http://host/path/file.html;jsessionid=a1234, the session identifier is attached as jsessionid=a1234, so a1234 is the ID
+that uniquely identifies the table of data associated with that user.
+URL rewriting is a moderately good solution for session tracking and even has the advantage that it works when
+browsers don’t support cookies or when the user has disabled them. However, if you implement session tracking
+yourself, URL rewriting has the same drawback as do cookies, namely, that the server-side program has a lot of
+straightforward but tedious processing to do. Even with a high-level API that handles most of the details for you,
+you have to be very careful that every URL that references your site and is returned to the user (even by indirect
+means like Location fields in server redirects) has the extra information appended. This restriction means that you
+cannot have any static HTML pages on your site (at least not any that have links back to dynamic pages at the
+site). So, every page has to be dynamically generated with servlets or JSP. Even when all the pages are
+dynamically generated, if the user leaves the session and comes back via a bookmark or link, the session information
+can be lost because the stored link contains the wrong identifying information.
+
+
+\section{Hidden Form Fields}
+\begin{verbatim}
+<INPUT TYPE="HIDDEN" NAME="session" VALUE="a1234"> 
+\end{verbatim}
+This entry means that, when the form is submitted, the specified name and value are automatically included in the
+GET or POST data. This hidden field can be used to store information about the session but has the major
+disadvantage that it only works if every page is dynamically generated by a form submission. Clicking on a regular
+\begin{verbatim}
+(<A HREF...>) 
+\end{verbatim}
+ hypertext link does not result in a form submission, so hidden form fields cannot support 
+general
+session tracking, only tracking within a specific series of operations such as checking out at a store.
+\subsection{Servlets and Session Tracking}
+Servlets provide an outstanding session-tracking solution: the HttpSession API. This high-level interface is built on
+top of cookies or URL rewriting. All servers are required to support session tracking with cookies, and most have a
+setting by which you can globally switch to URL rewriting.
+Either way, the servlet author doesn’t need to bother with many of the implementation details, doesn’t have to
+explicitly manipulate cookies or information appended to the URL, and is automatically given a convenient place to
+store arbitrary objects that are associated with each session.
+
+\section{Session Tracking basics}
+\begin{enumerate}
+
+\item Accessing the session object associated with the current request. Call
+request.getSession to get an HttpSession object, which is a simple hash table for
+storing user-specific data. 
+\begin{lstlisting}
+ HttpSession session = request.getSession(false);
+if (session == null) { printMessageSayingCartIsEmpty();
+} else { extractCartAndPrintContents(session);
+}
+\end{lstlisting}
+
+\item Looking up information associated with a session. Call getAttribute on the
+HttpSession object, cast the return value to the appropriate type, and check whether the
+result is null.
+\begin{lstlisting}
+ HttpSession session = request.getSession();
+SomeClass value = (SomeClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session
+value = new SomeClass(...);
+session.setAttribute("someIdentifier", value);
+}
+doSomethingWith(value);
+\end{lstlisting}
+\textbf{In most cases, you have a specific attribute name in mind and want to find the value (if any) already associated 
+with
+that name. However, you can also discover all the attribute names in a given session by calling getAttributeNames,
+which returns an Enumeration.}
+
+\item Storing information in a session. Use setAttribute with a key and a value.
+Be aware that setAttribute replaces any previous values; to remove a value without supplying a replacement, use
+removeAttribute. This method triggers the valueUnbound method of any values that implement HttpSessionBinding-
+Listener.
+Following is an example of adding information to a session. You can add information in two ways: by adding a new
+session attribute (as with the bold line in the example) or by augmenting an object that is already in the session (as 
+in
+the last line of the example). This distinction is fleshed out in the examples of Sections 9.7 and 9.8, which contrast
+the use of immutable and mutable objects as session attributes
+\begin{lstlisting}
+ HttpSession session = request.getSession(); SomeClass value =
+(SomeClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session value = new
+SomeClass(...); session.setAttribute("someIdentifier", value);
+}
+doSomethingWith(value);
+\end{lstlisting}
+
+\item Discarding session data. Call removeAttribute to discard a spe- cific value. Call
+invalidate to discard an entire session. Call logout to log the client out of the Web server
+and invalidate all ses- sions associated with that user.
+\begin{itemize}
+ \item Remove only the data your servlet created. You can call removeAttribute("key") to
+discard the value associated with the specified key. This is the most common approach.
+\item Delete the whole session (in the current Web application). You can call invalidate to discard
+an entire session. Just remember that doing so causes all of that user’s session data to be lost, not
+just the session data that your servlet or JSP page created. So, all the servlets and JSP pages in a
+Web application have to agree on the cases for which invalidate may be called.
+\item Log the user out and delete all sessions belonging to him or her. Finally, in servers that
+support servlets 2.4 and JSP 2.0, you can call logout to log the client out of the Web server and
+invalidate all sessions (at most one per Web application) associated with that user. Again, since
+this action affects servlets other than your own, be sure to coordinate use of the logout command
+with the other developers at your site.
+\end{itemize}
+
+
+\end{enumerate}
+
+\section{Session Tracking API}
+
+ Although the session attributes (i.e., the user data) are the pieces of session infortion you care most about, other
+information is sometimes useful as well. Here is a summary of the methods available in the HttpSession class.
+\begin{description}
+\item[public Object getAttribute(String name)] This method extracts a previously stored value from a session object. It 
+returns null if no value is associated with the
+given name.
+\item [public Enumeration getAttributeNames()]This method returns the names of all attributes in the session.
+public void setAttribute(String name, Object value)
+This method associates a value with a name. If the object supplied to setAttribute implements the
+HttpSessionBindingListener interface, the object’s valueBound method is called after it is stored in the session.
+Simi- larly, if the previous value implements HttpSessionBindingListener, its valueUnbound method is called.
+\item[public void removeAttribute(String name)] This method removes any values associated with the designated name. If 
+the value being removed implements HttpSessionBindingListener, its valueUnbound method is called.
+\item[public void invalidate()] This method invalidates the session and unbinds all objects associated with it. Use this 
+method with caution; remember that sessions are associated with users (i.e., clients), not with individual servlets or 
+JSP pages. So, if you invalidate a session, you might be destroying data that another servlet or JSP page is using.
+\item[public void logout()]This method logs the client out of the Web server and invalidates all sessions associated 
+with that client. The scope of the logout is the same as the scope of the authentication. For example, if the server 
+implements single sign-on,calling logout logs the client out of all Web applications on the server and invalidates all 
+sessions (at most one per Web application) associated with the client. For details, see the chapters on Web application 
+security in Volume 2 of this book.
+\item[public String getId()] This method returns the unique identifier generated for each session. It is useful for 
+debugging or logging or, in rare cases, for programmatically moving values out of memory and into a database (however, 
+some J2EE servers can do this automatically).
+\item[public boolean isNew()] This method returns true if the client (browser) has never seen the session, usually 
+because the session was just created rather than being referenced by an incoming client request. It returns false for 
+preexisting sessions. The main reason for mentioning this method is to steer you away from it: isNew is much less useful 
+than it appears at first glance. Many beginning developers try to use isNew to determine whether users have been to 
+their servlet before (within the session timeout period), writing code like the following:
+
+\begin{lstlisting}[caption=Wring isNew for session]
+ HttpSession session = request.getSession(); if (session.isNew()) {
+doStuffForNewbies();
+} else {
+doStuffForReturnVisitors();
+// Wrong!
+}
+\end{lstlisting}
+Wrong! Yes, if isNew returns true, then as far as you can tell this is the user’s first visit (at least within the
+session timeout). But if isNew returns false, it merely shows that they have visited the Web application
+before, not that they have visited your servlet or JSP page before.
+
+\item[public long getCreationTime()] This method returns the time in milliseconds since midnight, January 1, 1970 (GMT) 
+at which the session was first built. To get a value useful for printing, pass the value to the Date constructor or the 
+setTimeInMillis method of GregorianCalendar.
+\item[public long getLastAccessedTime()]This method returns the time in milliseconds since midnight, January 1, 1970 
+(GMT) at which the session was last accessed by the client. 
+\item[public int getMaxInactiveInterval()] 
+\item[public void setMaxInactiveInterval(int seconds)] These methods get or set the length of time, in seconds, that a 
+session should go without access before being automatically invalidated. A negative value specifies that the session 
+should never time out. Note that the timeout is maintained on the server and is not the same as the cookie expiration 
+date. For one thing, sessions are normally based on in-memory cookies, not persistent cookies, so there is no expiration 
+date. Even if you intercepted the JSESSIONID cookie and sent it out with an expiration date, browser sessions and server 
+sessions are two distinct things. For details on the distinction, see the next section.
+\end{description}
+
+\section{Browser vs Server Sessions}
+By default, session-tracking is based on cookies that are stored in the browser’s memory, not written to disk. Thus,
+unless the servlet explicitly reads the incoming JSESSIONID cookie, sets the maximum age and path, and sends it
+back out, quitting the browser results in the session being broken: the client will not be able to access the session
+again. The problem, however, is that the server does not know that the browser was closed and thus the server has to
+maintain the session in memory until the inactive interval has been exceeded.
+
+The analogous situation in the servlet world is one in which the server is trying to decide if it can throw away your
+HttpSession object. Just because you are not currently using the session does not mean the server can throw it
+away. Maybe you will be back (submit a new request) soon? If you quit your browser, thus causing the
+browser-session-level cookies to be lost, the session is effectively broken. But, as with the case of getting in your 
+car and
+leaving Wal-Mart, the server does not know that you quit your browser. So, the server still has to wait for a period of
+time to see if the session has been abandoned. Sessions automatically become inactive when the amount of time
+between client accesses exceeds the interval specified by getMaxInactiveInterval. When this happens,
+objects stored in the HttpSession object are removed (unbound). Then, if those objects implement the
+HttpSessionBindingListener interface, they are automatically notified. The one exception to the “the
+server waits until sessions time out” rule is if invalidate or logout is called. This is akin to your explicitly telling
+the Wal-Mart clerk that you are leaving, so the server can immediately remove all the items from the session and
+destroy the session object.
+
+
+\section{URL Encoding}
+URL rewriting instead? How will your code have to change?
+
+
+The goods news: your core session-tracking code does not need to change at all.
+The bad news: lots of other code has to change. In particular, if any of your pages contain links back to your own
+site, you have to explicitly add the session data to the URL. Now, the servlet API provides methods to add this
+information to whatever URL you specify. The problem is that you have to call these methods; it is not technically
+feasible for the system to examine the output of all of your servlets and JSP pages, figure out which parts contain
+hyperlinks back to your site, and modify those URLs. You have to tell it which URLs to modify. This requirement
+means that you cannot have static HTML pages if you use URL rewriting for session tracking, or at least you cannot
+have static HTML pages that refer to your own site. This is a significant burden in many applications, but worth the
+price in a few.
+
+
+There are two possible situations in which you might use URLs that refer to your own site.
+
+The first one is where the URLs are embedded in the Web page that the servlet generates. These URLs should be
+passed through the encodeURL method of HttpServletResponse. The method determines if URL rewriting is
+currently in use and appends the session information only if necessary. The URL is returned unchanged otherwise.
+
+The second situation in which you might use a URL that refers to your own site is in a sendRedirect call (i.e., placed
+into the Location response header). In this second situation, different rules determine whether session information
+needs to be attached, so you cannot use encodeURL. Fortunately, HttpServletResponse supplies an
+encodeRedirectURL method to handle that case. Here’s an example:
+
+\begin{lstlisting}[caption= Java Examples for Encoded URLS]
+#1 String originalURL = someRelativeOrAbsoluteURL; String encodedURL
+= response.encodeURL(originalURL);
+out.println("<A HREF=\"" + encodedURL + "\">...</A>");
+
+#2
+String originalURL = someURL;
+String encodedURL = response.encodeRedirectURL(originalURL);
+response.sendRedirect(encodedURL);
+\end{lstlisting}
+
+
+\chapter{JSF}
+
+\section{Motivation}
+\begin{description}
+ \item [Komponenten] JSF erlaubt es, vollständige Webanwendungen in einfacher Form aus Komponenten aufzubauen.
+Darüber hinaus kann man Komponenten selbst erstellen und beliebig wiederverwenden. Die
+Komponenten einer Webpage bilden eine hierarchische Struktur, einen Komponentenbaum.
+\item [DatenTransfer] JSF macht es sehr einfach möglich, Daten von der Applikation in die Benutzerschnittstelle (und
+wieder zurück) zu transferieren. Eine automatische (oder vom Entwickler gesteuerte)
+Konvertierung und Validierung ist dabei vorgesehen.
+\item[Zustandsspeicherung] JSF ermöglicht die automatische Speicherung des Zustands der Applikation - sowohl des
+Komponentenbaums, also der einzelnen Komponenten als auch der Applikationsdaten. Diese
+Speicherung kann in einer Benutzersitzung am Server oder im HTML-Quelltext am Client erfolge
+\item[Event Handling] Vom Benutzer am Client generierte Ereignisse (auch Event genannt) können am Server behandelt
+werden. Dazu werden Ereignisbehandlungsmethoden mit den einzelnen Komponenten verknüpft.
+Durch die strikte Trennung der Schichten der Applikation im Sinne der MVC-Architektur können die
+einzelnen an der Applikation beteiligten Personen (z.B. Webdesigner, Komponentenentwickler und
+Applikationsentwickler) unabhängig voneinander arbeiten.
+\item[Architektur] \pic[JSF Arch]{jsfarch.png}
+\end{description}
+
+\section{JSF Lebenszyklus}
+\pic[JSF Lebenszyklus]{jsfl.png}
+
+\begin{description}
+ \item [Phase 1: Ansicht wiederherstellen (Restore View)] \begin{itemize}
+                                                           \item Bei der allerersten Anfrage existiert dieser Komponentenbaum noch nicht und JSF baut ihn aus der
+Seitendeklaration neu auf
+\item JSP als View-Technologie
+zum Einsatz, leitet JSF die Anfrage an die hinter der Ansicht liegende JSP-Seite weiter. Diese wird
+abgearbeitet und bei jedem Antreffen eines neuen, noch nicht zu einer initialisierten Komponente
+gehörenden Tags wird eine neue Komponente erzeugt und mit den Attributwerten aus der JSP-Seite
+initialisiert.
+\item \textbf{Facelets} ist eine moderne View-Technologie, die mit JSF 2.0 eingeführt wurde. Facelets hat JSP
+abgelöst, da die "alte" JSP-Technologie in Kombination mit JSF wegen der unterschiedlichen
+Konzepte zur Schwierigkeiten führte. Facelets verfolgt eine ganz ähnliche Strategie, baut den Baum
+beim Parsen aber auf der Basis eines XHTML-Dokuments auf.
+\item \textbf{Unterschied Facelets JSP} Caching von alten Werte. Komponentenbaum hat Cache sowie auch Validatoren/Konverter.
+
+                                                          \end{itemize}
+\item[Phase 2: Request-Parameter anwenden (Apply Request Values)] \begin{itemize}
+                                                                   \item Komponentenbaum gearbeitet.
+                                                                   \item Benutzer Werte von Formular werden an einzelnen Komponenten zugewiesen.
+                                                                   \subitem geschieht, indem am
+Wurzelknoten die Methode processDecodes() aufgerufen wird - der Wurzelknoten ruft dann die
+gleiche Methode auf seinen Kindknoten und diese wiederum auf ihren Kindknoten rekursiv auf.
+\subitem ucht sich beim Abarbeiten der Methode jede Komponente (oder genauer gesagt der
+der Komponente zugeordnete Renderer) aus der HTTP-Anfrage, und zwar aus den Parametern,
+HTTP-Kopfzeilen (Header) und Cookies , die Werte heraus, die diese Komponente betreffen, und
+speichert sie als "übermittelter" Wert (Submitted-Value). 
+\subitem Decoding Process genannt.
+\subitem \textbf{Ist allerdings noch nicht der Wert, der dann später
+tatsächlich ins Modell geschrieben wird - Validierung kommt noch.}
+                                                                  \end{itemize}
+\item [Phase 3: Konvertierung und Validierung durchführen (Process Validations)] \begin{itemize}
+                                                                                  \item konvertiert
+und validiert.
+\item Die Konvertierung erfolgt vom zeichenkettenbasierten Submitted-Value auf die für das
+dahinterliegende Datenmodell notwendige Darstellung. Aus der Zeichenkette "01.01.2012" wird
+dann zum Beispiel eine Instanz der Klasse "java.util.Date".
+\item Abschluss des Konvertierungsvorgangs wird der Wert der
+Komponente validiert; das erledigen sogenannte Validatoren
+\subitem Es gibt im JSF-Standard bereits einige
+vorgefertigte Validatoren (z.B. ein LengthValidator oder ein DoubleRangeValidator
+                                                                                 \end{itemize}
+\item[Zwischenbemerkung]  Setzen des konvertierten und validierten Wertes: Allerdings noch
+nicht in die Managed-Beans, sondern vorerst nur in die Eigenschaft value innerhalb der
+Komponente.  Fehlschlagen? $ \rightarrow$ Fehlermeldungen generiert und die aktuelle Seite wird inklusive
+Fehlermeldungen als Antwort gerendert. Das bedeutet, dass alle folgenden Phasen ausser der
+"Antwort rendern"-Phase übersprungen werden.
+\textbf{Von Schritt 3 direkt zu Schritt 6 Springen}
+
+\item[Phase 4 : Model Aktualisieren] Unter der Voraussetzung, dass die abgesendeten Werte richtig konvertiert, validiert und lokal
+gespeichert werden konnten, werden diese Werte jetzt auf die von den einzelnen Komponenten
+referenzierten Eigenschaften der Geschäftsdaten übertragen.
+
+Üblicherweise wird dafür die value -Eigenschaft der Komponente mit einer Value-Expression an eine
+Eigenschaft der Geschäftslogik gebunden. Ein Beispiel hierfür ist der bereits bekannte Ausdruck
+"\#{customer.firstName}", mit dem die Eigenschaft "firstName" der Managed-Bean customer
+referenziert wird.
+\item [5)Applikation Ausführen] usführen der Businesslogik. Diese speichert beispielsweise geänderte
+Geschäftsdaten, liest Geschäftsdaten auf der Basis geänderter Filterkriterien neu aus oder
+kommuniziert mit anderen Systemen.
+edenfalls bestimmen die Methoden der Businesslogik durch
+ihren Rückgabewert, wohin die Reise in der Anwendung gehen wird: \textbf{View Navigation auf basis von Ergebnissen aus Business Logik.}
+
+\item[6) Render Response - Antwort Rendern] Komponentenbaum gerendert und die Ausgabe wird als Antwort der
+JSF-Anfrage zum Client geschickt.
+\begin{itemize}
+ \item Der Komponentenbaum wird aus der Seitendeklaration aufgebaut. Mit JSP passiert das durch
+einen Forward auf die JSP-Datei, in Facelets beim Parsen der XHTML-Datei.
+\item Der in Schritt 1 erstellte Komponentenbaum wird durch einen Aufruf der Methode "encodeAll"
+auf dem Wurzelknoten gerendert.
+\textit{Rendern der Werte der einzelnen Komponenten wieder die
+bereits erwähnten Konverter ins Spiel: Der Renderer holt den Wert der Komponente, ruft die
+Methode "getAsString()" auf dem Konverter auf und rendert das in eine Zeichenkette verwandelte
+Objekt zurück zum Client.}
+
+\end{itemize}
+
+\end{description}
+
+\section{JSF im Überblick}
+\begin{itemize}
+ \item Facelets wurde in JSF 2.0 in den Standard aufgenommen und ist die Sprache der Wahl für die
+Deklaration von Seiten.
+\item Kompositkomponenten ermöglichen ab JSF 2.0 das Erstellen von eigenen Komponenten - ohne
+eine Zeile Java-Code zu schreiben.
+\item Die Integration von Bean-Validation erlaubt eine metadatenbasierte Validierung.
+\item Ajax wurde in den Standard integriert.
+Eine Reihe neuer Annotationen macht die Konfiguration von JSF-Anwendungen so einfach wie
+nie zuvor.
+\item JSF 2.0 standardisiert die Verwaltung von Ressourcen wie Skripte oder Stylesheets
+System-Events bieten die Möglichkeit, auf spezielle Ereignisse im Lebenszylus zu reagieren.
+\item JSF 2.0 vereinfacht das Navigieren mit impliziter Navigation.
+\item Mit dem View-Scope gibt es einen neuen Gültigkeitsbereich für Managed-Beans.
+\end{itemize}
+
+\section{Beispiel Applikation}
+\subsection{Servlet Config}
+\begin{lstlisting}[caption=JSF Web Config,language=xml]
+ <servlet>
+<servlet-name>Faces Servlet</servlet-name>
+<servlet-class>javax.faces.webapp.FacesServlet</servlet-class> #1
+<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+<servlet-name>Faces Servlet</servlet-name>
+<url-pattern>*.jsf</url-pattern>  #2
+</servlet-mapping>
+ \end{lstlisting}
+\begin{itemize}
+ \item Implementation von Java Servlet Spezifikation/Interface
+ \item alle .jsf URLs gehen über diese Servlet.
+\end{itemize}
+\subsection{Was sind ManagedBeans}
+Das Model ist ein normales JavaBean oder POJO. Es wird als Managed Bean eingeführt, das durch
+den JSF Container verwaltet wird. Das "SimpleBean" ist ein solches Model:
+\begin{lstlisting}[caption=Managed Bean Beispiel]
+ @ManagedBean(name = "mySimpleBean") #1
+@RequestScoped #2
+public class SimpleBean {
+public String getMessage() {#3
+return "Hello from JSF";
+}
+}
+\end{lstlisting}
+\begin{enumerate}
+ \item Wie in Spring - name des Beans, sonnst wird Klassenname verwendet.
+ \item Klasse wird nur für 1 Request am leben gehalten, neu Instanzierung pro Request.
+ \item Get methode, kann in View mit jstl gehohlt werden.
+\end{enumerate}
+
+\subsubsection{View}
+Die View ist eine XHTML-Page, da Facelets als View-Technologie eingesetzt werden soll. Das
+folgemde File "simple.xhtml" wird im Ordner "webapp/pages" erstellt.
+\begin{lstlisting}[caption= Grundlegende View Beispiel]
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"> #1
+<h:outputText value="#{mySimpleBean.message}" />#2
+</html>
+\end{lstlisting}
+\begin{enumerate}
+ \item Registrierung von komponenten unter h (html) von jsf - jetzt kann ich h komponenten wie output in mein View nutzen ohne Exceptions :)
+ \item Ausgeben von message.
+\end{enumerate}
+\section{Design Patterns in JSF}
+\begin{description}
+ \item [FrontController Pattern:] Wie bei SpringMVC stellt auch JSF den FrontController. Hier ist es das
+Servlet "FacesServlet". Einen PageController kennt JSF aber nicht.
+\item [Composite View Pattern:] Dieses Pattern wird mit Facelets umgesetzt. Facelets stellt ein XML-
+Schema mit verschiedenen Elementen zur Verfügung, um ein Composite aufzubauen.
+\item [Template View Pattern:] Wie bei SpringMVC wird in JSF mit der View-Technologie Facelets
+ebenfalls auf XHTML gesetzt. Der statische Inhalt wird demnach mit einem wohlgeformten HTML
+realisiert, während die dynamischen Werte über die JSF-Expression-Language in das Template
+einfliessen.
+\end{description}
+\section{Composite View in JSF}
+\begin{lstlisting}[caption=CompositeView Beispiel JSF,language=html]
+ ...
+<h:body>
+<div id="wrapper">
+<ui:insert name="header-left">
+<ui:include src="logo.xhtml"/>
+</ui:insert>
+<ui:insert name="header-center" />
+<ui:insert name="header-right" />
+<div id="main">
+<ui:insert name="content" />
+<ui:insert name="footer">
+<ui:include src="footer.xhtml" />
+</ui:insert>
+</div>
+</div>
+</h:body>
+...
+\end{lstlisting}
+\textbf{Erklärung:} ui:insert - Dynamischer Bereich mit Namen, ui:include (dynamisches Subview) : Statischer Bereich mit Inhalt in Datei (subview).
+
+\textbf{Im Gegensatz zu Tiles, wo die Komposition in einem externen XML-Konfigurationsfile aufgebaut
+wird, definiert man mit Facelets dies direkt in einer XHTML-Page.}
+\begin{lstlisting}[caption=JSF Dynamisches Subview,language=html]
+ <html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:ui="http://java.sun.com/jsf/facelets"> 
+<ui:composition template="../templates/layout.xhtml">#1
+<ui:define name="header-center">#2
+<ui:include src="header.xhtml" />#3
+</ui:define>
+\end{lstlisting}
+\begin{enumerate}
+ \item  Welche Template soll benutzt werden?
+ \item  Definition von dynamischem Bereich.
+ \item  Inhalt von externem Datei wird hier angeziegt.
+\end{enumerate}
+\section{Vertiefung Template View in JSF}
+Die Unified Expression Language wurde entwickelt, weil sowohl JSP als auch JSF ihre eigene
+Expression Language (EL) definiert hatten. Für JSF war deswegen eine eigene Expression
+Language zusätzlich zur JSP-EL notwendig, weil die Ausdrücke der JSP-EL sofort evaluiert werden,
+die Ausdrücke der JSF-EL aber später - zum Beispiel in einer späteren Phase des Lebenslaufs einer
+HTTP-Anfrage - evaluiert werden können. Ein Beispiel: Würde der Entwickler in einer JSP/JSF-Seite
+statt
+\begin{verbatim}
+ value="#{myBean.myValue}"
+den Ausdruck
+value="${myBean.myValue}"
+\end{verbatim}
+verwenden, so würde der zweite Ausdruck bereits beim Erstellen der Komponente aufgelöst werden,
+also beim Parsen der Seite und JSF hätte keine Möglichkeit mehr, diesen Ausdruck in der Modell-
+Aktualisierungsphase auszuwerten, um einen Setter für den Wert zu erhalten. In der Unified-EL
+wurde auf dieses Bedürfnis Rücksicht genommen, und tatsächlich kann sowohl mit \#{ausdruck} als
+auch mit \${ausdruck} ein Ausdruck definiert werden, der von der Anwendung (oder vom JSP-Tag)
+zum richtigen Zeitpunkt evaluiert wird. Die beiden Notationen sind also in der neuen Unified-EL
+äquivalent.
+
+JSF stellt dem Programmierer eine umfangreiche Auswahl an vordefinierten Komponenten zur
+Verfügung, die viel Funktionalität zum Erstellen von Benutzeroberflächen mitbringen. Für die
+meisten Anwendungsfälle beherrschen diese Standardkomponenten das gewünschte Verhalten,
+29.10.2013
+2/6angefangen von einfachen Eingabeschaltflächen über Textfelder bis hin zur Darstellung von Daten
+in Tabellenform:
+
+\section{JSF View JSTL Komponenten}
+\begin{tabular}{c | c | c | p{4cm}| p{4cm} | }
+ html & h &  http://java.sun.com/jsf/html & HTML Custom-Tag-Library&Die Tags für die Standard- JSF-Komponenten und ihre
+Darstellung als HTML-Ausgabe befinden sich in dieser Library \\ \hline
+core & f & http://java.sun.com/jsf/core & Core Tag-Library Diese Tags sind für die Basisfunktionalität unabhängig 
+von speziellen Renderern zuständig \\ \hline
+facelets & ui & http://java.sun.com/jsf/facelets & Facelets Tag-Library
+Die Tags für die neue View-
+Handler-Technologie von JSF 
+\\ \hline
+\end{tabular}
+\begin{description}
+ \item [Variante 1: Facelets mit "component-aliasing"] Ein wichtiges Merkmal von Facelets ist das sogenannte 
+"component-aliasing". Damit ist es möglich,
+statt der Tags für die UI-Komponenten normale HTML-Tags, wie zum Beispiel <input> zu nutzen.
+Die Verbindung zu der UI-Komponente wird über das alias-Attribut "jsfc" im Tag hergestellt. Die
+entsprechende Komponente wird beim Kompilieren der Seite durch Facelets eingefügt. Der Vorteil
+des "component-aliasing" ist, dass Webdesigner die Seite mit herkömmlichen HTML-Editoren
+bearbeiten können, da die normalen HTML-Tags benutzt werden. Die zusätzlichen Attribute für JSF
+stören dabei nicht. Hier ein Beispiel:
+\begin{lstlisting}[caption=Component Aliasing,language=html]
+ <table>
+<thead>
+<th> Order No</th>
+<th> Product Name</th>
+</thead>
+<tbody>
+<tr jsfc="ui:repeat"
+value="#{order.orderList}"
+var="o">
+<td>#{o.orderNo}</td>
+<td>#{o.productName}</td>
+</tr>
+</tbody>
+</table>
+\end{lstlisting}
+\begin{enumerate}
+ \item Table tag
+ \item Table row mit jsfc repeat tag damit man es für alle in Orderlist wird wiederhohlt.
+ \item Enumrable Objekt.
+ \item Variable für Objekt im Enumrable Objekt.
+ \item Hohlen von Variablen.
+\end{enumerate}
+
+\item[Variante 2: Klassische JSF Komponenten] 
+\begin{lstlisting}[caption=Klassische JSF,language=html]
+ <h:dataTable value="#{order.orderList}"
+var="o"
+>
+<h:column>
+<!-- column header -->
+<f:facet name="header">Order No</f:facet>
+<!-- row record -->
+#{o.orderNo}
+</h:column>
+<h:column>
+<f:facet name="header">Product Name</f:facet>
+#{o.productName}
+</h:column>
+</h:dataTable>
+\end{lstlisting}
+\begin{enumerate}
+ \item Datatable - Tabellentag wird generiert mit referenz auf Enumerable.
+ \item Variable für Items in Enumerable.
+ \item Generator für td tags.
+ \item 1 tr generiert als Kopfzeile.
+ \item Tr's wierderhohlt für jede Item.
+\end{enumerate}
+tr = Table row.
+
+
+
+\end{description}
+
+
+\section{Navigation links mittels JSF}
+Ein wichtiger Teil jeder JSF-Applikation ist die Definition der Navigation zwischen den einzelnen
+Ansichten. Damit der Benutzer im Browser überhaupt von einer Ansicht der Anwendung zu einer
+anderen wechseln kann, muss die Seite eine Steuerkomponente enthalten. Darunter versteht man
+eine Komponente, die das Absenden der aktuellen Seite an den Server startet und somit die
+Abarbeitung des Lebenszyklus am Server anstösst. Von diesen Steuerkomponenten gibt es in JSF
+zwei: "h:commandButton" und "h:commandLink". Sie werden als Schaltfläche beziehungsweise Link
+in HTML ausgegeben:
+\begin{verbatim}
+ <h:commandButton action="#{questionnaireBean.persist}" value="Save"/>
+<h:commandLink action="#{questionnaireBean.create}" value="Create">
+\end{verbatim}
+Der ausschlaggebende Faktor für den Einsatz der Navigation ist das Attribut "action" der
+Steuerkomponenten. Darüber wird am Ende der Invoke-Application-Phase entschieden, welche
+Ansicht von JSF gerendert und zum Benutzer zurückgesendet wird.
+Ab JSF 2.0 kann direkt die View-ID einer Ansicht im action -Attribut angegeben oder von der Action-
+Methode zurückgegeben werden - wir bezeichnen das als implizite Navigation.
+Will man z.B. nach dem "persist()" zur Hauptseite wechseln, wird dies in der Action-Methode des
+QuestionnaireBean zu:
+\begin{verbatim}
+ public String persist() {#1
+...
+return "/pages/main?faces-redirect=true";#2
+}
+\end{verbatim}
+\begin{enumerate}
+ \item Der Action.Methode, die vom "h:commandButton" im obigen Beispiel aufgerufen wird. Die
+Action-Methode muss einen String Return-Werte zurückgeben. Hier wird die neue View festgelegt.
+\item Hier führt die implizite Navigation zur Page "/pages/main.xhtml". Durch die Einführung der
+impliziten Navigation muss auch das Auslösen eines Redirect möglich sein, um das Double-Submit-
+Problem verhindern zu können. Mit dem Parameter "faces-redirect=true" wird dieses Redirect
+festgelegt.
+\end{enumerate}
+
+
+\end{document}
