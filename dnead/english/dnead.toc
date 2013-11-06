@@ -1,0 +1,69 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Basics,Intro,TFS}{4}
+\contentsline {section}{\numberline {1.1}TFS Setup}{4}
+\contentsline {chapter}{\numberline {2}Windows Presentation Foundation (WPF)}{5}
+\contentsline {section}{\numberline {2.1}Goals of WPF}{5}
+\contentsline {section}{\numberline {2.2}WPF Features}{5}
+\contentsline {subsection}{\numberline {2.2.1}Rendering}{5}
+\contentsline {section}{\numberline {2.3}XAML}{5}
+\contentsline {subsection}{\numberline {2.3.1}User Controls vs Custom Control}{8}
+\contentsline {subsection}{\numberline {2.3.2}Layout Panels , Padding and Alignment}{8}
+\contentsline {subsection}{\numberline {2.3.3}Transformations (Translations/Animations)}{9}
+\contentsline {section}{\numberline {2.4}Databinding with XAML}{9}
+\contentsline {subsection}{\numberline {2.4.1}Data Context}{9}
+\contentsline {subsection}{\numberline {2.4.2}IPropertyChanged}{10}
+\contentsline {subsection}{\numberline {2.4.3}ObservableCollection}{10}
+\contentsline {subsection}{\numberline {2.4.4}Value Converters}{10}
+\contentsline {subsection}{\numberline {2.4.5}Problems}{11}
+\contentsline {section}{\numberline {2.5}MVVM Pattern}{11}
+\contentsline {subsection}{\numberline {2.5.1}Commands}{11}
+\contentsline {chapter}{\numberline {3}Entity Framework}{13}
+\contentsline {section}{\numberline {3.1}ADO.NET}{13}
+\contentsline {subsection}{\numberline {3.1.1}Examples}{14}
+\contentsline {section}{\numberline {3.2}Intro to Entity Framework}{14}
+\contentsline {section}{\numberline {3.3}Architecture / Structure of EF}{14}
+\contentsline {section}{\numberline {3.4}"Variations" of Entity Framework}{15}
+\contentsline {section}{\numberline {3.5}Entity Objects}{15}
+\contentsline {section}{\numberline {3.6}First Steps}{16}
+\contentsline {chapter}{\numberline {4}Dependency Injection with Unity}{18}
+\contentsline {section}{\numberline {4.1}What is a dependency?}{18}
+\contentsline {subsection}{\numberline {4.1.1}Tightly Coupled Dependencies (Bad)}{18}
+\contentsline {section}{\numberline {4.2}What is Inversion of Control}{19}
+\contentsline {subsection}{\numberline {4.2.1}IOC Implications}{19}
+\contentsline {subsection}{\numberline {4.2.2}IOC Advantages}{19}
+\contentsline {section}{\numberline {4.3}What is dependency injection}{19}
+\contentsline {subsection}{\numberline {4.3.1}Dependency Options}{19}
+\contentsline {subsection}{\numberline {4.3.2}Ways to inject dependencies}{19}
+\contentsline {subsubsection}{Constructor Injection}{19}
+\contentsline {subsubsection}{Setter Injection}{20}
+\contentsline {subsubsection}{Method Injection}{20}
+\contentsline {section}{\numberline {4.4}Pros and Cons of DI}{20}
+\contentsline {section}{\numberline {4.5}IOC Container Services}{20}
+\contentsline {section}{\numberline {4.6}IOC based Injection}{20}
+\contentsline {section}{\numberline {4.7}How to use Unity}{21}
+\contentsline {subsection}{\numberline {4.7.1}Resolving Dependencies (Wiring)}{21}
+\contentsline {section}{\numberline {4.8}Managing Lifetimes of Objects with Unity}{21}
+\contentsline {chapter}{\numberline {5}ASP MVC4}{23}
+\contentsline {section}{\numberline {5.1}Advantages of MVC}{23}
+\contentsline {section}{\numberline {5.2}Naming Conventions}{23}
+\contentsline {section}{\numberline {5.3}MVC Sequence Diagram - How it works}{23}
+\contentsline {section}{\numberline {5.4}Controllers}{23}
+\contentsline {subsection}{\numberline {5.4.1}Controller Action Types}{24}
+\contentsline {subsection}{\numberline {5.4.2}Controllers and AJAX}{24}
+\contentsline {section}{\numberline {5.5}Passing Data between Controller and View}{24}
+\contentsline {subsection}{\numberline {5.5.1}Viewbag}{25}
+\contentsline {section}{\numberline {5.6}Razor View Engine}{25}
+\contentsline {section}{\numberline {5.7}View Helpers}{26}
+\contentsline {section}{\numberline {5.8}Layout}{26}
+\contentsline {section}{\numberline {5.9}Routing}{26}
+\contentsline {section}{\numberline {5.10}Model binding}{27}
+\contentsline {subsection}{\numberline {5.10.1}Hidden values}{28}
+\contentsline {subsection}{\numberline {5.10.2}Step by Step behind the curtain}{28}
+\contentsline {section}{\numberline {5.11}Sessions}{28}
+\contentsline {chapter}{\numberline {6}Azure}{29}
+\contentsline {section}{\numberline {6.1}Data Center Architecture}{29}
+\contentsline {section}{\numberline {6.2}Windows Azure Portal}{30}
+\contentsline {subsection}{\numberline {6.2.1}PAAS in depth for Azure}{30}
+\contentsline {subsubsection}{Implementation}{30}
+\contentsline {section}{\numberline {6.3}Databases/Storage Account}{30}
+\contentsline {subsection}{\numberline {6.3.1}Storage Types (Table,Queue)}{31}

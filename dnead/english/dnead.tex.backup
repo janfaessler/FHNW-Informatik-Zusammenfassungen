@@ -1,0 +1,957 @@
+\documentclass[a4paper,10pt]{scrreprt}
+\usepackage[top=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+%opening
+\title{.NET Enterprise Applications}
+\author{Roland Hediger}
+\usepackage{fancyhdr}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\pic}[2][figure]{\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.4]{#2}
+ % rsc.png: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+ \caption{#1}
+\end{figure}
+}
+
+% Code listenings
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{language=[Sharp]C,
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+keywordstyle=\color{bluekeywords}\bfseries,
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily
+}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+ \pagestyle{fancy}
+
+
+\chapter{Basics,Intro,TFS}
+\footnote{Author welcomes tokens of gratitude in the form of beer, if thy deem this document helpful for thine test}
+\pic[TFS Features]{tfs.png}
+\section{TFS Setup}
+\begin{description}
+\item[On Premises] \begin{itemize}
+\item Server Setup
+\item Server Unterhalt + Backup
+\item Reporting (SQL Reporting Dienst)
+\item Sharepoint
+\item \textbf{Voll konfigurierbar im vergleich mit TFS}
+\end{itemize}
+\item[TFS als SAAS Lösung]
+\begin{itemize}
+\item Kein Server Setup
+\item Kein Unterhalt + Backup
+\item Saklierbar
+\item Data Storage off premises.
+\end{itemize}
+\item[Additional TFS Features]
+\begin{itemize}
+\item Sprint Planning
+\item Scrum Board
+\item Excel Reporting
+\end{itemize}
+\item [General] Dont waste too much time choosing the right process template. Out of the box experience is sufficient : Source Control, Work Item Types, Basic Reporting
+\end{description}
+
+\chapter{Windows Presentation Foundation (WPF)}
+
+\section{Goals of WPF}
+\begin{enumerate}
+\item Unified approach to UI Docs and Media, replacing the individual technologies GDI, GDI+, Win32 (Winforms)
+\item \textbf{Integrated vector-based composition engine} - One graphics engine for whole stack.
+\item Declarative programming : Separate UI look and feel (XAML) from programming (Code Behind).
+\item Ease of deployment : Allowing administrators to deploy and manage applications securely.
+\end{enumerate}
+
+\pic[WPF Architecture]{wpfArchitecture.PNG}
+
+\section{WPF Features}
+\subsection{Rendering}
+\pic{wrender.png}
+
+\section{XAML}
+Extensible Application Markup Langunage, xml based to \textit{instantiate and initialize objects with heirachichal relationships}
+
+\begin{lstlisting} [language=xml,caption=First XAML Example]
+<Window xmlns="http://schemas.microsoft.com/winfx/..."> <StackPanel HorizontalAlignment="Center" > <Image Source="Images/hello.jpg" Height="80" /> <TextBlock Text="Welcome to WPF!" FontSize="14"/> <Button Content="OK" Padding="10,4" /> </StackPanel> </Window>
+\end{lstlisting}
+
+\begin{description}
+\item[General] Markup for windows : Build applications in simple declarative statements. Can be used for any CLR object heirarchy.Code and content are strictly separate, streamlines designer developer collaboration.
+\item[XAML vs Code] Everything in XAML can also be done in code. The xml tags correspond to objects using their default constructors, and xml attributes correspond to the UI Object Properties.\\
+\pic[xaml vs c\#]{xaml_cs.png}
+
+\item [XAML Prefixes + Property Element Syntax] \hfill \\
+\begin{lstlisting}[caption=XAML Prefixes,language=xml]
+\begin{lstlisting} [caption=XAML Property Element Syntax]
+<Rectangle Width="20" Height="20"> <Rectangle.Fill> <LinearGradientBrush> <GradientStop Color="Red" Offset="0" /> <GradientStop Color="Blue" Offset="1" /> </LinearGradientBrush> </Rectangle.Fill> </Rectangle>
+\end{lstlisting}
+\item [XAML Compilation] \hfill \\
+\pic{xamlcomp.png}
+\item [UI Services] \hfill \\
+\begin{itemize}
+ \item Layout
+ \item Controls Library
+ \item Templates
+ \item Styles and Resources 
+\end{itemize}
+\begin{lstlisting}[language=xml,caption=Combination of UI Services Example]
+<StackPanel>
+<StackPanel.Triggers>
+<EventTrigger RoutedEvent="Button.Click">
+<EventTrigger.Actions>
+<BeginStoryboard>
+<BeginStoryboard.Storyboard>
+<Storyboard>
+<ColorAnimation To="Yellow" Duration="0:0:0.5"
+Storyboard.TargetName="TheBrush"
+Storyboard.TargetProperty="Color" />
+<DoubleAnimation To="45" Duration="0:0:2"
+Storyboard.TargetName="LowerEllipseTransform"
+Storyboard.TargetProperty="Angle" />
+...
+</StackPanel.Triggers>
+... remainder of contents of StackPanel, including x:Name'd
+TheBrush and LowerEllipseTransform ...
+</StackPanel>
+\end{lstlisting}
+\item [Flexible Composition] I can define an Item inside the content tag of an Item and it will be used as the parent item's content :
+ \begin{lstlisting}[caption=XAML Composition Example,language=xml]
+ <Button Width="50">
+<Button.Content>
+<Image Source="images/windows.jpg"
+Height="40"/>
+</Button.Content>
+</Button>
+ \end{lstlisting}
+ 
+\item[Attached Properties] Allows a child element of an object to adjust properites of itsself in relation to the parent object (where it should dock, margins) which are only available due to the type of the parent element.
+\begin{lstlisting}[caption=XAML Attached Properties Example,language=xml]
+<DockPanel>
+<Button DockPanel.Dock="Left" Content="Button" />
+</DockPanel>
+<Canvas>
+<Button Canvas.Top="20" Canvas.Left="20"
+Content="Button" />
+</Canvas>
+\end{lstlisting}
+\end{description}
+\subsection{User Controls vs Custom Control}
+\begin{description}
+\item[User controls] are reusable compositions of other controls : Grid with items positioned on it the same way used many times over.
+\item[CustomControl] Self explanatory - enhances existing control.
+\end{description}
+\subsection{Layout Panels , Padding and Alignment}
+\pic[WPF Panels]{wlp.png}
+\pic[Padding and Alignment]{pal.png}
+\begin{itemize}
+\item Use Alignment, Padding and Margin to position elements
+\item Avoid fix sizes for elements
+\item Do not misuse the Canvas Panel for fix positioning of elements (WinForms Style)
+\end{itemize}
+\subsection{Transformations (Translations/Animations)}
+Element can be transformed in WPF
+LayoutTransform influences the layout, RenderTransform does not.
+\pic{tform.png}
+\section{Databinding with XAML}
+\begin{lstlisting}[language=xml]
+<TextBlock Text="{Binding Path=Vorname}" />
+\end{lstlisting}
+\begin{itemize}
+\item DataBinding synchronizes the values of two properties.
+\item Typically UI element is connected to an entity object (POCO / DAO) from a database.
+\item Binding cna be Uni or Bidirectional.
+\item A ValueConverter can adapt different data formats for syncronization.
+\end{itemize}
+\pic[Data Binding Diagram]{dbind.png}
+
+\subsection{Data Context}
+Every WPF element has a DataContext property.The DataContext is inherited to children.Allows the Binding to a Data-Object.The default source of a {Bindings} is always the DataContext.
+\begin{lstlisting}[caption=Data Binding Example,language=xml]
+<Button Content="{Binding Name}" />
+DataContext = customer1;
+\end{lstlisting}
+\textbf{Properties:}
+\begin{description}
+\item [UpdateSourceTrigger] ProperyChanged,LostFocus,Explicit(manual)
+\item[Mode] Direction of Databinding : OneWay,TwoWay,OneWayToSource.
+\end{description}
+
+\subsection{IPropertyChanged}
+Every Data-Object must implement INotifyPropertyChanged to allow the propagation of changes.
+\begin{lstlisting}[caption=INotifyPropertyChanged implementation]
+public class Customer : INotifyPropertyChanged
+{
+private string _name;
+public string Name
+{
+get { return _name; }
+set
+{
+_name = value;
+NotifyPropertyChanged("Name");
+}
+}
+public event PropertyChangedEventHandler PropertyChanged;
+private void NotifyPropertyChanged( string name)
+{
+if( PropertyChanged != null )
+PropertyChanged(this, new PropertyChangedEventArgs(name));
+}
+}
+\end{lstlisting}
+\subsection{ObservableCollection}
+Use ObservableCollections to allow the propagation of collection changes. 
+\begin{verbatim}
+ObservableCollection<Auction> auctions
+= new ObservableCollection<Auction>();
+\end{verbatim}
+\subsection{Value Converters}
+ValueConverters can change the format of the data in both directions:
+\begin{lstlisting}[caption=ValueConverter Example]
+public class BoolToVisibilityConverter : IValueConverter
+{
+#region IValueConverter Members
+public object Convert(object value, Type targetType, object parameter,
+CultureInfo culture)
+{
+return (bool) value ? Visibility.Visible : Visibility.Collapsed;
+}
+public object ConvertBack(object value, Type targetType, object parameter,
+CultureInfo culture)
+{
+throw new NotImplementedException();
+}
+#endregion
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=ValueConverter in XAML]
+<Window.Resources>
+<conv:BooleanToStatusTextConverter
+x:Key="booleanToStatusTextConverter" />
+</Window.Resources>
+<Button Content="{Binding IsOpen,
+Converter={booleanToStatusTextConverter}}" />
+\end{lstlisting}
+
+\subsection{Problems}
+DataBinding errors are written to the Debug Output.Use an empty ValueConverter to set breakpoints.
+
+
+\section{MVVM Pattern}
+\begin{description}
+\item[Motivation]
+\begin{itemize}
+\item Separation of GUI design ("style") and logic "behavior".Ability to use Expression Blend.
+\item No duplicated code to update views..No "myLabel.Text = newValue" sprinkled in code behind everywhere.
+\item Testability: Since your logic is completely agnostic of your view (no "myLabel.Text" references), unit testing is made easy.
+\end{itemize}
+\end{description}
+\pic[MVVM Example]{mvvm.png}
+\begin{description}
+\item [View(xaml)] Usercontrol based, with xaml. Has minimal code behind. Datacontext is set to the associated View Model. No event Handlers. Data binding of view is set to view model.
+\item [View Model(c\#)] Implemenets INotifyPropertyChanged. Exposes ICommand, handles validation. Functions as an adapter class between view and model, as a result, it is testable.
+\item [Model] POCO free of all WPF.
+\end{description}
+\subsection{Commands}
+Commands are used to bind UI actions to the ViewModel functionality. A command implements 3 functions of the ICommand interface : 
+\begin{verbatim}
+Execute(object param);
+canExecute(object param);
+even CanExecuteChanged;
+\end{verbatim}
+
+Commands can be used on different UI Elements.
+
+\begin{lstlisting}[caption = ICommand Implementation Example]
+public class FooCommand : ICommand
+{
+ public Action<object> ExecuteDelegate { get; set; }
+ public Func<object, bool> CanExecuteDelegate { get; set; }
+
+ #region ICommand Members
+
+ public bool CanExecute(object parameter)
+ {
+ return CanExecuteDelegate(parameter);
+ }
+
+ public event EventHandler CanExecuteChanged;
+
+ public void Execute(object parameter)
+ {
+ ExecuteDelegate(parameter);
+ }
+
+ #endregion
+ }
+\end{lstlisting}
+
+\chapter{Entity Framework}
+\pic[Underlying Architecture 1]{ula.png}
+
+\pic[Underlying Architecture 2]{ula_2.png}
+
+\section{ADO.NET}
+\textbf{klassenauflistung:}
+\begin{itemize}
+\item SqlConnection
+\item SqlCommand
+\item SqlCommandBuilder
+\item SqlDataAdapter
+\item SqlDataReader
+\item SqlException
+\item SqlParameter
+\item SqlBulkCopy
+\item SqlTransaction
+\end{itemize}
+\subsection{Examples}
+\begin{lstlisting}[caption=DataSet Example]
+using (SqlConnection cn = new SqlConnection("<connection string>") { 
+	cn.Open(); 
+	SqlDataAdapter ad = new OleDbDataAdapter("select * from products", cn);
+	 DataSet ds = new DataSet();
+	  ad.Fill(ds,"Products"); 
+	  foreach(DataRow dr in ds.Tables["Products"].Rows) { 
+	  Console.WriteLine(dr["ProductName"]); } 
+	}
+\end{lstlisting}
+\section{Intro to Entity Framework}
+\begin{description}
+\item [EF] Maps conceptual model to physical tables, uses LINQ. Has features like change tracking identity resolution, 
+lazy loading and more. 
+\item [LINQ to SQL] Lightweight no mapping.Replaced by EF but still supported.
+\item [NHibernate] Open Source like Entity Framework, uses LINQ.
+
+\end{description}
+\section{Architecture / Structure of EF}
+\pic[EF Architecture]{efarch.png}
+
+\begin{description}
+\item[EDMX Files] \hfill \\
+\pic[EDMX Files]{edmx1.png}
+\pic[EDMX Files]{edmx2.png}
+\item[Object Context (DB Context)] \hfill \\
+\begin{verbatim}
+Methods:
+SaveChanges()
+CreateObjectSet() (->LINQ-Query)
+Attach() / Detach()
+efresh()
+Properties:
+Connection
+ObjectStateManger
+\end{verbatim}
+\item[Lazy Loading] Default, Eager loading - load everything - must be specified explicitly.
+\item[StoredProcedure mapping] Usually sucks, maps to a single entity with one method to fetch the result of stored 
+procedure, as dataset.
+\end{description}
+\section{"Variations" of Entity Framework}
+\begin{description}
+\item[Database First] : All code for Entities generated from database. (Model)
+\item[Code First] No .edmx files, DB Schema and Entity Objects / Model from code. 
+\item [Model first] Uses UI Designer, and edmx file with T4 Templating to generate Entity Objects and Context.
+\end{description}
+
+\section{Entity Objects}
+\pic[Entity Framework Object using Model based approach]{efo1.png}
+\pic[Object with Change Tracking]{efoa2.png}
+\begin{description}
+\item[Notes] Important to consider dev performance vs actual runtime performance because ORM means overhead.
+\item [Design Consderations] \begin{itemize}
+\item Encapsulate DAL implementation? (technology, connections, queries, structure)
+\item Technology (ADO.NET vs. EF vs. ……)
+\item Logical – physical model mapping?
+\item Performance \& scalability
+\item Batching: reduce round-trips (performance), Bulk insert/update: for large volumes
+\item Use Views?
+\item Use Stored Procedures?
+\end{itemize}
+\item[Benefits of ORM] \begin{itemize}
+\item Decouples logical model from database model
+\item Consistent, independent query language
+\item Rich designer support
+\item Most common patterns (1-to-many, many-to-1, many-to-many, self-referencing, inheritance,
+\item Slower than ADO.NET core
+\item Must regenerate EDM after DB changes
+\end{itemize}
+\end{description}
+
+\section{First Steps}
+\begin{lstlisting}[caption=Initial Entity Framework Example]
+// create dbcontext 
+AuctionContext context = new AuctionContext();
+// get all auctions from database
+ var myAuctions = context.Auctions;
+// get all open auctions 
+var openAuctions = context.Auctions.Where(a => a.EndTime < DateTime.Now);
+// add new auction to database 
+var newAuction = new Auction() {………} context.AddToAuctions(newAuction); context.SaveChanges();
+\end{lstlisting}
+\chapter{Dependency Injection with Unity}
+\section{What is a dependency?}
+Dependenencies in UML : \\
+\pic[Depedency examples in UML]{dep.png}
+\textbf{Common Dependencies in Enterprise Apps:}
+\begin{description}
+ \item [Application Layers] Data Access Layer \& Database dependencies, Dependencies between business layer, and DB 
+Layer.
+ \item [External Services and Components] Web Services, third party components.
+ \item [.NET Components] File Objects / Http Objects (MVC) - HttpContext, Session.
+\end{description}
+
+\subsection{Tightly Coupled Dependencies (Bad)}
+\begin{lstlisting}[caption=Bad DI Example]
+ public class CustomerService : ICustomerService {
+  #region ICustomerService Members
+  public CustomerDTO GetACustomerFrom(int id)
+{
+    CustomerDTOMapper dtoMapper = new CustomerDTOMapper();
+    CustomerRepository custRepository = new CustomerRepository();
+    return dtoMapper.mapFrom(custRepository.getFrom(id));
+ }
+\end{lstlisting}
+
+Problems :
+\begin{itemize}
+ \item Code is tightly coupled,difficult to isolate when testing, difficult to maintain. Changing out components not 
+possible.
+\end{itemize}
+\textbf{Solutions:}
+\begin{itemize}
+ \item Inversion of Control - Hollywood principle.
+ \item Dependency injection.
+\end{itemize}
+\section{What is Inversion of Control}
+Higher level modules should not depend on lower level modules. Both should depend on abstractions (interfaces or 
+abstract classes).\textit{Abstractions should not depend on details}
+\subsection{IOC Implications}
+\begin{itemize}
+ \item Layers, modulariziation
+ \item Interface based programming.
+ \item Interface in seperate package to implementation.
+ \item Implementations fetched through dependency injection.
+ 
+\end{itemize}
+\subsection{IOC Advantages}
+\begin{itemize}
+ \item Increase loose coupling
+\subitem  Abstract interfaces don't change
+\subitem  Concrete classes implement interfaces
+\subitem  Concrete classes easy to throw away and replace
+\item Increase mobility
+\item Increase isolation
+\subitem  decrease rigidity
+\subitem Increase testability
+\subitem Increase maintainability
+\end{itemize}
+
+\section{What is dependency injection}
+\begin{description}
+ \item [Purpose] How do we wire up concrete interfaces? DI gives us the ability to inject external dependency into 
+component
+\item DI is a form of IoC, where implementations are passed
+into an object through constructors/setters/service look-
+ups, which the object will 'depend' on in order to behave
+correctly
+\end{description}
+
+\subsection{Dependency Options}
+\begin{description}
+
+\item [Option 1 – Factory] User depends on factory,factory depends on destination.
+\item [Option 2 – Locator/Registry/Directory] The component still controls the wiring. Instantiation 
+Sequence.Dependency 
+on the Locator.
+\item[Option 3 – Dependency Injection] An assembler controls the wiring
+\end{description}
+
+\subsection{Ways to inject dependencies}
+\subsubsection{Constructor Injection}
+\pic{constdi.png}
+\subsubsection{Setter Injection}
+\pic{setdi.png}
+\subsubsection{Method Injection}
+\pic{methdi.png}
+
+\section{Pros and Cons of DI}
+\begin{description}
+ \item [+] Loosely Coupled
+ \item [+] Better Testing
+ \item [+] Allows IOC Container
+\end{description}
+
+\section{IOC Container Services}
+\begin{itemize}
+ \item Service Locator - Finds implementation of Interface based on wiring.
+ \item Managing lifetime of dependencies. (Singleton, per http request etc)
+ \item Automatic injection.
+ \item Wiring config.
+\end{itemize}
+
+\section{IOC based Injection}
+\pic[IOC based Injection]{iocinj.png}
+
+\section{How to use Unity}
+Unity container creates object instances during
+resolution of types.Container must be asked to resolve a type.
+\begin{lstlisting}[caption= DI Unity First Example]
+  IUnityContainer container = new UnityContainer();
+  IVideoSource source = container.resolve<IVideoSource>();
+  IEnumerable<VideoSource> sources = container.ResolveAll<IVideoSource>();
+\end{lstlisting}
+
+\subsection{Resolving Dependencies (Wiring)}
+Dependencies are wired up for resolved types\\
+Properties marked as [Dependency]\\
+Constructor marked [InjectionConstructor]\\
+Methods marked [InjectionMethod]\\
+Unity can also wire up dependencies on
+objects not created by container
+
+\textbf{Wiring Methods :}
+\begin{tabular}{|c | c | c | c |}
+  & Constructor & Properties & Method \\
+  Resolve & Yes & Yes & Yes \\
+  BuildUp & No & Yes & Yes \\
+  
+\end{tabular}
+\begin{itemize}
+
+\item Container has registration for object resolution
+Maps interfaces and abstract base classes to
+\item  Concrete types
+\item Existing object instances
+\item Performed only once per container instance
+Can Use code or configuration
+Register multiple types based on names
+
+\end{itemize}
+
+\pic[Sample Registration using Unity]{regdi.png}
+\pic[Sample Registration in App.config]{regconf.png}
+
+\section{Managing Lifetimes of Objects with Unity}
+\begin{itemize}
+\item Control the lifetime of objects created by Unity
+Use LifetimeManager derived classes during
+registration
+\item Container controlled: singleton
+\item  Transient: new every time, resolve is called
+(default)
+\item Externally managed: keeps weak references
+\item RegisterInstance method: Singleton not created by container.
+\end{itemize}
+
+\chapter{ASP MVC4}
+\section{Advantages of MVC}
+\begin{itemize}
+\item A new option for ASP.NET, not a replacement
+for ASP.NET WebForms
+\item Simple way to program ASP.NET
+\item Easy testable
+\item Much control over your <html>
+\item Much control over your URLs
+\item Can be used as a base infrastructure for SPA
+\item Plays well with others : Entity Framework, Unity, Unit Testing
+(Single Page Apps)
+\end{itemize}
+\section{Naming Conventions}
+\pic[MVC Naming Conventions]{mvcname.png}
+\section{MVC Sequence Diagram - How it works}
+\pic[MVC Architecture]{mvcarch.png}
+\section{Controllers}
+\begin{itemize}
+\item Controllers handle all incoming requests
+\item Retrieve data from storage
+\item Store posted data in storage (http post)
+\item Pass the data to a View to generate the
+\item HTML/CSS/JavaScript for display
+\item Controllers can implement REST APIs
+(derive controller from ApiController)
+\item  The simplest controller just returns HTML to
+the Web browser
+\item IMPORTANT: By default, all public methods
+in a controller class can be called from the
+Web browser
+\item Controllers give a ResultObject as return value and can be tested without the need for a webserver - Normal 
+object.
+
+\end{itemize}
+
+\subsection{Controller Action Types}
+\begin{tabular}{c | c | c}
+Return Type & Content & Example  \\ \hline
+ ViewResult & Html-Page & return View(); \\ \hline
+ PartialViewResult & Part of HTML Page  & return PartialView()  \\ \hline
+ RedirectResult & Redirect to other page & return Redirect(``url''); \\ \hline
+ FileResult & Binary data & return File(``path''); \\ \hline
+ JsonResult & Serialized JS Objects & return JSON(MyPOCO); \\ \hline
+ JavaScriptResult & JS (AJAX) & return JavaScript(``alert('hi')''); \\ \hline
+
+\end{tabular}
+
+\subsection{Controllers and AJAX}
+Ajax calls can also be handled by the
+controller
+These are also public methods:
+\begin{verbatim}
+ View:
+@Ajax.ActionLink("Click me", "Click", null)
+Controller:
+public JavaScriptResult Click()
+{
+return JavaScript("alert('Hallo World');");
+} 	
+\end{verbatim}
+\section{Passing Data between Controller and View}
+\textbf{This part was not taken entirely from the slides because it was badly explained.}
+\begin{enumerate}
+ \item I can return a view with the View(Modelobject) method as follows :
+ \begin{verbatim}
+  public ActionResult Index()
+{
+return View(db.Item.ToList());
+}
+ \end{verbatim}
+ This looks for view index.cshtml under views (matches method name). The parameter is the model object. 
+\underline{Unless otherwise specified 
+the view expects either no parameter or a parameter of type object, which can be accessed}
+
+\end{enumerate}
+
+\subsection{Viewbag}
+\textbf{This is referred to in the slides as the untyped variant.} It IS NOT strictly speaking a variant. You are able 
+to send data to the View using a model as above, and fill up the viewbag with objects (properties) at the same time.
+\begin{lstlisting}[caption=ViewBag Example]
+ ViewBag.Persons = new SelectList(context.People, "Id", "Name");
+ //In View
+ @Html.DropDownListFor(model => model.SellerId, (SelectList)ViewBag.Persons)
+ 
+ //Combined Variant
+ //Controller
+   public ActionResult Index()
+{
+Object blab = new Object(); //can be anything
+Viewbag.bla = blab
+return View(db.Item.ToList());
+}
+
+ //In View
+ <h2> Viewbag.blab.toString</h2>
+ @Html.DropDownListFor(model => model.SellerId, (SelectList)ViewBag.Persons
+ 
+
+\end{lstlisting}
+
+\section{Razor View Engine}
+Asp.Net classic view engine can be used but replaced by Razor.
+Html tags implicitly identified and cause the code block to end.
+If it doesnt work one can manually force a code block :
+
+\begin{lstlisting}[caption=Normal Razor ASP.NET MVC,language=html]
+ <h2>Products</h2>
+ <ul>
+    @foreach (var p in products) {
+     <li> @p.ProductName </li>
+    }
+ <li>
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Specified Code Block ASP.NET MVC,language=html]
+\begin{lstlisting}
+//@{code here} html stuff here. 
+<div>
+<b>
+@if (HttpContext.Current.Request.IsAuthenticated)
+{
+@:Change your password:
+}
+else
+{
+@:Please change your initial password:
+}
+</b>
+</div>
+\end{lstlisting}
+
+\section{View Helpers}
+Methods that you can use in the view to generate HTML tags that correspond with properties of @model.
+\begin{lstlisting}
+ @Html.ActionLink(“Edit Record”, “Edit”, new {Id=3}):
+ //generates:
+<a href=”/Home/Edit/3′′>Edit Record</a>
+@Html.LabelFor(model => model.FirstName):
+//generates:
+<label for="FirstName">FirstName</label>
+
+@Html.EditorFor(model => model.FirstName):
+
+//generates 
+<input class="text-box single-line" data-val="true"
+data-val-required="The FirstName field is required."
+id="FirstName" name="FirstName" type="text" value="" />
+\end{lstlisting}
+
+\section{Layout}
+This was also badly explained in the slides.
+As we learn in web frameworks we need a template for every view. The template itsself is a view in ASP.NET mvc - 
+layout.cshtml. The name for the template is specified in \_ViewStart.cshtml, doesnt have to be named layout.
+
+\textit{The layout also has access to the Viewbag -}
+\textbf{Whatever I put in the viewbag in a Controller method, can be displayed in the layout in non dynamic parts, if 
+the property doesnt exist - an empty String is displayed (null)}
+Example :
+\pic[Layout Example] {layout_example.png}
+
+\textbf{Requirement : Layout must contain @RenderBody that is all}
+
+\section{Routing}
+\begin{lstlisting}[caption=Routing Example]
+App_Start/RouteConfig.cs
+ routes.MapRoute(
+"Default", // Route name
+"{controller}/{action}/{id}", // URL with parameters
+new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Default
+);
+\end{lstlisting}
+First route that matches url pattern "wins".
+
+\section{Model binding}
+Just like in Spring MVC or JSF the properties of the Model Object can be bound to form fields provided the fields are 
+given suitable names so that the model binder knows what to bind. This is taken care of with the html helpers above. In 
+other words manually making form fields is generally a bad idea.
+
+\pic[Model binder]{mbinder.png}
+
+If you really want to you can extract the values manually from the Request object :
+\begin{lstlisting}[caption=Manual reading of form values (not recommended but just in case)]
+ public ActionResult Create()
+{
+var product = new Product() {
+AvailabilityDate =
+DateTime.Parse(Request["availabilityDate"]),
+CategoryId = Int32.Parse(Request["categoryId"]),
+Description = Request["description"],
+Kind =
+(ProductKind)Enum.Parse(typeof(ProductKind),
+Request["kind"]),
+Name = Request["name"],
+UnitPrice = Decimal.Parse(Request["unitPrice"]),
+UnitsInStock =
+Int32.Parse(Request["unitsInStock"]),
+};
+// do work
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Model binding with primitive values]
+ public ActionResult Create(
+DateTime availabilityDate, int categoryId,
+string description, ProductKind kind, string name,
+decimal unitPrice, int unitsInStock
+)
+{
+var product = new Product() {
+AvailabilityDate = availabilityDate,
+CategoryId = categoryId,
+Description = description,
+Kind = kind,
+Name = name,
+UnitPrice = unitPrice,
+UnitsInStock = unitsInStock,
+};
+// do work
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Model binding sensibly]
+ public ActionResult Create(Product product)
+{
+// do work
+}
+\end{lstlisting}
+
+\subsection{Hidden values}
+@HiddenFor(model=>model.property) in the view.
+Generates a hidden form field that is also mapped to the model later.
+
+\subsection{Step by Step behind the curtain}
+Value Sources: querystring parameters, form\\
+fields and route data\\
+Evaluation order:\\
+\begin{itemize}
+\item Previously bound action parameters, when the
+action is a child action
+\item Form fields (Request.Form)
+\item The property values in the JSON Request body
+(Request.InputStream), but only when the
+request is an AJAX request
+\item Route data (RouteData.Values)
+\item Querystring parameters (Request.QueryString)
+\item Posted files (Request.Files)
+\end{itemize}
+
+\section{Sessions}
+\begin{lstlisting}[caption=using session in controller]
+      public ActionResult Index(SessionAspDotNetMvcModel data)
+        {
+            // Assign value into session
+            Session["SessionUserID"] = data.sUserID;
+            // Redirect view
+            return RedirectToAction("EmployeeSection");
+        }
+\end{lstlisting}
+
+Session States :
+\begin{description}
+\item [InProc:] In memory on the Web server
+(default)
+\item [StateServer:] Separate process called the
+ASP.NET state service
+\item [SQLServer:] SQL Server database
+Custom: Custom storage provider
+\item [Off]
+ 
+\end{description}
+
+\chapter{Azure}
+
+Cloud service : On demand , self service, and runs on pay per use principal.
+Why cloud : Outsourcing of infrastructure, scalability.
+
+\textbf{Cloud Service Types:}
+
+\begin{description}
+\item [IaaS:] Infrastructure as a Service - Virtual Machines (Virtual Private Server)
+\item [PaaS:] Platform as a Service - \begin{itemize}
+                                 \item Mobile Services
+\item Cloud Services
+\item  SQL Databases \& Reporting
+\item  Storage
+\item Service Bus
+\item  Virtual Networks
+\item Web Sites
+                                \end{itemize}
+                                
+Important Characteristics : Usually automates deployment with possibilities for customization through scripts that you 
+can add to the deployment process. Services like openshift for example deploy when you commit your project to the git 
+repo.
+
+[SaaS:] Software as a Service : Site builders and so on fully managed.
+
+\end{description}
+
+\section{Data Center Architecture}
+\pic{dca.png}
+
+\section{Windows Azure Portal}
+\begin{description}
+
+\item[Service Management Portal UI] Subscriptions (roles, URL, billing account) Hosted services, storage, SQL Azure 
+and all the other services. Staging, production, updates.Create, configure, scale, monitor.\\
+Built on top Azure Service Management.
+REST APIs.\\
+Multiple service administrators.\\
+Get detailed billing information\\
+\item [Modes] Free  - Limited VM \\
+Shared VM - \$9.68\\
+Standard : Separate VM -  \$75 to \$298
+\item [PAAS Websites] Visual Studio helps, use publish button to send to Azure.
+\item [IAAS Features] To migrate legacy applications. Full control over the OS Image. Create
+your VHD locally and upload\\
+Deploy a service package that
+references and uses the custom
+OS image\\
+You maintain the OS (patch) With your tools. 
+\end{description}
+\subsection{PAAS in depth for Azure}
+\begin{itemize}
+ \item Auto scaling possible
+Use Azure Diagnostics, avoid
+logging to local discs
+\item  Azure may “reimage” the VM any
+time (after patch) -> this removes all
+local data!
+\item  Production \& staging environment
+\item  Virtual IP address swap (easy testing
+in staging, quick undo possible)
+\end{itemize}
+
+\subsubsection{Implementation}
+\pic{implcl.png}
+
+\section{Databases/Storage Account}
+\begin{itemize}
+\item Familiar SQL Server
+ Support for existing APIs \& tools
+\item Failover cluster, data stored on 3
+different backend data nodes
+150 GB limit - ``sharding''
+\item No point in time backup!
+\item Accessible with Management
+Studio 
+\end{itemize}
+
+\pic[Database Syncing]{dbds.png}
+
+Storage in DB :
+\begin{itemize}
+\item  blobs\footnote{Large binary - 200gb}, Tables \& Queues
+\item Georeplication (immediately
+consistent)
+\item 100TB per storage account
+\item Accessible via RESTful Web
+Service API
+Security: shared secret keys,
+HTTPS endpoint
+\end{itemize}
+
+\subsection{Storage Types (Table,Queue)}
+\begin{description}
+ \item [Table] \begin{itemize}
+              \item   Rows of entities
+\item  Up to 255 properties per row
+\item  Max. 1 MB per entity
+\item  Partitioned by (partition) key
+\item  Indexed by row key
+\item Scales for large number
+(billions) of entities
+\item  Structured data, no fixed schema,
+not an RDBMS.
+\end{itemize}
+\item[Queue] \begin{itemize}
+              \item Any binary object can be queued
+(64kB limit)
+\item Use for Inter-role communication
+\item  non transactional
+\item  read at least once
+\item  message invisible for timeout
+\item  delete to remove message -
+otherwise is returned to queue
+\end{itemize}
+
+
+\end{description}
+\end{document}
