@@ -84,7 +84,7 @@
 	\vspace{5cm}
 	dnead Zusammenfassung
 }
-\author{Jan Fässler}
+\author{Jan Fässler, Jonas Schwammberger}
 \date{5. Semester (HS 2013)}
 
 \usepackage{wrapfig}
@@ -819,6 +819,137 @@ Validations can be specified for individual fields in the data model. Client and
         </Viewbox>
     </DockPanel>
 </Window>
+\end{lstlisting}
+
+\begin{lstlisting}[ language=Java, caption=MainViewModel.cs, style=JavaStyle]
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Threading;
+using Fhnw.Dnead.Auction.DAL;
+
+namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
+{
+    public class MainViewModel : ViewModelBase
+    {
+        readonly ObservableCollection<AuctionViewModel> auctions = new ObservableCollection<AuctionViewModel>();
+
+        public ObservableCollection<AuctionViewModel> Auctions
+        {
+            get
+            {
+                return auctions;
+            }
+        }
+
+        readonly AuctionContext context = new AuctionContext();
+
+        /// <summary>
+        /// Timer to detect auction closes
+        /// </summary>
+        readonly DispatcherTimer auctionTimer = new DispatcherTimer();
+
+
+        private void StartAuctionTimer()
+        {
+            auctionTimer.Tick +=
+                delegate
+                    {
+                        // set all timed out auctions to closed
+                        UpdateAuctionOpenStatus();
+                        context.SaveChanges();
+                    };
+
+            auctionTimer.Interval = new TimeSpan(0, 0, 1);
+            auctionTimer.Start();
+        }
+
+        /// <summary>
+        /// Verifies expiration date of auctions and updates open status if expired.
+        /// </summary>
+        private void UpdateAuctionOpenStatus()
+        {
+            auctions.Where(a => a.EndTime < DateTime.Now).ToList().ForEach(a => a.Open = false);
+        }
+
+        public MainViewModel()
+        {
+            // read existing data from db and fill them in the observable collection
+            context.Auctions.ToList().ForEach(a => auctions.Add(new AuctionViewModel { Auction = a }));
+
+            StartAuctionTimer();
+
+        }
+
+        public void AddNewAuction(AuctionViewModel newAuctionEntity)
+        {
+            context.Auctions.Add(newAuctionEntity.Auction);
+            context.SaveChanges();
+            Auctions.Add(newAuctionEntity)
+\end{lstlisting}
+
+\begin{lstlisting}[ language=Java, caption=BidViewModel.cs, style=JavaStyle]
+using System;
+using System.Windows;
+using System.Windows.Input;
+using Fhnw.Dnead.Auction.WpfClient.Commands;
+
+
+namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
+{
+    /// <summary>
+    /// ViewModel for a bid for an auction.
+    /// </summary>
+    class BidViewModel : ViewModelBase
+    {
+        private DelegateCommand<Window> okCommand;
+
+        public string Bid { get; private set; }
+        private readonly AuctionViewModel item;
+
+        public BidViewModel(AuctionViewModel item)
+        {
+            this.item = item;
+            Bid = ((item.Bid == 0 || item.Bid == null? item.StartPrice : item.Bid) + 1).ToString();
+        }
+
+        public bool ValidateEntries()
+        {
+            int newBid;
+            if (!int.TryParse(Bid, out newBid)) return false;
+            if (newBid == 0) return false;
+            if (newBid <= item.Bid) return false;
+            if (newBid <= item.StartPrice) return false;
+
+            item.Bid = newBid;
+            item.Buyer = Environment.UserName;
+
+            return true;
+        }
+
+        public ICommand OkCommand
+        {
+            get
+            {
+                if (okCommand == null)
+                {
+                    okCommand = new DelegateCommand<Window>(DoOk, CanDoOk);
+                }
+                return okCommand;
+            }
+        }
+
+        void DoOk(Window win)
+{
+            if (ValidateEntries())
+            {
+                win.DialogResult = true;
+            }
+}
+
+        bool CanDoOk(Window win) { return true; }
+    }
+}
 \end{lstlisting}
 
 % Inhalt Ende 
