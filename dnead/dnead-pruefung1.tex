@@ -561,7 +561,7 @@ using (SqlConnection cn = new SqlConnection("<connection string>") {
 \end{center}
 \subsubsection{Entity Data Model}
 \begin{center}
-\includegraphics[scale=0.4]{entity_data_model_1.png}
+\includegraphics[scale=0.2]{entity_data_model_1.png}
 \includegraphics[scale=0.4]{entity_data_model_2.png}
 \end{center}
 \subsubsection{Benefits \& Considerations}
@@ -747,6 +747,79 @@ Validations can be specified for individual fields in the data model. Client and
 \begin{center}
 	\includegraphics[scale=0.2]{mvc_model.png}
 \end{center}
+
+\section{Codebeispiele}
+\subsection{WPF XAML}
+\begin{lstlisting}[ language=Java, caption=MainWindow.xaml, style=JavaStyle]
+<Window x:Class="Fhnw.Dnead.Auction.WpfClient.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="596.317"
+    xmlns:my="clr-namespace:Fhnw.Dnead.Auction.WpfClient"
+    xmlns:conv="clr-namespace:Fhnw.Dnead.Auction.WpfClient.Converter">
+
+    <Window.Resources>
+        <conv:BooleanToStatusTextConverter x:Key="booleanToStatusTextConverter" />
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+    </Window.Resources>
+    
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" Name="dgAuctionItems" ItemsSource="{Binding Path=Auctions}" Margin="0,48,0,0" IsReadOnly="True">
+            <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                            <Button Background="Red" Name="btnBuy" Content="Buy" Width="44" Margin="2" Visibility="{Binding Path=Open, Converter={StaticResource booleanToVisibilityConverter}}" IsCancel="False" Click="BtnBuyClick"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Path=Name}" Header="Artikel" />
+                <DataGridTextColumn Binding="{Binding Path=StartPrice}" Header="Start Preis" />
+                <DataGridTextColumn Binding="{Binding Path=Bid}" Header="Aktuelles Gebot" />
+                <DataGridTextColumn Binding="{Binding Path=StartTime}" Header="Auktionsstart" />
+                <DataGridTextColumn Binding="{Binding Path=EndTime}" Header="Auktionsende" />
+                <DataGridTextColumn Binding="{Binding Path=Seller}" Header="Verk{\a}ufer" />
+                <DataGridTextColumn Binding="{Binding Path=Buyer}" Header="K{\a}ufer" />
+                <DataGridTextColumn Binding="{Binding Path=Open, Converter={StaticResource booleanToStatusTextConverter}}" Header="Status" />
+                <DataGridTemplateColumn Header="Bild">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=Picture}" Width="64" Height="64" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Artikel verkaufen" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="162" Click="BtnSellClick"/>
+
+    </Grid>
+</Window>
+\end{lstlisting}
+
+\begin{lstlisting}[ language=Java, caption=BidView.xaml, style=JavaStyle]
+<Window x:Class="Fhnw.Dnead.Auction.WpfClient.Views.BidView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bieten" Height="176" Width="300">
+   
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="10"  Name="btnCancel" VerticalAlignment="Bottom" Width="75" IsCancel="True" />
+            <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="10"  Name="btnOk" VerticalAlignment="Bottom" Width="75" Command="{Binding OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+            <TextBlock Height="23" HorizontalAlignment="Right" Margin="10" Text="Gebot" VerticalAlignment="Bottom" />
+            <TextBox Height="24" Margin="10" HorizontalAlignment="Stretch" Width="100" Name="txtBid" VerticalAlignment="Bottom" Text="{Binding Path=Bid}"/>
+        </StackPanel>
+        <Viewbox Margin="10" >
+            <Image Name="imgPicture" Source="{Binding Path=Item.Picture}">
+
+            </Image>
+        </Viewbox>
+    </DockPanel>
+</Window>
+\end{lstlisting}
 
 % Inhalt Ende 
 \end{document} 
