@@ -37,7 +37,13 @@ escapeinside={(*@}{@*)},
 commentstyle=\color{greencomments},
 keywordstyle=\color{bluekeywords}\bfseries,
 stringstyle=\color{redstrings},
-basicstyle=\ttfamily
+basicstyle=\ttfamily,
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,
+  basicstyle=\footnotesize\ttfamily
 }
 \begin{document}
 \maketitle
@@ -954,4 +960,411 @@ otherwise is returned to queue
 
 
 \end{description}
+
+\chapter{Code}
+
+\begin{lstlisting}[caption=Converter WPF]
+using System;
+using System.Windows.Data;
+
+namespace Fhnw.Dnead.Auction.WpfClient.Converter
+{
+    /// <summary>
+    /// Converts booleans to Offen/Abgeschlossen strings
+    /// </summary>
+    [ValueConversion(typeof(bool), typeof(String))]
+    public class BooleanToStatusTextConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo 
+culture)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            return (bool)value?"Offen":"Abgeschlossen";
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo 
+culture)
+        {
+            // we don't intend this to ever be called
+            return null;
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= Using a viewModel in View]
+ using System.Windows;
+using Fhnw.Dnead.Auction.WpfClient.ViewModels;
+
+namespace Fhnw.Dnead.Auction.WpfClient.Views
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+       MainViewModel viewModel = new MainViewModel();
+
+       public MainWindow()
+        {
+
+            InitializeComponent();
+
+            DataContext = viewModel;
+
+        }
+
+        private void btnSell_Click(object sender, RoutedEventArgs e)
+        {
+            var sellView = new SellView();
+
+            if (sellView.ShowDialog().Value == true)
+            {
+                viewModel.Auctions.Add(sellView.ViewModel.NewAuctionItem);
+            }
+        }
+
+        private void btnBuy_Click(object sender, RoutedEventArgs e)
+        {
+            Auction selectedAuction = (Auction)dgAuctionItems.SelectedItem
+            var bidView = new BidView(selectedAuction);
+            bidView.ShowDialog();
+        }
+    }
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=ViewModel/Business logic]
+ using System;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Input;
+using Fhnw.Dnead.Auction.WpfClient.Commands;
+
+namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
+{
+    public class SellViewModel : ViewModelBase
+    {
+        private DelegateCommand<Window> _okCommand;
+
+       public Auction NewAuctionItem { get; private set; }
+
+        public string Name { get; set; }
+        public string StartPrice { get; set; }
+        public string EndTime { get; set; }
+        private string picturePath ;
+        public string PicturePath
+        {
+            get { return picturePath;  }
+            set{
+            
+                picturePath = value;
+                    if (picturePath != null && (picturePath.Length > 0))
+                {
+                                    #region 2. Extension: Image Preview - Enables preview of the selected image
+                Picture = ReadPicture(picturePath);
+                #endregion
+                }
+            }
+        }
+
+        private byte[] picture;
+
+        public byte[] Picture { get { return picture; }
+            set { picture = value;
+                NotifyPropertyChanged("Picture");
+            }
+        }
+
+        public SellViewModel()
+        {
+            EndTime = DateTime.Now.AddDays(7).ToString(CultureInfo.CurrentCulture);
+            Name = "?";
+            StartPrice = "1";
+            
+        }
+        /// <summary>
+        /// Validates if all data are correctly provided for the new auction
+        /// Creates a new NewAuctionItem property instance.
+        /// </summary>
+        /// <returns>true if OK, else false</returns>
+        public bool ValidateEntries()
+        {
+            if (Name.Length == 0) return false;
+            int startPrice;
+            if (!int.TryParse(StartPrice, out startPrice)) return false;
+            if (startPrice == 0) return false;
+            DateTime endTime;
+            if (!DateTime.TryParse(EndTime, out endTime)) return false;
+            if (endTime < DateTime.Now) return false;
+            if (Picture != null && PicturePath.Length > 0 && !File.Exists(PicturePath)) return false;
+
+            // create new auction item and initialize it
+            NewAuctionItem = new Auction
+            {
+                Name = this.Name,
+                StartPrice = startPrice,
+                Seller = Environment.UserName,
+                EndTime = endTime,
+                Open = true,
+                StartTime = DateTime.Now,
+
+                #region 1. Extension: Read picture
+                // optional: read picture
+                Picture = ReadPicture(PicturePath)
+                #endregion
+            };
+            return true;
+        }
+
+        #region 1. Extension: Read picture (2. part)
+        /// <summary>
+        /// Helper method to read the selected picture
+        /// </summary>
+        /// <returns></returns>
+        private byte[] ReadPicture(string filename)
+        {
+            // basic check if there is a filename
+            if (string.IsNullOrEmpty(filename))
+            {
+                return null;
+            }
+
+            using (FileStream fileStream = new FileStream(filename, FileMode.Open))
+            {
+                using (BinaryReader reader = new BinaryReader(fileStream))
+                {
+                    byte[] buffer = new byte[fileStream.Length];
+                    reader.Read(buffer, 0, Convert.ToInt32(fileStream.Length));
+                    return buffer;
+                }
+            }
+        }
+        #endregion
+
+        public ICommand OkCommand
+        {
+            get
+            {
+                if (_okCommand == null)
+                {
+                    _okCommand = new DelegateCommand<Window>(DoOk, CanDoOk);
+                }
+                return _okCommand;
+            }
+        }
+
+        void DoOk(Window win)
+        {
+            if (ValidateEntries() == true)
+            {
+                win.DialogResult = true;
+            }
+        }
+
+        bool CanDoOk(Window win) { return true; }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=sample edmx file,language=xml]
+ <?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AuctionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" 
+xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" 
+xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AuctionModelStoreContainer">
+          <EntitySet Name="Auction" EntityType="AuctionModel.Store.Auction" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Auction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="StartPrice" Type="int" Nullable="false" />
+          <Property Name="Bid" Type="int" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Seller" Type="nchar" Nullable="false" MaxLength="50" />
+          <Property Name="Buyer" Type="nchar" MaxLength="50" />
+          <Property Name="Open" Type="bit" Nullable="false" />
+          <Property Name="Picture" Type="image" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuctionModel" Alias="Self" p1:UseStrongSpatialTypes="false" 
+xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
+xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
+xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AuctionContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Auctions" EntityType="AuctionModel.Auction" />
+        </EntityContainer>
+        <EntityType Name="Auction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="StartPrice" Type="Int32" Nullable="false" />
+          <Property Name="Bid" Type="Int32" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Seller" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="Buyer" Type="String" MaxLength="50" Unicode="true" FixedLength="true" />
+          <Property Name="Open" Type="Boolean" Nullable="false" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AuctionModelStoreContainer" 
+CdmEntityContainer="AuctionContext">
+          <EntitySetMapping Name="Auctions">
+            <EntityTypeMapping TypeName="AuctionModel.Auction">
+              <MappingFragment StoreEntitySet="Auction">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartPrice" ColumnName="StartPrice" />
+                <ScalarProperty Name="Bid" ColumnName="Bid" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Seller" ColumnName="Seller" />
+                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
+                <ScalarProperty Name="Open" ColumnName="Open" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Unity Example]
+ IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType<MyBaseService, CustomerService>();
+MyBaseService myServiceInstance = myContainer.Resolve<MyBaseService>();
+
+
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType(typeof(MyBaseService), typeof(CustomerService));
+MyBaseService myServiceInstance = (MyBaseService)myContainer.Resolve(typeof(MyBaseService));
+
+// Create container and register types
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType<IMyService, DataService>("Data");
+myContainer.RegisterType<IMyService, LoggingService>("Logging");
+
+// Retrieve an instance of each type
+IMyService myDataService = myContainer.Resolve<IMyService>("Data");
+IMyService myLoggingService = myContainer.Resolve<IMyService>("Logging");
+
+// Create container and register types using a name for each one
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType<IMyService, DefaultService>();
+myContainer.RegisterType<IMyService, DataService>("Data");
+myContainer.RegisterType<IMyService, LoggingService>("Logging");
+
+// Retrieve a list of non-default types registered for IMyService
+// List will only contain the types DataService and LoggingService
+IEnumerable<IMyService> serviceList = myContainer.ResolveAll<IMyService>();
+
+
+// Create container and register types using a name for each one
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType(typeof(MyServiceBase), typeof(DefaultService));
+myContainer.RegisterType(typeof(MyServiceBase), typeof(DataService), "Data");
+myContainer.RegisterType(typeof(MyServiceBase), typeof(LoggingService), "Logging");
+
+// Retrieve a list of non-default types registered for MyServiceBase
+// List will only contain the types DataService and LoggingService
+foreach(Object mapping in myContainer.ResolveAll(typeof(MyServiceBase)))
+{
+  MyServiceBase myService = (MyServiceBase)mapping;
+}
+
+
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Constructor Injection]
+public class MyObject
+{
+  public MyObject(MyDependentClass myInstance)
+  { 
+    // work with the dependent instance
+    myInstance.SomeProperty = "SomeValue";
+    // or assign it to a class-level variable
+  }
+} 
+
+
+IUnityContainer uContainer = new UnityContainer();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+IUnityContainer uContainer = new UnityContainer()
+   .RegisterType<IMyInterface, FirstObject>()
+   .RegisterType<MyBaseClass, SecondObject>();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+
+
+//Multiple-Constructor Injection Using an Attribute
+
+public class MyObject
+{
+
+  public MyObject(SomeOtherClass myObjA)
+  { 
+    ...
+  }
+
+  [InjectionConstructor]
+  public MyObject(MyDependentClass myObjB)
+  { 
+    ...
+  }
+
+} 
+IUnityContainer uContainer = new UnityContainer();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+  
+
+
+
+\end{lstlisting}
+
+
 \end{document}
