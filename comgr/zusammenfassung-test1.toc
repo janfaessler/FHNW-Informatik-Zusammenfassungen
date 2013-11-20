@@ -89,3 +89,17 @@
 \contentsline {subsection}{\numberline {10.2}Blendfunktion}{24}
 \contentsline {subsection}{\numberline {10.3}Additive Blending}{24}
 \contentsline {subsection}{\numberline {10.4}Zeichnungsreihenfolge}{24}
+\contentsline {section}{\numberline {11}Deferred Shading}{25}
+\contentsline {subsection}{\numberline {11.1}Prinzip}{25}
+\contentsline {subsection}{\numberline {11.2}Vorteile}{25}
+\contentsline {subsection}{\numberline {11.3}Nachteile}{25}
+\contentsline {subsection}{\numberline {11.4}OpenGL}{25}
+\contentsline {subsubsection}{\numberline {11.4.1}Framebuffer objects}{25}
+\contentsline {subsubsection}{\numberline {11.4.2}FBO relevant API}{25}
+\contentsline {section}{\numberline {12}Shadow Rendering}{26}
+\contentsline {subsection}{\numberline {12.1}Einleitung}{26}
+\contentsline {subsection}{\numberline {12.2}Shadow Volumes}{26}
+\contentsline {subsection}{\numberline {12.3}Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.4}Variance Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.5}Cascade Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.6}Vergleich}{27}

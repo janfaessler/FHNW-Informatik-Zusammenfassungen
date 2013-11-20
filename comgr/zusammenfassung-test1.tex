@@ -706,5 +706,76 @@ Zeichnungsreihenfolge ist entscheidend:
 \begin{center}
 	\includegraphics[scale=0.2]{alphablending_order.png}
 \end{center}
+
+\newpage
+\section{Deferred Shading}
+Methode um in dreidimensionalen Szenen die Geometrieverarbeitung von der Lichtberechnung zu trennen. So sind mehrere hundert dynamische Lichter in geometrisch komplexen Szenen möglich
+\subsection{Prinzip}
+In klassischen Rendermethoden wird anhand von Tiefe (depth), Ausrichtung (normals) und Farbe (albedo) eines Eckpunktes und Farbe, Intensität und Einfallswinkel einer Lichtquelle der finale Farbwert für den jeweiligen Eckpunkt ermittelt. Für jede Lichtquelle muss so jeder Eckpunkt zur Berechnung herangezogen werden. \\
+Beim Deferred Shading werden nun Tiefenwert, Ausrichtung und Farbe eines jeden Pixels in jeweils eine Textur in Bildschirmgröße gespeichert. Dies wird durch sogenannte Multiple Render Targets ermöglicht, wobei in jedem Rendervorgang in verschiedene Framebufferobjekte (die Texturen) gleichzeitig geschrieben werden kann. Statt dass nun jeder Eckpunkt mit den Lichtquellen verrechnet werden muss, muss nur noch jedes Pixel (in dem alle benötigten Werte – depth, normals und albedo – vorhanden sind) bei der Berechnung berücksichtigt werden. \\
+Die Berechnung selbst erfolgt durch klassische Beleuchtungsmodelle, wie zum Beispiel nach Phong. Dabei kann zusätzlich noch Glanzlicht mit einbezogen werden. Technisch geschieht das im Pixel- bzw. Fragment-Shader am Ende der Grafikpipeline.
+\subsection{Vorteile}
+\begin{itemize}
+	\item Independent of scene complexity \& dynamics.
+	\item Fully in hardware.
+	\item Well suited for deferred renderers (as normal map is typically available).
+\end{itemize}
+\subsection{Nachteile}
+\begin{itemize}
+	\item Noise removal requires extra blur stage.
+	\item Limited range of sample sphere makes approach relatively local and view dependent.
+\end{itemize}
+\subsection{OpenGL}
+\subsubsection{Framebuffer objects}
+\begin{itemize}
+	\item FBOs encapsulate a framebuffer that can be used for off- screen rendering.
+	\item Each FBO has a given dimension, and a number of attachments (n color buffers, depth buffer, and stencil buffer).
+	\item Attached buffers are either textures or renderbuffers. 
+	\item FBOs can be enabled for writing and reading.
+\end{itemize}
+\subsubsection{FBO relevant API}
+\begin{itemize}
+	\item glGenFramebuffer, glDeleteFramebuffers
+	\item glBindFramebuffer - Bind for reading or writing
+	\item glClearBuffer
+	\item glFramebufferTexture2D - Attach texture to FBO
+	\item glCheckFramebufferStatus -  Important: Check if FBO is correctly set up
+\end{itemize}
+
+\newpage
+\section{Shadow Rendering}
+\subsection{Einleitung}
+\begin{itemize}
+	\item Schatten für Echtzeitanwendungen werden normalerweise mit Deferred Rendering implementiert
+	\item In einem ersten Schritt werden Informationen gesammelt die dann für die Beleuchtungsberechnung in einem zweiten Schritt verwendet werden
+\end{itemize}
+\subsection{Shadow Volumes}
+\begin{itemize}
+	\item Jedes Polygon erzeugt ein Schattenvolumen (Pyramidenstumpf)
+	\item Für jeden Sichtstrahl wird ein Zähler inkrementiert beim Eintreten in das Schattenvolumen und dekrementiert beim Austreten.
+	\item Zonen mit einem Zähler == 0 sind beleuchtet, != 0 sind im Schatten
+	\item Wie kann man das erreichen ohne Ray-Tracing?
+\end{itemize}
+\subsection{Shadow Maps}
+\begin{itemize}
+	\item Rendern der Szene um Farb- und Tiefenwerte zu erhalten
+	\item Rendern der Shadow Volumes
+	\item Kombinieren der Resultate
+\end{itemize}
+\subsection{Variance Shadow Maps}
+\begin{itemize}
+	\item Multisampling vermeiden, Filter der GPU verwenden
+	\item Wie bei PCF interessiert uns der Zusammenhang der Shadow Map Werte einer Region und des Tiefenwerte des Fragments das wir zeichnen
+	\item Statt Shadow Map Anteile (PCF) betrachtet man die Verteilung der Tiefenwerte
+	\item Die Tschebyscheff-Ungleichung liefert uns die Wahrscheinlichkeit bei bekanntem Mittelwert und Varianz ob ein Wert  auftritt oder nicht
+\end{itemize}
+\subsection{Cascade Shadow Maps}
+\begin{center}
+	\includegraphics[scale=0.2]{cascade_shadow_maps.png}
+\end{center}
+\subsection{Vergleich}
+\begin{center}
+	\includegraphics[scale=0.4]{shadow_rendering.png}
+\end{center}
 % Inhalt Ende 
 \end{document} 
