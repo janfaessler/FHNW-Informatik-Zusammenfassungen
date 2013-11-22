@@ -1,0 +1,105 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Mathematische Grundlagen}{1}
+\contentsline {subsection}{\numberline {1.1}Euklidischer Raum}{1}
+\contentsline {subsection}{\numberline {1.2}Vektoren}{1}
+\contentsline {subsubsection}{\numberline {1.2.1}Addition}{1}
+\contentsline {subsubsection}{\numberline {1.2.2}skalare Multiplikation}{1}
+\contentsline {subsubsection}{\numberline {1.2.3}Betrag}{2}
+\contentsline {subsubsection}{\numberline {1.2.4}Einheitsvektor}{2}
+\contentsline {subsubsection}{\numberline {1.2.5}Skalarprodukt}{2}
+\contentsline {subsubsection}{\numberline {1.2.6}Vektorprodukt}{2}
+\contentsline {subsection}{\numberline {1.3}Matrizen}{2}
+\contentsline {subsubsection}{\numberline {1.3.1}Einheitsmatrix}{2}
+\contentsline {subsubsection}{\numberline {1.3.2}Transponierte Matrix}{3}
+\contentsline {subsubsection}{\numberline {1.3.3}Multiplikation}{3}
+\contentsline {subsection}{\numberline {1.4}Homogene Koordinaten}{3}
+\contentsline {subsection}{\numberline {1.5}2D-Transformationen}{3}
+\contentsline {subsubsection}{\numberline {1.5.1}Translation}{3}
+\contentsline {subsubsection}{\numberline {1.5.2}Skalierung}{3}
+\contentsline {subsubsection}{\numberline {1.5.3}Scherung}{4}
+\contentsline {subsubsection}{\numberline {1.5.4}Rotation}{4}
+\contentsline {subsection}{\numberline {1.6}3D-Transformationen}{4}
+\contentsline {subsubsection}{\numberline {1.6.1}Translation}{4}
+\contentsline {subsubsection}{\numberline {1.6.2}Skalierung}{4}
+\contentsline {subsubsection}{\numberline {1.6.3}Scherung}{4}
+\contentsline {subsubsection}{\numberline {1.6.4}Rotation}{4}
+\contentsline {subsubsection}{\numberline {1.6.5}Rotation um eine beliebige Achse}{5}
+\contentsline {section}{\numberline {2}Rasteralgorithmen}{6}
+\contentsline {subsection}{\numberline {2.1}Inkrementeller Algorithmus}{6}
+\contentsline {subsection}{\numberline {2.2}Bresenham Algorithmus}{6}
+\contentsline {section}{\numberline {3}Perspektive: 3D auf 2D}{7}
+\contentsline {subsection}{\numberline {3.1}Kategorien der Projektionen}{7}
+\contentsline {subsection}{\numberline {3.2}Parallelprojektion}{7}
+\contentsline {subsection}{\numberline {3.3}Zentralprojektion}{7}
+\contentsline {subsection}{\numberline {3.4}Projektionstransformation}{7}
+\contentsline {subsubsection}{\numberline {3.4.1}Schritt 1: Scherung H in eine orthogonale Sichtpyramide}{8}
+\contentsline {subsubsection}{\numberline {3.4.2}Skalierung S in ein kanonisches Sichtvolumen}{8}
+\contentsline {subsubsection}{\numberline {3.4.3}Projektive Transformation N in einen Sichtw\IeC {\"u}rfel }{8}
+\contentsline {subsubsection}{\numberline {3.4.4}Perspektivische Division}{8}
+\contentsline {subsection}{\numberline {3.5}Viewport-Transformation}{9}
+\contentsline {section}{\numberline {4}OpenGL}{10}
+\contentsline {subsection}{\numberline {4.1}Was ist OpenGL?}{10}
+\contentsline {subsection}{\numberline {4.2}Rendering Pipeline}{10}
+\contentsline {subsection}{\numberline {4.3}Shaders}{10}
+\contentsline {section}{\numberline {5}3D-Objekte}{12}
+\contentsline {subsection}{\numberline {5.1}OpenGL-Primitive}{12}
+\contentsline {subsection}{\numberline {5.2}DrawElements}{12}
+\contentsline {subsection}{\numberline {5.3}Vertex Buffer Object}{12}
+\contentsline {section}{\numberline {6}Shader}{14}
+\contentsline {subsection}{\numberline {6.1}Shader Programme kompilieren, linken \& aktivieren}{14}
+\contentsline {subsection}{\numberline {6.2}einfache Datentypen}{14}
+\contentsline {subsection}{\numberline {6.3}Typen Qualifizierer}{14}
+\contentsline {subsubsection}{\numberline {6.3.1}const}{14}
+\contentsline {subsubsection}{\numberline {6.3.2}attribute}{14}
+\contentsline {subsubsection}{\numberline {6.3.3}uniform}{15}
+\contentsline {subsubsection}{\numberline {6.3.4}varying}{15}
+\contentsline {section}{\numberline {7}Beleuchtung}{16}
+\contentsline {subsection}{\numberline {7.1}Lichtquellen}{16}
+\contentsline {subsection}{\numberline {7.2}Reflexion}{16}
+\contentsline {subsubsection}{\numberline {7.2.1}Ambiente Reflexion}{16}
+\contentsline {subsubsection}{\numberline {7.2.2}Diffuse Reflexion}{16}
+\contentsline {subsubsection}{\numberline {7.2.3}Spiegelnde Reflexion}{16}
+\contentsline {subsubsection}{\numberline {7.2.4}Lichtabnahme (Attenuierung)}{17}
+\contentsline {subsection}{\numberline {7.3}Beleuchtungsmodell nach Phong}{17}
+\contentsline {subsection}{\numberline {7.4}Erweiterungen im alten OpenGL Beleuchtungsmodell}{17}
+\contentsline {subsection}{\numberline {7.5}Blinn's Halbvektor}{17}
+\contentsline {subsection}{\numberline {7.6}Schattierung}{17}
+\contentsline {subsubsection}{\numberline {7.6.1}Berechnung pro Dreieck: Flat Shading}{17}
+\contentsline {subsubsection}{\numberline {7.6.2}Berechnung pro Vertex: Gouraud Shading}{18}
+\contentsline {subsubsection}{\numberline {7.6.3}Berechnung pro Pixel: Phong Shading}{18}
+\contentsline {section}{\numberline {8}Texture Mapping}{19}
+\contentsline {subsection}{\numberline {8.1}verschiedene Texturen}{19}
+\contentsline {subsection}{\numberline {8.2}Textur Abbildung}{19}
+\contentsline {subsection}{\numberline {8.3}Texturfilterung}{19}
+\contentsline {subsubsection}{\numberline {8.3.1}Point Sampling}{19}
+\contentsline {subsubsection}{\numberline {8.3.2}Bilineare Filterung}{19}
+\contentsline {subsubsection}{\numberline {8.3.3}MIP-Mapping}{20}
+\contentsline {subsubsection}{\numberline {8.3.4}Trilineare Filterung}{20}
+\contentsline {subsubsection}{\numberline {8.3.5}Anisotropische Filterung}{20}
+\contentsline {subsection}{\numberline {8.4}Bump Mapping}{21}
+\contentsline {subsubsection}{\numberline {8.4.1}Heightfield Bump Mapping}{21}
+\contentsline {subsubsection}{\numberline {8.4.2}Normalmap Bump Mapping}{21}
+\contentsline {subsubsection}{\numberline {8.4.3}Parallax Mapping}{21}
+\contentsline {subsection}{\numberline {8.5}Texture Mapping in OpenGL}{22}
+\contentsline {section}{\numberline {9}Frustum Culling}{23}
+\contentsline {subsection}{\numberline {9.1}Ziel}{23}
+\contentsline {subsection}{\numberline {9.2}H\IeC {\"u}llvolumen}{23}
+\contentsline {section}{\numberline {10}Alpha Blending}{24}
+\contentsline {subsection}{\numberline {10.1}Einleitung}{24}
+\contentsline {subsection}{\numberline {10.2}Blendfunktion}{24}
+\contentsline {subsection}{\numberline {10.3}Additive Blending}{24}
+\contentsline {subsection}{\numberline {10.4}Zeichnungsreihenfolge}{24}
+\contentsline {section}{\numberline {11}Deferred Shading}{25}
+\contentsline {subsection}{\numberline {11.1}Prinzip}{25}
+\contentsline {subsection}{\numberline {11.2}Vorteile}{25}
+\contentsline {subsection}{\numberline {11.3}Nachteile}{25}
+\contentsline {subsection}{\numberline {11.4}OpenGL}{25}
+\contentsline {subsubsection}{\numberline {11.4.1}Framebuffer objects}{25}
+\contentsline {subsubsection}{\numberline {11.4.2}FBO relevant API}{25}
+\contentsline {section}{\numberline {12}Shadow Rendering}{26}
+\contentsline {subsection}{\numberline {12.1}Einleitung}{26}
+\contentsline {subsection}{\numberline {12.2}Shadow Volumes}{26}
+\contentsline {subsection}{\numberline {12.3}Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.4}Variance Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.5}Cascade Shadow Maps}{26}
+\contentsline {subsection}{\numberline {12.6}Vergleich}{27}

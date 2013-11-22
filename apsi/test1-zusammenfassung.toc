@@ -1,0 +1,64 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}SSL}{1}
+\contentsline {subsection}{\numberline {1.1}The secure channel}{1}
+\contentsline {subsection}{\numberline {1.2}security in the TCP/IP stack}{1}
+\contentsline {subsection}{\numberline {1.3}diffrent parts of the SSL protocoll}{1}
+\contentsline {subsection}{\numberline {1.4}SSL(TLS) over TCP/IP}{1}
+\contentsline {subsection}{\numberline {1.5}SSL characteristics}{1}
+\contentsline {subsection}{\numberline {1.6}SSL protocols}{2}
+\contentsline {subsection}{\numberline {1.7}Handshake protocol}{2}
+\contentsline {subsubsection}{\numberline {1.7.1}SSL protocol basic handshake features}{2}
+\contentsline {subsubsection}{\numberline {1.7.2}protocol gritty details}{3}
+\contentsline {subsubsection}{\numberline {1.7.3}generating Master Secret}{4}
+\contentsline {subsubsection}{\numberline {1.7.4}generating key material}{4}
+\contentsline {subsection}{\numberline {1.8}Record protocol}{4}
+\contentsline {subsubsection}{\numberline {1.8.1}Ablauf}{4}
+\contentsline {subsubsection}{\numberline {1.8.2}Format}{5}
+\contentsline {subsection}{\numberline {1.9}SSL remaining protocols}{5}
+\contentsline {subsection}{\numberline {1.10}TLS enhancements}{5}
+\contentsline {subsection}{\numberline {1.11}Words to the wise about applied cryptography}{5}
+\contentsline {subsection}{\numberline {1.12}SSL and Java applications}{6}
+\contentsline {subsubsection}{\numberline {1.12.1}Java SSL software (JSSE)}{6}
+\contentsline {subsubsection}{\numberline {1.12.2}X.509 certificate}{6}
+\contentsline {subsubsection}{\numberline {1.12.3}Webserver verification of client's certificate}{7}
+\contentsline {subsubsection}{\numberline {1.12.4}Client verification of server's certificate}{7}
+\contentsline {subsubsection}{\numberline {1.12.5}Certification path}{7}
+\contentsline {subsubsection}{\numberline {1.12.6}A secure Webserver in Java}{7}
+\contentsline {section}{\numberline {2}Validation}{9}
+\contentsline {subsection}{\numberline {2.1}Fundamental principles}{9}
+\contentsline {subsection}{\numberline {2.2}Points of attack}{9}
+\contentsline {subsection}{\numberline {2.3}SQL injection}{9}
+\contentsline {subsubsection}{\numberline {2.3.1}login attack}{9}
+\contentsline {subsubsection}{\numberline {2.3.2}some more tricks}{10}
+\contentsline {subsubsection}{\numberline {2.3.3}Defenses against SQL injection}{10}
+\contentsline {subsubsection}{\numberline {2.3.4}SQL statements\IeC {\textquoteright } sanitation}{10}
+\contentsline {subsection}{\numberline {2.4}Cross-Site Scripting}{10}
+\contentsline {subsubsection}{\numberline {2.4.1}XSS}{10}
+\contentsline {subsubsection}{\numberline {2.4.2}Defenses against XSS}{11}
+\contentsline {subsection}{\numberline {2.5}Regular Expressions}{12}
+\contentsline {subsubsection}{\numberline {2.5.1}Cheet Sheet}{12}
+\contentsline {subsubsection}{\numberline {2.5.2}Example}{13}
+\contentsline {section}{\numberline {3}Robust Programming}{15}
+\contentsline {subsection}{\numberline {3.1}Einleitung}{15}
+\contentsline {subsection}{\numberline {3.2}Specific tools enhance robustness}{15}
+\contentsline {subsection}{\numberline {3.3}Types and visibility in Java}{15}
+\contentsline {subsection}{\numberline {3.4}Code inheritance breaks encapsulation}{15}
+\contentsline {subsubsection}{\numberline {3.4.1}Instead inheritance use composition}{16}
+\contentsline {subsubsection}{\numberline {3.4.2}Instead inheritance use Template/Hooks}{16}
+\contentsline {subsection}{\numberline {3.5}Annotations}{16}
+\contentsline {subsubsection}{\numberline {3.5.1}General remarks}{16}
+\contentsline {subsubsection}{\numberline {3.5.2}Why are annotations so important?}{16}
+\contentsline {subsubsection}{\numberline {3.5.3}Overview}{17}
+\contentsline {subsection}{\numberline {3.6}exception handling}{18}
+\contentsline {subsubsection}{\numberline {3.6.1}Ideal fault-tolerant software components}{18}
+\contentsline {subsubsection}{\numberline {3.6.2}Requirements for exception handling}{18}
+\contentsline {subsubsection}{\numberline {3.6.3}Classes of exceptions}{18}
+\contentsline {subsection}{\numberline {3.7}Assertions}{18}
+\contentsline {subsubsection}{\numberline {3.7.1}Decleration}{18}
+\contentsline {subsubsection}{\numberline {3.7.2}enable/disable}{19}
+\contentsline {section}{\numberline {4}Action Control}{20}
+\contentsline {subsection}{\numberline {4.1}Goal}{20}
+\contentsline {subsection}{\numberline {4.2}AC policies}{20}
+\contentsline {subsubsection}{\numberline {4.2.1}Discretionary AC}{20}
+\contentsline {subsubsection}{\numberline {4.2.2}Mandatory AC}{20}
+\contentsline {subsection}{\numberline {4.3}Bell-LaPadula (BLP) policy model }{21}

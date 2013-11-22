@@ -1,0 +1,86 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Overview}{1}
+\contentsline {subsection}{\numberline {1.1}.Net Development Frameworks}{1}
+\contentsline {subsubsection}{\numberline {1.1.1}CLR, CIL}{1}
+\contentsline {subsubsection}{\numberline {1.1.2}Strategie, Nutzen und Trends}{1}
+\contentsline {subsubsection}{\numberline {1.1.3}Managed und Unmanaged}{1}
+\contentsline {subsubsection}{\numberline {1.1.4}Sicherheit}{2}
+\contentsline {subsubsection}{\numberline {1.1.5}Attribute}{2}
+\contentsline {subsection}{\numberline {1.2}.NET Compact Framework}{2}
+\contentsline {subsection}{\numberline {1.3}SharePoint}{2}
+\contentsline {subsection}{\numberline {1.4}BizTalk}{3}
+\contentsline {subsection}{\numberline {1.5}Summary}{4}
+\contentsline {section}{\numberline {2}Team Foundation Server}{5}
+\contentsline {subsection}{\numberline {2.1}Features}{5}
+\contentsline {subsubsection}{\numberline {2.1.1}Versionskontrolle}{5}
+\contentsline {subsubsection}{\numberline {2.1.2}TFS-Build}{5}
+\contentsline {subsubsection}{\numberline {2.1.3}Reports}{5}
+\contentsline {subsubsection}{\numberline {2.1.4}Benutzerverwaltung}{6}
+\contentsline {subsubsection}{\numberline {2.1.5}Serveraufbau}{6}
+\contentsline {section}{\numberline {3}Windows Presentation Foundation}{7}
+\contentsline {subsection}{\numberline {3.1}Leistungsmerkmale}{7}
+\contentsline {subsubsection}{\numberline {3.1.1}Eigenschaften und Ereignisse}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}Grafik}{7}
+\contentsline {subsubsection}{\numberline {3.1.3}Interoperabilit\IeC {\"a}t}{8}
+\contentsline {subsubsection}{\numberline {3.1.4}Medien und Dokumente}{8}
+\contentsline {subsubsection}{\numberline {3.1.5}Text und Typographie}{8}
+\contentsline {subsubsection}{\numberline {3.1.6}Benutzerschnittstelle}{8}
+\contentsline {subsection}{\numberline {3.2}XAML}{8}
+\contentsline {subsubsection}{\numberline {3.2.1}Declarative Programming}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}XAML vs. Code}{9}
+\contentsline {subsubsection}{\numberline {3.2.3}Namespaces}{9}
+\contentsline {subsubsection}{\numberline {3.2.4}Property Element Syntax}{9}
+\contentsline {subsection}{\numberline {3.3}XAML compilation}{10}
+\contentsline {subsection}{\numberline {3.4}XAML Layout}{10}
+\contentsline {subsubsection}{\numberline {3.4.1}Panels}{10}
+\contentsline {subsubsection}{\numberline {3.4.2}Attached Properties}{10}
+\contentsline {subsubsection}{\numberline {3.4.3}Margin, Padding und Alignment}{10}
+\contentsline {subsubsection}{\numberline {3.4.4}Transformation}{11}
+\contentsline {subsection}{\numberline {3.5}Data Binding}{11}
+\contentsline {subsubsection}{\numberline {3.5.1}DataContext}{12}
+\contentsline {subsubsection}{\numberline {3.5.2}UpdateTrigger \& Binding Direction}{12}
+\contentsline {subsubsection}{\numberline {3.5.3}INotifyPropertyChanged}{12}
+\contentsline {subsubsection}{\numberline {3.5.4}ObservableCollection}{12}
+\contentsline {subsection}{\numberline {3.6}Value Converter}{13}
+\contentsline {section}{\numberline {4}Model-View-ViewModel}{14}
+\contentsline {subsection}{\numberline {4.1}Einleitung}{14}
+\contentsline {subsubsection}{\numberline {4.1.1}Pattern}{14}
+\contentsline {subsubsection}{\numberline {4.1.2}User Interaction}{14}
+\contentsline {subsubsection}{\numberline {4.1.3}Overview}{14}
+\contentsline {subsection}{\numberline {4.2}Commands}{15}
+\contentsline {section}{\numberline {5}Entity Framework}{16}
+\contentsline {subsection}{\numberline {5.1}ADO.NET}{16}
+\contentsline {subsubsection}{\numberline {5.1.1}Architecture}{16}
+\contentsline {subsubsection}{\numberline {5.1.2}Data Provider}{16}
+\contentsline {subsection}{\numberline {5.2}Considerations}{16}
+\contentsline {subsubsection}{\numberline {5.2.1}Sample}{16}
+\contentsline {subsubsection}{\numberline {5.2.2}the base for ORMs}{17}
+\contentsline {subsection}{\numberline {5.3}Entity Framework}{17}
+\contentsline {subsubsection}{\numberline {5.3.1}Overview}{17}
+\contentsline {subsubsection}{\numberline {5.3.2}Architecture}{18}
+\contentsline {subsubsection}{\numberline {5.3.3}Entity Data Model}{18}
+\contentsline {subsubsection}{\numberline {5.3.4}Benefits \& Considerations}{18}
+\contentsline {section}{\numberline {6}Dependency Injection}{20}
+\contentsline {subsection}{\numberline {6.1}DI and IoC}{20}
+\contentsline {subsubsection}{\numberline {6.1.1}Overview}{20}
+\contentsline {subsubsection}{\numberline {6.1.2}Implications}{20}
+\contentsline {subsubsection}{\numberline {6.1.3}Advantages of IoC}{20}
+\contentsline {subsection}{\numberline {6.2}The DI Container Unity}{20}
+\contentsline {subsubsection}{\numberline {6.2.1}Options and Types}{20}
+\contentsline {subsubsection}{\numberline {6.2.2}Options}{21}
+\contentsline {subsubsection}{\numberline {6.2.3}Pros \& Cons}{21}
+\contentsline {subsubsection}{\numberline {6.2.4}Services of IoC Container}{21}
+\contentsline {section}{\numberline {7}ASP.NET MVC}{22}
+\contentsline {subsection}{\numberline {7.1}Controllers}{22}
+\contentsline {subsubsection}{\numberline {7.1.1}Actions}{22}
+\contentsline {subsubsection}{\numberline {7.1.2}Ajax}{22}
+\contentsline {subsubsection}{\numberline {7.1.3}View typed}{23}
+\contentsline {subsubsection}{\numberline {7.1.4}View untyped}{23}
+\contentsline {subsection}{\numberline {7.2}Views}{23}
+\contentsline {subsubsection}{\numberline {7.2.1}Code Blocks }{23}
+\contentsline {subsubsection}{\numberline {7.2.2}HtmlHelpers}{24}
+\contentsline {subsubsection}{\numberline {7.2.3}Layout Pages}{24}
+\contentsline {subsection}{\numberline {7.3}Routes}{24}
+\contentsline {subsection}{\numberline {7.4}Model}{24}
+\contentsline {section}{\numberline {8}Codebeispiele}{25}
+\contentsline {subsection}{\numberline {8.1}WPF XAML}{25}

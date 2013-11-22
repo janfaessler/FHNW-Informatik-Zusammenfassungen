@@ -27,3 +27,5 @@
 *.mtc0
 *.tex.bak
 *.DS_Store
+
+*.synctex
