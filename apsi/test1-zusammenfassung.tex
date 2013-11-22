@@ -514,6 +514,97 @@ Contra: Loss of flexibility.
 \end{itemize}
 \begin{center}
 	\includegraphics[scale=0.4]{bell-la_padula.png}
+	\includegraphics[scale=0.4]{bell-la_padula_eg.png}
 \end{center}
+\subsection{Other policy concepts}
+\begin{itemize}
+	\item Seperation of Duty: Check is only valid if signed y two authorized people
+	\item Chinese Wall Policy
+\end{itemize}
+\subsection{Role-based access control (RBAC)}
+Permissions are associated with:
+\begin{itemize}
+	\item roles  (= set of actions and responsibilities, associated with particular 
+working activities)
+	\item users/subjects
+\end{itemize}
+\subsection{ACM/ACL}
+\begin{center}
+	\includegraphics[scale=0.4]{acm.png}
+\end{center}
+Right to copy: Two rights in stead of one Read (r / rc).
+Attenuation of privilege: You can't give away rights you do not possess. This principle is usually ignored for the owner of an object.
+\textbf{Summary}
+\begin{itemize}
+	\item Access control matrix is the simplest abstraction  mechanism for representing a   protection state within a system.
+	\item Transitions alter the protection state.
+	\item Six primitive operations alter the AC matrix: Transitions can be expressed as commands composed of these operations and, possibly , conditions. 
+\end{itemize}
+\subsection{AC list (ACL)}
+In large systems the matrix will be big and sparse.  Therefore in practice, the matrix is implemented as a list.
+\begin{center}
+	\includegraphics[scale=0.4]{acm_to_acl.png}
+\end{center}
+\subsection{Capability list}
+\begin{center}
+	\includegraphics[scale=0.4]{capability_list.png}
+\end{center}
+\textbf{Delegation:} Process can pass capability at run time
+\textbf{Revocation:}
+\begin{itemize}
+	\item Only if OS knows which data is associated with a capability. If capability is used for multiple resources, one has to revoke all or none.
+	\item Indirection: capability points to pointer to resource (C=>P=>R, set P=0 to revoke)
+\end{itemize}
+\subsection{Android}
+\subsubsection{Basic Components of an Application}
+\begin{itemize}
+	\item Activity: User Interface
+	\item Service: Java daemon
+	\item Content provider: Store and share data
+	\item Broadcast receiver: For messages from other applications
+	\item Intents: asynchronous mesaging system
+\end{itemize}
+\subsubsection{Security steps}
+\begin{itemize}
+	\item Signing with certificates
+	\item Application sandbox: runs with its UID and own Dalvik virtual machine
+	\item Linux and ACL
+	\begin{itemize}
+		\item Each application executes with its own user identity as Linux process
+		\item Android middleware has a reference monitor that mediates the establishment of inter-component communication (ICC)
+	\end{itemize}
+\end{itemize}
+\subsubsection{Android manifest file}
+Focus on Inter Component Communication (ICC) whose security policy is defined in the Android manifest file. Allows developers to specify a high-level ACL to access the components:
+\begin{itemize}
+	\item Each component can be assigned an access permission label
+	\item Each application requests a list of permission labels
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.4]{AndroidManifest.png}
+\end{center}
+\begin{itemize}
+	\item Components can be public or private (exported attribute). It specifies whether the activity can be launched by components of other applications. Default value is not reliable, set it always explicitly.
+	\item If the manifest does not specify an access permission, any component in any application can access it. Components without access permissions should be exceptional cases, and possible inputs must be carefully analysed (consider splitting components). 
+	\item If no permission label is set on a broadcast, any unprivileged application can read it. Always specify an access permission on Intent broadcasts (unless you specify the destination explicitly). 
+\end{itemize}
+\lstinputlisting[caption=Intent broadcast permissions,style=JavaStyle]{intent_broadcast_ex.java}
+Android content provider permissions
+\begin{itemize}
+	\item seperate "read and "write"
+	\item URI permissions to specify which data subsets of the parent content provider permission can be granted for
+	\item Always define separate read and write permissions. Use URI permissions to delegate right to other components.
+\end{itemize}
+\includegraphics[scale=0.4]{content_prov_perm.png}
+\begin{itemize}
+	\item The application developer can add reference monitor hooks
+	\item Use checkCallingPermission() to mediate "administrative" operations. Alternatively, create separate Services.
+\end{itemize}
+\includegraphics[scale=0.4]{service_hooks.png}
+\textbf{Permission categories}: normal, dangerous, signature, signatureOrSystem
+\begin{itemize}
+	\item Use signature permissions for dangerous permissions. Otherwise and always include informative descriptions
+\end{itemize}
+\includegraphics[scale=0.4]{perm_categ.png}
 % Inhalt Ende 
 \end{document} 
