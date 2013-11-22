@@ -1,0 +1,18 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Spring Configuration}{2}
+\contentsline {section}{\numberline {2}Java Persistence API (JPA)}{2}
+\contentsline {subsection}{\numberline {2.1}General Info}{2}
+\contentsline {subsection}{\numberline {2.2}Entity Annotations}{2}
+\contentsline {subsubsection}{\numberline {2.2.1}Primary Keys: Generation}{3}
+\contentsline {subsubsection}{\numberline {2.2.2}Associations}{3}
+\contentsline {subsubsection}{\numberline {2.2.3}Examples}{5}
+\contentsline {subsection}{\numberline {2.3}Entity Manager}{6}
+\contentsline {subsubsection}{\numberline {2.3.1}Queries}{7}
+\contentsline {subsection}{\numberline {2.4}Transactions}{7}
+\contentsline {subsection}{\numberline {2.5}Data Transfer Object}{7}
+\contentsline {subsubsection}{\numberline {2.5.1}Service Method (Dozer)}{7}
+\contentsline {subsubsection}{\numberline {2.5.2}Con}{8}
+\contentsline {subsubsection}{\numberline {2.5.3}Pro}{8}
+\contentsline {section}{\numberline {3}Spring Remoting}{8}
+\contentsline {subsection}{\numberline {3.1}Pr\IeC {\"u}fung}{8}
+\contentsline {section}{\numberline {4}Anhang}{8}
