@@ -62,3 +62,32 @@
 \contentsline {subsubsection}{\numberline {4.2.1}Discretionary AC}{20}
 \contentsline {subsubsection}{\numberline {4.2.2}Mandatory AC}{20}
 \contentsline {subsection}{\numberline {4.3}Bell-LaPadula (BLP) policy model }{21}
+\contentsline {subsection}{\numberline {4.4}Other policy concepts}{21}
+\contentsline {subsection}{\numberline {4.5}Role-based access control (RBAC)}{21}
+\contentsline {subsection}{\numberline {4.6}ACM/ACL}{21}
+\contentsline {subsection}{\numberline {4.7}AC list (ACL)}{22}
+\contentsline {subsection}{\numberline {4.8}Capability list}{22}
+\contentsline {subsection}{\numberline {4.9}Android}{23}
+\contentsline {subsubsection}{\numberline {4.9.1}Basic Components of an Application}{23}
+\contentsline {subsubsection}{\numberline {4.9.2}Security steps}{23}
+\contentsline {subsubsection}{\numberline {4.9.3}Android manifest file}{23}
+\contentsline {section}{\numberline {5}JavaIdiocies}{25}
+\contentsline {subsection}{\numberline {5.1}Java Security Model}{25}
+\contentsline {subsection}{\numberline {5.2}Visibility modifiers}{25}
+\contentsline {subsubsection}{\numberline {5.2.1}Purpose}{25}
+\contentsline {subsubsection}{\numberline {5.2.2}Attention}{25}
+\contentsline {subsection}{\numberline {5.3}Protecting packages}{25}
+\contentsline {subsubsection}{\numberline {5.3.1}Sealed JAR archives}{25}
+\contentsline {subsubsection}{\numberline {5.3.2}Signing JAR archives}{26}
+\contentsline {subsubsection}{\numberline {5.3.3}Join packages via security policy PAP}{26}
+\contentsline {subsection}{\numberline {5.4}Inner classes}{26}
+\contentsline {subsection}{\numberline {5.5}Common Java Antipatterns}{26}
+\contentsline {subsubsection}{\numberline {5.5.1}Assuming objects are immutable}{26}
+\contentsline {subsection}{\numberline {5.6}Basing security checks on untrusted sources}{27}
+\contentsline {subsection}{\numberline {5.7}False inheritance relationship}{27}
+\contentsline {subsection}{\numberline {5.8}Ignoring changes to super classes}{27}
+\contentsline {subsection}{\numberline {5.9}Neglecting to validate inputs}{27}
+\contentsline {subsection}{\numberline {5.10}Misusing public static variables}{27}
+\contentsline {subsection}{\numberline {5.11}Believing a constructor exception destroys the object}{28}
+\contentsline {subsection}{\numberline {5.12}TOC2TOU - Time Of Check To Time Of Use}{28}
+\contentsline {subsection}{\numberline {5.13}Twelve (very conservative) guidelines for writing safer Java}{28}

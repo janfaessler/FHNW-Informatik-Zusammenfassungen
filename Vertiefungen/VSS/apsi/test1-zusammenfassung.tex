@@ -606,5 +606,96 @@ Android content provider permissions
 	\item Use signature permissions for dangerous permissions. Otherwise and always include informative descriptions
 \end{itemize}
 \includegraphics[scale=0.4]{perm_categ.png}
+
+\newpage
+\section{JavaIdiocies}
+\subsection{Java Security Model}
+\includegraphics[scale=0.4]{java_sec_model.png}
+\subsection{Visibility modifiers}
+(default, private, protected, public)
+\subsubsection{Purpose}
+\begin{itemize}
+	\item Information hiding
+	\item Compartmentalization of program's components (things you should know (public) and things you can safely ignore(private))
+\end{itemize}
+\subsubsection{Attention}
+\begin{itemize}
+	\item Java allows increasing the visibility of a member in subclasses
+	\item protected is unsafe:  subclassing and a class can claim to have the same package.
+\end{itemize}
+\subsection{Protecting packages}
+\subsubsection{Sealed JAR archives}
+Add header in the manifest. 
+All classes in a package must be found in the same JAR file.
+\subsubsection{Signing JAR archives}
+Sending point:
+jarsigner -keystore x -signedJar sCount.jar Count.jar signFiles\\ 
+keytool -export -keystore susanstore -alias signFiles -file SusanJones.cer\\
+Receiving end:\\
+\lstinputlisting[style=JavaStyle]{signing_jar_end.java}
+\subsubsection{Join packages via security policy PAP}
+Can insert in the java.security file:\\
+package.definition=com.ibneco.securepackage\\
+Attention: no class loaders from Sun support this at present
+\subsection{Inner classes}
+Inner classes are not understood by JVM:\\
+\includegraphics[scale=0.4]{inner_classes_jvm.png}\\
+Other classes belonging to the same package can call the access function and tamper the private data member.
+\subsection{Common Java Antipatterns}
+\subsubsection{Assuming objects are immutable}
+Object[] signers;\\
+public Object[] getSigners(){return signers;}\\
+Problem: We quickly forget that mutable input and output objects can be modified by the caller application.\\
+Solution: Make a copy of mutable I/O parameters.
+\subsection{Basing security checks on untrusted sources}
+*Signature* (final java.io.File f) { ... f.getPath() ... }\\
+Problem: Do not forget that security checks can be always fooled if they are based on information that attackers can control!
+\begin{itemize}
+	\item You can not trust libraries
+	\item non-final classes/methods can be sub classed
+	\item mutable types can be modified
+\end{itemize}
+Solution: Make copys of inputs or make a copy of the source of the input. Never invoke doPrivileged() with caller-provided inputs.
+\subsection{False inheritance relationship}
+Problem: class Stack<E> extends Vector<E>. Stack is not a Vector but all Methods that can be applied to a Vector can now applied to the Stack.
+\subsection{Ignoring changes to super classes}
+Problem: Changes to a super class may affect its sub classes which leads to unwanted behaviour or misuse of inherited methods.\\
+Solution: Subclass only when the inheritance model is well-specified and well-understood. Monitor changes to super classes.
+\subsection{Neglecting to validate inputs}
+Problems: Invalidated inputs can be out-of-bounds values, escape characters, can affect processing of requests or delegating them to sub-components (SQL). Additional issues when calling native methods.\\
+Solution: Validate all inputs
+\begin{itemize}
+	\item Check for escape characters
+	\item Check for out-of-bounds values
+	\item Check for malformed requests
+	\item Regex API can help validate String inputs
+	\item Wrap native methods in Java language wrapper to validate inputs
+	\item Make all natives method private
+\end{itemize}
+\subsection{Misusing public static variables}
+Problem: Static variables can be modified or misused as a communication channel globally across a Java runtime environment.\\
+Solution: Reduce the scope of static fields and define acces methods (with securityManagerCheck();). Treat public static fields primarly as constants (final).
+\lstinputlisting[caption=Possible implementation of securityManagerCheck(),style=JavaStyle]{securityManagerCheck.java}
+\subsection{Believing a constructor exception destroys the object}
+Problem: If the constructor throws an exception, a reference on it still exists on the uninitialized object in the heap. Java 1.7 destroys automatically objects whose constructor has thrown an exception.\\
+Solution: Make the class final if possible. If the finalize method can be overridden, ensure that partially initialized instances are unusable (initialized-flag).
+\subsection{TOC2TOU - Time Of Check To Time Of Use}
+Example: Check for a file-permission is done at the opening but never ever checked again, even if privileged actions are done. That is typical for Unix systems.\\
+Solution: Always check the user's permission while executing a privileged operation.
+\subsection{Twelve (very conservative) guidelines for writing safer Java}
+\begin{itemize}
+	\item Do not depend on implicit initialization
+	\item Limit access to entities
+	\item Make everything final
+	\item Do not depend on package scope
+	\item Do not use inner classes
+	\item Avoid signing your code. Code that isn't signed will run without special privileges i.e. less likely to do damage!
+	\item If you must sign, put all signed code in one jar archive
+	\item Make classes uncloneable. Java's object cloning mechanism allows an attacker to build new instances of the classes you define, without using any of your constructors.
+	\item Make classes unserializeable
+	\item Make classes undeserializeable
+	\item Do not compare classes by name
+	\item Do not store secrets
+\end{itemize}
 % Inhalt Ende 
 \end{document} 
