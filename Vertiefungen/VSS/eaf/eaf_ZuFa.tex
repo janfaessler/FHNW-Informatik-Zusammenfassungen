@@ -100,6 +100,7 @@
  
 \title{ %Titel
 EAF Zusammenfassung}
+\author{Jonas Schwammberger, Fabio Oesch \& Jan Fässler}
 
  \begin{document}
  \maketitle
@@ -110,10 +111,64 @@ EAF Zusammenfassung}
  \pagestyle{documentstyle}
  \tableofcontents
  \pagebreak
-\section{Spring Configuration}
+\section{Spring Framework}
+\begin{center}
+	\includegraphics[scale=0.3]{spring.png}
+\end{center}
+\subsection{Grundsätze}
+\begin{description}
+	\item[Dependency Injection] \hfill \\
+		Den Objekten werden die benötigten Ressourcen und Objekte zugewiesen. Sie müssen sie nicht selbst suchen.
+	\item[Aspekt-orientierte Programmierung] \hfill \\
+		Dadurch kann man vor allem technische Aspekte wie Transaktionen oder Sicherheit isolieren und den eigentlichen Code davon frei halten.
+	\item[Templates] \hfill \\
+		Vorlagen dienen dazu, die Arbeit mit einigen Programmierschnittstellen (APIs) zu vereinfachen, indem Ressourcen automatisch aufgeräumt sowie Fehlersituationen einheitlich behandelt werden.
+\end{description}
+\subsubsection{Dependency Injection}
+Dieses Paradigma beschreibt die Arbeitsweise von Frameworks: eine Funktion eines Anwendungsprogramms wird bei einer Standardbibliothek registriert und von dieser zu einem späteren Zeitpunkt aufgerufen. Statt dass die Anwendung den Kontrollfluss steuert und lediglich Standardfunktionen benutzt, wird die Steuerung der Ausführung bestimmter Unterprogramme an das Framework abgegeben.
+\subsubsection{Aspect-oriented}
+AOP ist ein Programmierparadigma, um verschiedene logische Aspekte einer Anwendung getrennt voneinander zu entwerfen, zu entwickeln und zu testen. Die getrennt entwickelten Aspekte werden dann zur endgültigen Anwendung zusammengefügt. In Enterprise Applikationen werden mit AOP vor allem System Services, wie Transaktion, Sicherheit, ... von der Business Logik entkoppelt, so dass sich der Programmierer beim Erstellen des Business Objekte vollkommen auf die Geschäftslogik und dadurch auf den eigentlichen Verwendungszweck der Applikation konzentrieren kann.
+\subsubsection{Container}
+Spring ist ein Container, d.h. er enthält und verwaltet den Lebenszyklus und die Konfiguration von Java-Objekten. Die Java-Objekte sind sogenannte POJOs (Plain-Old-Java- Objects). Der Spring Container kann schnell herunter- und hinaufgefahren werden. Das ermöglicht eine effiziente Entwicklung und einen gezielten Einsatz für Unit. Tests. Der Spring Container kann beispielsweise explizit für einen Unit-Test hochgefahren werden. Der Container kann problemlos im Java EE, Java SE und in Webapplikationen integriert werden. Auch setzt er keine spezielle Architektur voraus und benötigt keine umgebungsspezifischen Konfigurationsdateien. Spring wird einfach mit einer entsprechenden Applikation mitgeliefert.
+\subsection{Configuration}
+\begin{center}
+	\includegraphics[scale=0.4]{simpleSpringApp.png}
+\end{center}
+\subsubsection{XML Based}
+Vor/Nachteile:
+\begin{itemize}
+	\item[+] Keine Kompilation nach Konfigurationsänderung
+	\item[+] XML ist bekannt
+	\item[+] Tool unterstützung vorhanden
+	\item[+] Zentrales XML-File, dadurch abhängigkeiten gut ersichtlich
+	\item[-] Kann bei grossen Projekten unübersichtlich werden
+	\item[-] Implementation und Konfiguration sind von einander getrennt
+\end{itemize}
+\lstinputlisting[caption=SimpleSpringApp,style=JavaStyle]{simpleSpringApp.java}
+\lstinputlisting[caption=helloConfig.xml,style=JavaStyle]{simpleSpringApp.xml}
+\subsubsection{Annotation Based}
+Vor/Nachteile:
+\begin{itemize}
+	\item[+] Implementation und Konfiguration sind zusammen
+	\item[+] keine riesen XML
+	\item[-] Bei grossen Projekten ist es schwierig den Überblick zu behalten
+	\item[-] Der Java Quellcode muss zur Verfügung stehen
+\end{itemize}
+\lstinputlisting[caption=Annotation based,style=JavaStyle]{annotationSpringApp.java}
+\lstinputlisting[caption=helloConfig.xml,style=JavaStyle]{annotationSpringApp.xml}
+\subsubsection{Java Based}
+\begin{itemize}
+	\item[+] Implementation und Konfiguration sind zusammen
+	\item[+] Alles in Java, kein XML
+	\item[+] Gute Tool Unterstützung
+	\item[-] Konfigurationsänderungen führen zur Komplilation der Konfigurationsklasse
+\end{itemize}
+\lstinputlisting[caption=JavaConfig,style=JavaStyle]{javaSpringApp.java}
+
+\newpage
 \section{Java Persistence API (JPA)}
 \subsection{General Info}
-\includegraphics[scale=0.5]{jpa.png}
+\includegraphics[scale=0.5]{jpa.png}\\
 \Bold{JPA Components}
 \begin{itemize}
 \item EntityManager provides access to the objects (similar to a DAO)\\
@@ -324,6 +379,8 @@ $\bullet$ You are not catched by a Lazy Loading Exception\\
 $\bullet$ Forces you to think about the interface of the remote service façades\\
 $\bullet$ Information from multiple domain objects can be combined in one DTO
 \end{itemize}
+
+\newpage
 \section{Spring Remoting}
 \subsection{Prüfung}
 \begin{description}
