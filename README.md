@@ -1,5 +1,4 @@
 # FHNW Informatik Zusammenfassungen
-=======================================
 Hier sind alle möglichen Zusammenfassungen aus dem Informatik Bachelor Studium an der FHNW Brugg/Windisch
 
 ## Fehler? Unvollständig?
