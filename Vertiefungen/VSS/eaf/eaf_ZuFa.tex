@@ -389,6 +389,58 @@ $\bullet$ Information from multiple domain objects can be combined in one DTO
 \item[Domain Model:] Entities
 \item[Database Access:] Wird von JPA Implementation übernommen
 \end{description}
+
+\newpage
+\section{Transaktionen}
+\subsection{Transaction Strategies}
+
+\subsection{Transaction Propagation}
+
+\newpage
+\section{Aspect-Oriented Programming}
+Aspekte sind \"Filter\", welche vor und nach dem Aufruf anderer Methoden eingehängt wird.
+
+Transaction Propagation Strategie wird im Movierental ebenfalls über einen Aspect implementiert.\newline
+\includegraphics[scale=1.0]{aopterminology.png}\\
+\begin{itemize}
+	\item Advice: Action taken at a particular joinpoint.
+	\item Join Point: Point during the execution of execution.
+	\item Pointcut: A set of joinpoints specifying where advice should be applied.
+	\item Aspect: A modularization of a cross-cutting concern. The combination of advice and pointcut.
+	\item Weaving: Assembling aspects into advised objects.
+\end{itemize}
+
+\subsection{Implementsmöglichkeiten}
+\begin{itemize}
+	\item Compile time – modify the source code during compilation
+	\item Run time – byte injection, benutzt Library cglib
+	\item Run time – using the JDK 1.3 Dynamic Proxy. Instead of getting an object instance, the application receives a proxy object.The proxy implements the same interface.
+\end{itemize}
+Spring benutzt Proxies.
+
+\subsection{AOP in Spring}
+\lstinputlisting[label=Enable annotated Aspects,caption=Enable annotated Aspects]{enableAspects.xml}
+\lstinputlisting[label=Enable annotated Aspects,caption=Enable annotated Aspects]{aopExample.java}
+
+\Bold{Types of Advice}, wie dieser Aspect eine Methode umhüllt.
+\begin{itemize}
+	\item Before: Vor einem Methodenaufruf
+	\item After: Nach einem Methodenaufruf, auch wenn eine Exception geworfen wurde.
+	\item After Returning: Nach einem Methodenaufruf normal zurückkommt.
+	\item Around: Alles
+\end{itemize}
+
+\Bold{Pointcut}, wann eine Methode umhüllt wird. Execution ist das wichtigste (arbeitet mit einem Pattern Matching im Methodennamen).
+\begin{itemize}
+	\item execution - for matching method execution join points, this is the primary pointcut designator you will use when working with Spring AOP
+	\item within - limits matching to join points within certain types (simply the execution of a method declared within a matching type when using Spring AOP)
+	\item this - limits matching to join points (the execution of methods when using Spring AOP) where the bean reference (Spring AOP proxy) is an instance of the given type
+	\item target - limits matching to join points (the execution of methods when using Spring AOP) where the target object (application object being proxied) is an instance of the given type
+	\item args - limits matching to join points (the execution of methods when using Spring AOP) where the arguments are instances of the given types
+	\item 
+\end{itemize}
+
+
 \section{Anhang}
 \lstinputlisting[label=Persistence Unit,caption=Persistence Unit]{persistance.java}
 \lstinputlisting[label=Query Examples,caption=Query Examples]{queries.java}

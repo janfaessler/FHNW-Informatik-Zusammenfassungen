@@ -1,0 +1,4 @@
+<!-- enabling @AspectJ --> 
+<aop:aspectj-autoproxy/> 
+<!-- annotated aspect as regular java class --> 
+<bean id="tracing" class="aop.TracingAnnotations"/>

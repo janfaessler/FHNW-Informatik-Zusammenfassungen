@@ -23,4 +23,10 @@
 \contentsline {subsubsection}{\numberline {2.5.3}Pro}{12}
 \contentsline {section}{\numberline {3}Spring Remoting}{13}
 \contentsline {subsection}{\numberline {3.1}Pr\IeC {\"u}fung}{13}
-\contentsline {section}{\numberline {4}Anhang}{13}
+\contentsline {section}{\numberline {4}Transaktionen}{14}
+\contentsline {subsection}{\numberline {4.1}Transaction Strategies}{14}
+\contentsline {subsection}{\numberline {4.2}Transaction Propagation}{14}
+\contentsline {section}{\numberline {5}Aspect-Oriented Programming}{15}
+\contentsline {subsection}{\numberline {5.1}Implementsm\IeC {\"o}glichkeiten}{15}
+\contentsline {subsection}{\numberline {5.2}AOP in Spring}{15}
+\contentsline {section}{\numberline {6}Anhang}{16}
