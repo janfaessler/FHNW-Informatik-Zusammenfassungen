@@ -392,9 +392,30 @@ $\bullet$ Information from multiple domain objects can be combined in one DTO
 
 \newpage
 \section{Transaktionen}
-\subsection{Transaction Strategies}
+\subsection{Transaction Isolation Strategies}
+\begin{itemize}
+	\item Read Uncommitted: Geringste Isolation, höchste Performance, es können Dirty Reads, Non-repeatable Reads und Phantom Reads auftreten
+	\item Read Committed: Es gibt keine Dirty Reads mehr, aber es gibt weiterhin Non-repeatable Reads und Phantom Reads
+	\item Repeatable Read:Keine Dirty Reads und keine Non-repeatable Reads, aber weiterhin Phantom Reads
+	\item Serializable: Keine Dirty Reads, keine Non-repeatable Reads und keine Phantom Reads, höchste Isolation, geringste Performance
+\end{itemize}
+Default Isolation level????
 
-\subsection{Transaction Propagation}
+\subsection{Transaction PropagationStartegies}
+n einigen Transaktionsmanagern kann die "Transaction Propagation" pro Methode unterschiedlich eingestellt werden. Es sind nicht immer alle Einstellungen möglich. Die unterschiedlichen Einstellungen zur Transaction Propagation bewirken beim Eintritt in die jeweilige Methode Folgendes:
+
+\begin{itemize}
+	\item Required: Falls bereits vorher eine Transaktion begonnen wurde, wird sie fortgesetzt. Falls noch keine Transaktion aktiv ist, wird eine neue gestartet.
+	\item RequiresNew: Unabhängig davon, ob bereits eine Transaktion aktiv ist, wird immer eine neue eigene Transaktion gestartet. Diese Transaktion benötigt ein eigenes Commit bzw. Rollback. Ein Commit bzw. Rollback in dieser neuen Transaktion führt nicht zum Commit bzw. Rollback in einer eventuell vorher begonnenen Transaktion. RequiresNew bedingt keine 'Nested Transaction', sondern ein 'Suspend' der laufenden Transaktion und Einschieben der Untertransaktion. Unabhängig vom Ergebnis dieser Untertransaktion wird anschließend mit der übergeordneten Transaktion fortgefahren.
+	\item Supports: Falls bereits eine Transaktion aktiv ist, wird sie verwendet. Ansonsten wird keine Transaktion verwendet.
+	\item NotSupported: Die Methode wird immer ohne Transaktion ausgeführt, auch wenn bereits vorher eine Transaktion gestartet wurde.
+	\item Mandatory: Es muss bereits eine Transaktion aktiv sein. Sonst wird eine Exception geworfen.
+	\item Never: Es darf keine Transaktion aktiv sein. Sonst wird eine Exception geworfen.
+	\item Nested: Eine geschachtelte Transaktion wird gestartet. Diese Option wird meistens nicht unterstützt.
+\end{itemize}
+
+WICHTIG: In JPA müssen die meisten Manipulationen an den Entitäten eines PersistenceContext von einer JPA-Transaktion eingehüllt werden. Das betrifft praktisch alle "schreibenden" EntityManager-Methoden (persist, flush, remove, merge, lock und refresh).
+
 
 \newpage
 \section{Aspect-Oriented Programming}
@@ -410,7 +431,7 @@ Transaction Propagation Strategie wird im Movierental ebenfalls über einen Aspe
 	\item Weaving: Assembling aspects into advised objects.
 \end{itemize}
 
-\subsection{Implementsmöglichkeiten}
+\subsection{Implementationssmöglichkeiten}
 \begin{itemize}
 	\item Compile time – modify the source code during compilation
 	\item Run time – byte injection, benutzt Library cglib
@@ -437,7 +458,24 @@ Spring benutzt Proxies.
 	\item this - limits matching to join points (the execution of methods when using Spring AOP) where the bean reference (Spring AOP proxy) is an instance of the given type
 	\item target - limits matching to join points (the execution of methods when using Spring AOP) where the target object (application object being proxied) is an instance of the given type
 	\item args - limits matching to join points (the execution of methods when using Spring AOP) where the arguments are instances of the given types
-	\item 
+	\item @target - limits matching to join points (the execution of methods when using Spring AOP) where the class of the executing object has an annotation of the given type
+	\item @args - limits matching to join points (the execution of methods when using Spring AOP) where the runtime type of the actual arguments passed have annotations of the given type(s)
+	\item @within - limits matching to join points within types that have the given annotation (the execution of methods declared in types with the given annotation when using Spring AOP)
+	\item @annotation- limits matching to join points where the subject of the join point (method being executed in Spring AOP) has the given annotation
+\end{itemize}
+
+\subsection{Pros}
+\begin{itemize}
+	\item $...$reduces the amount of codes
+	\item  $...$enhancing maintainability
+	\item $...$flexible; aspects, point-cuts and advices can be defined either at source code level, or in XML metadata.
+\end{itemize}
+
+\subsection{Cons}
+\begin{itemize}
+	 \item AOP suffers from a lack of tool support and widespread education
+	 \item easy to introduce unpredictable behavior
+	 \item There are security concerns with code weaving, and hence some AOP implementation does not support bytecode weaving, including Spring (Spring only support runtime weaving).
 \end{itemize}
 
 
