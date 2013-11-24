@@ -416,6 +416,8 @@ n einigen Transaktionsmanagern kann die "Transaction Propagation" pro Methode un
 
 WICHTIG: In JPA müssen die meisten Manipulationen an den Entitäten eines PersistenceContext von einer JPA-Transaktion eingehüllt werden. Das betrifft praktisch alle "schreibenden" EntityManager-Methoden (persist, flush, remove, merge, lock und refresh).
 
+\subsubsection{@Transactional Annotation}
+Bei allen Methoden (kann auch auf Klassen angewendet werden. Hat die selbe Semantik wie alle Methoden annotiert), welche mit @Transactional annotiert sind, wird automatisch neue Transaktionen gestartet und transaction.commit() aufgerufen. mit @Transactional(propagation = propagation.STRATEGY) Kann einer der obigen Strategien für diese Methode konfiguriert werden.
 
 \newpage
 \section{Aspect-Oriented Programming}
