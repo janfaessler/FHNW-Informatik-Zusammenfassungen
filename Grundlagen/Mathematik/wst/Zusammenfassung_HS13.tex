@@ -137,20 +137,16 @@ Ein Experiment, welches beliebig oft wiederholt werden Mögliche Ergebnisse eine
 \begin{definition}[Ergebnis]
 Aussage, die bei der Durchführung des Experimentes entweder wahr oder falsch ist, je nachdem welches Ergebnis eingetreten ist.
 \end{definition}
+
+\begin{definition}[Wahrscheinlichkeit]
+Mass für die relative Häufigkeit mit der das Ereignis bei wiederholten Durchführung des Experimentes eintritt.
+\end{definition}
+
 Jedes Ereignis kann als Teilmenge von Ergebnissen interpretiert werden. \\
 \\
 Die einzelnen Ergebnisse selber können ebenfalls als Ereignisse betrachtet werden: \\
 Zu einem Ergebnis $\omega \in \Omega$ gehört das sogenannte \textbf{Elementarereignis} $E = \{\Omega\}$.
 
-\textbf{Beispiel:  Wurf eines Würfels} \\
-Ergebnismenge: $\Omega=\{1,2,3,4,5,6\}$ \\
-Beispiel für ein Ereignis:\\
-E : \"{}Die augenzahl ist gerade\"{} \\
-$E=\{2,4,6\}$ \\
-
-\begin{definition}[Wahrscheinlichkeit]
-Mass für die relative Häufigkeit mit der das Ereignis bei wiederholten Durchführung des Experimentes eintritt.
-\end{definition}
 
 \subsection{Laplace-Experiment}
 \begin{definition}[Laplace-Experiment]
@@ -161,15 +157,7 @@ Die Wahrscheinlichkeit eines Ereignisses $E \subseteq\Omega$ wird für diesen Fa
 \begin{equation}
   P(E)=\frac{|E|}{|\Omega|}=\frac{\text{Anzahl günstige Ergebnisse}}{\text{Anzahl aller Ergebnisse}}
 \end{equation}
-Dieses mathematische Modell für ein Laplace-Experiment, bestehend aus der Menge $\Omega$ mit der Funktion $P$ nennt man einen \textbf{Laplace-Raum}. Dieses $P$ heisst auch \textbf{Gleichverteilung}. \\
-\\
-\textbf{Beispiel:  Wurf eines Würfels} \\
-Wie gross ist die Wahrscheinlichkeit für eineAugenzahl grösser als 4? \\
-$E=\{5,6\}$ \\
-\\
-$P(E)=\frac{2}{6}=\frac{1}{3} \approx 33.33\%$ \\
-\\
-Im Laplace-Raum sind für Mengen $M$ die Anzahl der Elemente, $|M|$, zu bestimmen. Die \textbf{Kombinatorik} liefert systematische Abzählverfahren.
+Dieses mathematische Modell für ein Laplace-Experiment, bestehend aus der Menge $\Omega$ mit der Funktion $P$ nennt man einen \textbf{Laplace-Raum}. Dieses $P$ heisst auch \textbf{Gleichverteilung}.
 
 \subsection{Kombinatorik}
 
@@ -329,21 +317,21 @@ Es sei $X : \Omega \rightarrow X$ eine Zufallsvariable, wobei $X \subset \RN$ ei
 Dan gilt $V(X) = E(X^2)-E(X)^2$.
 \end{satz}
 
-\newpage
-\section{diskrete Verteilung}
+\subsection{diskrete Verteilung}
 \begin{tabular}{l l}
 	Alle Ereignisse gleich wahrscheinlich & Laplace \\
 	\\
-	Treffer$(WK p)$, nciht Treffer & $B(p)$ \\
+	Treffer$(WK$ $p)$, nicht Treffer & $B(p)$ \\
 	\\
-	Anzahl Treffer $(WK p)$ in $n$ unabhängigen Versuchen & $Bin(n,p)$ \\
+	Anzahl Treffer $(WK$ $p)$ in $n$ unabhängigen Versuchen & $Bin(n,p)$ \\
 	\\
-	Versuche bis erster Treffer $(WK p)$ in unabhängigen Versuchen & $Geo(p)$ \\
+	Versuche bis erster Treffer $(WK$ $p)$ in unabhängigen Versuchen & $Geo(p)$ \\
 	\\
 	Verteilung für seltene Ereignisse mit im Schnitt $\lambda$ Ereignissen pro Zeit/Ort-Einheit & $Poi(\lambda)$ \\
 \end{tabular}
 
-\subsection{Bernoulli-Verteilung}
+\subsubsection{Bernoulli-Verteilung}
+Treffer$(WK$ $p)$, nicht Treffer
 \begin{definition}[Bernoulli-Verteilung]
 Die Verteilung einer Zufallsvariable X, die nur zwei Werte 0 (Treffer) oder 1 (kein Treffer) annehmen kann, wobei $p$ die Wahrscheinlichkeit für 1 bezeichent, heisst Bernoulli-verteilt mit Parameter $p$. \\
 \end{definition}
@@ -353,7 +341,8 @@ Dichte von $X : f(0) = 1 - p$, $f(1) = p$ \\
 $E(X) = p$ \\
 $V(X) = p*(1-p)$ \\
 
-\subsection{Binomial-Verteilung}
+\subsubsection{Binomial-Verteilung}
+Anzahl Treffer $(WK$ $p)$ in $n$ unabhängigen Versuchen
 \begin{definition}[Binomial-Verteilung]
 Die Verteilung einer Zufallsvariable X, die die Anzahl an Treffern bei der $n$-maligen unabhängigen Durchführung eines Experiments mit zwei Ausgängen, Treffer oder kein Treffer, wobei $p$ die Wahrscheinlichkeit für Treffer bezeichnet, heisst Binomial-verteilt mit Parametern $n,p$. \\
 \end{definition}
@@ -362,8 +351,11 @@ Dichte von $X : f(k) = \binom{n}{k} * p^k * (1-p)^{n-k}$, $k=0,1,$ \dots, $n$ \\
 \\
 $E(X) = n*p$ \\
 $V(X) = n*p*(1-p)$ \\
+\\
+\textbf{Matlab}: binocdf($k$, $n$, $p$)
 
-\subsection{geometirsche-Verteilung}
+\subsubsection{geometirsche-Verteilung}
+Versuche bis erster Treffer $(WK$ $p)$ in unabhängigen Versuchen 
 \begin{definition}[geometischre-Verteilung]
 Die Verteilung einer Zufallsvariable X, die die Anzahl der Versuche bis zum ersten Treffer bei der $n$-maligen unabhängigen Durchführung eines Experiments mit zwei Ausgängen, Treffer und kein Treffer, wobei $p$ die Wahrscheinlichkeit für Treffer bezeichnet, heisst geometrisch verteilt mit Parameter $p$. \\
 \end{definition}
@@ -374,7 +366,8 @@ $X=k$ bedeutet, dass die ersten $k-1$ Versuche jeweils kein Treffer waren. und d
 $E(X) = \frac{1}{p}$ \\
 $V(X) = \frac{1-p}{p^2}$ \\
 
-\subsection{Poisson-Verteilung}
+\subsubsection{Poisson-Verteilung}
+Verteilung für seltene Ereignisse mit im Schnitt $\lambda$ Ereignissen pro Zeit/Ort-Einheit
 \begin{definition}[Poisson-Verteilung]
 Die Poisson-Verteilung kommt bei Zufallsvariablen zum Einsatz, welche die Anzahl Ereignisse einer bestimmten Art in einer Zeit- und/oder Ort-Intervall beschreiben. Falls im Mittel $\lambda$-Ereignisse auftreten, dann ist X Poisson verteilt mit Parameter $\lambda$. \\
 \end{definition}
@@ -385,7 +378,7 @@ $X=k$ bedeutet, dass die ersten $k-1$ Versuche jeweils kein Treffer waren. und d
 $E(X) = \lambda$ \\
 $V(X) = \lambda$ \\
 
-\subsection{Eigenschaften}
+\subsubsection{Eigenschaften}
 \begin{satz}
 Es seien $X,Y$ Zufallsvariablen und $a,c \in \RN$.
 Dan gilt:
@@ -399,6 +392,210 @@ Dan gilt:
 	\item $E(g(X)) \neq g(E(X))$.
 \end{itemize}
 \end{satz}
+
+\newpage
+\section{stetige Verteilung}
+\subsection{stetige Zufallsvariablen}
+\begin{definition}[stetige Zufallsvariable]
+Eine stetige Zufallsvariable hat einen kontinuierlichn Wertebereich, bestehend aus einem Intervall oder ganz $\RN$.
+\end{definition}
+Die Wahrscheinlichkeit, dass eine stetige Zufallsvariable einen exakten Wert annimt ist 0. Sinnvoll sind Wahrscheinlichkeiten, dass X einen Wert in einem Intervall $[a,b]$ annimt. \\ \\
+Diese Wahrscheinlichkeiten werden durch die Dichte $f(x)$ der Zufallsvariablen beschrieben:
+\begin{equation}
+	P(a \leq X \leq b) = \int_a^b f(x) dx
+\end{equation}
+\begin{center}
+	\includegraphics[scale=0.3]{Integral-dichte.png}
+\end{center}
+Die Gesammtfläche unter der Dichtefunktion muss gleich 1 sein.
+\begin{equation}
+P(-\infty \leq X \leq \infty) = \int_{-\infty}^{\infty} f(x) dx=1
+\end{equation}
+\subsection{Verteilungsfunktion}
+\begin{equation}
+F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dx
+\end{equation}
+\subsubsection{Eigenschaften}
+\begin{align}
+P(a \leq X \leq b) = F(b)-F(a) \\
+\lim_{x \rightarrow - \infty} F(x) = 0 \\
+\lim_{x \rightarrow \infty} F(x) = 1 \\
+F'(X) f(x), \text{falls f stetig}
+\end{align}
+
+\subsection{Erwartungswert, Varianz, Standardabweichung}
+Erwartungswert von $X$:
+\begin{equation}
+E(x)=\int_{-\infty}^\infty x * f(x) dx
+\end{equation}
+Varianz von $X$:
+\begin{equation}
+V(x)=\int_{-\infty}^\infty (x - E(X))^2 * f(x) dx = E(X^2) - E(X)^2
+\end{equation}
+Standardabweichung von $X$:
+\begin{equation}
+\sigma(X) = \sqrt{V(X)}
+\end{equation}
+\subsection{Gleichverteilung}
+\begin{definition}[stetige Gleichverteilung]
+Die stetige Gleichverteilung auf dem Intervall$[s,t]$ ist gegeben durch die konstante Dichte $f(x)=\frac{1}{t-s}$ für $s \leq x \leq t$. 
+\end{definition}
+Schreibweise: $X \sim U[s,t]$ \\
+$E(x) = \frac{s + t}{2}$ \\
+$V(x) = \frac{1}{12}*(t-s)^2$
+
+\subsection{Normalverteilung}
+\subsubsection{Standardnormalverteilung}
+\begin{definition}[Standardnormalverteilung]
+Die Standardnormalverteilung ist gegeben durch die Dichte $\varphi(x) = \frac{1}{\sqrt{2\pi}}*e^{-\frac{x^2}{2}}$. Man nennt dies auch \textbf{Gauss'sche Glockenkurve}.
+\end{definition}
+Schreibweise: $X \sim N(0,1)$ \\
+$E(x) = 0$ \\
+$V(x) = 1$
+\begin{center}
+	\includegraphics[scale=0.4]{standardnormalverteilung.png}
+\end{center}
+Die Verteilungsfunktion wird mit $\Phi$ bezeichnet: $\Phi(x) = \int_{-\infty}^x \varphi(t) dt$.
+\subsubsection{Normalvertielung}
+\begin{definition}[Normalverteilung]
+Die Normalverteilung mit Parametern $\mu$ und $\sigma$ ist gegeben durch die Dichte $\varphi(x) = \frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{(x-\mu)^2}{2\sigma^2}}$.
+\end{definition}
+Schreibweise: $X \sim N(\mu,\sigma)$ \\
+$E(x) = \mu$ \\
+$V(x) = \sigma^2$
+Die allgemeine Normalverteilung entsteht, in dem die Gauss'sche Glockenkurve horizontal um die Strecke $\mu$ verschoben wird und um den Faktor $\sigma>0$  horizental gestreckt wird: $\sigma_{\mu,\sigma}(x)=\frac{1}{\sigma}\varphi(\frac{x - \mu}{\sigma})$
+\begin{center}
+	\includegraphics[scale=0.4]{normalvertielung.png}
+\end{center}
+Die Verteilungsfunktion wird mit $\Phi$ bezeichnet: $\Phi(x)_{\mu,\sigma} = \Phi(\frac{x-\mu}{\sigma})$.
+\subsubsection{Matlab}
+\begin{tabular}{l l}
+	Dichte & normpdf($x$, $\mu$, $\sigma$) \\
+	Verteilungsfunktion & normcdf($x$, $\mu$, $\sigma$) \\
+\end{tabular}
+
+\subsection{Quantil}
+\begin{definition}[Quantil]
+Gegeben sei ein $\alpha\in (0,1)$. Für welchen Wert $z_\alpha$ gilt $P(X \leq z_\alpha)=\alpha$? \\
+So ein $z_\alpha$ heisst $\alpha$-Quantil (oder Perzentil)
+\end{definition}
+\begin{center}
+	\includegraphics[scale=0.4]{quantil.png}
+\end{center}
+\subsubsection{Sigma-Regel}
+Für $x \sim N(\mu,\sigma)$ gilt: \\
+$P(\mid X - \mu \mid \leq \sigma) \approx 68.3\%$ : 1. Sigma-Regel \\
+$P(\mid X - \mu \mid \leq 2\sigma) \approx 95.5\%$ : 2. Sigma-Regel \\
+$P(\mid X - \mu \mid \leq 3\sigma) \approx 99.7\%$ : 3. Sigma-Regel
+\begin{center}
+	\includegraphics[scale=0.4]{sigma-regel.png}
+\end{center}
+
+\subsection{Exponentialverteilung}
+Die Exponentialverteilung beschreibt zufällige Lebensdauernvon Geräten oder Wartezeiten auf zufällige Ereignisse.
+\begin{definition}[Exponentialerteilung]
+Die Wahrscheinlichkeit dass X einen Wert grösser als t annimt, sinkt exponentiell: $P(X \geq t) = e^{-\lambda t}$, $(t \geq 0)$ \\
+Eine Zufallsvariable mit dieser Dichte heisst exponentiell verteilt mit Parameter $\lambda$.
+\end{definition}
+Schreibweise: $X \sim Exp(\lambda)$ \\
+$E(x) = \frac{1}{\lambda}$ \\
+$V(x) = \frac{1}{\lambda^2}$
+\begin{center}
+	\includegraphics[scale=0.3]{exponentialverteilung.png}
+\end{center}
+
+
+\newpage
+\section{Unabhängige Zufallsvariablen}
+\subsection{Unabhängigkeit von Zufallsvariablen}
+\begin{definition}[Unabhängige Zufallsvariablen]
+Eine unendliche Folge von Zufallsvariablen heisst \textbf{(stochastisch) unabhängig}, wenn jede endliche Teilfolge davon stochastisch unabhängig ist. \\
+Eine endliche Folge von Zufallsvariabeln $X_1$, \dots, $X_n$ heisst (stochastisch) unabhängig, wenn 
+\begin{equation}
+P(X_1 \leq x_1, X_2 \leq x_2, \dots, X_n \leq x_n) = P(X_1 \leq x_1) * P(X_2 \leq x_2), \dots, P(X_n \leq x_n)
+\end{equation}
+für alle $x_1, x_2, \dots, x_n \in \RN$
+\end{definition}
+
+\begin{satz} 
+Es seien $X$ und $Y$ unabhängige diskrete Zufallsvariablen mit den Werten $\chi$ und $\Upsilon$ und Zähldichten $f_X$ und $f_Y$. \\
+Weiter sei $g: \chi \times \Upsilon \rightarrow\ZN$. Dan gilt für alle $z \in \ZN$:
+\begin{equation}
+P(g(X,Y) = z) = \sum_{x \in \chi} \sum_{y\in \Upsilon:g(x,y)=z} f_X(x) * f_Y(y)
+\end{equation}
+\end{satz}
+
+\begin{satz} 
+Es seien $X$ und $Y$ unabhängige diskrete Zufallsvariablen mit den Werten $\chi$ und $\Upsilon$ und Zähldichten $f_X$ und $f_Y$. Dann hat die Summe $X + Y$ die Zähldichte
+\begin{equation}
+f_{X+Y}(z) = \sum_{x in \chi} f_X(x) * f_Y(z-x)
+\end{equation}
+Hierbei ist für $f_Y(y)=0$ für $y \notin \Upsilon$
+\end{satz}
+Die Zähldichte von $f_{X+Y}$ nennt man auch Faltung von $f_X$ und $f_Y$.
+
+\begin{satz} 
+Es seien $X$ und $Y$ unabhängige Zufallsvariablen sind, dan gilt
+\begin{align}
+X \sim Poi(\lambda_1), Y \sim Poi(\lambda_2) &\Rightarrow X + Y \sim Poi(\lambda_1 + \lambda_2) \\
+X \sim Bin(n_1,p), Y \sim Bin(n_2,p) &\Rightarrow X + Y \sim Bin(n_1 + n_2, p)
+\end{align}
+\end{satz}
+
+\begin{satz}[Additionstheorem der Normalverteilung]
+Seien $X_1, X_2, \dots, X_n$ unabhängige, normal verteilte Zufallsvariablen eines Zufallsexperiments mit den Erwartungswerten $\mu_i$ und der Standardabweichung $\sigma_1$. Weiter seien$a_1,a_2, \dots, a_n$ belibige reelle Zahlen, nicht alle gleich 0. \\
+Dann ist die Zufallsvariable $Y = a_1X_1 + a_2X_2 + \dots + a_nX_n$ auch normal verteilt mit Erwartungswert $a_1\mu_1,a_2\mu_2, \dots, a_n\mu_n$ und Varianz $a_1^2\sigma_1^2,a_2^2\sigma_2^2, \dots, a_n^2\mu_n^2$
+\end{satz}
+
+\subsection{Eigenschaft von Erwartungswert und Varianz}
+Es seien $X$ und $Y$  Zufallsvariablen und $a, c \in \RN$.
+Dan gilt:
+\begin{align}
+E(X + Y) = E(X) + E(Y) \\
+E(aX) = aE(X) \\
+E(X + c) = E(X) + c\\
+V(X + c) = V(X)\\
+V(aX) = a^2V(X)\\
+\text{Falls X und Y unabhängig sind: } V(X + Y) = V(X) + V(Y) \\
+\text{Wenn X diskret ist und } f_X \text{die Zählichte von X: } E(g(X)) = \sum_x g(x) * f_X(x) \\
+\text{Wenn X stetig ist und } f_X \text{ ide Dichte von X: } E(g(X)) = \int_{-\infty}^\infty g(x) * f_X(x) dx
+\end{align}
+
+\subsection{die Ungleichung von Tschabyscheff}
+\begin{satz}
+Es sei X eine Zufallsvariable mit Erwartungswert $\mu$ und Varianz $\sigma^2$. Dann gilt für alle $k > 0$:
+\begin{equation}
+P(\mid X - \mu \mid \geq k) \leq \frac{\sigma^2}{k^2}
+\end{equation}
+\end{satz}
+Diese Abschätzung gilt für alle möglichen Verteilungen von X. Sie ist deshalb in manchen Fällen recht grob.
+
+\subsection{Grentzwertsätze}
+\subsubsection{Gesetz der Grossen Zahlen}
+Es sei E ein Ereignis eines Zufallexperiments, und sei $p$ die Wahrscheinlichkeit von E. Weiter bezeichne $X$ die Anzahl des Eintreffens von E bei $n$ unabhängigen Ausführungen dieses Experiments. Für jede beliebig kleine reelle Zahl $\epsilon > 0$ gilt dann:
+\begin{equation}
+P(\mid \frac{X}{n} - p \mid \geq \epsilon) \rightarrow 0 (n \rightarrow \infty)
+\end{equation}
+\subsubsection{Zentraler Grenzwertsatz}
+Es sei $X_1, X_2,$ \dots eine Folge von unabhängigen Zufallsvariablen eines  Wahrscheinlichkeitsraumes, welche alle dieselbe Verteilung mit Erwartungswert $\mu$ und Varianz $\sigma^2$ haben. Dan gilt für grosse $n$: \\
+Die Summe $S_n = X_1 + \dots + X_n$ besitzt näherungsweise die Normalverteilung $N(\mu_n, \sigma_n)$ mit $\mu_n = n * \mu$ und $\sigma_n = \sqrt{n} * \sigma$. Es gilt also näherungsweise $ \frac{S_n - \mu_n}{\sqrt{n} * \mu} \sim N(0,1)$. \\
+Präzise gilt für alle $z \in \RN$:
+\begin{equation}
+P(\frac{S_n - n\mu}{\sqrt{n}\sigma} \leq z) \rightarrow \Phi(z) (n \rightarrow \infty)
+\end{equation}
+\subsubsection{Grenzwertsatz von de Moivre und Laplace}
+Für grosse $n$ ist
+\begin{equation}
+P(a \leq X \leq b) \approx \Phi (\frac{b - np}{\sqrt{np(1-p)}}) - \Phi (\frac{a - np}{\sqrt{np(1-p)}})
+\end{equation}
+Diese Approximation ist für $n > \frac{9}{p(1-p)}$ hinfreichend genau. \\
+Etwas genauer wird es mit der sogenannten \textbf{Stetigkeitskorrektur}:
+\begin{equation}
+P(a \leq X \leq b) \approx \Phi(\frac{b + \frac{1}{2} - np}{\sqrt{np(1-p)}}) - \Phi(\frac{a - \frac{1}{2} - np}{\sqrt{np(1-p)}})
+\end{equation}
+
+\newpage
+\section{Aspekte der induktiven Statistik}
 
 % Inhalt Ende 
 \end{document} 

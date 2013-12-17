@@ -116,35 +116,27 @@
 % hier beginnt das Dokument
 \begin{document}
 \subsubsection*{Laplace-Experiment}
-Ein Zufallsexperiment mit $n$ verschiedenen möglichen Ergebnissen, die alle dieselbe Wahrscheinlichkeit, alse $\frac{1}{n}$ haben. Die Wahrscheinlichkeit eines Ereignisses $E \subseteq\Omega$ wird für diesen Fall folgendermassen definiert:
-\begin{equation}
-  P(E)=\frac{|E|}{|\Omega|}=\frac{\text{Anzahl günstige Ergebnisse}}{\text{Anzahl aller Ergebnisse}}
-\end{equation}
-Dieses $P$ heisst auch \textbf{Gleichverteilung}. 
-
+\begin{equation*}
+  P(E)=\frac{|E|}{|\Omega|}=\frac{\text{Anzahl günstige Ergebnisse}}{\text{Anzahl aller Ergebnisse}} \rightarrow \text{Gleichverteilung}
+\end{equation*}
 \subsubsection*{Produkte}
-Wenn es bei einem mehrstufigen Auswahlprozess für das 1. Objekt $n_1$ Möglichkeiten, für das 2. Objekt $n_2$ Möglichkeiten, \dots , und für das $k$-te Objekt $n_k$ Möglichkeiten gibt, dann gibt es für den gesamten Auswahlprozess $n_1*n_2* \dots * n_k$ Möglichkeiten.
-\begin{equation}
+\begin{equation*}
   |A_1 \times A_2 \times \dots \times A_k| = |A_1| * |A_2| * \dots * |A_k|
-\end{equation}
-
+\end{equation*}
 \subsubsection*{Summen}
-Wenn es $n_1$ Objekte mit Eigenschaft 1, $n_2$ Objekte mit Eigenschaft 2, \dots, $n_k$ Objekte mit Eigenschaft $k$ gibt, und kein Objekt zwei der Eigenschaften gleichzeitig besitzt, dann gibt es insgesamt $n_1+n_2+$ \dots $+n_k$ Objekte die eine der Eigenschaft besitzen.
-\begin{equation}
+\begin{equation*}
   |A_1 \cup A_2 \cup \dots \cup A_k| = |A_1| + |A_2| + \dots + |A_k|
-\end{equation}
-
+\end{equation*}
 \subsubsection*{Fakultät}
-Wir ziehen $n$ mal ohne Zurücklegen mit Beachtung der Reihenfolge aus einer Urne mit $n$ Kugeln. Dan gibt es $n*(n-1)*$ \dots $*2*1$ Möglichkeiten.
-\begin{equation}
+\begin{equation*}
 	n! := n*(n-1)* \dots *2*1 \sim \sqrt{2*\pi*n}*(\frac{n}{e})^n
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Binominalkoeffizient}
-$\binom{n}{k}$ gibt die Anzahl aller $k$-elementigen Teilmengen einer $n$-elementigen Menge an. \\
-\begin{equation}
+
+\begin{equation*}
 	 \binom{n}{k} := \frac{n!}{(n-k)!*k!}
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Urnenmodel}
 \begin{center}
@@ -157,111 +149,159 @@ $\binom{n}{k}$ gibt die Anzahl aller $k$-elementigen Teilmengen einer $n$-elemen
 	\end{tabular}
 \end{center}
 
-\subsubsection*{Wahrscheinlichkeit}
-Eien Wahrscheinlichkeit $P: 2^{\Omega} \rightarrow [0,1]$ erfüllt:
-\begin{align}
-	 P(\Omega) &= 1 \\
-	 \forall E \subseteq \Omega : P(E^c) &=1-O(E)\\
-	 P(0) &= 0
-\end{align}
-\begin{align}
+\subsubsection*{algemeine Wahrscheinlichkeiten}
+\begin{align*}
 	 P(E_1 \cup E_2 \cup E_3 \cup  \dots ) = P(E_1) + P(E_2) + P(E_3) + \dots \\	 
 	 \forall E_1, E_2 \subseteq \Omega : P(E_1\cup E_2) = P(E_1) + P(E_2) - P(E_1 \cap E_2)\\
 	 E=\{e_1,e_2, \dots \} \rightarrow P(E) = P(\{e_1\}) + P(\{e_2\}) + \dots
-\end{align}
+\end{align*}
 
 \subsubsection*{Z-Dichte}
 Die Funktion $f_P : \Omega \rightarrow [0,1]$ mit $f_P(w)=P(\{w\})$ heisst Zähldichte von P.
-\begin{align}
+\begin{align*}
 	 P(E) &=\sum_{e \in E} f_P(e) \\
 	 P(E) &=\sum_{e \in \Omega} f_P(e)=1
-\end{align}
+\end{align*}
 
 \subsubsection*{bedingte Wahrscheinlichkeit}
 Es sei $B \subseteq \Omega$ mit $P(B) > 0$. Dann heisst $P(A|B)$ (elementare) bedingte Wahrscheibnlichkeit von A unter B.
-\begin{equation}
+\begin{equation*}
 	 P(A|B) := \frac{P(A \cap B)}{P(B)}
-\end{equation}
+\end{equation*}
 
-Formel von Bayes:
-\begin{equation}
+\subsubsection*{Formel von Bayes}
+\begin{equation*}
 	 P(A|B)=\frac{P(A)}{P(B)} * P(B | A)
-\end{equation}
+\end{equation*}
 
 \subsubsection*{totele Wahrscheinlichkeit}
 Es sei  $B_i(i \in I)$ eine Zerlegung von $\Omega$ (d.h. die $B_i$ sind paarweise disjunkt und $\Omega=U_{i \in I} B_i$) mit $P(B_i) > 0$.
-\begin{equation}
+\begin{equation*}
 	 P(A) = \sum_{i \in I} P(A | B_i) * P(B_i)
-\end{equation}
+\end{equation*}
 
 \subsubsection*{positive prädiktive Wert}
 Für $0 < P(A) < 1$ gilt mit $\Omega = A \cup A^c$ insbesondere:
-\begin{equation}
+\begin{equation*}
 	 P(A | B) = \frac{P(A)*P(A | B)}{P(B | A) * P(A) + P(B | A^c) * P(A^c)}
-\end{equation}
+\end{equation*}
 
 \subsubsection*{stochastische Unabhängigkeit}
 Zwei Ereignisse $A,B \subseteq \Omega$ heissen stochastisch unabhängig, falls 
-\begin{equation}
+\begin{equation*}
 	P(A \cap B) = P(A) * P(B)  \equiv \underbrace{P(A|B)}_{\frac{P(A \cap B)}{P(B)}}=P(A) \leftarrow (B) \neq 0]
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Mehrstufige Zufallsexperimente}
 Gegeben ist eine Urne mit 4 weissen und 2 schwarzen Kugeln. Wir ziehen dreimal ohne Zurücklegen: Was ist die Warhscheinlichkeit A: \"{ }Dritte Kugel weiss\"{}? \\
 $\Omega = \{w,s\} \times \{w,s\} \times \{w,s\}$ und $A= \{(w,w,w),(w,s,w),(s,w,w),(s,s,w)\}$
-\begin{equation}
+\begin{equation*}
 	P(A) = f(w,w,w) + f(w,s,w) + f(s,w,w) + f(s,s,w)
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Verteilungsfunktion}
 Es sei $X : \Omega \rightarrow X$ eine Zufallsvariable, wobei $X \in \RN$ eine endliche oder abzählbare Menge ist. Zudem sei $f$ die Zähldichte von $X$.
-\begin{equation}
+\begin{equation*}
 	F(x)=P(X \leq x) = \sum_{t \in X:t \leq x} f(t)
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Erwartungswert, Varianz \& Standardabweichung}
-\begin{align}
+\begin{align*}
 	E(X) &=\sum_{x \in X} x * f(x)=\sum_{x \in X} x * P(X = x) \\
 	V(X)&= \sum_{x \in X} (x - E)^2 * f(x) = \sum_{x \in X} (x - E)^2 * P(X=x) = E(X^2)-E(X)^2 \\
 	\sigma(X) &= \sqrt{V(X)}
-\end{align}
+\end{align*}
 
 \subsubsection*{Bernoulli-Verteilung}
-Treffer ($WK$ $p$), nicht Treffer
-\begin{align}
+kann zwei Werte annehmen, 0 (Treffer) oder 1 (kein Treffer)
+\begin{align*}
 	X \sim B(p): P(0) &= 1 - p \\
 	P(1) &= p \\
 	E(X) &= p \\
 	V(X) &= p*(1-p)
-\end{align} 
+\end{align*} 
 
 \subsubsection*{Binomial-Verteilung}
-Anzahl Treffer ($WK$ $p$) in $n$ unabhängigen Versuchen
-\begin{align}
+Anzahl Treffer (Wahrscheinlichkeit $p$) in $n$ unabhängigen Versuchen
+\begin{align*}
 	X \sim Bin(n,p): P(X=k) &= \binom{n}{k} * p^k * (1-p)^{n-k}, k=0,1, \dots, n \\
 	E(X) &= n*p \\
 	V(X) &= n*p*(1-p)
-\end{align} 
+\end{align*} 
+\textbf{Dichte}: binopdf($k$, $n$, $p$) $\mid$ \textbf{Verteilungsfunktion}: binocdf($k$, $n$, $p$)
+
 
 \subsubsection*{geometirsche-Verteilung}
-Versuche bis erster Treffer ($WK$ $p$) in unabhängigen Veruschen
-\begin{align}
+Versuche bis erster Treffer (Wahrscheinlichkeit $p$) in $n$ unabhängigen Veruschen
+\begin{align*}
 	X \sim Geo(n,p): P(X=k) &= (1-p)^{k-1}*p, k=0,1, \dots, n \\
 	E(X) &= \frac{1}{p}\\
 	V(X) &= \frac{1-p}{p^2}
-\end{align} 
+\end{align*} 
+\textbf{Dichte}: geopdf($k-1$, $p$) $\mid$ \textbf{Verteilungsfunktion}: geocdf($k-1$, $p$)
 
 \subsubsection*{Poisson-Verteilung}
 Verteilung für seltene Ereignisse mit im Schnitt $\lambda$ Ereignisse pro Zeit/Ort
-\begin{align}
+\begin{align*}
 	X \sim Poi(\lambda): P(X = k) &=\frac{\lambda^k}{k!}*e^{-\lambda}, k=0,1, \dots, n \\
 	E(X) &= \lambda\\
 	V(X) &= \lambda
-\end{align} 
+\end{align*} 
+\textbf{Dichte}: poisspdf($k$, $\lambda$) $\mid$ \textbf{Verteilungsfunktion}: poisscdf($k$, $\lambda$)
+
+\subsection*{stetige Zufallsvariable}
+$\rightarrow$ kontinuierlicher Wertebereich\\
+$\rightarrow$ beschreibt Wahrscheinlichkeit das ZV Wert in Bereich annimmt.\\
+$\rightarrow$ Wahrscheinlichkeit als Dichte ausgedrückt.
+\begin{align*}
+Dichtefunktion &: P(a \leq X \leq b) = \int _a^b f(x) dx \\
+Erwartungswer &t: E(X) =\int _{-\infty}^{\infty} x*f(x) dx \\
+Varianz &: V(X) = \int _{-\infty}^{\infty} (x - E(X))^2 * f(x) dx = E(X^2) - E(X)^2 \\
+Standartabweichung &: \sigma(X) = \sqrt{V(X)} \\
+Verteilungsfunktion &: F(x) = P(X \leq x) = \int _{-\infty}^{x}f(t)dt\\
+\end{align*}
+
+\subsubsection*{stetige Gleichverteilung-Verteilung}
+die konstante Dichte  für $s \leq x \leq t$ auf dem Intervall$[s,t]$. 
+\begin{align*}
+	X \sim U[s,t]&: f(x)=\frac{1}{t-s} \\
+	E(x) &= \frac{s + t}{2}\\
+	V(x) &= \frac{1}{12}*(t-s)^2
+\end{align*} 
+
+\subsubsection*{Standardormalverteilung} 
+\begin{align*}
+	X \sim N(0,1)&: \varphi(x) = \frac{1}{\sqrt{2\pi}}*e^{-\frac{x^2}{2}} \\
+	E(x) &= 0\\
+	V(x) &= 1
+\end{align*} 
+\textbf{Dichte}: normpdf($x$) $\mid$ \textbf{Verteilungsfunktion}: normcdf($x$)
+
+\subsubsection*{Normalverteilung}
+Die Normalverteilung mit Parametern $\mu$ und $\sigma$.
+\begin{align*}
+	X \sim N(\mu, \sigma) &: \varphi(x) = \frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{(x-\mu)^2}{2\sigma^2}}  \\
+	E(x) &= \mu\\
+	V(x) &= \sigma
+\end{align*} 
+\textbf{Dichte}: normpdf($x$, $\mu$, $\sigma$) $\mid$ \textbf{Verteilungsfunktion}: normcdf($x$, $\mu$, $\sigma$)
+
+\textbf{Standardisierung:} $X \sim M(\mu, \sigma) \rightarrow X-\mu \sim N(0,\sigma) \rightarrow Z \sim N(0,1) \text{ mit } Z=\frac{x-\mu}{\sigma}$ \\
+\textbf{Quantil:} Gegeben $\alpha \in (0,1)$. Für welche $z_\alpha$ gilt P($x\leq z_\alpha=\alpha$) \\
+\textbf{Matlab:} $x=$ norminv($p$)
+
+
+\subsubsection*{Exponentialverteilung}
+Die Wahrscheinlichkeit dass X einen Wert grösser als $t$ annimt, sinkt exponentiell.\\
+\begin{align*}
+	X \sim Poi(\lambda) : P(X = t) &=\frac{\lambda^k}{k!}*e^{-\lambda} \text{, k=0,1, \dots, n} \\
+	E(x) &= \frac{1}{\lambda}\\
+	V(x) &= \frac{1}{\lambda^2}
+\end{align*} 
+\textbf{Dichte}: exppdf($k$, $\frac{1}{\lambda}$) $\mid$ \textbf{Verteilungsfunktion}: expcdf($k$, $\frac{1}{\lambda}$)
 
 \subsubsection*{Eigenschaften}
-
-\begin{align}
+\begin{align*}
 	E(X + Y) &= E(X) + E(Y) \\
 	E(a * X) &= a * E(X) \\
 	E(X + c) &= E(X) + c\\
@@ -269,7 +309,86 @@ Verteilung für seltene Ereignisse mit im Schnitt $\lambda$ Ereignisse pro Zeit/
 	V(a * X) &= a^2* V(X) \\
 	E(g(X)) &= \sum_{x} g(x) * P(X=x) \leftarrow [\RN \rightarrow \RN] \\
 	E(g(X)) &\neq g(E(X))
-\end{align} 
+\end{align*} 
+
+\subsubsection*{Unabhängigkeit}
+\begin{align*}
+P(X_1 \leq x_1, X_2 \leq x_2, \dots, X_n \leq x_n) &= P(X_1 \leq x_1) * P(X_2 \leq x_2), \dots, P(X_n \leq x_n) \\
+P(g(X,Y) = z) &= \sum_{x \in \chi} \sum_{y\in \Upsilon:g(x,y)=z} f_X(x) * f_Y(y) \\
+X \sim Poi(\lambda_1), Y \sim Poi(\lambda_2) &\Rightarrow X + Y \sim Poi(\lambda_1 + \lambda_2) \\
+X \sim Bin(n_1,p), Y \sim Bin(n_2,p) &\Rightarrow X + Y \sim Bin(n_1 + n_2, p)
+\end{align*}
+
+\subsubsection*{Additionstheorem der Normalverteilung}
+\begin{align*}
+a_1X_1 + a_2X_2 + \dots + a_nX_n \sim N(a_1\mu_1 + a_2\mu_2 + \dots + a_n\mu_n, \sqrt {a_1^2 \sigma_1^2 + a_2^2 \sigma_2^2 +\dots + a_n^2 \sigma_n^2})
+\end{align*}
+\subsubsection*{Eigenschaft von Erwartungswert und Varianz}
+Es seien $X$ und $Y$  Zufallsvariablen und $a, c \in \RN$.
+Dan gilt:
+\begin{align*}
+E(X + Y) = E(X) + E(Y) \\
+E(aX) = aE(X) \\
+E(X + c) = E(X) + c\\
+V(X + c) = V(X)\\
+V(aX) = a^2V(X)\\
+\text{Falls X und Y unabhängig sind: } V(X + Y) = V(X) + V(Y) \\
+\text{Wenn X diskret ist und } f_X \text{die Zählichte von X: } E(g(X)) = \sum_x g(x) * f_X(x) \\
+\text{Wenn X stetig ist und } f_X \text{ ide Dichte von X: } E(g(X)) = \int_{-\infty}^\infty g(x) * f_X(x) dx
+\end{align*}
+
+\subsubsection*{Ungleichung von Tschabyscheff}
+\begin{equation*}
+P(\mid X - \mu \mid \geq k) \leq \frac{\sigma^2}{k^2}
+\end{equation*}
+Diese Abschätzung gilt für alle möglichen Verteilungen von X. Sie ist deshalb in manchen Fällen recht grob.
+
+\subsubsection*{Grentzwertsätze: Gesetz der Grossen Zahlen}
+\begin{equation*}
+P(\mid \frac{X}{n} - p \mid \geq \epsilon) \rightarrow 0 (n \rightarrow \infty)
+\end{equation*}
+\subsubsection*{Zentraler Grenzwertsatz}
+Es sei $X_1, X_2,$ \dots eine Folge von unabhängigen Zufallsvariablen eines  Wahrscheinlichkeitsraumes, welche alle dieselbe Verteilung mit Erwartungswert $\mu$ und Varianz $\sigma^2$ haben. Dan gilt für grosse $n$: \\
+Die Summe $S_n = X_1 + \dots + X_n$ besitzt näherungsweise die Normalverteilung $N(\mu_n, \sigma_n)$ mit $\mu_n = n * \mu$ und $\sigma_n = \sqrt{n} * \sigma$. Es gilt also näherungsweise $ \frac{S_n - \mu_n}{\sqrt{n} * \mu} \sim N(0,1)$. \\
+Präzise gilt für alle $z \in \RN$:
+\begin{equation*}
+P(\frac{S_n - n\mu}{\sqrt{n}\sigma} \leq z) \rightarrow \Phi(z) (n \rightarrow \infty)
+\end{equation*}
+\subsubsection*{Grenzwertsatz von de Moivre und Laplace}
+Für grosse $n$ ist
+\begin{equation*}
+P(a \leq X \leq b) \approx \Phi (\frac{b - np}{\sqrt{np(1-p)}}) - \Phi (\frac{a - np}{\sqrt{np(1-p)}})
+\end{equation*}
+Diese Approximation ist für $n > \frac{9}{p(1-p)}$ hinfreichend genau. \\
+Etwas genauer wird es mit der sogenannten \textbf{Stetigkeitskorrektur}:
+\begin{equation*}
+P(a \leq X \leq b) \approx \Phi(\frac{b + \frac{1}{2} - np}{\sqrt{np(1-p)}}) - \Phi(\frac{a - \frac{1}{2} - np}{\sqrt{np(1-p)}})
+\end{equation*}
+
+\subsubsection*{Statistische Tests}
+\begin{enumerate}
+	\item Man stellt die Nullhypothese $H_0$ und die Alternativhypothese $H_1$ auf. Das bestmögliche Ergebnis ist die Widerlegung von $H_0$
+	\item Man wählt ein Testverfahren zb Experimente oder Stichproben
+	\item Aufgrund des gewählten Tests bestimmt man die so genannte Testgrösse
+	\item Man wählt ein Signifikanzniveau $\alpha$ und bestimmt aufgrund dessen den Verwerfungsbereich. Dieser wird so festgelegt, dass bei Zutreffen von $H_0$ die Testgrösse mit Wahrscheinlichkeit $\leq \alpha$ dort drin liegt. 
+	\item Liegt der gemäss (3) berechnete Wert der Testgrösse im Verwerfungsbereich, so lehnen wir $H_0$ ab. Man sagt in diesem Fall, auch, das Ergebniss des Tests sei signifikant auf dem $\alpha$-niveau
+\end{enumerate}
+\subsubsection*{Konfidenzintervall}
+Wenn die Zufallsvariable $X$ die Anzahl an die Personen zählt, die mit ja antworten, dann ist $X \sim Bin(n,p)$, mit$n=500$ in unserem Beispiel. \\
+Bekanntlich gilt approximativ: $\frac{X-np}{\sqrt{np(1-p)}} \sim N(0,1)$.\\
+Nun sei $\alpha=\frac{1+Q}{2}$ und $z_a$ das $\alpha$-Quantil von $N(0,1)$.\\
+\\
+Die Wahrscheinlichkeit, dass das Intervall den Wert $p$ enthält, also gerade $Q$.
+\begin{equation*}
+\left[\frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}-z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right), \frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}+z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right)\right]
+\end{equation*}
+Approximativ:
+\begin{equation*}
+	\left[\frac{k}{n}-\frac{z_\alpha}{n}\sqrt{\frac{k(n-k)}{n}}, \frac{k}{n}+\frac{z_\alpha}{n}\sqrt{\frac{k(n-k)}{n}} \right]
+\end{equation*}
+
+
+
 --------------------------------------------------------------------------------------------------------
 \\
 \\
