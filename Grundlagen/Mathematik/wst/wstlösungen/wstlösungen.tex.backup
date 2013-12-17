@@ -273,11 +273,11 @@ norminv(97.500) = $z_a$ = 1.96\\
 \begin{framed}
 KonfidenzIntervall:\\
  \begin{equation}
-  [\frac{k}{n} - \frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},\frac{k}{n}+\frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},]
+ \
  \end{equation}
 
 \end{framed}
-
+\
 \end{document}
 
 
