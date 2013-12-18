@@ -265,6 +265,7 @@ $ P(|X-100| \ge 20) \le 0.2025$
 
 \chapter*{Serie 7}
 \section*{Aufgabe 1}
+$z_a = z_\alpha$\\
 2994 Kinder 1562 Knaben.
 Sei $X=k$ wo $n = 2994$ dann ist $k =1562$
 Sei $z_a$ das Quantil für $N(0,1)$ $z_a$ = norminv(a) $ a = \frac{1 + Q}{2}$ \\
@@ -273,11 +274,47 @@ norminv(97.500) = $z_a$ = 1.96\\
 \begin{framed}
 KonfidenzIntervall:\\
  \begin{equation}
-  [\frac{k}{n} - \frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},\frac{k}{n}+\frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},]
+  [\frac{k}{n} - \frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},\frac{k}{n}+\frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}}]
  \end{equation}
 
 \end{framed}
 
+\section*{Aufgabe 2}
+$z_a = z_\alpha$
+$ n = 1000$\\
+$ k = 30$\\
+$ a = 1.9/2$ \\
+norminv(a) =$ z_a$ = 1.6449
+Einsetzen im Interval Formel da oben.
+
+
+\section*{Aufgabe 3}
+1. Ja, Additionstheorem der Normalverteilung.
+2. Nein, siehe 1.
+3. Ja, Additionstheorem der Normalverteilung.
+4. Nein, siehe 3.
+
+\section*{Aufgabe 4}
+Verwerfungskriterium : 5 Löse aber jede Löse hat Zahl > 1600\\
+$H_0$ = Es gibt 3000 Löse
+1. Fehler Erste Art : 3000 Löse aber Jede von 5 < 1600 : Mehrstüfige Auswahlprozess = : \\
+$\pi{n=1596}^{i=1600} \frac{l_i}{3000}$
+Fehler 2 Art :\\
+2000 Löse : $H_0$ trifft nicht zu aber nicht verworfen das heisst 1 minus verworfen\\
+$\pi{n=1596}^{i=1600} \frac{l_i}{2000}$
+
+3. Nicht möglich da Löse Anzahl zu wenig für Verwerfungskriterium ist. P = 0.
+
+\section*{Aufgabe 6}
+12 Karten : Anzahl Treffer - Binomial Verteilung mit p = 50\% für Treffer \\
+$H_0$ = beliebig Raten
+Gesucht richtige Antworten damit $H_0$ ungültig mit Signifikanznouveau  von 5\% \\
+
+\begin{framed}
+ $P(X \ge k) \le 0.05$ ist das gleiche wie $P(X \le k) \ge 0.95$ \\
+ Konfidenzbereichgrenze.
+\end{framed}
+Invers gefragt : \\
+\texttt{binoinv(0.95,12,0.5) = 9}\\
+9 ist an der Grenze des ``Nicht glaubens'' daher ist es nür erfüllt bei 9+1 Karte = 10.
 \end{document}
-
-
