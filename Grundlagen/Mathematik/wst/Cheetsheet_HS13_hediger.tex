@@ -1,0 +1,437 @@
+\documentclass[landscape,twocolumn,a4paper]{article}
+
+\setlength{\oddsidemargin}{-.6in}	 % default=0in
+\setlength{\textwidth}{11in}	 % default=9in
+\setlength{\columnsep}{0.25in}	 % default=10pt
+\setlength{\columnseprule}{1pt}	 % default=0pt (no line)
+\setlength{\textheight}{7.5in}	 % default=5.15in
+\setlength{\topmargin}{-1.0in}	 % default=0.20in
+\setlength{\headsep}{0.25in}	 % default=0.35in
+\setlength{\parskip}{1.2ex}
+\setlength{\parindent}{0mm}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{5pt}{-5pt}
+\titlespacing*{\subsection}{0pt}{0pt}{-5pt}
+\titlespacing*{\subsubsection}{0pt}{0pt}{-5pt}
+
+
+%Math
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ulem}
+
+
+\usepackage{multirow}
+\usepackage{multicol}
+
+
+%PageStyle
+\usepackage[ngerman]{babel} % deutsche Silbentrennung
+\usepackage[utf8]{inputenc} 
+\usepackage{fancyhdr, graphicx}
+\usepackage[scaled=0.8]{helvet}
+%\usepackage{enumitem}
+\usepackage{parskip}
+%\usepackage[a4paper,top=2cm]{geometry}
+%\setlength{\textwidth}{17cm}
+%\setlength{\oddsidemargin}{-0.5cm}
+
+
+%My Commands
+\newcommand{\RN}{\mathbb{R}} %Real Number
+\newcommand{\NN}{\mathbb{N}} %Natural Number
+\newcommand{\QN}{\mathbb{Q}} %Rational Number
+\newcommand{\ZN}{\mathbb{Z}} %ganze Zahlen
+\newcommand{\CN}{\mathbb{C}}
+\newcommand{\PN}{\mathbb{P}} %Primzahle Bitches
+\newcommand{\Teilt}{\mid} %|
+\newcommand{\Teiltn}{\nmid} %kein teiler
+\newcommand{\Potp}{\mathcal{P}} %Potenzmenge
+\newcommand{\Pota}{\mathcal{A}}
+\newcommand{\Potr}{\mathcal{R}}
+\newcommand{\Potn}{\mathcal{N}}
+\newcommand{\Bold}[1]{\textbf{#1}} %Boldface
+\newcommand{\Kursiv}[1]{\textit{#1}} %Italic
+\newcommand{\T}[1]{\text{#1}} %Textmode
+\newcommand{\Nicht}[1]{\T{\sout{$ #1 $}}} %Streicht Shit durch
+\newcommand{\lra}{\leftrightarrow} %Arrows
+\newcommand{\ra}{\rightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\lral}{\longleftrightarrow}
+\newcommand{\ral}{\longrightarrow}
+\newcommand{\lal}{\longleftarrow}
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\Lral}{\Longleftrightarrow}
+\newcommand{\Ral}{\Longrightarrow}
+\newcommand{\Lal}{\Longleftarrow}
+\newcommand{\Vektor}[1]{\vec{#1}}
+\newcommand{\Brace}[1]{\left( #1 \right)} %()
+\newcommand{\Bracel}[1]{\left\lbrace #1 \right.} %(
+\newcommand{\Bracer}[1]{\right. #1 \right\rbrace} %)
+\newcommand{\Brack}[1]{\left\lbrace #1 \right\rbrace} %{}
+\newcommand{\Brackl}[1]{\left\lbrace #1 \right.} %{
+\newcommand{\Brackr}[1]{\right. #1 \right\rbrace} %}
+\newcommand{\Result}[1]{\underline{\underline{#1}}} %Doppelt unterstrichen
+\newcommand{\Abs}[1]{\left| #1 \right|} %Absolutbetrag
+\newcommand{\Norm}[1]{\Abs{\Abs{ #1 }}} %Norm
+\newcommand{\Arrays}[1]{\left(\begin{array}{c}#1\end{array}\right)} %Array mit einer Kolonne ()
+\newcommand{\Array}[2]{\left(\begin{array}{#1}#2\end{array}\right)} %Array mit n Kolonnen ()
+\newcommand{\Bracka}[2]{\left\lbrace\begin{array}{#1}#2\end{array}\right\rbrace} %Array mit {}
+\newcommand{\Brackal}[2]{\left\lbrace\begin{array}{#1} #2 \end{array}\right.} %Array mit {
+\newcommand{\Brackar}[2]{\left.\begin{array}{#1} #2 \end{array}\right\rbrace} %Array mit }
+\newcommand{\Sumone}[2]{\sum_{#2=1}^{#1}} %Summe von 1
+\newcommand{\Sumz}[2]{\sum_{#2=0}^{#1}} %Summe von 0
+\newcommand{\Sum}[2]{\sum_{#2}^{#1}} %Allgemeine Summe
+\newcommand{\Oneover}[1]{\frac{1}{#1}} %1 über igendwas
+\newcommand{\Tablewt}[3]{\begin{table*}[h]\caption{#1} \begin{tabular}{#2}{#3}\end{tabular}\end{table*}} %Table mit Titel
+\newcommand{\Oben}[2]{\overset{#1}{#2}} %etwas über etwas anderem
+\newcommand{\Unten}[2]{\underset{#1}{#2}} %etwas unter etwas anderem
+\newcommand{\Bildcap}[2]{\begin{figure}[htb]\centering\includegraphics[width=0.2\textwidth]{#1} \caption{#2}\end{figure}} %Bild mit beschriftung
+\newcommand{\Bildjpeg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpeg}} %Bilder jpeg!!
+\newcommand{\Bildjpg}[1]{\includegraphics[width=0.2\textwidth]{#1.jpg}} %Bilder jpg!!
+\newcommand{\Bild}[1]{\includegraphics[width=0.4\textwidth]{#1}} %Bilder jpg!!
+%Beispiel für lstlisting \lstinputlisting[label=Aufgabe 4a,caption=Aufgabe 4a]{4a.java}
+
+
+
+
+%Config
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{15.2pt}
+
+%Metadata
+\title{
+	\vspace{5cm}
+	WST Cheetsheet
+}
+\author{ Jan Fässler}
+\date{5. Semester (HS 2013)}
+
+
+% hier beginnt das Dokument
+\begin{document}
+\subsubsection*{Laplace-Experiment}
+Ein Zufallsexperiment mit $n$ verschiedenen möglichen Ergebnissen, die alle dieselbe Wahrscheinlichkeit, alse $\frac{1}{n}$ haben. Die Wahrscheinlichkeit eines Ereignisses $E \subseteq\Omega$ wird für diesen Fall folgendermassen definiert:
+\begin{equation}
+  P(E)=\frac{|E|}{|\Omega|}=\frac{\text{Anzahl günstige Ergebnisse}}{\text{Anzahl aller Ergebnisse}}
+\end{equation}
+Dieses $P$ heisst auch \textbf{Gleichverteilung}. 
+
+\subsubsection*{Produkte}
+Wenn es bei einem mehrstufigen Auswahlprozess für das 1. Objekt $n_1$ Möglichkeiten, für das 2. Objekt $n_2$ Möglichkeiten, \dots , und für das $k$-te Objekt $n_k$ Möglichkeiten gibt, dann gibt es für den gesamten Auswahlprozess $n_1*n_2* \dots * n_k$ Möglichkeiten.
+\begin{equation}
+  |A_1 \times A_2 \times \dots \times A_k| = |A_1| * |A_2| * \dots * |A_k|
+\end{equation}
+
+\subsubsection*{Summen}
+Wenn es $n_1$ Objekte mit Eigenschaft 1, $n_2$ Objekte mit Eigenschaft 2, \dots, $n_k$ Objekte mit Eigenschaft $k$ gibt, und kein Objekt zwei der Eigenschaften gleichzeitig besitzt, dann gibt es insgesamt $n_1+n_2+$ \dots $+n_k$ Objekte die eine der Eigenschaft besitzen.
+\begin{equation}
+  |A_1 \cup A_2 \cup \dots \cup A_k| = |A_1| + |A_2| + \dots + |A_k|
+\end{equation}
+
+\subsubsection*{Fakultät}
+Wir ziehen $n$ mal ohne Zurücklegen mit Beachtung der Reihenfolge aus einer Urne mit $n$ Kugeln. Dan gibt es $n*(n-1)*$ \dots $*2*1$ Möglichkeiten.
+\begin{equation}
+	n! := n*(n-1)* \dots *2*1 \sim \sqrt{2*\pi*n}*(\frac{n}{e})^n
+\end{equation}
+
+\subsubsection*{Binominalkoeffizient}
+$\binom{n}{k}$ gibt die Anzahl aller $k$-elementigen Teilmengen einer $n$-elementigen Menge an. \\
+\begin{equation}
+	 \binom{n}{k} := \frac{n!}{(n-k)!*k!}
+\end{equation}
+
+\subsubsection*{Urnenmodel}
+\begin{center}
+	\begin{tabular}{l|l|l}
+		 					&	zur\"{u}cklegen			&	nicht zur\"{u}cklegen\\
+		 \hline
+		 geordnet		&	$n^k$							&	$n!$ oder $\frac{n!}{(n-k)!}$\\
+		 \hline
+		 ungeordnet	&	$\binom{k+n-1}{k}$	&	$\binom{n}{k}=\frac{n!}{k!(n-k)!}$
+	\end{tabular}
+\end{center}
+
+\subsubsection*{Wahrscheinlichkeit}
+Eien Wahrscheinlichkeit $P: 2^{\Omega} \rightarrow [0,1]$ erfüllt:
+\begin{align}
+	 P(\Omega) &= 1 \\
+	 \forall E \subseteq \Omega : P(E^c) &=1-O(E)\\
+	 P(0) &= 0
+\end{align}
+\begin{align}
+	 P(E_1 \cup E_2 \cup E_3 \cup  \dots ) = P(E_1) + P(E_2) + P(E_3) + \dots \\	 
+	 \forall E_1, E_2 \subseteq \Omega : P(E_1\cup E_2) = P(E_1) + P(E_2) - P(E_1 \cap E_2)\\
+	 E=\{e_1,e_2, \dots \} \rightarrow P(E) = P(\{e_1\}) + P(\{e_2\}) + \dots
+\end{align}
+
+\subsubsection*{Z-Dichte}
+Die Funktion $f_P : \Omega \rightarrow [0,1]$ mit $f_P(w)=P(\{w\})$ heisst Zähldichte von P.
+\begin{align}
+	 P(E) &=\sum_{e \in E} f_P(e) \\
+	 P(E) &=\sum_{e \in \Omega} f_P(e)=1
+\end{align}
+
+\subsubsection*{bedingte Wahrscheinlichkeit}
+Es sei $B \subseteq \Omega$ mit $P(B) > 0$. Dann heisst $P(A|B)$ (elementare) bedingte Wahrscheibnlichkeit von A unter B.
+\begin{equation}
+	 P(A|B) := \frac{P(A \cap B)}{P(B)}
+\end{equation}
+
+Formel von Bayes:
+\begin{equation}
+	 P(A|B)=\frac{P(A)}{P(B)} * P(B | A)
+\end{equation}
+
+\subsubsection*{totele Wahrscheinlichkeit}
+Es sei  $B_i(i \in I)$ eine Zerlegung von $\Omega$ (d.h. die $B_i$ sind paarweise disjunkt und $\Omega=U_{i \in I} B_i$) mit $P(B_i) > 0$.
+\begin{equation}
+	 P(A) = \sum_{i \in I} P(A | B_i) * P(B_i)
+\end{equation}
+
+\subsubsection*{positive prädiktive Wert}
+Für $0 < P(A) < 1$ gilt mit $\Omega = A \cup A^c$ insbesondere:
+\begin{equation}
+	 P(A | B) = \frac{P(A)*P(A | B)}{P(B | A) * P(A) + P(B | A^c) * P(A^c)}
+\end{equation}
+
+\subsubsection*{stochastische Unabhängigkeit}
+Zwei Ereignisse $A,B \subseteq \Omega$ heissen stochastisch unabhängig, falls 
+\begin{equation}
+	P(A \cap B) = P(A) * P(B)  \equiv \underbrace{P(A|B)}_{\frac{P(A \cap B)}{P(B)}}=P(A) \leftarrow (B) \neq 0]
+\end{equation}
+
+\subsubsection*{Mehrstufige Zufallsexperimente}
+Gegeben ist eine Urne mit 4 weissen und 2 schwarzen Kugeln. Wir ziehen dreimal ohne Zurücklegen: Was ist die Warhscheinlichkeit A: \"{ }Dritte Kugel weiss\"{}? \\
+$\Omega = \{w,s\} \times \{w,s\} \times \{w,s\}$ und $A= \{(w,w,w),(w,s,w),(s,w,w),(s,s,w)\}$
+\begin{equation}
+	P(A) = f(w,w,w) + f(w,s,w) + f(s,w,w) + f(s,s,w)
+\end{equation}
+
+\subsubsection*{Verteilungsfunktion}
+Es sei $X : \Omega \rightarrow X$ eine Zufallsvariable, wobei $X \in \RN$ eine endliche oder abzählbare Menge ist. Zudem sei $f$ die Zähldichte von $X$.
+\begin{equation}
+	F(x)=P(X \leq x) = \sum_{t \in X:t \leq x} f(t)
+\end{equation}
+
+\subsubsection*{Erwartungswert, Varianz \& Standardabweichung}
+\begin{align}
+	E(X) &=\sum_{x \in X} x * f(x)=\sum_{x \in X} x * P(X = x) \\
+	V(X)&= \sum_{x \in X} (x - E)^2 * f(x) = \sum_{x \in X} (x - E)^2 * P(X=x) = E(X^2)-E(X)^2 \\
+	\sigma(X) &= \sqrt{V(X)}
+\end{align}
+
+\subsubsection*{Bernoulli-Verteilung}
+Treffer ($WK$ $p$), nicht Treffer
+\begin{align}
+	X \sim B(p): P(0) &= 1 - p \\
+	P(1) &= p \\
+	E(X) &= p \\
+	V(X) &= p*(1-p)
+\end{align} 
+
+\subsubsection*{Binomial-Verteilung}
+Anzahl Treffer ($WK$ $p$) in $n$ unabhängigen Versuchen
+\begin{align}
+	X \sim Bin(n,p): P(X=k) &= \binom{n}{k} * p^k * (1-p)^{n-k}, k=0,1, \dots, n \\
+	E(X) &= n*p \\
+	V(X) &= n*p*(1-p)
+\end{align} 
+
+\subsubsection*{geometirsche-Verteilung}
+Versuche bis erster Treffer ($WK$ $p$) in unabhängigen Veruschen
+\begin{align}
+	X \sim Geo(n,p): P(X=k) &= (1-p)^{k-1}*p, k=0,1, \dots, n \\
+	E(X) &= \frac{1}{p}\\
+	V(X) &= \frac{1-p}{p^2}
+\end{align} 
+
+\subsubsection*{Poisson-Verteilung}
+Verteilung für seltene Ereignisse mit im Schnitt $\lambda$ Ereignisse pro Zeit/Ort
+\begin{align}
+	X \sim Poi(\lambda): P(X = k) &=\frac{\lambda^k}{k!}*e^{-\lambda}, k=0,1, \dots, n \\
+	E(X) &= \lambda\\
+	V(X) &= \lambda
+\end{align} 
+
+\subsubsection*{Eigenschaften}
+
+\begin{align}
+	E(X + Y) &= E(X) + E(Y) \\
+	E(a * X) &= a * E(X) \\
+	E(X + c) &= E(X) + c\\
+	V(X + c) &= V(X) \\
+	V(a * X) &= a^2* V(X) \\
+	E(g(X)) &= \sum_{x} g(x) * P(X=x) \leftarrow [\RN \rightarrow \RN] \\
+	E(g(X)) &\neq g(E(X))
+\end{align} 
+--------------------------------------------------------------------------------------------------------
+\\
+\\
+\subsubsection*{Stetige Verteilungen Allgemein}
+Ganze fläche unter der Dichtefunktion muss 1 sein :
+\begin{align}
+ P(-\infty < X < \infty) = \int^{\infty}_{-\infty} f(x)dx = 1\\
+\end{align}
+
+\begin{align}
+ P(a \le X \le b = \int^b_a f(x)dx = F(b) - F(a)\\
+ F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)dt\\
+ E(X) = \int_{-\infty}^{\infty} x.f(x)dx\\
+ V(X) = \int_{-\infty}^{\infty} (x-E(x))^2 . f(x)dx = E(X^2) - E(X)^2 \\
+ \sigma(X) = \sqrt(V(X))
+\end{align}
+
+\subsubsection{Stetige Gleichverteilung}
+\begin{align}
+ f(x) = \frac{1}{t-s}
+ E(x) = \frac{s+t}{2}
+ V(x) = \frac{1}{12} (t-s)^2
+\end{align}
+\textbf{Matlab:}
+\texttt{unifpdf(x,s,t)}\\
+\texttt{unifcdf(x,s,t)}\\
+Beispiel : Person A kommt zu zufälligen Zeitpunkt am Bahnhof : P( Wartezeit länger als 10 min)
+
+\subsubsection*{Standard-Normalverteilung}
+\textbf{Matlab:}\\
+\texttt{normpdf(x)}\\
+\texttt{normcdf(x)}\\
+\begin{align}
+ X~N(0,1)\\
+ E(X) = 0\\
+ V(X) = 1
+\end{align}
+
+\subsubsection*{Normalverteilung}
+\textbf{Matlab:}\\
+\texttt{normpdf} $(x,\mu,\sigma)$
+\texttt{normcdf} $(x,\mu,\sigma)$
+\begin{align}
+ E(X) = \mu\\
+ V(X) = \sigma^2
+\end{align}
+Verteilungsfunktion = $\phi$
+\subsubsection*{Standisierung Normalverteilung}
+\begin{align}
+ X - \mu ~ (0,\sigma)\\
+ Z ~ N(0,1) : Z = \frac{X - \mu}{\sigma}
+\end{align}
+
+\subsubsection*{Quantil der Normalverteilung}
+Gegeben ist ein $\alpha \in (0,1) : $ Für welchen Wert gilt $P(X \le z_a) = a?$
+\textbf{Matlab:}\\
+\texttt{norminv$(a\mu\sigma)$}\\
+Standardnormalverteiling : (Falls Parameter fehlen z.B) \\
+\texttt{norminv(a)}
+\subsection*{Sigma Regeln}
+\begin{align}
+ P(|X-\mu| \le \sigma) \approx 68.3\%\\
+ P(|X-\mu| \le 2\sigma) \approx 95.5\%\\
+ P(|X-\mu| \le 3\sigma) \approx 99.7\%\\
+\end{align}
+\subsubsection*{Exponentialverteilung}
+\begin{align}
+P (X \ge t) = e^{-\lambda t}, (t \ge 0) \\
+F(t) = 1-e^{-t}\\
+\end{align}
+
+\textbf{Matlab:}\\
+\texttt{exppdf}$(x,\frac{1}{\lambda})$\\
+\texttt{expcdf}$(x,\frac{1}{\lambda})$\\
+
+\begin{align}
+ E(X) = \frac{1}{\lambda} \\
+ V(X) = \frac{1}{\lambda^2}\\
+\end{align}
+
+Zwischenankuftszeit ~ $ Exp(\lambda) \Leftrightarrow$ Anzahl $~ Poi(\lambda)$
+\textbf{No Memory Property:} Wenn ein Gerät mit einer exponentiell verteilten Lebendauer X, t Stunden gelaufen ist,\\
+$P(h)$ wo h ist für h Stunden weiter laufen ist gleich wie als es neu wäre.
+
+\subsubsection*{Unabhängigkeit von Zufallsvariablen}
+
+\begin{align}
+ X ~ Poi(\lambda_1) , Y ~ Poi(\lambda_2)  \Rightarrow X + Y ~ Poi (\lambda_1+\lambda_2)\\
+ X ~ Bin (n_1,p) , Y ~ Bin(n_2,p) \Rightarrow X + Y ~ Bin(n_1+n_2,p)
+\end{align}
+
+\subsubsection*{Additionstheorem der Normalverteilung}
+Seien $X_1,X_2,...X_N $ unabhängige normal verteilte Zufallsvariablen eines Zufallsexperiments mit Erwartungswetern 
+$\mu_i$ und $\sigma_i$ Wieter seien $a_1..a_n$ beliebige reelle Zahlen nicht alle gleich 0. 
+\begin{align}
+  Y = a_1 X_1 + a_2 X_2 + a_n X_n
+  E(Y) = a_1\mu_1 +..+ a_n\mu_n
+  V(X) = a_1^2\sigma_1^2+..+a_n^2\sigma_n^2
+\end{align}
+
+Beispiel :\\
+$ X_1 ~ N(250,7.5)$\\
+$ X_2 ~ N(30,2.2)$ \\
+$ X_3 ~ N(750,20)$ \\
+$P(X_1+X_2+X_3) ~ N(250 +30 +750, \sqrt{7.5^2 + 2.2^2 + 20^2}$
+
+\subsubsection*{Eigenschaften Bei Addition von E und V}
+Erwartungswert ist linear
+\begin{align}
+ E(X + Y) = E(X) + E(Y)\\
+ E (aX) = a E(X)\\
+ E(X+c) = E(X) + c\\
+ V(X + c) = V(X)\\
+ V(aX) = a^2 V(X)\\
+\end{align}
+
+\subsubsection*{Tschebycheff}
+Es sei X eine Zufallsvariable mit Erwartungswert $\mu$ und Varianz $\sigma^2$\\
+\begin{align}
+ k > 0 : P(|X-\mu| \ge k) \le \frac{\sigma^2}{k^2}
+\end{align}
+
+
+\subsubsection*{Zentraler Grenzwertsatz}
+\begin{align}
+  S_n = X_1 .. + X_n
+  \mu_n = n.\mu \\
+  \sigma_n = \sqrt{n}. \sigma
+  \frac{S_n - \mu_n}{\sqrt{n}. \sigma} ~N(0,1)
+\end{align}
+
+\subsubsection*{Moivre und Laplace Grenzwertsatz}
+$Bin(n,p)$ als Summe von n $B(p)$ variablen
+\begin{align}
+ P(a \le X \le b) \approx \sigma(\frac{b-np}{\sqrt{np(1-p}}) - \sigma(\frac{a-np}{\sqrt{np(1-p)}})
+\end{align}
+\subsubsection*{KonfidenzIntervall}
+Üblicherwiese Q = 0.95\\
+
+\begin{align}
+ \frac{X-np}{\sqrt{np(1-p)}} ~ N(0,1)\\
+ \alpha = \frac{1 + Q}{2} \\
+\end{align}
+$z_{\alpha}$ = \texttt{norminv}($\alpha$)\\
+Intervall :\\
+\begin{align}
+ [\frac{k}{n} - \frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}},\frac{k}{n}+\frac{z_a}{n} \sqrt{\frac{k(n-k)}{n}}]
+\end{align}
+
+\subsubsection*{Hypothesen}
+\begin{description}
+ \item $H_0$ Nullhypothese 
+ \item $H_1$ Alternativhypothese
+ \item[Fehler 1 Art:] $H_O$ trifft zu aber verwerfen.
+ \item[Fehler 2 Art:] $H_0$ trifft \textbf{nicht} zu aber nicht verwerfen
+ \item[Signigikanzniveau] $\alpha$ Verwerfungsbereich - Wahrscheinlichkeit für Fehler 1 Art höchstens $\alpha$
+ \item $ X \in V_{bereich} \rightarrow H_0$ ungültig das Gegenteil gilt auch. Gegenteil ist aber zu schwach für 
+definitven Beweis. 
+\end{description}
+\subsubsection*{T Verteilung}
+Benutzt um $\sigma$ zu Schätzen:
+\begin{align}
+ T = \sqrt{n} \frac{\overline{X}-\mu}{\sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (X_i-\overline{X})^2}}
+\end{align}
+\textit{ t verteilt mit n-1 Freiheitsgraden}
+\end{document} 
