@@ -32,10 +32,12 @@ Weiter gute Repos mit Implementationen von Übrungen sind folgende:
 - [Jonas Schwammberger](https://github.com/Helldevastator/efalg)
 - [Fabio Oesch](https://github.com/fabio-oesch/fhwn.efalg)
 - [Daniel Gürber](https://github.com/danielguerber/Efalg)
+- [Jan Fässler](https://github.com/janfaessler/FHNW-efalg)
 
 ### pfcs
-- [Fabio Oesch / Jan Fässler / Sam](https://github.com/fabio-oesch/fhnw.pfcs)
+- [Fabio Oesch / Sam](https://github.com/fabio-oesch/fhnw.pfcs)
 - [Daniel Gürber](https://github.com/danielguerber/Fhnw.Pfcs)
+- [Jan Fässler](https://github.com/janfaessler/FHNW-pfcs)
 
 ### Compilerbau
 - [pfirpfel / Fabio Oesch / MyrionPhoenixmoon / Jan Fässler](https://github.com/pfirpfel/iml-compiler)
