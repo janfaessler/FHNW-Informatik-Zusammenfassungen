@@ -18,6 +18,7 @@
 
 % Code listenings
 \usepackage{color}
+ \usepackage{framed}
 \definecolor{bluekeywords}{rgb}{0.13,0.13,1}
 \definecolor{greencomments}{rgb}{0,0.5,0}
 \definecolor{redstrings}{rgb}{0.9,0,0}
@@ -45,13 +46,28 @@ basicstyle=\ttfamily,
  tabsize=2,
   basicstyle=\footnotesize\ttfamily
 }
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, 
+break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
 \begin{document}
 \maketitle
 \tableofcontents
 \newpage
  \pagestyle{fancy}
 
-
+\part{Prüfung 1}
 \chapter{Basics,Intro,TFS}
 \footnote{Author welcomes tokens of gratitude in the form of beer, if thy deem this documents helpful for thine test}
 \pic[TFS Features]{tfs.png}
@@ -569,7 +585,7 @@ registration
 \item Externally managed: keeps weak references
 \item RegisterInstance method: Singleton not created by container.
 \end{itemize}
-
+\part{Prüfung 2}
 \chapter{ASP MVC4}
 \section{Advantages of MVC}
 \begin{itemize}
@@ -961,7 +977,716 @@ otherwise is returned to queue
 
 \end{description}
 
-\chapter{Code}
+\chapter{Windows Communication Foundation}
+
+\section{Fundamentals}
+\begin{itemize}
+\item Is a runtime for message based communication
+Is a development API
+\subitem For creating systems that send messages between services and
+clients
+\subitem Unified API across different transport mechanisms
+\item For applications that communicate with other
+applications
+\subitem On the same computer system
+\subitem On external computer system
+\subitem In another company accessible over the internet
+\end{itemize}
+
+\subsection{Service Orientation}
+\begin{description}
+ \item[Boundaries are Explicit] Developers opt-in to consuming, exposing,
+and defining public-facing service façade.
+\item [	Autonomous Evolution] Services and consumers are independently
+versioned, deployed, operated, and
+secured.
+\item[Share Schema + Contract not class]Data never includes behavior;
+Objects with data and behavior are a local
+phenomenon.
+\item[Compatability based on policy] Capabilities and requirements represented
+by a unique public name; Used to establish
+service suitability.
+
+\end{description}
+
+\subsection{Design Goals WCF}
+\begin{description}
+ \item [Unifaction] \begin{itemize}
+                     \item Unified former distributed technology stacks
+\item Composable functionality
+\item Appropriate for use on-machine, in the intranet, and
+cross the Internet
+\end{itemize}
+\item[Productive Service-Oriented Programming] \begin{itemize}
+                                                \item Service-oriented programming model
+\item Supports 4 tenets of service-orientation
+\item Improve developer productivity
+                                               \end{itemize}
+\item[Interoperability \& Integration] \begin{itemize}
+                                       \item WS-* interoperability with applications running on other platforms
+\item Interoperability with today’s distributed stacks.
+                                      \end{itemize}
+
+\end{description}
+
+\section{WCF Concepts}
+\pic{cservice.png}
+\pic{endp.png}
+\pic{abc.png}
+\pic[WCF Messaging Runtime]{wcfmr.png}
+\begin{description}
+ \item [Adressses] \texttt{http://www.mystore.com/StoreFront
+net.tcp://mycomputer:9000/StoreFront}\\
+Scheme:\\
+HTTP, TCP, Named pipes, MSMQ, ...
+Machine\\
+\[Port\]\\
+Path\\
+\item[Contracts] Defines what a service communicates.
+\end{description}
+
+\section{Contracts,Behavior,Ways to Talk}
+\begin{description}
+ \item [Service Contract] Defines Operations, 
+Behaviors and Communication Shape Map CLR types to WSD\footnote{Web Services Description Language} (what does your 
+service do?)
+\item [Data Contract] Defines Schema and Versioning Strategies Maps CLR types to XSD\footnote{XML Schema Definition}
+\item [Message Contract] Allows defining application-specific headers and unwrapped body content Maps CLR types to SOAP 
+messages.
+\item[Binding] Describes how a service communicates : Set of binding elements :
+\begin{itemize}
+ \item Set of predefined standard bindings
+\item Transport; http, tcp, np, msmq
+\item Encoding format; text, binary, MTOM, ...
+\item Security requirements
+\item Reliable session requirements
+\item Transaction requirements
+\item Can be customized
+\item Custom binding
+\end{itemize}
+\item[Behavior] Modifies or extends service or client runtime
+behavior. Instancing; Singleton, PrivateSession,
+SharedSession, PerCall  Concurrency; Multiple, Reentrant, Single, Throttling; connections, threading Metadata 
+customization Transactions; AutoEnlist, Isolation, AutoComplete.
+\pic{bbe.png}
+\pic{bbs.png}
+\item[Ways to talk] One way, Request - Reply, Duplex/Dual.
+\end{description}
+
+\section{Steps for Building a WCF App}
+\begin{enumerate}
+ \item Service
+ \subitem Define Contracts
+ \subitem Implement Contracts
+  \subitem Define Endpoints. 
+  \subitem Host and Run Service.
+  \item Client.
+  \subitem Generate Proxy from Metadata.
+  \subitem Implement Run Client.
+\end{enumerate}
+
+\section{WCF Examples}
+\subsection{Service Contract}
+\begin{lstlisting}[caption=Define Service Contract]
+ [ServiceContract]
+public interface ICalculator
+{
+[OperationContract]
+int Add(int a, int b);
+// Not exposed as part of the external contract :-)
+void MethodRequiredForImplementation(bool b);
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=Service Contract: One Way]
+ [ServiceContract]
+public interface ICalculator
+{
+[OperationContract]
+int Add(int a, int b);
+[OperationContract(IsOneWay=true)]
+void StoreProblem (ComplexProblem p);
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=Service Contract:Duplex Asymmetric]
+ [ServiceContract(Session=true,
+CallbackContract=typeof(ICalculatorResults)]
+public interface ICalculatorProblems
+{
+[OperationContract(IsOneWay=true)]
+void SolveProblem (ComplexProblem p);
+}
+public interface ICalculatorResults
+{
+[OperationContract(IsOneWay=true)]
+void Results(ComplexProblem p);
+}
+\end{lstlisting}
+\subsection{Data Contract}
+\begin{lstlisting}[caption=Defininbg a Data Contract]
+ [DataContract]
+public class ComplexNumber
+{
+[DataMember]
+public double Real = 0.0D;
+[DataMember]
+public double Imaginary = 0.0D;
+public ComplexNumber(double r, double i)
+{
+this.Real = r;
+this.Imaginary = i;
+}
+}
+\end{lstlisting}
+\subsection{Message Contract}
+\begin{lstlisting}[caption=Define Message Contract]
+ [MessageContract]
+public class ComplexProblem
+{
+[MessageHeader(Name="Op", MustUnderstand=true)]
+public string operation;
+[MessageBodyMember]
+public ComplexNumber n1;
+[MessageBodyMember]
+public ComplexNumber n2;
+[MessageBodyMember]
+public ComplexNumber solution;
+// Constructors...
+}
+\end{lstlisting}
+\subsection{Bindings}
+\begin{lstlisting}[caption=WCF Bindings,language=xml]
+ <endpoint address="Calculator"
+bindingSectionName="basicHttpBinding"
+bindingConfiguration="UsernameBinding"
+contractType="ICalculator" />
+<bindings>
+<basicHttpBinding>
+<binding name="UsernameBinding"
+messageEncoding="Mtom">
+<security mode="Message">
+<message clientCredentialType="UserName"/>
+</security>
+</binding>
+</basicHttpBinding>
+</bindings>
+\end{lstlisting}
+
+\section{Features Summary}
+\pic{fs.png}
+
+\section{Config (xml) based WCF}
+\begin{lstlisting}[caption=Endpoints WCF Config,language=xml]
+ <?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+<system.serviceModel>
+<services>
+<service serviceType="CalculatorService">
+<endpoint address="Calculator"
+bindingSectionName="basicProfileBinding"
+contract="ICalculator" />
+</service>
+</services>
+</system.serviceModel>
+</configuration>
+\end{lstlisting}
+\begin{lstlisting}[caption=Bindings WCF Config,language=xml]
+ <endpoint address="Calculator"
+bindingSectionName="basicProfileBinding"
+bindingConfiguration="Binding1"
+contractType="ICalculator" />
+<bindings>
+<basicProfileBinding>
+<binding configurationName="Binding1"
+hostnameComparisonMode="StrongWildcard"
+transferTimeout="00:10:00"
+maxMessageSize="65536"
+messageEncoding="Text"
+textEncoding="utf-8"
+</binding>
+</basicProfileBinding>
+</bindings>
+\end{lstlisting}
+\begin{lstlisting}[caption=Custom Bindings]
+ <bindings>
+<customBinding>
+<binding configurationName="Binding1">
+<reliableSession bufferedMessagesQuota="32"
+inactivityTimeout="00:10:00"
+maxRetryCount="8"
+ordered="true" />
+<httpsTransport manualAddressing="false"
+maxMessageSize="65536"
+hostnameComparisonMode="StrongWildcard"/>
+<textMessageEncoding maxReadPoolSize="64"
+maxWritePoolSize="16"
+messageVersion="Default"
+encoding="utf-8" />
+</binding>
+</customBinding>
+</bindings>
+\end{lstlisting}
+
+\section{WCF Summary}
+\pic{ws.png}
+
+\chapter{REST API MVC}
+\section{Rest Basics}
+\begin{description}
+ \item [Definition] Style of software architecture for distributed systems
+Term originated in a 2000 PhD written by Roy Fielding
+one of the principal authors of the HTTP protocol specification
+Term is also often used to describe any simple interface that
+transmits domain-specific data over HTTP without an additional
+messaging (e.g. SOAP) or session tracking (e.g. cookies)
+\item [Principles] \hfill \\
+\pic{restprin.png}
+\pic{repor.png}
+\begin{lstlisting}[caption=Verlingung mit Rest,language=xml]
+ <order>
+<date>16.03.2013</date>
+<amount>23</amount>
+<product ref="http://example.com/products/4711" />
+<customer ref="http://example.com/customers/1234" />
+</order>
+\end{lstlisting}
+\item[Error Codes]\begin{itemize}                   
+ \item 201 Created
+\item 200 Success/204 Success but No Content
+\item 301 Uri Moved
+\item 403 Not authorized
+\item 404 Not Found / Does not exist
+\item 405 Method not Allowed
+\item 415 Unsupported Media Type
+\item 500 Server Error
+\end{itemize}
+\item[Rest Steps] \begin{enumerate}
+                   \item Give everything id, id is an uri.
+                   \item Link things together using resource references.
+                   \item Standard HTTP Methods (GET;POST;PUT;DELETE;)
+                   \item Content negotiation URI based representations (Accept: application/xml) (foo.xml / foo.html / 
+foo.json)
+                   \end{enumerate}
+\item[Common Patterns]
+\begin{itemize}
+
+\item GET /container List container content
+\item POST /container Add item to container (with item in
+    request)
+\item URI of item returned in HTTP response header, e.g.
+Location: http://host/container/item
+\item DELETE /container
+Remove container (including items)
+\item GET /container/item Read item
+\item PUT /container/item Update item (with updated item in request)
+    DELETE /container/item Remove item 
+\end{itemize}
+\item[Rest vs SOAP] \hfill \\
+\pic{rvs.png}
+
+\end{description}
+
+\section{WCF vs Web Api}
+\begin{itemize}
+ \item Service -> Web API controller
+\item Operation -> Action
+\item Service contract -> Not applicable
+\item Endpoint -> Not applicable
+\item URI templates -> ASP.NET Routing
+\item Message handlers -> Same
+\item Formatters -> Same
+\item Operation handlers -> Filters, model binders
+\end{itemize}
+\pic{wcfwebapi.png}
+\pic{wcfwapi2.png}
+
+\section{Web Api Vorteile}
+\begin{itemize}  \item Has
+nothing to do with ASP.Net
+\item New http object Model : HttpRequestMessage, HttpResponseMessage,
+Headers, HttpContent
+\item Code based config only.
+\item Symmetry client, server, async apis.
+\end{itemize}
+
+\subsection{Integrated Stack}
+\begin{itemize}
+ \item Modern HTTP programming model
+\item Full support for ASP.NET Routing
+\item Content negotiation and custom formatters
+\item Model binding and validation
+\item Filters
+\item Query composition
+\item Easy to unit test
+\item Improved Inversion of Control (IoC) via
+\item DependencyResolver
+\item Code-based configuration
+\item Self-host
+\end{itemize}
+
+\section{Default Route (Important)}
+\begin{framed}
+ \begin{itemize}
+  \item Default route will use http method for action
+\item Controller/action/id
+\item API/Controller/id GET/POST/PUT/DELETE
+ \end{itemize}
+
+\end{framed}
+
+\section{Formate (XML JSON)}
+\begin{itemize}
+ \item XML tag based document formatting
+\item Javascript Notation by Douglas Crockford
+\item JSON less verbose than XML, more lightweight
+\item Mobile devices have limited bandwidth
+\item Set Xml or JSON based on Content-Type or Accept
+header
+\subitem Accept: application/xml
+\item Can also use Odata
+\end{itemize}
+
+\section{Security in Web API}
+\begin{verbatim}
+[Authorize()]
+https over port 443
+Security Tokens
+OAuth
+ 
+\end{verbatim}
+
+\subsection{Exkurs : Authorize}
+\pic{webapi_auth01.png}
+\begin{itemize}
+ \item Globally: To restrict access for every Web API controller, add the AuthorizeAttribute filter to the global filter 
+list
+\begin{lstlisting}
+ public static void Register(HttpConfiguration config)
+{
+    config.Filters.Add(new AuthorizeAttribute());
+}
+
+\end{lstlisting}
+\item Controller: To restrict access for a specific controller, add the filter as an attribute to the controller:
+\begin{lstlisting}
+ // Require authorization for all actions on the controller.
+[Authorize]
+public class ValuesController : ApiController
+{
+    public HttpResponseMessage Get(int id) { ... }
+    public HttpResponseMessage Post() { ... }
+}
+public class ValuesController : ApiController
+{
+    public HttpResponseMessage Get() { ... }
+
+    // Require authorization for a specific action.
+    [Authorize]
+    public HttpResponseMessage Post() { ... }
+}
+// Restrict by user:
+[Authorize(Users="Alice,Bob")]
+public class ValuesController : ApiController
+{
+}
+   
+// Restrict by role:
+[Authorize(Roles="Administrators")]
+public class ValuesController : ApiController
+{
+}
+\end{lstlisting}
+
+\end{itemize}
+
+\section{API Hosting}
+\begin{description}
+ \item [Web] Asp.net IIS
+ \item [Self Hosting] Any .NET application can become a Web API server
+ \item [In Memory] Whole pipeline in memory
+ \item [OWIN (Open Web Interface for .NET)] Decouple web application from the host. 
+\end{description}
+
+\section{Building the API}
+\begin{description}
+ \item [Controllers] Represents a HTTP resource  Doesn’t have to map 1-to-1 to an entity!, Use http helpers to conform 
+to http standards : [HttpGet] usw. Can Use IAssemblyResolver to load.
+\item [Actions] Maps to an incoming HTTP request. \\
+\begin{framed}
+ Actions matched:\\
+ \begin{verbatim}
+  - by prefix (GetAll, GetById, Post(id),Put(id))
+- by action attribute (i.e. [HttpPost]) 
+ \end{verbatim}
+\end{framed}
+\pic{acpa.png}
+\item[Action Return]Model / void, HttpResponseMessage , any CLR type, Work with HTTP concepts directly:\\
+IHttpActionResult Predefined factories creating HttpResponseMessage\\
+\begin{verbatim}
+ public interface IHttpActionResult
+{
+Task<System.Net.Http.HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken);
+}
+\end{verbatim}
+\item[Routing] \hfill \\
+\pic{routing.png}
+\item[Content Negotiation] \hfill \\
+\pic{cn.png}
+\pic{cn2.png}
+\item[Testing] Browser tools Fiddler4
+
+\end{description}
+
+\chapter{Signal R}
+Schlussendlich websockets über verschiedene Tech.
+Higher Abstraction Level\\
+Abstracts different technologies to push data\\
+Websockets not required\\
+Falls back to available technologies\\
+Open source\\
+Easier to use\\
+SignalR extends ASP.NET\\
+etect and handle connection states of
+clients\\
+Auto-reconnect after network failures ->
+persistent connections\\Real-time” HTTP-based communication\\
+framework
+Runs in all browsers (JavaScript needed) \\
+Server and client APIs:\\
+ Client calls server\\
+ Server calls client\\
+ APIs for different client technologies (beyond
+JavaScript)\\
+
+\section{Hubs}
+Hubs offer an application-level RPC style\\
+Derived from
+Microsoft.AspNet.SignalR.Hub\\
+Abstraction on top of persistent connections\\
+Hub conventions:
+\begin{itemize}
+\item Public methods are callable from the outside
+\item  Send messages to clients by invoking hub
+methods which are delegated to the clients
+(dynamic, no type safety)
+\end{itemize}
+
+\pic{sighub.png}
+
+\section{Hub Protocol}
+Base endpoint is <MyURL>/signalr\\
+Get JS metadata from <MyURL>/ signalr/hubs\\
+Transport negotiation sequence:\\
+\begin{enumerate}
+\item Web Sockets
+\item  2: Server Sent Event (SSE) (-> not supported by IE)
+\item Forever frame
+\item Long polling
+\item Parameters are serialized to/from JSON
+\end{enumerate}
+
+\section{Pusing Data to Clients}
+\pic{pdc.png}
+\begin{lstlisting}[caption=Pushing Data to Clients]
+ public class MyHub : Hub
+{
+public void SendHelloToAll()
+{
+Clients.All.broadcastMessage("Hello");
+}
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=Hub Lifecycle]
+ public class MyHub1 : Hub
+{
+public override Task OnConnected()
+{
+...
+}
+public override Task OnDisconnected()
+{
+...
+}
+public override Task OnReconnected()
+{
+...
+}
+}
+\end{lstlisting}
+
+\section{Hub Customers}
+
+Many all platforms. Popular jquery api -  uses Late Binding / Generated Proxy.
+\pic{jquerycode.png}
+
+\section{Client Connection Steps}
+\begin{itemize}
+ \item Create Hubconnection
+ \item Create hub proxy
+ \item Wire up handlers via On(...)
+ \item Call methods via invoke /lambda expr
+\end{itemize}
+
+\begin{lstlisting}[caption=client example signalr]
+ static void Main(string[] args)
+{
+var hubConnection =
+new HubConnection("http://xxx.azurewebsites.net");
+var chat = hubConnection.CreateHubProxy("myHub");
+chat.On<string>("newMessage", x => Console.WriteLine(x));
+hubConnection.Start();
+Console.ReadLine();
+}
+\end{lstlisting}
+
+\chapter{Windows 8 Apps}
+\section{Basics}
+\begin{itemize}
+ \item For Desktop+Tablet
+ \item Businesses use Windows store or Side loading\footnote{Involves purchasing ``Enterprise Key'' from Microsoft}
+ \item 2/3 c\# 1/3 html js (not run in browser)
+ \item Touch enabled, full screen, Immersive, Managed lifecycle. 
+ \item Metro apps can be ``snapped'' - View more then 1 app at the same time on screen. Make one smaller.
+ \item Apps can have live tiles with updated info (Push notification)
+ \item Charms - menu right hand side, context sensitive. 
+ \item ``App Bar'' at bottom or top of screen replaces menus and toolbars.
+\end{itemize}
+
+\section{App Lifecycle}
+\pic{al.png}
+\begin{itemize}
+ \item 3 App Sites :
+ \subitem Running suspended, Not running / terminated.
+ \item If app suspended, 5 seconds to restore state. 
+ \subitem Subscribe to events, Incrementially save data, Save or restore data - user context.
+ \item Templates in VS : Hub Application Class Library ,Portable Class Library (->usable on Desktop, WinRT, Windows 
+Phone 8), Unit Test Library (all Windows Runtime)
+\item Async api  many win rt functions async await.
+\end{itemize}
+
+\section{Capabilities}
+Abilities that need to be enabled - permissions / features of device.
+\pic{abil.png}
+
+\section{Contracts}
+Ability to make data available globally in winrt (to other applications) :
+Search\\
+Share Target \\
+File Open Picker (Skydrive, ...)\\
+File Save Picker\\
+Contact Picker\\
+Print Task Settings\\
+Protocol\\
+File Association\\
+
+\section{Layout Conventions}
+\begin{itemize}
+\item Align everything to 20x20 pixel grid
+\subitem Shape outlines
+\subitem Text baselines
+\item Standard font sizes/line heights
+\subitem 12/20, 14.67/20, 26.67/32, 56/64
+\item Standard content area margin
+\subitem Top: 7 units (140px)
+\subitem Heading Baseline: 5 units (100px)
+\subitem Left: 6 units (120px)
+\end{itemize}
+
+\section{Semantic Zoom}
+Two Elements with Syncronzied Scrolling :
+\pic{semz.png}
+
+\section{Application State and Session State, Disc Access}
+\begin{description}
+ \item [App State] No explicit save for app state, do it manually often.
+ \item [Session State] Navigation, UI, scroll positions-
+\item[Disc Access] In container, no direct access to disc:\\
+\begin{verbatim}
+ Windows.ApplicationModel.Package.Current.Inst
+alledLocation
+ApplicationData.Current.LocalFolder
+ ApplicationData.Current.TemporaryFolder
+
+\end{verbatim}
+\end{description}
+
+\section{How to launch an App using Contracts}
+\pic{lac.png}
+
+\section{Application Manifest + Packaging + Deployment}
+\pic{am.png}
+\subsection{Packaging apps}
+Right click project click store, click create app packages, follow wizard.
+\subsection{Deployment}
+Deployed in store after verification / with "Side Loading Key" - Then an .appx package is created with a powershell 
+script that installs it using the given key on the computer. 
+
+\section{Azure Mobile Services}
+
+\subsection{Definition}
+\begin{itemize}
+ \item Generic framework to create backend services. Built with Node js based on Azure websites. Creates a common 
+backend that works for multiple mobile platforms. 
+\pic{azarch.png}
+\item Data Source : Crud Rest API orientated Models. 
+\item Identity / OAUTH : Out of the box (Facebook, Google , Twitter)
+\item Compatability for Android PUSH, APN (Apple) + Windows Mobile / Store. 
+\item Dynamic DB Schema Creation : Created on first use. Can be switched off for production.
+\end{itemize}
+
+\subsection{Data Access}
+\pic{azda.png}
+\pic{azda2.png}
+\pic{azda3.png}
+\pic{azda4.png}
+\pic{azda5.png}
+\pic{azda6.png}
+\begin{lstlisting}[caption=Azure web services Data Access]
+ IMobileServiceTable<TodoItem> todoTable =
+App.MobileService.GetTable<TodoItem>();
+await todoTable.InsertAsync(newItem);
+\end{lstlisting}
+\begin{lstlisting}[language=JavaScript]
+ exports.post = function(request, response)
+{
+// Use "request.service" to access
+// features of your mobile service:
+// var tables = request.service.tables;
+// var push = request.service.push;
+response.send(200, "Hello World");
+};
+\end{lstlisting}
+\subsubsection{Scheduling}
+Scripts can be executed as a type of cron job.
+
+\subsection{Authentication with OAuth}
+\pic{oa1.png}
+\pic{oa2.png}
+
+\begin{framed}
+ Restrict permissions in settings afterward
+\end{framed}
+\pic{oalog.png}
+
+\section{Push Notifications}
+Common high level notification pattern:\\
+1. Client retrieves its handle\\
+2. Client stores handle in app backend\\
+3. App backend contacts PNS\\
+4. PNS forwards notification\\
+Note : Platform specific infrastructure, no common interface - problematic.\\
+\textbf{Solution windows azure notification hub}\\
+
+\subsection{Notification Hub}
+Multiplatform push notification infrastructure\\
+- Platform-independent messages\\
+- Scale out\\
+- Sends push notifications from any backend
+(in the cloud or on-premises) to any mobile
+platform
+
+
+\part{Code}
+\chapter{Code Prüfung 1}
 
 \begin{lstlisting}[caption=Converter WPF]
 using System;
@@ -1081,20 +1806,23 @@ namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
 
         public SellViewModel()
         {
-            EndTime = DateTime.Now.AddDays(7).ToString(CultureInfo.CurrentCulture);
+            EndTime = DateTime.Now.AddDays(7).ToString(CultureInfo.CurrentCulture);
+
             Name = "?";
             StartPrice = "1";
             
         }
         /// <summary>
-        /// Validates if all data are correctly provided for the new auction
+        /// Validates if all data are correctly provided for the new auction
+
         /// Creates a new NewAuctionItem property instance.
         /// </summary>
         /// <returns>true if OK, else false</returns>
         public bool ValidateEntries()
         {
             if (Name.Length == 0) return false;
-            int startPrice;
+            int startPrice;
+
             if (!int.TryParse(StartPrice, out startPrice)) return false;
             if (startPrice == 0) return false;
             DateTime endTime;
@@ -1102,8 +1830,10 @@ namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
             if (endTime < DateTime.Now) return false;
             if (Picture != null && PicturePath.Length > 0 && !File.Exists(PicturePath)) return false;
 
-            // create new auction item and initialize it
-            NewAuctionItem = new Auction
+            // create new auction item and initialize it
+
+            NewAuctionItem = new Auction
+
             {
                 Name = this.Name,
                 StartPrice = startPrice,
@@ -1151,7 +1881,8 @@ namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
             {
                 if (_okCommand == null)
                 {
-                    _okCommand = new DelegateCommand<Window>(DoOk, CanDoOk);
+                    _okCommand = new DelegateCommand<Window>(DoOk, CanDoOk);
+
                 }
                 return _okCommand;
             }
@@ -1171,104 +1902,196 @@ namespace Fhnw.Dnead.Auction.WpfClient.ViewModels
 \end{lstlisting}
 
 \begin{lstlisting}[caption=sample edmx file,language=xml]
- <?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
-  <!-- EF Runtime content -->
-  <edmx:Runtime>
-    <!-- SSDL content -->
-    <edmx:StorageModels>
+ <?xml version="1.0" encoding="utf-8"?>
+
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+
+  <!-- EF Runtime content -->
+
+  <edmx:Runtime>
+
+    <!-- SSDL content -->
+
+    <edmx:StorageModels>
+
       <Schema Namespace="AuctionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" 
 xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" 
-xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="AuctionModelStoreContainer">
-          <EntitySet Name="Auction" EntityType="AuctionModel.Store.Auction" store:Type="Tables" Schema="dbo" />
-        </EntityContainer>
-        <EntityType Name="Auction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
-          <Property Name="StartPrice" Type="int" Nullable="false" />
-          <Property Name="Bid" Type="int" />
-          <Property Name="StartTime" Type="datetime" Nullable="false" />
-          <Property Name="EndTime" Type="datetime" Nullable="false" />
-          <Property Name="Seller" Type="nchar" Nullable="false" MaxLength="50" />
-          <Property Name="Buyer" Type="nchar" MaxLength="50" />
-          <Property Name="Open" Type="bit" Nullable="false" />
-          <Property Name="Picture" Type="image" />
-        </EntityType>
-      </Schema>
-    </edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
+xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+
+        <EntityContainer Name="AuctionModelStoreContainer">
+
+          <EntitySet Name="Auction" EntityType="AuctionModel.Store.Auction" store:Type="Tables" Schema="dbo" />
+
+        </EntityContainer>
+
+        <EntityType Name="Auction">
+
+          <Key>
+
+            <PropertyRef Name="Id" />
+
+          </Key>
+
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+
+          <Property Name="Name" Type="nchar" Nullable="false" MaxLength="50" />
+
+          <Property Name="StartPrice" Type="int" Nullable="false" />
+
+          <Property Name="Bid" Type="int" />
+
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+
+          <Property Name="Seller" Type="nchar" Nullable="false" MaxLength="50" />
+
+          <Property Name="Buyer" Type="nchar" MaxLength="50" />
+
+          <Property Name="Open" Type="bit" Nullable="false" />
+
+          <Property Name="Picture" Type="image" />
+
+        </EntityType>
+
+      </Schema>
+
+    </edmx:StorageModels>
+
+    <!-- CSDL content -->
+
+    <edmx:ConceptualModels>
+
       <Schema Namespace="AuctionModel" Alias="Self" p1:UseStrongSpatialTypes="false" 
 xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
 xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" 
-xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="AuctionContext" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Auctions" EntityType="AuctionModel.Auction" />
-        </EntityContainer>
-        <EntityType Name="Auction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
-          <Property Name="StartPrice" Type="Int32" Nullable="false" />
-          <Property Name="Bid" Type="Int32" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Seller" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
-          <Property Name="Buyer" Type="String" MaxLength="50" Unicode="true" FixedLength="true" />
-          <Property Name="Open" Type="Boolean" Nullable="false" />
-          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-      </Schema>
-    </edmx:ConceptualModels>
-    <!-- C-S mapping content -->
-    <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+
+        <EntityContainer Name="AuctionContext" p1:LazyLoadingEnabled="true">
+
+          <EntitySet Name="Auctions" EntityType="AuctionModel.Auction" />
+
+        </EntityContainer>
+
+        <EntityType Name="Auction">
+
+          <Key>
+
+            <PropertyRef Name="Id" />
+
+          </Key>
+
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+
+          <Property Name="StartPrice" Type="Int32" Nullable="false" />
+
+          <Property Name="Bid" Type="Int32" />
+
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+
+          <Property Name="Seller" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="true" />
+
+          <Property Name="Buyer" Type="String" MaxLength="50" Unicode="true" FixedLength="true" />
+
+          <Property Name="Open" Type="Boolean" Nullable="false" />
+
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+
+        </EntityType>
+
+      </Schema>
+
+    </edmx:ConceptualModels>
+
+    <!-- C-S mapping content -->
+
+    <edmx:Mappings>
+
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+
         <EntityContainerMapping StorageEntityContainer="AuctionModelStoreContainer" 
-CdmEntityContainer="AuctionContext">
-          <EntitySetMapping Name="Auctions">
-            <EntityTypeMapping TypeName="AuctionModel.Auction">
-              <MappingFragment StoreEntitySet="Auction">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="StartPrice" ColumnName="StartPrice" />
-                <ScalarProperty Name="Bid" ColumnName="Bid" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="Seller" ColumnName="Seller" />
-                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
-                <ScalarProperty Name="Open" ColumnName="Open" />
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
-  </edmx:Runtime>
-  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <Connection>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
-      </DesignerInfoPropertySet>
-    </Connection>
-    <Options>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
-      </DesignerInfoPropertySet>
-    </Options>
-    <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
-  </Designer>
+CdmEntityContainer="AuctionContext">
+
+          <EntitySetMapping Name="Auctions">
+
+            <EntityTypeMapping TypeName="AuctionModel.Auction">
+
+              <MappingFragment StoreEntitySet="Auction">
+
+                <ScalarProperty Name="Id" ColumnName="Id" />
+
+                <ScalarProperty Name="Name" ColumnName="Name" />
+
+                <ScalarProperty Name="StartPrice" ColumnName="StartPrice" />
+
+                <ScalarProperty Name="Bid" ColumnName="Bid" />
+
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+
+                <ScalarProperty Name="Seller" ColumnName="Seller" />
+
+                <ScalarProperty Name="Buyer" ColumnName="Buyer" />
+
+                <ScalarProperty Name="Open" ColumnName="Open" />
+
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+
+              </MappingFragment>
+
+            </EntityTypeMapping>
+
+          </EntitySetMapping>
+
+        </EntityContainerMapping>
+
+      </Mapping>
+
+    </edmx:Mappings>
+
+  </edmx:Runtime>
+
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+
+    <Connection>
+
+      <DesignerInfoPropertySet>
+
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+
+      </DesignerInfoPropertySet>
+
+    </Connection>
+
+    <Options>
+
+      <DesignerInfoPropertySet>
+
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+
+      </DesignerInfoPropertySet>
+
+    </Options>
+
+    <!-- Diagram content (shape and connector positions) -->
+
+    <Diagrams></Diagrams>
+
+  </Designer>
+
 </edmx:Edmx>
 \end{lstlisting}
 
@@ -1291,6 +2114,448 @@ myContainer.RegisterType<IMyService, LoggingService>("Logging");
 IMyService myDataService = myContainer.Resolve<IMyService>("Data");
 IMyService myLoggingService = myContainer.Resolve<IMyService>("Logging");
 
+// Create container and register types using a name for each one
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType<IMyService, DefaultService>();
+myContainer.RegisterType<IMyService, DataService>("Data");
+myContainer.RegisterType<IMyService, LoggingService>("Logging");
+
+// Retrieve a list of non-default types registered for IMyService
+// List will only contain the types DataService and LoggingService
+IEnumerable<IMyService> serviceList = myContainer.ResolveAll<IMyService>();
+
+
+// Create container and register types using a name for each one
+IUnityContainer myContainer = new UnityContainer();
+myContainer.RegisterType(typeof(MyServiceBase), typeof(DefaultService));
+myContainer.RegisterType(typeof(MyServiceBase), typeof(DataService), "Data");
+myContainer.RegisterType(typeof(MyServiceBase), typeof(LoggingService), "Logging");
+
+// Retrieve a list of non-default types registered for MyServiceBase
+// List will only contain the types DataService and LoggingService
+foreach(Object mapping in myContainer.ResolveAll(typeof(MyServiceBase)))
+{
+  MyServiceBase myService = (MyServiceBase)mapping;
+}
+
+
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Constructor Injection]
+public class MyObject
+{
+  public MyObject(MyDependentClass myInstance)
+  { 
+    // work with the dependent instance
+    myInstance.SomeProperty = "SomeValue";
+    // or assign it to a class-level variable
+  }
+} 
+
+
+IUnityContainer uContainer = new UnityContainer();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+IUnityContainer uContainer = new UnityContainer()
+   .RegisterType<IMyInterface, FirstObject>()
+   .RegisterType<MyBaseClass, SecondObject>();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+
+
+//Multiple-Constructor Injection Using an Attribute
+
+public class MyObject
+{
+
+  public MyObject(SomeOtherClass myObjA)
+  { 
+    ...
+  }
+
+  [InjectionConstructor]
+  public MyObject(MyDependentClass myObjB)
+  { 
+    ...
+  }
+
+} 
+IUnityContainer uContainer = new UnityContainer();
+MyObject myInstance = uContainer.Resolve<MyObject>();
+
+  
+
+
+
+\end{lstlisting}
+
+\chapter{Code Prüfung 2}
+\begin{lstlisting}[caption=WebApi Example]
+ using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ProductStoreWebApiService.Models;
+
+namespace ProductStoreWebApiService.Controllers
+{
+    public class ProductsController : ApiController
+    {
+
+        static readonly IProductRepository repository = new ProductRepository();
+
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return repository.GetAll();
+        }
+
+        public Product GetProduct(int id)
+        {
+            Product item = repository.Get(id);
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            return item;
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(string category)
+        {
+            return repository.GetAll().Where(
+                p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public HttpResponseMessage PostProduct(Product item)
+        {
+            item = repository.Add(item);
+            var response = Request.CreateResponse<Product>(HttpStatusCode.Created, item);
+
+            string uri = Url.Link("DefaultApi", new { id = item.Id });
+            response.Headers.Location = new Uri(uri);
+            return response;
+        }
+
+        public void PutProduct(int id, Product product)
+        {
+            product.Id = id;
+            if (!repository.Update(product))
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+        }
+
+        public void DeleteProduct(int id)
+        {
+            Product item = repository.Get(id);
+            if (item == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            repository.Remove(id);
+        }
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=signalr example 1]
+ namespace MvcApplication1
+{
+    public class MyHub : Hub
+    {
+        public void AddMessage(string nick, string message)
+        {
+            Clients.All.newMessage(nick, message);
+        }
+    }
+}
+
+namespace MvcApplication1
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Chat", id = UrlParameter.Optional }
+            );
+        }
+    }
+}
+
+<div class="container"> 
+    <input type="text" id="message" />
+    <input type="text" id="nick" />
+<input type="button" id="sendmessage" value="Send" />
+<ul id="discussion"></ul>
+</div>
+@section scripts {
+<script src="~/Scripts/jquery.signalR-2.0.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script>
+    $(function () {
+        $.connection.myHub.client.newMessage = function (nick, message) {
+            // Add the message to the page.
+            $('#discussion').append('<li>' + nick + ', ' + message + '</li>');
+        };
+        $.connection.hub.start();
+        $('#sendmessage').click(function () {
+            // Call the Send method on the hub.
+            $.connection.myHub.server.addMessage($('#nick').val(), $('#message').val());
+        });
+    });
+</script>
+}
+
+namespace MvcApplication1
+{
+    public class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            app.MapSignalR();
+        }
+    }
+} 
+\end{lstlisting}
+\begin{lstlisting}[caption=wcf example]
+ namespace CurrencyConverterServices
+{
+    [ServiceContract]
+    public interface ICurrencyConverterService
+    {
+        [OperationContract]
+        string GetData(int value);
+
+        [OperationContract]
+        CompositeType GetDataUsingDataContract(CompositeType composite);
+
+        [OperationContract]
+        CurrencyExchange Convert(Money sourceMoney, CurrencyCode targetCurrency);
+    }
+    // Use a data contract as illustrated in the sample below to add composite types to service operations.
+    // You can add XSD files into the project. After building the project, you can directly use the data types defined 
+there, with the namespace "CurrencyConverterService.ContractType".
+    [DataContract]
+    public class CompositeType
+    {
+        bool boolValue = true;
+        string stringValue = "Hello ";
+        [DataMember]
+        public bool BoolValue
+        {
+            get { return boolValue; }
+            set { boolValue = value; }
+        }
+        [DataMember]
+        public string StringValue
+        {
+            get { return stringValue; }
+            set { stringValue = value; }
+        }
+    }
+}
+
+namespace CurrencyConverterServices
+{
+    public class CurrencyConverterService : ICurrencyConverterService
+    {
+        public string GetData(int value)
+        {
+            return string.Format("You entered: {0}", value);
+        }
+        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        {
+            if (composite == null)
+            {
+                throw new ArgumentNullException("composite");
+            }
+            if (composite.BoolValue)
+            {
+                composite.StringValue += "Suffix";
+            }
+            return composite;
+        }
+        public CurrencyExchange Convert(Money sourceMoney, CurrencyCode targetCurrency)
+        {
+            CurrencyConverter cc = new CurrencyConverter();
+            return cc.Convert(sourceMoney, targetCurrency);
+        }
+    }
+}
+
+namespace CurrencyConverterLib
+{
+    [DataContract]
+    public enum CurrencyCode { [EnumMember]USD, [EnumMember]EUR, [EnumMember]CHF };
+}
+
+namespace CurrencyConverterLib
+{
+    [DataContract]
+    public class Money
+    {
+        public Money(CurrencyCode currencyCode, double amount)
+        {
+            Currency = currencyCode;
+            Amount = amount;
+        }
+        [DataMember]
+        public CurrencyCode Currency { get; set; }
+
+        [DataMember]
+        public double Amount { get; set; }
+    }
+}
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+
+  <appSettings>
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" />
+  </system.web>
+  <!-- When deploying the service library project, the content of the config file must be added to the host's 
+  app.config file. System.Configuration does not support config files for libraries. -->
+  <system.serviceModel>
+    <services>
+      <service name="CurrencyConverterServices.CurrencyConverterService">
+        <endpoint address="" binding="basicHttpBinding" contract="CurrencyConverterServices.ICurrencyConverterService">
+          <identity>
+            <dns value="localhost" />
+          </identity>
+        </endpoint>
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+        <host>
+          <baseAddresses>
+            <add baseAddress="http://localhost:8733/Design_Time_Addresses/CurrencyConverterService/Service1/" />
+          </baseAddresses>
+        </host>
+      </service>
+    </services>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior>
+          <!-- To avoid disclosing metadata information, 
+          set the values below to false before deployment -->
+          <serviceMetadata httpGetEnabled="True" httpsGetEnabled="True"/>
+          <!-- To receive exception details in faults for debugging purposes, 
+          set the value below to true.  Set to false before deployment 
+          to avoid disclosing exception information -->
+          <serviceDebug includeExceptionDetailInFaults="False" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+  </system.serviceModel>
+
+</configuration>
+\end{lstlisting}
+\begin{lstlisting}[caption=wcf self host]
+ // program.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.ServiceModel;
+using GettingStartedLib;
+using System.ServiceModel.Description; 
+
+namespace GettingStartedHost
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Step 1 Create a URI to serve as the base address.
+            Uri baseAddress = new Uri("http://localhost:8000/GettingStarted/");
+
+            // Step 2 Create a ServiceHost instance
+            ServiceHost selfHost = new ServiceHost(typeof(CalculatorService), baseAddress);
+
+            try
+            {
+                // Step 3 Add a service endpoint.
+                selfHost.AddServiceEndpoint(typeof(ICalculator), new WSHttpBinding(), "CalculatorService");
+
+                // Step 4 Enable metadata exchange.
+                ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
+                smb.HttpGetEnabled = true;
+                selfHost.Description.Behaviors.Add(smb);
+
+                // Step 5 Start the service.
+                selfHost.Open();
+                Console.WriteLine("The service is ready.");
+                Console.WriteLine("Press <ENTER> to terminate service.");
+                Console.WriteLine();
+                Console.ReadLine();
+
+                // Close the ServiceHostBase to shutdown the service.
+                selfHost.Close();
+            }
+            catch (CommunicationException ce)
+            {
+                Console.WriteLine("An exception occurred: {0}", ce.Message);
+                selfHost.Abort();
+            }
+        }
+    }
+}
+\end{lstlisting}
+\begin{lstlisting}[caption=wcf client side]
+svcutil.exe /language:cs /out:generatedProxy.cs /config:app.config http://localhost:8000/ServiceModelSamples/service
+ using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using GettingStartedClient.ServiceReference1;
+
+namespace GettingStartedClient
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Step 1: Create an instance of the WCF proxy.
+            CalculatorClient client = new CalculatorClient();
+
+            // Step 2: Call the service operations.
+            // Call the Add service operation.
+            double value1 = 100.00D;
+            double value2 = 15.99D;
+            double result = client.Add(value1, value2);
+            Console.WriteLine("Add({0},{1}) = {2}", value1, value2, result);
+
+            // Call the Subtract service operation.
+            value1 = 145.00D;
+            value2 = 76.54D;
+            result = client.Subtract(value1, value2);
+            Console.WriteLine("Subtract({0},{1}) = {2}", value1, value2, result);
+
+            // Call the Multiply service operation.
+            value1 = 9.00D;
+            value2 = 81.25D;
+            result = client.Multiply(value1, value2);
+            Console.WriteLine("Multiply({0},{1}) = {2}", value1, value2, result);
+
+            // Call the Divide service operation.
+            value1 = 22.00D;
+            value2 = 7.00D;
+            result = client.Divide(value1, value2);
+            Console.WriteLine("Divide({0},{1}) = {2}", value1, value2, result);
+
+            //Step 3: Closing the client gracefully closes the connection and cleans up resources.
+            client.Close();
+        }
+    }
+}
 \end{lstlisting}
 
 

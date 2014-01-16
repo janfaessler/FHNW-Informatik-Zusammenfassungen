@@ -1,70 +1,125 @@
 \select@language {english}
-\contentsline {chapter}{\numberline {1}Basics,Intro,TFS}{4}
-\contentsline {section}{\numberline {1.1}TFS Setup}{4}
-\contentsline {chapter}{\numberline {2}Windows Presentation Foundation (WPF)}{5}
-\contentsline {section}{\numberline {2.1}Goals of WPF}{5}
-\contentsline {section}{\numberline {2.2}WPF Features}{5}
-\contentsline {subsection}{\numberline {2.2.1}Rendering}{5}
-\contentsline {section}{\numberline {2.3}XAML}{5}
-\contentsline {subsection}{\numberline {2.3.1}User Controls vs Custom Control}{8}
-\contentsline {subsection}{\numberline {2.3.2}Layout Panels , Padding and Alignment}{8}
-\contentsline {subsection}{\numberline {2.3.3}Transformations (Translations/Animations)}{8}
-\contentsline {section}{\numberline {2.4}Databinding with XAML}{9}
-\contentsline {subsection}{\numberline {2.4.1}Data Context}{9}
-\contentsline {subsection}{\numberline {2.4.2}IPropertyChanged}{9}
-\contentsline {subsection}{\numberline {2.4.3}ObservableCollection}{10}
-\contentsline {subsection}{\numberline {2.4.4}Value Converters}{10}
-\contentsline {subsection}{\numberline {2.4.5}Problems}{10}
-\contentsline {section}{\numberline {2.5}MVVM Pattern}{10}
-\contentsline {subsection}{\numberline {2.5.1}Commands}{11}
-\contentsline {chapter}{\numberline {3}Entity Framework}{13}
-\contentsline {section}{\numberline {3.1}ADO.NET}{13}
-\contentsline {subsection}{\numberline {3.1.1}Examples}{14}
-\contentsline {section}{\numberline {3.2}Intro to Entity Framework}{14}
-\contentsline {section}{\numberline {3.3}Architecture / Structure of EF}{14}
-\contentsline {section}{\numberline {3.4}"Variations" of Entity Framework}{15}
-\contentsline {section}{\numberline {3.5}Entity Objects}{15}
-\contentsline {section}{\numberline {3.6}First Steps}{16}
-\contentsline {chapter}{\numberline {4}Dependency Injection with Unity}{17}
-\contentsline {section}{\numberline {4.1}What is a dependency?}{17}
-\contentsline {subsection}{\numberline {4.1.1}Tightly Coupled Dependencies (Bad)}{17}
-\contentsline {section}{\numberline {4.2}What is Inversion of Control}{18}
-\contentsline {subsection}{\numberline {4.2.1}IOC Implications}{18}
-\contentsline {subsection}{\numberline {4.2.2}IOC Advantages}{18}
-\contentsline {section}{\numberline {4.3}What is dependency injection}{18}
-\contentsline {subsection}{\numberline {4.3.1}Dependency Options}{18}
-\contentsline {subsection}{\numberline {4.3.2}Ways to inject dependencies}{18}
-\contentsline {subsubsection}{Constructor Injection}{18}
-\contentsline {subsubsection}{Setter Injection}{19}
-\contentsline {subsubsection}{Method Injection}{19}
-\contentsline {section}{\numberline {4.4}Pros and Cons of DI}{19}
-\contentsline {section}{\numberline {4.5}IOC Container Services}{19}
-\contentsline {section}{\numberline {4.6}IOC based Injection}{19}
-\contentsline {section}{\numberline {4.7}How to use Unity}{20}
-\contentsline {subsection}{\numberline {4.7.1}Resolving Dependencies (Wiring)}{20}
-\contentsline {section}{\numberline {4.8}Managing Lifetimes of Objects with Unity}{20}
-\contentsline {chapter}{\numberline {5}ASP MVC4}{22}
-\contentsline {section}{\numberline {5.1}Advantages of MVC}{22}
-\contentsline {section}{\numberline {5.2}Naming Conventions}{22}
-\contentsline {section}{\numberline {5.3}MVC Sequence Diagram - How it works}{22}
-\contentsline {section}{\numberline {5.4}Controllers}{22}
-\contentsline {subsection}{\numberline {5.4.1}Controller Action Types}{23}
-\contentsline {subsection}{\numberline {5.4.2}Controllers and AJAX}{23}
-\contentsline {section}{\numberline {5.5}Passing Data between Controller and View}{23}
-\contentsline {subsection}{\numberline {5.5.1}Viewbag}{24}
-\contentsline {section}{\numberline {5.6}Razor View Engine}{24}
-\contentsline {section}{\numberline {5.7}View Helpers}{24}
-\contentsline {section}{\numberline {5.8}Layout}{25}
-\contentsline {section}{\numberline {5.9}Routing}{25}
-\contentsline {section}{\numberline {5.10}Model binding}{25}
-\contentsline {subsection}{\numberline {5.10.1}Hidden values}{27}
-\contentsline {subsection}{\numberline {5.10.2}Step by Step behind the curtain}{27}
-\contentsline {section}{\numberline {5.11}Sessions}{27}
-\contentsline {chapter}{\numberline {6}Azure}{28}
-\contentsline {section}{\numberline {6.1}Data Center Architecture}{28}
-\contentsline {section}{\numberline {6.2}Windows Azure Portal}{29}
-\contentsline {subsection}{\numberline {6.2.1}PAAS in depth for Azure}{29}
-\contentsline {subsubsection}{Implementation}{29}
-\contentsline {section}{\numberline {6.3}Databases/Storage Account}{29}
-\contentsline {subsection}{\numberline {6.3.1}Storage Types (Table,Queue)}{30}
-\contentsline {chapter}{\numberline {7}Code}{31}
+\contentsline {part}{\numberline {I}Pr\IeC {\"u}fung 1}{5}
+\contentsline {chapter}{\numberline {1}Basics,Intro,TFS}{6}
+\contentsline {section}{\numberline {1.1}TFS Setup}{6}
+\contentsline {chapter}{\numberline {2}Windows Presentation Foundation (WPF)}{7}
+\contentsline {section}{\numberline {2.1}Goals of WPF}{7}
+\contentsline {section}{\numberline {2.2}WPF Features}{7}
+\contentsline {subsection}{\numberline {2.2.1}Rendering}{7}
+\contentsline {section}{\numberline {2.3}XAML}{7}
+\contentsline {subsection}{\numberline {2.3.1}User Controls vs Custom Control}{10}
+\contentsline {subsection}{\numberline {2.3.2}Layout Panels , Padding and Alignment}{10}
+\contentsline {subsection}{\numberline {2.3.3}Transformations (Translations/Animations)}{10}
+\contentsline {section}{\numberline {2.4}Databinding with XAML}{11}
+\contentsline {subsection}{\numberline {2.4.1}Data Context}{11}
+\contentsline {subsection}{\numberline {2.4.2}IPropertyChanged}{11}
+\contentsline {subsection}{\numberline {2.4.3}ObservableCollection}{12}
+\contentsline {subsection}{\numberline {2.4.4}Value Converters}{12}
+\contentsline {subsection}{\numberline {2.4.5}Problems}{12}
+\contentsline {section}{\numberline {2.5}MVVM Pattern}{12}
+\contentsline {subsection}{\numberline {2.5.1}Commands}{13}
+\contentsline {chapter}{\numberline {3}Entity Framework}{15}
+\contentsline {section}{\numberline {3.1}ADO.NET}{15}
+\contentsline {subsection}{\numberline {3.1.1}Examples}{16}
+\contentsline {section}{\numberline {3.2}Intro to Entity Framework}{16}
+\contentsline {section}{\numberline {3.3}Architecture / Structure of EF}{16}
+\contentsline {section}{\numberline {3.4}"Variations" of Entity Framework}{17}
+\contentsline {section}{\numberline {3.5}Entity Objects}{17}
+\contentsline {section}{\numberline {3.6}First Steps}{18}
+\contentsline {chapter}{\numberline {4}Dependency Injection with Unity}{19}
+\contentsline {section}{\numberline {4.1}What is a dependency?}{19}
+\contentsline {subsection}{\numberline {4.1.1}Tightly Coupled Dependencies (Bad)}{19}
+\contentsline {section}{\numberline {4.2}What is Inversion of Control}{20}
+\contentsline {subsection}{\numberline {4.2.1}IOC Implications}{20}
+\contentsline {subsection}{\numberline {4.2.2}IOC Advantages}{20}
+\contentsline {section}{\numberline {4.3}What is dependency injection}{20}
+\contentsline {subsection}{\numberline {4.3.1}Dependency Options}{20}
+\contentsline {subsection}{\numberline {4.3.2}Ways to inject dependencies}{20}
+\contentsline {subsubsection}{Constructor Injection}{20}
+\contentsline {subsubsection}{Setter Injection}{21}
+\contentsline {subsubsection}{Method Injection}{21}
+\contentsline {section}{\numberline {4.4}Pros and Cons of DI}{21}
+\contentsline {section}{\numberline {4.5}IOC Container Services}{21}
+\contentsline {section}{\numberline {4.6}IOC based Injection}{21}
+\contentsline {section}{\numberline {4.7}How to use Unity}{22}
+\contentsline {subsection}{\numberline {4.7.1}Resolving Dependencies (Wiring)}{22}
+\contentsline {section}{\numberline {4.8}Managing Lifetimes of Objects with Unity}{22}
+\contentsline {part}{\numberline {II}Pr\IeC {\"u}fung 2}{24}
+\contentsline {chapter}{\numberline {5}ASP MVC4}{25}
+\contentsline {section}{\numberline {5.1}Advantages of MVC}{25}
+\contentsline {section}{\numberline {5.2}Naming Conventions}{25}
+\contentsline {section}{\numberline {5.3}MVC Sequence Diagram - How it works}{25}
+\contentsline {section}{\numberline {5.4}Controllers}{25}
+\contentsline {subsection}{\numberline {5.4.1}Controller Action Types}{26}
+\contentsline {subsection}{\numberline {5.4.2}Controllers and AJAX}{26}
+\contentsline {section}{\numberline {5.5}Passing Data between Controller and View}{26}
+\contentsline {subsection}{\numberline {5.5.1}Viewbag}{27}
+\contentsline {section}{\numberline {5.6}Razor View Engine}{27}
+\contentsline {section}{\numberline {5.7}View Helpers}{27}
+\contentsline {section}{\numberline {5.8}Layout}{28}
+\contentsline {section}{\numberline {5.9}Routing}{28}
+\contentsline {section}{\numberline {5.10}Model binding}{28}
+\contentsline {subsection}{\numberline {5.10.1}Hidden values}{30}
+\contentsline {subsection}{\numberline {5.10.2}Step by Step behind the curtain}{30}
+\contentsline {section}{\numberline {5.11}Sessions}{30}
+\contentsline {chapter}{\numberline {6}Azure}{31}
+\contentsline {section}{\numberline {6.1}Data Center Architecture}{31}
+\contentsline {section}{\numberline {6.2}Windows Azure Portal}{32}
+\contentsline {subsection}{\numberline {6.2.1}PAAS in depth for Azure}{32}
+\contentsline {subsubsection}{Implementation}{32}
+\contentsline {section}{\numberline {6.3}Databases/Storage Account}{32}
+\contentsline {subsection}{\numberline {6.3.1}Storage Types (Table,Queue)}{33}
+\contentsline {chapter}{\numberline {7}Windows Communication Foundation}{34}
+\contentsline {section}{\numberline {7.1}Fundamentals}{34}
+\contentsline {subsection}{\numberline {7.1.1}Service Orientation}{34}
+\contentsline {subsection}{\numberline {7.1.2}Design Goals WCF}{34}
+\contentsline {section}{\numberline {7.2}WCF Concepts}{34}
+\contentsline {section}{\numberline {7.3}Contracts,Behavior,Ways to Talk}{35}
+\contentsline {section}{\numberline {7.4}Steps for Building a WCF App}{36}
+\contentsline {section}{\numberline {7.5}WCF Examples}{36}
+\contentsline {subsection}{\numberline {7.5.1}Service Contract}{36}
+\contentsline {subsection}{\numberline {7.5.2}Data Contract}{38}
+\contentsline {subsection}{\numberline {7.5.3}Message Contract}{38}
+\contentsline {subsection}{\numberline {7.5.4}Bindings}{38}
+\contentsline {section}{\numberline {7.6}Features Summary}{38}
+\contentsline {section}{\numberline {7.7}Config (xml) based WCF}{38}
+\contentsline {section}{\numberline {7.8}WCF Summary}{40}
+\contentsline {chapter}{\numberline {8}REST API MVC}{41}
+\contentsline {section}{\numberline {8.1}Rest Basics}{41}
+\contentsline {section}{\numberline {8.2}WCF vs Web Api}{42}
+\contentsline {section}{\numberline {8.3}Web Api Vorteile}{43}
+\contentsline {subsection}{\numberline {8.3.1}Integrated Stack}{43}
+\contentsline {section}{\numberline {8.4}Default Route (Important)}{43}
+\contentsline {section}{\numberline {8.5}Formate (XML JSON)}{44}
+\contentsline {section}{\numberline {8.6}Security in Web API}{44}
+\contentsline {subsection}{\numberline {8.6.1}Exkurs : Authorize}{45}
+\contentsline {section}{\numberline {8.7}API Hosting}{46}
+\contentsline {section}{\numberline {8.8}Building the API}{46}
+\contentsline {chapter}{\numberline {9}Signal R}{49}
+\contentsline {section}{\numberline {9.1}Hubs}{49}
+\contentsline {section}{\numberline {9.2}Hub Protocol}{49}
+\contentsline {section}{\numberline {9.3}Pusing Data to Clients}{49}
+\contentsline {section}{\numberline {9.4}Hub Customers}{50}
+\contentsline {section}{\numberline {9.5}Client Connection Steps}{50}
+\contentsline {chapter}{\numberline {10}Windows 8 Apps}{52}
+\contentsline {section}{\numberline {10.1}Basics}{52}
+\contentsline {section}{\numberline {10.2}App Lifecycle}{52}
+\contentsline {section}{\numberline {10.3}Capabilities}{53}
+\contentsline {section}{\numberline {10.4}Contracts}{53}
+\contentsline {section}{\numberline {10.5}Layout Conventions}{53}
+\contentsline {section}{\numberline {10.6}Semantic Zoom}{54}
+\contentsline {section}{\numberline {10.7}Application State and Session State, Disc Access}{54}
+\contentsline {section}{\numberline {10.8}How to launch an App using Contracts}{54}
+\contentsline {section}{\numberline {10.9}Application Manifest + Packaging + Deployment}{54}
+\contentsline {subsection}{\numberline {10.9.1}Packaging apps}{54}
+\contentsline {subsection}{\numberline {10.9.2}Deployment}{54}
+\contentsline {section}{\numberline {10.10}Azure Mobile Services}{55}
+\contentsline {subsection}{\numberline {10.10.1}Definition}{55}
+\contentsline {subsection}{\numberline {10.10.2}Data Access}{55}
+\contentsline {subsubsection}{Scheduling}{55}
+\contentsline {subsection}{\numberline {10.10.3}Authentication with OAuth}{55}
+\contentsline {section}{\numberline {10.11}Push Notifications}{56}
+\contentsline {subsection}{\numberline {10.11.1}Notification Hub}{56}
+\contentsline {part}{\numberline {III}Code}{61}
+\contentsline {chapter}{\numberline {11}Code Pr\IeC {\"u}fung 1}{62}
+\contentsline {chapter}{\numberline {12}Code Pr\IeC {\"u}fung 2}{70}
