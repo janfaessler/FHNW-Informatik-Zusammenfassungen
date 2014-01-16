@@ -292,9 +292,9 @@ Die Normalverteilung mit Parametern $\mu$ und $\sigma$.
 
 
 \subsubsection*{Exponentialverteilung}
-Die Wahrscheinlichkeit dass X einen Wert grösser als $t$ annimt, sinkt exponentiell.\\
+Die Wahrscheinlichkeit dass X einen Wert grösser als $t$ annimt, sinkt exponentiell.
 \begin{align*}
-	X \sim Poi(\lambda) : P(X = t) &=\frac{\lambda^k}{k!}*e^{-\lambda} \text{, k=0,1, \dots, n} \\
+	X \sim Exp(\lambda) : P(X \geq t) &= e^{-\lambda t} \\
 	E(x) &= \frac{1}{\lambda}\\
 	V(x) &= \frac{1}{\lambda^2}
 \end{align*} 
@@ -348,22 +348,24 @@ Diese Abschätzung gilt für alle möglichen Verteilungen von X. Sie ist deshalb
 P(\mid \frac{X}{n} - p \mid \geq \epsilon) \rightarrow 0 (n \rightarrow \infty)
 \end{equation*}
 \subsubsection*{Zentraler Grenzwertsatz}
-Es sei $X_1, X_2,$ \dots eine Folge von unabhängigen Zufallsvariablen eines  Wahrscheinlichkeitsraumes, welche alle dieselbe Verteilung mit Erwartungswert $\mu$ und Varianz $\sigma^2$ haben. Dan gilt für grosse $n$: \\
-Die Summe $S_n = X_1 + \dots + X_n$ besitzt näherungsweise die Normalverteilung $N(\mu_n, \sigma_n)$ mit $\mu_n = n * \mu$ und $\sigma_n = \sqrt{n} * \sigma$. Es gilt also näherungsweise $ \frac{S_n - \mu_n}{\sqrt{n} * \mu} \sim N(0,1)$. \\
-Präzise gilt für alle $z \in \RN$:
-\begin{equation*}
-P(\frac{S_n - n\mu}{\sqrt{n}\sigma} \leq z) \rightarrow \Phi(z) (n \rightarrow \infty)
-\end{equation*}
-\subsubsection*{Grenzwertsatz von de Moivre und Laplace}
-Für grosse $n$ ist
-\begin{equation*}
-P(a \leq X \leq b) \approx \Phi (\frac{b - np}{\sqrt{np(1-p)}}) - \Phi (\frac{a - np}{\sqrt{np(1-p)}})
-\end{equation*}
-Diese Approximation ist für $n > \frac{9}{p(1-p)}$ hinfreichend genau. \\
-Etwas genauer wird es mit der sogenannten \textbf{Stetigkeitskorrektur}:
-\begin{equation*}
-P(a \leq X \leq b) \approx \Phi(\frac{b + \frac{1}{2} - np}{\sqrt{np(1-p)}}) - \Phi(\frac{a - \frac{1}{2} - np}{\sqrt{np(1-p)}})
-\end{equation*}
+\begin{align*}
+  S_n = X_1 .. + X_n
+  \mu_n = n.\mu \\
+  \sigma_n = \sqrt{n}. \sigma
+  \frac{S_n - \mu_n}{\sqrt{n}. \sigma} ~N(0,1)
+\end{align*}
+
+\subsubsection*{Moivre und Laplace Grenzwertsatz}
+$Bin(n,p)$ als Summe von n $B(p)$ variablen
+\begin{align*}
+ P(a \le X \le b) \approx \sigma(\frac{b-np}{\sqrt{np(1-p}}) - \sigma(\frac{a-np}{\sqrt{np(1-p)}})
+\end{align*}
+
+\subsubsection*{T Verteilung}
+Benutzt um $\sigma$ zu Schätzen: (\textit{ t verteilt mit n-1 Freiheitsgraden})
+\begin{align*}
+ T = \sqrt{n} \frac{\overline{X}-\mu}{\sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (X_i-\overline{X})^2}}
+\end{align*}
 
 \subsubsection*{Statistische Tests}
 \begin{enumerate}
@@ -374,23 +376,23 @@ P(a \leq X \leq b) \approx \Phi(\frac{b + \frac{1}{2} - np}{\sqrt{np(1-p)}}) - \
 	\item Liegt der gemäss (3) berechnete Wert der Testgrösse im Verwerfungsbereich, so lehnen wir $H_0$ ab. Man sagt in diesem Fall, auch, das Ergebniss des Tests sei signifikant auf dem $\alpha$-niveau
 \end{enumerate}
 \subsubsection*{Konfidenzintervall}
-Wenn die Zufallsvariable $X$ die Anzahl an die Personen zählt, die mit ja antworten, dann ist $X \sim Bin(n,p)$, mit$n=500$ in unserem Beispiel. \\
-Bekanntlich gilt approximativ: $\frac{X-np}{\sqrt{np(1-p)}} \sim N(0,1)$.\\
-Nun sei $\alpha=\frac{1+Q}{2}$ und $z_a$ das $\alpha$-Quantil von $N(0,1)$.\\
-\\
-Die Wahrscheinlichkeit, dass das Intervall den Wert $p$ enthält, also gerade $Q$.
-\begin{equation*}
-\left[\frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}-z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right), \frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}+z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right)\right]
-\end{equation*}
-Approximativ:
-\begin{equation*}
+\begin{align*}
+	\frac{X-np}{\sqrt{np(1-p)}} \sim N(0,1) \\
+	\alpha=\frac{1+Q}{2} \\
+\left[\frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}-z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right), \frac{1}{n+z_\alpha^2} \left(X+\frac{z_\alpha^2}{2}+z_\alpha\sqrt{\frac{X(n-X)}{n}+\frac{z_\alpha^2}{4}}\right)\right] \\
 	\left[\frac{k}{n}-\frac{z_\alpha}{n}\sqrt{\frac{k(n-k)}{n}}, \frac{k}{n}+\frac{z_\alpha}{n}\sqrt{\frac{k(n-k)}{n}} \right]
-\end{equation*}
+\end{align*}
 
-
-
+\subsubsection*{Hypothesen}
+\begin{description}
+ \item $H_0$ Nullhypothese / $H_1$ Alternativhypothese
+ \item[Fehler 1 Art:] $H_O$ trifft zu aber verwerfen.
+ \item[Fehler 2 Art:] $H_0$ trifft \textbf{nicht} zu aber nicht verwerfen
+ \item[Signigikanzniveau] $\alpha$ Verwerfungsbereich - Wahrscheinlichkeit für F. 1 Art höchstens $\alpha$
+ \item $ X \in V_{bereich} \rightarrow H_0$ ungültig das Gegenteil gilt auch. Gegenteil ist aber zu schwach für 
+definitven Beweis. 
+\end{description}
 --------------------------------------------------------------------------------------------------------
-\\
 \\
 by Jan Fässler
 
