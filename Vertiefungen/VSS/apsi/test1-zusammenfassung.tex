@@ -1,5 +1,6 @@
 \documentclass[10pt]{article}
 
+\usepackage{array}
 %Math
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -431,9 +432,41 @@ Main usages:
 		\end{enumerate}
 \end{enumerate}
 \subsubsection{Overview}
-\begin{center}
-	\includegraphics[scale=0.55]{annotations.png}
-\end{center}
+\textbf{Meta}\\
+Im Paket java.lang.annotation - diese werden nur für die Definition von Annotationen gebraucht.\\
+\begin{tabular}{| l | p{15cm} |}
+\hline
+Annotation & Beschreibung \\ \hline
+@Target & Dieser Annotationstyp wird bei der Programmierung einer Annotation angewandt. Damit wird festgelegt, auf welche Elemente eines Programms sie angewendet werden darf. Die möglichen Werte für eine Annotation dieses Typs sind in der Enumeration ElementType aufgeführt: TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL\_VARIABLE, ANNOTATION\_TYPE, PACKAGE.\\ \hline
+@Retention & Enumeration in RetentionPolicy. Specifies wheter the annotation is only available for:\newline SOURCE: at compile time, discarded by compiler \newline CLASS: stored in class file, discarded by VM \newline RUNTIME: retained in class file and loaded by VM, accessible at runtime using reflection \\ \hline
+@Inherited & The annotation get applied to subclasses as well (only CLASS annotation)\\ \hline
+@Documented & Annotation should appear in the JavaDoc\\ \hline
+\end{tabular}\\
+
+\textbf{Vordefinierte}\\
+\begin{tabular}{| l | p{8cm} | m{6cm} |}
+\hline
+Annotation & Beschreibung & Beispiel \\ \hline
+@Deprecated & [RUNTIME] Generates compiler warnings & \\ \hline
+@SupressWarnings & [SOURCE] Indicates that the named compiler warnings should be supressed & \\ \hline
+@Override & [SOURCE] Indicates that a method is intended to override a method in a super class. & \\ \hline
+@Resource & [RUNTIME] Any class or component that provides some useful functionality to an application can be thought of as a Resource and the same can be marked with @Resource annotation. The programmer specifies, how this resource must be accessed. & \includegraphics[width=6cm]{annotation_resource.PNG} \\ \hline
+@PostConstruct & [RUNTIME] Used on a method that needs to be executed after dependency injection (Spring FW!) is done to perform any initialization. This method must be invoked before the class is put into service. & \includegraphics[width=6cm]{annotation_post.PNG} \\ \hline
+@PreDestroy & [RUNTIME] Used to release resources that it has been holding. & \includegraphics[width=6cm]{annotation_pre.PNG} \\ \hline
+@CheckReturnValue & Telling the compiler that it should issue a warning if the return value isn't used. & \includegraphics[width=6cm]{annotation_checkretval.PNG} \\ \hline
+@Nonnull &  The annotated element must not be null. Annotated fields must not be null after construction has completed. Annotated methods must have non-null return values. & \includegraphics[width=6cm]{annotation_nonnull.PNG} \\ \hline
+@CheckForNull & The annotated element might be null, and uses of the element should check for null. When this annotation is applied to a method it applies to the method return value. & \includegraphics[width=6cm]{annotation_checkfornull.PNG} \\ \hline
+\end{tabular}\\
+
+\textbf{Custom}\\
+\begin{tabular}{| p{9.5cm} | p{8cm} |}
+\hline
+Annotation & Beispiel \\ \hline
+public @interface ToDo\{public String value();\} & @ToDo("'improve quality"') \\ \hline
+public @interface Authors\{public String[] names;\} & @Authors(names=\{"'Grz"',"'Nc"'\}) \\ \hline
+public @interface RequestForEnhancements\{\newline public int id(); public String assigned() default "'"'; public String date();\} & @RequestForEnhancements(id=5, date="'11.12.13"') \\ \hline
+\end{tabular}
+
 \subsection{exception handling}
 \subsubsection{Ideal fault-tolerant software components}
 \begin{center}
