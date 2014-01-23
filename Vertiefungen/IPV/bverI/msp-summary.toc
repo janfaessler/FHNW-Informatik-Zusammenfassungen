@@ -70,51 +70,52 @@
 \contentsline {subsection}{\numberline {9.3}Fourierintegral und -spektrum}{20}
 \contentsline {subsection}{\numberline {9.4}Fouriertransformation}{20}
 \contentsline {subsection}{\numberline {9.5}Fourier-Transformationspaare}{21}
-\contentsline {subsection}{\numberline {9.6}FT von diskreten Signalen}{21}
-\contentsline {subsection}{\numberline {9.7}Aliasing und Abtasttheorem}{21}
-\contentsline {subsection}{\numberline {9.8}Diskrete Fouriertransformation}{22}
-\contentsline {subsection}{\numberline {9.9}FFT und DCT}{23}
-\contentsline {subsection}{\numberline {9.10}DFT in 2D}{23}
-\contentsline {subsection}{\numberline {9.11}Implementierung der 2D-DFT}{23}
-\contentsline {subsection}{\numberline {9.12}SD Algorithmus}{24}
-\contentsline {section}{\numberline {10}Kanten und Ecken}{25}
-\contentsline {subsection}{\numberline {10.1}\IeC {\"U}bersicht}{25}
-\contentsline {subsection}{\numberline {10.2}Gradient}{25}
-\contentsline {subsubsection}{\numberline {10.2.1}Ableitungsfilter}{25}
-\contentsline {subsubsection}{\numberline {10.2.2}Kantendetektierung}{26}
-\contentsline {subsubsection}{\numberline {10.2.3}1. und 2. Ableitung}{26}
-\contentsline {subsection}{\numberline {10.3}Laplacian of Gaussian}{26}
-\contentsline {subsubsection}{\numberline {10.3.1}Kantensch\IeC {\"a}rfung}{27}
-\contentsline {subsubsection}{\numberline {10.3.2}Anwendung des Laplace-Filters}{27}
-\contentsline {subsection}{\numberline {10.4}Eckpunkte}{27}
-\contentsline {subsubsection}{\numberline {10.4.1}Anforderungen}{28}
-\contentsline {subsubsection}{\numberline {10.4.2}Strukturmatrix}{28}
-\contentsline {subsubsection}{\numberline {10.4.3}Eigenwerte und Eigenvektoren}{28}
-\contentsline {subsubsection}{\numberline {10.4.4}\IeC {\"A}hnliche Matrizen}{28}
-\contentsline {subsubsection}{\numberline {10.4.5}Diagonalisierte Strukturmatrix}{28}
-\contentsline {subsubsection}{\numberline {10.4.6}Spezifische Interpretation}{29}
-\contentsline {subsubsection}{\numberline {10.4.7}Corner Response Function (CRF)}{29}
-\contentsline {section}{\numberline {11}Wavelet-Transformation}{30}
-\contentsline {subsection}{\numberline {11.1}Einsatz der WT}{30}
-\contentsline {subsection}{\numberline {11.2}Idee der Bildpyramide}{30}
-\contentsline {subsection}{\numberline {11.3}$L_2$-Norm}{30}
-\contentsline {subsection}{\numberline {11.4}Mother Wavelet und Wavelet-Familien}{31}
-\contentsline {subsection}{\numberline {11.5}Continuous Wavelet Transform}{31}
-\contentsline {subsection}{\numberline {11.6}CWT, DWT und FWT}{31}
-\contentsline {subsection}{\numberline {11.7}FWT}{32}
-\contentsline {subsection}{\numberline {11.8}FWT als Filteroperation}{32}
-\contentsline {subsection}{\numberline {11.9}R\IeC {\"u}cktransformation}{33}
-\contentsline {subsection}{\numberline {11.10}FWT Filterbank}{33}
-\contentsline {subsection}{\numberline {11.11}FWT in zwei Dimensionen}{33}
-\contentsline {subsection}{\numberline {11.12}Bilddaten-Dekorrelation}{34}
-\contentsline {subsection}{\numberline {11.13}Quantisierung}{34}
-\contentsline {section}{\numberline {12}PGF}{35}
-\contentsline {subsection}{\numberline {12.1}Features}{35}
-\contentsline {subsection}{\numberline {12.2}Aufbau}{35}
-\contentsline {subsection}{\numberline {12.3}Farbtransformation}{35}
-\contentsline {subsection}{\numberline {12.4}5/3 Wavelet Filterbank}{35}
-\contentsline {subsection}{\numberline {12.5}Skalare Quantisierung}{36}
-\contentsline {subsection}{\numberline {12.6}Progressive Kodierung}{36}
-\contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{37}
-\contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{37}
-\contentsline {subsection}{\numberline {12.9}Adaptives RLE}{37}
+\contentsline {subsection}{\numberline {9.6}Beispiel: R\IeC {\"u}cktransformation}{21}
+\contentsline {subsection}{\numberline {9.7}FT von diskreten Signalen}{22}
+\contentsline {subsection}{\numberline {9.8}Aliasing und Abtasttheorem}{22}
+\contentsline {subsection}{\numberline {9.9}Diskrete Fouriertransformation}{22}
+\contentsline {subsection}{\numberline {9.10}FFT und DCT}{23}
+\contentsline {subsection}{\numberline {9.11}DFT in 2D}{24}
+\contentsline {subsection}{\numberline {9.12}Implementierung der 2D-DFT}{24}
+\contentsline {subsection}{\numberline {9.13}SD Algorithmus}{25}
+\contentsline {section}{\numberline {10}Kanten und Ecken}{26}
+\contentsline {subsection}{\numberline {10.1}\IeC {\"U}bersicht}{26}
+\contentsline {subsection}{\numberline {10.2}Gradient}{26}
+\contentsline {subsubsection}{\numberline {10.2.1}Ableitungsfilter}{26}
+\contentsline {subsubsection}{\numberline {10.2.2}Kantendetektierung}{27}
+\contentsline {subsubsection}{\numberline {10.2.3}1. und 2. Ableitung}{27}
+\contentsline {subsection}{\numberline {10.3}Laplacian of Gaussian}{27}
+\contentsline {subsubsection}{\numberline {10.3.1}Kantensch\IeC {\"a}rfung}{28}
+\contentsline {subsubsection}{\numberline {10.3.2}Anwendung des Laplace-Filters}{28}
+\contentsline {subsection}{\numberline {10.4}Eckpunkte}{28}
+\contentsline {subsubsection}{\numberline {10.4.1}Anforderungen}{29}
+\contentsline {subsubsection}{\numberline {10.4.2}Strukturmatrix}{29}
+\contentsline {subsubsection}{\numberline {10.4.3}Eigenwerte und Eigenvektoren}{29}
+\contentsline {subsubsection}{\numberline {10.4.4}\IeC {\"A}hnliche Matrizen}{29}
+\contentsline {subsubsection}{\numberline {10.4.5}Diagonalisierte Strukturmatrix}{29}
+\contentsline {subsubsection}{\numberline {10.4.6}Spezifische Interpretation}{30}
+\contentsline {subsubsection}{\numberline {10.4.7}Corner Response Function (CRF)}{30}
+\contentsline {section}{\numberline {11}Wavelet-Transformation}{31}
+\contentsline {subsection}{\numberline {11.1}Einsatz der WT}{31}
+\contentsline {subsection}{\numberline {11.2}Idee der Bildpyramide}{31}
+\contentsline {subsection}{\numberline {11.3}$L_2$-Norm}{31}
+\contentsline {subsection}{\numberline {11.4}Mother Wavelet und Wavelet-Familien}{32}
+\contentsline {subsection}{\numberline {11.5}Continuous Wavelet Transform}{32}
+\contentsline {subsection}{\numberline {11.6}CWT, DWT und FWT}{32}
+\contentsline {subsection}{\numberline {11.7}FWT}{33}
+\contentsline {subsection}{\numberline {11.8}FWT als Filteroperation}{33}
+\contentsline {subsection}{\numberline {11.9}R\IeC {\"u}cktransformation}{34}
+\contentsline {subsection}{\numberline {11.10}FWT Filterbank}{34}
+\contentsline {subsection}{\numberline {11.11}FWT in zwei Dimensionen}{34}
+\contentsline {subsection}{\numberline {11.12}Bilddaten-Dekorrelation}{35}
+\contentsline {subsection}{\numberline {11.13}Quantisierung}{35}
+\contentsline {section}{\numberline {12}PGF}{36}
+\contentsline {subsection}{\numberline {12.1}Features}{36}
+\contentsline {subsection}{\numberline {12.2}Aufbau}{36}
+\contentsline {subsection}{\numberline {12.3}Farbtransformation}{36}
+\contentsline {subsection}{\numberline {12.4}5/3 Wavelet Filterbank}{36}
+\contentsline {subsection}{\numberline {12.5}Skalare Quantisierung}{37}
+\contentsline {subsection}{\numberline {12.6}Progressive Kodierung}{37}
+\contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{38}
+\contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{38}
+\contentsline {subsection}{\numberline {12.9}Adaptives RLE}{38}

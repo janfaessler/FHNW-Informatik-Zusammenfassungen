@@ -827,13 +827,13 @@ Eine nicht periodische Funktion $g(x)$ kann als Summe von unendlich vielen Sinus
 \end{center}
 \subsection{Beispiel: Rücktransformation}
 \begin{align*}
-  G(\omega) &= \sqrt{\frac{\pi}{2}}(\delta(\omega-3)+\delta(\omega+3)) \\
-  f(x) &= \frac{\int_{-\infty}^\infty G(\omega)e^{j\omega x}d\omega}{\sqrt{2\pi}} \\
+  G(\omega) &= \sqrt{\frac{\pi}{2}}(\delta(\omega-3)+\delta(\omgea+3)) \\
+  
   &= \frac{\int_{-\infty}^\infty \delta(\omega-3)e^{j\omega x}d\omega + \int_{-\infty}^\infty \delta(\omega+3)e^{j\omega x}d\omega}{2} \\
-  &= \frac{e^{j3x}+e^{-j3x}}{2} \hspace*{1cm}| e^{ix} == \cos(x)+i\sin(x)\\
-  &= \frac{\cos(3x)+j\sin(3x)+\cos(3x)-j\sin(3x)}{2} \\
-  &= \cos(3x)
+  &= \frac{e^{j3x}+e^{-j3x}}{2} \\
+  &= \frac{\int_{-\infty}^\infty G(\omega)e^{j\omega x}d\omega}{\sqrt{2\pi}} \\
 \end{align*}
+
 
 \subsection{FT von diskreten Signalen}
 \begin{center}
