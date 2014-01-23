@@ -91,3 +91,12 @@
 \contentsline {subsection}{\numberline {5.11}Believing a constructor exception destroys the object}{28}
 \contentsline {subsection}{\numberline {5.12}TOC2TOU - Time Of Check To Time Of Use}{28}
 \contentsline {subsection}{\numberline {5.13}Twelve (very conservative) guidelines for writing safer Java}{28}
+\contentsline {section}{\numberline {6}Java security overview}{29}
+\contentsline {subsection}{\numberline {6.1}Java security in a nutshell}{29}
+\contentsline {subsection}{\numberline {6.2}Java security model}{29}
+\contentsline {subsubsection}{\numberline {6.2.1}Java policy files}{29}
+\contentsline {subsubsection}{\numberline {6.2.2}protection domains}{29}
+\contentsline {subsection}{\numberline {6.3}Byte code verifier}{30}
+\contentsline {subsection}{\numberline {6.4}Java class loaders}{30}
+\contentsline {subsubsection}{\numberline {6.4.1}Java class loaders hierarchy}{30}
+\contentsline {subsubsection}{\numberline {6.4.2}The class loader security phases}{30}

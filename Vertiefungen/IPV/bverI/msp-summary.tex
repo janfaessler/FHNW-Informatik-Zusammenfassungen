@@ -397,14 +397,23 @@ Thresholding
 \end{itemize}
 \subsubsection*{Modifizierte Gammafunktion}
 \begin{equation*}
+	s = \frac{\gamma}{x_0(\gamma-1)+x_0^{1-\gamma}} \hspace{2cm} d = \frac{1}{x_0^\gamma(\gamma-1)+1}-1
+\end{equation*}
+Gammakorrektur:
+\begin{equation*}
 	f_{(\gamma, x_0)}(x) = \begin{cases}
 		s * x, & \text{für } 0 \leq x \leq x_0 \\
 		(1+d) * x^\gamma - d, & \text{für } x_0 < x \leq 1
 	\end{cases}
 \end{equation*}
-\begin{equation*}
-	s = \frac{\gamma}{x_0(\gamma-1)+x_0^{1-\gamma}} \hspace{2cm} d = \frac{1}{x_0^\gamma(\gamma-1)+1}-1
-\end{equation*}
+Inverse Gammakorrektur:
+\begin{align*}
+	f_{(\gamma, x_0)}(y) = \begin{cases}
+		\frac{y}{s}, & \text{für } y \leq s \cdot x_0 \\
+		\left( \frac{y+d}{1+d} \right)^\frac{1}{\gamma}, & \text{für } y > s \cdot x_0
+	\end{cases}
+\end{align*}
+
 
 \subsection{Bildqualität}
 \begin{itemize}
@@ -523,18 +532,16 @@ Nichtlineare sRGB-Komponenten:
 \begin{equation*}
 	R = f_2(R') \hspace{2cm} G = f_2(G') \hspace{2cm} B = f_2(B')
 \end{equation*}
-Inverse modifzierte Gammakorrektur:
-\begin{equation*}
-	f_2(c) = \begin{cases}
-		\left( \frac{c + 0.055}{1.055} \right)^{2.4}, & \text{wenn } c > 0.03928 \\
-		\frac{c}{12.92}, & \text{wenn } c \leq 0.03928 \\
-	\end{cases}
-\end{equation*}
+Inverse modifzierte Gammakorrektur \\
+\\
 Lineare Transformation von RGB nach CIE XYZ:
 \begin{equation*}
-	\begin{pmatrix} X \\ Y \\ Z \end{pmatrix} = \begin{pmatrix} 0.4121 & 0.3576 & 0.1805 \\0.2126 & 0.7152 & 0.0722 \\ 0.0193 & 0.1192 & 0.9505\end{pmatrix} =\begin{pmatrix} R \\ G \\ B \end{pmatrix}
+	\begin{pmatrix} X \\ Y \\ Z \end{pmatrix} = \begin{pmatrix} 0.4124 & 0.3576 & 0.1805 \\0.2126 & 0.7152 & 0.0722 \\ 0.0193 & 0.1192 & 0.9505\end{pmatrix} \cdot \begin{pmatrix} R \\ G \\ B \end{pmatrix}
 \end{equation*}
-
+Rücktransformation:
+\begin{equation*}
+	\begin{pmatrix} R \\ G \\ B \end{pmatrix}= \begin{pmatrix} 3.2406 & -1.5372 & -0.4986 \\ -0.9689 & 1.8758 & 0.0415 \\ 0.0557 & -0.2040 & 1.0570 \end{pmatrix} \cdot \begin{pmatrix} X \\ Y \\ Z \end{pmatrix} 
+\end{equation*}
 \subsection{Weisspunkte}
 \begin{description}
 	\item[D50] \hfill
@@ -552,7 +559,23 @@ Lineare Transformation von RGB nach CIE XYZ:
 \end{description}
 \subsubsection*{Chromatische Adaptierung:}
 \begin{equation*}
-	\begin{pmatrix} X_{65} \\ Y_{65} \\ Z_{65} \end{pmatrix} = M_{65|50} * \begin{pmatrix} X_{50} \\ Y_{50} \\ Z_{50} \end{pmatrix}   =\begin{pmatrix} 0.955556 & -0.023049 & 0.063197 \\ -0.028302 & 1.009944 & 0.021018 \\ 0.012305 & -0.020494 & 1.330084\end{pmatrix} * \begin{pmatrix} X_{50} \\ Y_{50} \\ Z_{50} \end{pmatrix} 
+	\begin{pmatrix} X_{65} \\ Y_{65} \\ Z_{65} \end{pmatrix} = 
+	M_{65|50} \cdot \begin{pmatrix} X_{50} \\ Y_{50} \\ Z_{50} \end{pmatrix} = 
+	\begin{pmatrix} 
+	0.955556 & -0.023049 & 0.063197 \\
+	 -0.028302 & 1.009944 & 0.021018 \\
+	  0.012305 & -0.020494 & 1.330084
+	  \end{pmatrix} \cdot \begin{pmatrix} X_{50} \\ Y_{50} \\ Z_{50} \end{pmatrix} 
+\end{equation*}
+
+\begin{equation*}
+	\begin{pmatrix} X_{50} \\ Y_{50} \\ Z_{50} \end{pmatrix} = 
+	M_{50|65} \cdot \begin{pmatrix} X_{65} \\ Y_{65} \\ Z_{65} \end{pmatrix} =
+	 \begin{pmatrix} 
+	1.047840 & 0.0228961 & -0.0501482\\ 
+	0.0295561 & 0.990482 & -0.0170559 \\
+	 -0.00923843 & 0.0150496 & 0.752033
+	 \end{pmatrix} \cdot \begin{pmatrix} X_{65} \\ Y_{65} \\ Z_{65} \end{pmatrix} 
 \end{equation*}
 
 \pagebreak

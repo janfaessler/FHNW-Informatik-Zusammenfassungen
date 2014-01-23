@@ -697,5 +697,60 @@ Solution: Always check the user's permission while executing a privileged operat
 	\item Do not compare classes by name
 	\item Do not store secrets
 \end{itemize}
+
+\newpage
+\section{Java security overview}
+\subsection{Java security in a nutshell}
+\begin{center}
+	\includegraphics[scale=0.3]{nutshell.png}
+\end{center}
+\subsection{Java security model}
+\subsubsection{Java policy files}
+\begin{center}
+	\includegraphics[scale=0.2]{policy-files.png}
+\end{center}
+At run time these policies are enforced by the class AccessController that is automatically called when the SecurityManager is activated.
+\subsubsection{protection domains}
+All domains which the actual thread crosses must own the desired priviege
+\begin{center}
+	\includegraphics[scale=0.2]{protection-domain.png}
+\end{center}
+
+\subsection{Byte code verifier}
+The Goal is to prevent access to underlying physical machine via forged pointers, crashes and undefined states. \\
+Checks a class file for validity:
+\begin{itemize}
+	\item Code has only valid instructions and register use
+	\item Code does not overflow/underflow the stack
+	\item Code does not convert data types illegally or forge pointers
+	\item Code accesses objects as correct type
+	\item Method calls use correct number and types of arguments
+	\item Refers to other classes use legal names
+\end{itemize}
+
+\subsection{Java class loaders}
+The class loader is the fountain head of Java Security:
+\begin{itemize}
+	\item The loading and \textbf{verification} steps expel bogus class files before they even get into the JVM
+	\item \textbf{Protection domains} drive all later security decisions
+	\item \textbf{Namespaces} keep separate classes and packages coming from different places
+\end{itemize}
+
+\subsubsection{Java class loaders hierarchy}
+\begin{center}
+	\includegraphics[scale=0.5]{class_loaders-hierarchy.png}
+\end{center}
+
+\subsubsection{The class loader security phases}
+\begin{center}
+	\includegraphics[scale=0.4]{class-loader.png}
+\end{center}
+\begin{description}
+	\item[load:] \hfill \\ \includegraphics[scale=0.4]{class-loader-load.png}
+	\item[verify:] \hfill \\ \includegraphics[scale=0.4]{class-loader-verify.png}
+	\item[prepare:] \hfill \\ \includegraphics[scale=0.4]{class-loader-prepare.png}
+	\item[resolve:] \hfill \\ \includegraphics[scale=0.4]{class-loader-resolve.png}
+	\item[initialize:] \hfill \\ \includegraphics[scale=0.4]{class-loader-initialize.png}
+\end{description}
 % Inhalt Ende 
 \end{document} 
