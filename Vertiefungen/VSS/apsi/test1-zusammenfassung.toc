@@ -48,7 +48,7 @@
 \contentsline {subsection}{\numberline {3.5}Annotations}{16}
 \contentsline {subsubsection}{\numberline {3.5.1}General remarks}{16}
 \contentsline {subsubsection}{\numberline {3.5.2}Why are annotations so important?}{16}
-\contentsline {subsubsection}{\numberline {3.5.3}Overview}{17}
+\contentsline {subsubsection}{\numberline {3.5.3}Overview}{16}
 \contentsline {subsection}{\numberline {3.6}exception handling}{18}
 \contentsline {subsubsection}{\numberline {3.6.1}Ideal fault-tolerant software components}{18}
 \contentsline {subsubsection}{\numberline {3.6.2}Requirements for exception handling}{18}
