@@ -95,27 +95,28 @@
 \contentsline {subsubsection}{\numberline {10.4.5}Diagonalisierte Strukturmatrix}{29}
 \contentsline {subsubsection}{\numberline {10.4.6}Spezifische Interpretation}{30}
 \contentsline {subsubsection}{\numberline {10.4.7}Corner Response Function (CRF)}{30}
-\contentsline {section}{\numberline {11}Wavelet-Transformation}{31}
-\contentsline {subsection}{\numberline {11.1}Einsatz der WT}{31}
-\contentsline {subsection}{\numberline {11.2}Idee der Bildpyramide}{31}
-\contentsline {subsection}{\numberline {11.3}$L_2$-Norm}{31}
-\contentsline {subsection}{\numberline {11.4}Mother Wavelet und Wavelet-Familien}{32}
-\contentsline {subsection}{\numberline {11.5}Continuous Wavelet Transform}{32}
-\contentsline {subsection}{\numberline {11.6}CWT, DWT und FWT}{32}
-\contentsline {subsection}{\numberline {11.7}FWT}{33}
-\contentsline {subsection}{\numberline {11.8}FWT als Filteroperation}{33}
-\contentsline {subsection}{\numberline {11.9}R\IeC {\"u}cktransformation}{34}
-\contentsline {subsection}{\numberline {11.10}FWT Filterbank}{34}
-\contentsline {subsection}{\numberline {11.11}FWT in zwei Dimensionen}{34}
-\contentsline {subsection}{\numberline {11.12}Bilddaten-Dekorrelation}{35}
-\contentsline {subsection}{\numberline {11.13}Quantisierung}{35}
-\contentsline {section}{\numberline {12}PGF}{36}
-\contentsline {subsection}{\numberline {12.1}Features}{36}
-\contentsline {subsection}{\numberline {12.2}Aufbau}{36}
-\contentsline {subsection}{\numberline {12.3}Farbtransformation}{36}
-\contentsline {subsection}{\numberline {12.4}5/3 Wavelet Filterbank}{36}
-\contentsline {subsection}{\numberline {12.5}Skalare Quantisierung}{37}
-\contentsline {subsection}{\numberline {12.6}Progressive Kodierung}{37}
-\contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{38}
-\contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{38}
-\contentsline {subsection}{\numberline {12.9}Adaptives RLE}{38}
+\contentsline {subsection}{\numberline {10.5}Harris Algorithmus}{31}
+\contentsline {section}{\numberline {11}Wavelet-Transformation}{32}
+\contentsline {subsection}{\numberline {11.1}Einsatz der WT}{32}
+\contentsline {subsection}{\numberline {11.2}Idee der Bildpyramide}{32}
+\contentsline {subsection}{\numberline {11.3}$L_2$-Norm}{32}
+\contentsline {subsection}{\numberline {11.4}Mother Wavelet und Wavelet-Familien}{33}
+\contentsline {subsection}{\numberline {11.5}Continuous Wavelet Transform}{33}
+\contentsline {subsection}{\numberline {11.6}CWT, DWT und FWT}{33}
+\contentsline {subsection}{\numberline {11.7}FWT}{34}
+\contentsline {subsection}{\numberline {11.8}FWT als Filteroperation}{34}
+\contentsline {subsection}{\numberline {11.9}R\IeC {\"u}cktransformation}{35}
+\contentsline {subsection}{\numberline {11.10}FWT Filterbank}{35}
+\contentsline {subsection}{\numberline {11.11}FWT in zwei Dimensionen}{35}
+\contentsline {subsection}{\numberline {11.12}Bilddaten-Dekorrelation}{36}
+\contentsline {subsection}{\numberline {11.13}Quantisierung}{36}
+\contentsline {section}{\numberline {12}PGF}{37}
+\contentsline {subsection}{\numberline {12.1}Features}{37}
+\contentsline {subsection}{\numberline {12.2}Aufbau}{37}
+\contentsline {subsection}{\numberline {12.3}Farbtransformation}{37}
+\contentsline {subsection}{\numberline {12.4}5/3 Wavelet Filterbank}{37}
+\contentsline {subsection}{\numberline {12.5}Skalare Quantisierung}{38}
+\contentsline {subsection}{\numberline {12.6}Progressive Kodierung}{38}
+\contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{39}
+\contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{39}
+\contentsline {subsection}{\numberline {12.9}Adaptives RLE}{39}
