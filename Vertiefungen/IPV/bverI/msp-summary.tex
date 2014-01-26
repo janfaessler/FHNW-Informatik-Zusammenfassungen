@@ -82,7 +82,31 @@
  framexbottommargin=4pt,
  showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
 }
-
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
 %Config
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{15.2pt}
@@ -1382,4 +1406,167 @@ Innerhalb eines Farbkanals gibt es noch weitere Redundanz (z.B. Flächen mit gle
 	\item nach einem Codewort 0: $k++$
 	\item nach einem anderem Codewort: $k-- (k>0)$
 \end{itemize}
+\section{Uebungen}
+\subsection{Uebung 1}
+Gegeben ist das Bild Schlittentest.raw der Grösse 800 mal 600 Bildpunkte. Es enthält einen
+Header der Länge 1 KiByte in einem proprietären Format und die Bildinformation von einem
+CMOS-Bildsensor mit Bayer-Maske. Pro Bildpunkt (Pixel) ist jeweils nur eine der drei Farb-
+komponenten (Rot, Grün, Blau) in einem Byte abgespeichert. Die an der ersten Stelle des
+Bildes gegebene Farbkomponente ist Blau. Sie können dieses Bild in ImageJ mit Fi-
+le/Import/Raw öffnen.\\
+Ergänzen Sie das ImageJ-Plugin BayerMask\_.java an den entsprechenden Stellen, um die
+fehlenden Farbkomponenten durch Interpolation zu erzeugen. Testen Sie Ihr Programm mit
+dem Bild Schlittentest.raw. Eine gute Bayer-Mask-Interpolation sollte zu möglichst wenig
+Farbartefakten (z.B. Farb-Moiré im weissen Ärmel oder bei den weissen Drähten) führen
+(siehe nachfolgenden Bildausschnitt).
+\lstinputlisting[caption=Bayer Mask,style=JavaStyle]{Code/BayerMask_.java}
+\subsection{Uebung 2}
+In dieser Aufgabe wollen wir den Huffman-Code aus Aufgabe 2 verwenden, um ein Graustu-
+fenbild entropiecodiert abzuspeichern. Erweitern Sie das Plugin so, dass Sie eine Binärdatei
+mittels eines ObjectOutputStreams erzeugen können. Der ObjectOutputStreams eignet
+sich für die Objektserialisierung. Betrachten Sie die Methoden write und encodeImage.
+a) Schreiben Sie in den Header der Datei die Breite und Höhe des Bildes. Verwenden Sie
+dazu einfach zwei Integer.\\
+b) Für das Decodieren der Datei wird der Code-Baum aus Aufgabe 2 wiederum benötigt.
+Daher sollten Sie nach dem Header den ganzen Code-Baum serialisieren.\\
+c) Zum Schluss kommen noch die codierten Bilddaten. Der Einfachheit halber können Sie
+ein BitSet verwenden. Iterieren Sie durch alle Pixel des Bildes und schreiben Sie den
+entsprechenden Huffman-Code jedes Pixels hintereinander ins BitSet. Anschliessend
+serialisieren Sie das BitSet. Tipp: Schreiben Sie den Huffman-Code jeweils mit dem
+MSB zuerst ins BitSet.\\
+d) Denn dazu passenden Decoder finden Sie in Huffman\_Dec.java. Falls Sie leicht anders
+vorgegangen sind, müssen Sie den Decoder unter umständen leicht anpassen.\\
+e) Codieren Sie ein Graustufenbild mit Ihrem Encoder (stimmt der erwartete Speicherbedarf
+mit dem wirklichen überein?) und decodieren Sie die entstandene huf-Datei mit dem De-
+coder. Verwenden Sie in ImageJ den ImageCalculator, um die Differenz zwischen dem
+Originalbild und dem decodierten Bild zu bestimmen.
+\lstinputlisting[caption=Huffman Decodierung,style=JavaStyle]{Code/Huffman_Dec.java}
+In dieser Aufgabe sollen Sie einen Huffman-Entropiecodierer als ImageJ-Plugin programmie-
+ren und auf ein Graustufenbild anwenden. Als Gerüst können Sie Huffman\_Enc.java ver-
+wenden. Betrachten Sie die Methode createHuffmanTree().\\
+a) Bestimmen Sie zuerst die Wahrscheinlichkeiten, mit denen die einzelnen Intensitäten in
+einem Graustufenbild auftreten. Verwenden Sie dazu das Histogramm.\\
+b) Schätzen Sie mit Hilfe des Resultats aus a) die mittlere Codelänge und den resultieren-
+den Speicherbedarf für das codierte Bild ab.\\
+c) Programmieren Sie die Erzeugung des Code-Baumes und speichern Sie die einzelnen
+Codewörter für die verschiedenen Intensitäten ab. Zur Erzeugung des Code-Baums eig-
+net sich eine PriorityQueue<Node> besonders gut, weil damit auf sehr einfache Art die
+beiden Knoten mit kleinster Wahrscheinlichkeit gefunden werden können.\\
+d) Berechnen Sie die mittlere Codelänge Ihres Codes und überprüfen Sie Ihr Resultat mit
+demjenigen von b).
+\lstinputlisting[caption=Huffman Encodierung,style=JavaStyle]{Code/Huffman_Enc.java}
+\lstinputlisting[caption=Node,style=JavaStyle]{Code/Node.java}
+Die aktuelle Version von ImageJ unterstützt das PGM-Dateiformat. PGM-Dateien im ASCII-
+und im Binärformat können eingelesen werden, aber beim Erstellen wird immer nur das
+Binärformat verwendet.\\
+a) Erstellen Sie ein neues Plugin ToPGM\_.java für 8-Bit-Grauwertbilder, welches ein Bild
+als PGM-Datei im ASCII-Format abspeichert.\\
+b) Wie gross ist die Kompressionsrate, wenn ein Bild im Binär- anstatt im ASCII-Format
+abgespeichert wird? Schätzen Sie die Kompressionsrate für ein beliebiges Bild theore-
+tisch ab. Überprüfen Sie Ihre Abschätzung an konkreten Beispielen (bridge.gif).
+\lstinputlisting[caption=To PGM,style=JavaStyle]{Code/ToPGM_.java}
+\subsection{Uebung 3}
+Programmieren Sie den linearen Histogrammausgleich gemäss Punktoperationen Folie 22.
+Verwenden Sie dazu eine Lookup-Table, die Sie als int-Array der Länge 256 für alle mögli-
+chen Intensitäten im Voraus berechnen. Mit der Instanzmethode applyTable() der Klasse
+ImageProcessor können Sie anschliessend die Lookup-Table auf das Bild anwenden.
+\lstinputlisting[caption=Linearer Histogrammausgleich,style=JavaStyle]{Code/LinHistAusgleich_.java}
+Programmieren Sie die modifizierte Gammakorrektur mit variablen Werten für Gamma und
+x0 gemäss Punktoperationen Folie 27 für ein Graustufenbild. Verwenden Sie wiederum eine
+Lookup-Table.
+\lstinputlisting[caption=Gamma,style=JavaStyle]{Code/ModGamma_.java}
+Bestimmen Sie die inverse Funktion zur modifizierten Gammakorrektur. Beachten Sie dabei,
+dass der Trennwert, wo zwischen linearer und Potenzfunktion unterschieden wird, auch
+angepasst werden muss.\\
+Programmieren Sie die inverse modifizierte Gammakorrektur mit variablen Werten für Gam-
+ma und $x_0$. Verwenden Sie wiederum eine Lookup-Table.
+\lstinputlisting[caption=Gamma Inverse,style=JavaStyle]{Code/ModGammaInverse_.java}
+\subsection{Uebung 5}
+Basierend auf der YUV-Farbtransformation der Aufgabe 1 wollen wir eine Umwandlung in ein
+Grauwertbild vornehmen. Als Grauwert werden wir den Luminanzwert des YUV-Farbraums
+verwenden.\\
+Gegeben sei wiederum eine Eingabebild im sRGB-Farbraum mit einem effektiven Gamma $\gamma$ von 1/2.2.
+a) Überführen Sie das nicht-lineare sRGB-Bild in den linearen RGB-Farbraum mit Hilfe der
+modifizierten Gammakorrektur.\\
+b) Erstellen Sie ein erstes Grauwertbild, indem Sie den Y-Kanal der YUV-Transformation
+aus Aufgabe 1 berechnen.\\
+c) Eine abgekürzte, nicht ganz korrekte Umrechnung erlaubt die Transformation in einem
+einzigen Schritt aus den sRGB-Komponenten. Dabei wird Y wie folgt berechnet:
+$Y = 0.309*R’ + 0.609*G’ + 0.082*B’$\\
+d) Bestimmen Sie die Bildqualität des zweiten Grauwertbildes bezüglich des ersten in dB.
+Berechnen Sie dazu die PSNR.
+\lstinputlisting[caption=RGB zu Graustufenbild,style=JavaStyle]{Code/RGBtoGray_.java}
+YUV ist die Basis für die Farbkodierung im analogen Fernsehen, sowohl im nordamerikani-
+schen NTSC- als auch im europäischen PAL-System. Die Luminanzkomponente Y wird aus
+den RGB-Komponenten in der Form\\
+$Y = 0.299*R + 0.587*G + 0.114*B$\\
+abgeleitet, wobei angenommen wird, dass die RGB-Werte bereits nach dem TV-Standard für
+die Wiedergabe gammakorrigiert sind ($\gamma NTSC = 2.2$). Die UV-Komponenten sind als gewichte-
+te Differenz zwischen dem Luminanzwert und dem Blau- bzw. Rotwert definiert, konkret als
+$U = 0.492*(B – Y)$\\
+ und\\
+ $V = 0.877*(R – Y)$.\\
+a) Programmieren Sie die lineare RGB-YUV-Farbtransformation für das amerikanische
+Fernsehsystem NTSC. Das Eingabebild sei im nicht-linearen sRGB-Farbraum mit einem
+effektiven Gamma $\gamma$ von 1/2.2.\\
+b) Programmieren Sie die lineare YUV-RGB-Rücktransformation. Die Koeffizienten der
+Rücktransformationsmatrix erhalten Sie durch Inversion der Matrix.\\
+c) Berechnen Sie die Qualität des rücktransformierten Bildes bezüglich des Originals. Be-
+rechnen Sie dazu die PSNR für jeden der drei Farbkanäle.
+\lstinputlisting[caption=YUV Transformation,style=JavaStyle]{Code/YUVTransform_.java}
+\subsection{Uebung 6}
+Implementieren Sie ein Gauss’sches Glättungsfilter. Die Grösse des Filters (Radius $\sigma$) soll
+beliebig einstellbar sein. Ein sinnvoller Wert von $\sigma$ wäre zum Beispiel 3. Erstellen Sie die
+zugehörige Filtermatrix dynamisch mit einer Grösse von mindestens 5$\sigma$ in beiden Richtun-
+gen. Nutzen Sie die x-/y-Separierbarkeit der Gaussfunktion.
+\lstinputlisting[caption=Gauss Filter,style=JavaStyle]{Code/GaussFilter_.java}
+Implementieren Sie ein gewichtetes Medianfilter. Spezifizieren Sie die Gewichte als konstan-
+tes, zweidimensionales Integer-Array. Testen Sie das Filter und vergleichen Sie es mit einem
+gewöhnlichen Medianfilter.
+\lstinputlisting[caption=Gewichteter Median Filter,style=JavaStyle]{Code/GewMedianFilter_.java}
+Programmieren Sie eine Prozedur zur linearen Filterung. Das Bild und die Filtermatrix sollen
+dabei als Parameter übergeben werden. Zur Behebung der Randproblematik verwenden Sie
+auf der einen Seite die Absolutwerte von negativen Pixelkoordinaten und auf der andern
+Seite das Entsprechende.
+\lstinputlisting[caption=Lineares Filter,style=JavaStyle]{Code/LinearesFilter_.java}
+\subsection{Uebung 7}
+Ausgehend von der Implementierung der linearen Faltung (Übung 6, Aufgabe 2.1) können
+Sie auf einfache Art die Grauwert-Dilation programmieren. Erlauben Sie Strukturmatrizen
+beliebiger Form, d.h. lassen Sie es zu, dass gewisse Elemente der Strukturmatrix nicht
+berücksichtigt werden.
+\lstinputlisting[caption=Grauwerterosion,style=JavaStyle]{Code/GrauwertDilation_.java}
+Analog zu Aufgabe 1, jetzt aber für die Grauwert-Erosion.
+\lstinputlisting[caption=Grauwertdilation,style=JavaStyle]{Code/GrauwertErosion_.java}
+\subsection{Uebung 8}
+Gegeben ist das Graustufenbild coins.png. Schreiben Sie ein Programm, welches die Anzahl
+der Münzen bestimmt und jede Münze mit einer eigenen Farbe einfärbt.\\
+a) Beachten Sie, dass das Graustufenbild zuerst binarisiert und allfällige Störungen elimi-
+niert werden sollen, bevor Sie das Flood Filling Verfahren anwenden können. Schreiben
+Sie eine Methode, die das Bild und einen Schwellwert als Input heben und ein neues Bi-
+närbild generiert.\\
+b) Verwenden Sie für das anschliessende Flood Filling ein effizientes Verfahren, welches
+auch für grössere Bilder geeignet ist.\\
+c) Erzeugen Sie ein neues Falschfarbenbild, welches den Hintergrund schwarz und die
+Münzen in Falschfarben darstellt.
+\lstinputlisting[caption=Region Labeling,style=JavaStyle]{Code/RegionLabeling_.java}
+\subsection{Uebung 10}
+a) Programmieren Sie die Kantendetektierung mittels verbessertem Sobel-Filtern:
+\begin{equation*}
+H_x = \frac{1}{32} \begin{pmatrix} -3 & 0 & 3\\-10& 0& 10\\ 	-3& 0& 3\end{pmatrix} \T{und} H_y=\frac{1}{32}\begin{pmatrix} -3&-10&-3 \\ 0&0&0 \\ 3&10&3  \end{pmatrix}
+\end{equation*}\\
+Geben Sie die Kantenstärke sowie die Kantenrichtung als Bilder aus.\\
+Wenden Sie Ihren Kantendetektor auf windisch.png an.\\
+b) Färben Sie die Kanten anhand ihrer Winkel ein und geben Sie sie in einem Bild aus.
+Wählen Sie zum Beispiel die Hue-Komponente des HSV oder HLS-Farbraumes für den
+winkelabhängigen Farbton.\\
+Wenden Sie das angepasste Verfahren auf coins.png an.
+\lstinputlisting[caption=Corner,style=JavaStyle]{Code/Corner.java}
+Vervollständigen Sie das ImageJ Plugin HarrisCornerPlugin\_.java indem Sie die Corner
+Response Funktion makeCrf()der Klasse HarrisCornerDetector ausprogrammieren.\\
+Adaptieren Sie zudem die Zeichnungsmethode der Eckpunkte, um die Eckpunktstärke gra-
+phisch darzustellen.
+\lstinputlisting[caption=Harris Corner Detection,style=JavaStyle]{Code/HarrisCornerDetector.java}
+\lstinputlisting[caption=Harris Corner Plugin,style=JavaStyle]{Code/HarrisCornerPlugin_.java}
+
+
 \end{document} 

@@ -82,7 +82,31 @@
  framexbottommargin=4pt,
  showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
 }
-
+\lstdefinestyle{JavaStyle}{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
 %Config
 \renewcommand{\headrulewidth}{0pt}
 \setlength{\headheight}{15.2pt}
@@ -827,13 +851,13 @@ Eine nicht periodische Funktion $g(x)$ kann als Summe von unendlich vielen Sinus
 \end{center}
 \subsection{Beispiel: Rücktransformation}
 \begin{align*}
-  G(\omega) &= \sqrt{\frac{\pi}{2}}(\delta(\omega-3)+\delta(\omgea+3)) \\
-  
+  G(\omega) &= \sqrt{\frac{\pi}{2}}(\delta(\omega-3)+\delta(\omega+3)) \\
+  f(x) &= \frac{\int_{-\infty}^\infty G(\omega)e^{j\omega x}d\omega}{\sqrt{2\pi}} \\
   &= \frac{\int_{-\infty}^\infty \delta(\omega-3)e^{j\omega x}d\omega + \int_{-\infty}^\infty \delta(\omega+3)e^{j\omega x}d\omega}{2} \\
-  &= \frac{e^{j3x}+e^{-j3x}}{2} \\
-  &= \frac{\int_{-\infty}^\infty G(\omega)e^{j\omega x}d\omega}{\sqrt{2\pi}} \\
+  &= \frac{e^{j3x}+e^{-j3x}}{2} \hspace*{1cm}| e^{ix} == \cos(x)+i\sin(x)\\
+  &= \frac{\cos(3x)+j\sin(3x)+\cos(3x)-j\sin(3x)}{2} \\
+  &= \cos(3x)
 \end{align*}
-
 
 \subsection{FT von diskreten Signalen}
 \begin{center}
@@ -1151,6 +1175,10 @@ CRF:
 	\item mit dem Parameter $\alpha$ wird die Empfindlichkeit gesteuert (z.B. 0.05)
 	\item $Q(u,v) >$ Schwellwert (z.B. 10'000 bis 1 Mio)
 \end{itemize}
+\subsection{Harris Algorithmus}
+\begin{center}
+	\includegraphics[scale=0.5]{harris.png}
+\end{center}
 
 \pagebreak
 \section{Wavelet-Transformation}
@@ -1378,4 +1406,14 @@ Innerhalb eines Farbkanals gibt es noch weitere Redundanz (z.B. Flächen mit gle
 	\item nach einem Codewort 0: $k++$
 	\item nach einem anderem Codewort: $k-- (k>0)$
 \end{itemize}
+\section{Uebungen}
+\subsection{Uebung 1}
+\lstinputlisting[caption=Bayer Mask,style=JavaStyle]{Code/BayerMask_.java}
+\subsection{Uebung 2}
+\lstinputlisting[caption=Huffman Decodierung,style=JavaStyle]{Code/Huffman_Dec.java}
+\lstinputlisting[caption=Huffman Encodierung,style=JavaStyle]{Code/Huffman_Enc.java}
+\lstinputlisting[caption=Node,style=JavaStyle]{Code/Node.java}
+\lstinputlisting[caption=To PGM,style=JavaStyle]{Code/toPGM.java}
+
+
 \end{document} 

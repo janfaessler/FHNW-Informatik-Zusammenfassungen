@@ -120,3 +120,12 @@
 \contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{39}
 \contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{39}
 \contentsline {subsection}{\numberline {12.9}Adaptives RLE}{39}
+\contentsline {section}{\numberline {13}Uebungen}{39}
+\contentsline {subsection}{\numberline {13.1}Uebung 1}{39}
+\contentsline {subsection}{\numberline {13.2}Uebung 2}{41}
+\contentsline {subsection}{\numberline {13.3}Uebung 3}{47}
+\contentsline {subsection}{\numberline {13.4}Uebung 5}{50}
+\contentsline {subsection}{\numberline {13.5}Uebung 6}{53}
+\contentsline {subsection}{\numberline {13.6}Uebung 7}{57}
+\contentsline {subsection}{\numberline {13.7}Uebung 8}{59}
+\contentsline {subsection}{\numberline {13.8}Uebung 10}{61}
