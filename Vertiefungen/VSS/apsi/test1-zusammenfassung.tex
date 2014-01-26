@@ -1,6 +1,8 @@
 \documentclass[10pt]{article}
 
 \usepackage{array}
+\usepackage{pdfpages} 
+
 %Math
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -867,7 +869,7 @@ Checks a class file for validity:
 
 \subsection{Java security at the method level}
 \begin{itemize}
-	\item To protect one method in all instances, use the SecurityManager & AccessController directly as we have shown so far
+	\item To protect one method in all instances, use the SecurityManager \& AccessController directly as we have shown so far
 	\item To protect a reference to an individual instance, consider using  the class GuardedObject
 \end{itemize}
 \begin{center}
@@ -899,5 +901,8 @@ The class loader is the fountain head of Java Security:
 	\item[resolve:] \hfill \\ \includegraphics[scale=0.4]{class-loader-resolve.png}
 	\item[initialize:] \hfill \\ \includegraphics[scale=0.4]{class-loader-initialize.png}
 \end{description}
+
+\includepdf[pages={1-12},landscape, frame=true]{regex.pdf}
+
 % Inhalt Ende 
 \end{document} 
