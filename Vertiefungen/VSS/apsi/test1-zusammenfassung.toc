@@ -48,7 +48,7 @@
 \contentsline {subsection}{\numberline {3.5}Annotations}{16}
 \contentsline {subsubsection}{\numberline {3.5.1}General remarks}{16}
 \contentsline {subsubsection}{\numberline {3.5.2}Why are annotations so important?}{16}
-\contentsline {subsubsection}{\numberline {3.5.3}Overview}{17}
+\contentsline {subsubsection}{\numberline {3.5.3}Overview}{16}
 \contentsline {subsection}{\numberline {3.6}exception handling}{18}
 \contentsline {subsubsection}{\numberline {3.6.1}Ideal fault-tolerant software components}{18}
 \contentsline {subsubsection}{\numberline {3.6.2}Requirements for exception handling}{18}
@@ -72,22 +72,34 @@
 \contentsline {subsubsection}{\numberline {4.9.2}Security steps}{23}
 \contentsline {subsubsection}{\numberline {4.9.3}Android manifest file}{23}
 \contentsline {section}{\numberline {5}JavaIdiocies}{25}
-\contentsline {subsection}{\numberline {5.1}Java Security Model}{25}
-\contentsline {subsection}{\numberline {5.2}Visibility modifiers}{25}
-\contentsline {subsubsection}{\numberline {5.2.1}Purpose}{25}
-\contentsline {subsubsection}{\numberline {5.2.2}Attention}{25}
-\contentsline {subsection}{\numberline {5.3}Protecting packages}{25}
-\contentsline {subsubsection}{\numberline {5.3.1}Sealed JAR archives}{25}
-\contentsline {subsubsection}{\numberline {5.3.2}Signing JAR archives}{26}
-\contentsline {subsubsection}{\numberline {5.3.3}Join packages via security policy PAP}{26}
-\contentsline {subsection}{\numberline {5.4}Inner classes}{26}
-\contentsline {subsection}{\numberline {5.5}Common Java Antipatterns}{26}
-\contentsline {subsubsection}{\numberline {5.5.1}Assuming objects are immutable}{26}
-\contentsline {subsection}{\numberline {5.6}Basing security checks on untrusted sources}{27}
-\contentsline {subsection}{\numberline {5.7}False inheritance relationship}{27}
-\contentsline {subsection}{\numberline {5.8}Ignoring changes to super classes}{27}
-\contentsline {subsection}{\numberline {5.9}Neglecting to validate inputs}{27}
-\contentsline {subsection}{\numberline {5.10}Misusing public static variables}{27}
-\contentsline {subsection}{\numberline {5.11}Believing a constructor exception destroys the object}{28}
-\contentsline {subsection}{\numberline {5.12}TOC2TOU - Time Of Check To Time Of Use}{28}
-\contentsline {subsection}{\numberline {5.13}Twelve (very conservative) guidelines for writing safer Java}{28}
+\contentsline {subsection}{\numberline {5.1}Visibility modifiers}{25}
+\contentsline {subsubsection}{\numberline {5.1.1}Purpose}{25}
+\contentsline {subsubsection}{\numberline {5.1.2}Attention}{25}
+\contentsline {subsection}{\numberline {5.2}Protecting packages}{25}
+\contentsline {subsubsection}{\numberline {5.2.1}Sealed JAR archives}{25}
+\contentsline {subsubsection}{\numberline {5.2.2}Signing JAR archives}{25}
+\contentsline {subsubsection}{\numberline {5.2.3}Join packages via security policy PAP}{25}
+\contentsline {subsection}{\numberline {5.3}Inner classes}{26}
+\contentsline {subsection}{\numberline {5.4}Common Java Antipatterns}{26}
+\contentsline {subsubsection}{\numberline {5.4.1}Assuming objects are immutable}{26}
+\contentsline {subsection}{\numberline {5.5}Basing security checks on untrusted sources}{26}
+\contentsline {subsection}{\numberline {5.6}False inheritance relationship}{26}
+\contentsline {subsection}{\numberline {5.7}Ignoring changes to super classes}{26}
+\contentsline {subsection}{\numberline {5.8}Neglecting to validate inputs}{27}
+\contentsline {subsection}{\numberline {5.9}Misusing public static variables}{27}
+\contentsline {subsection}{\numberline {5.10}Believing a constructor exception destroys the object}{27}
+\contentsline {subsection}{\numberline {5.11}TOC2TOU - Time Of Check To Time Of Use}{27}
+\contentsline {subsection}{\numberline {5.12}Twelve (very conservative) guidelines for writing safer Java}{27}
+\contentsline {section}{\numberline {6}Java security overview}{29}
+\contentsline {subsection}{\numberline {6.1}Java security in a nutshell}{29}
+\contentsline {subsection}{\numberline {6.2}Java security model}{29}
+\contentsline {subsubsection}{\numberline {6.2.1}SecurityManager}{29}
+\contentsline {subsubsection}{\numberline {6.2.2}Java policy files}{30}
+\contentsline {subsubsection}{\numberline {6.2.3}Permissions in Java}{30}
+\contentsline {subsubsection}{\numberline {6.2.4}ProtectionDomain}{31}
+\contentsline {subsubsection}{\numberline {6.2.5}CodeSource}{32}
+\contentsline {subsection}{\numberline {6.3}Byte code verifier}{32}
+\contentsline {subsection}{\numberline {6.4}Java security at the method level}{32}
+\contentsline {subsection}{\numberline {6.5}Java class loaders}{32}
+\contentsline {subsubsection}{\numberline {6.5.1}Java class loaders hierarchy}{33}
+\contentsline {subsubsection}{\numberline {6.5.2}The class loader security phases}{33}

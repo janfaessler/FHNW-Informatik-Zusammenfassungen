@@ -1,0 +1,131 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Einf\IeC {\"u}hrung}{1}
+\contentsline {subsection}{\numberline {1.1}Elektromagnetische Strahlung}{1}
+\contentsline {subsection}{\numberline {1.2}Sensor-Arrays}{1}
+\contentsline {subsection}{\numberline {1.3}Farbbilderzeugung}{1}
+\contentsline {subsection}{\numberline {1.4}Digitales Rasterbild}{2}
+\contentsline {subsection}{\numberline {1.5}Raster- vs. Vektordaten}{2}
+\contentsline {subsection}{\numberline {1.6}Wertebereiche von Pixeln}{3}
+\contentsline {subsection}{\numberline {1.7}Region of Interest}{3}
+\contentsline {section}{\numberline {2}Bildspeicherung}{4}
+\contentsline {subsection}{\numberline {2.1}Bildformate}{4}
+\contentsline {subsection}{\numberline {2.2}PGM-Beispiel}{4}
+\contentsline {subsection}{\numberline {2.3}TIFF-Struktur}{4}
+\contentsline {subsection}{\numberline {2.4}JPEG-Prozesskette}{5}
+\contentsline {subsection}{\numberline {2.5}Bildkompression}{5}
+\contentsline {subsection}{\numberline {2.6}Codierung}{5}
+\contentsline {subsubsection}{\numberline {2.6.1}mittlere Codel\IeC {\"a}nge einer Symbolfolge}{5}
+\contentsline {subsubsection}{\numberline {2.6.2}Huffman-Code}{6}
+\contentsline {subsection}{\numberline {2.7}Unterabtastung}{6}
+\contentsline {subsection}{\numberline {2.8}quantisierung}{6}
+\contentsline {section}{\numberline {3}Punktoperationen}{7}
+\contentsline {subsection}{\numberline {3.1}Definition}{7}
+\contentsline {subsubsection}{\numberline {3.1.1}homogen}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}nicht homogen}{7}
+\contentsline {subsection}{\numberline {3.2}Kontrast und Helligkeit}{7}
+\contentsline {subsection}{\numberline {3.3}Automatische Kontrastanpassung}{7}
+\contentsline {subsection}{\numberline {3.4}Schwellwertoperation}{8}
+\contentsline {subsection}{\numberline {3.5}Histogrammausgleich}{8}
+\contentsline {subsection}{\numberline {3.6}Gammakorrektur}{8}
+\contentsline {subsection}{\numberline {3.7}Bildqualit\IeC {\"a}t}{9}
+\contentsline {section}{\numberline {4}Farben}{10}
+\contentsline {subsection}{\numberline {4.1}Farbsysteme}{10}
+\contentsline {subsubsection}{\numberline {4.1.1}lineare Farbsysteme}{10}
+\contentsline {subsubsection}{\numberline {4.1.2}niht lineare Farbsysteme}{10}
+\contentsline {subsection}{\numberline {4.2}Farbr\IeC {\"a}ume}{11}
+\contentsline {subsubsection}{\numberline {4.2.1}RGB}{11}
+\contentsline {subsubsection}{\numberline {4.2.2}HSV und HLS}{11}
+\contentsline {subsubsection}{\numberline {4.2.3}CIExyz}{11}
+\contentsline {subsubsection}{\numberline {4.2.4}CIExy}{11}
+\contentsline {subsection}{\numberline {4.3}Umwandlungen}{12}
+\contentsline {subsubsection}{\numberline {4.3.1}CMY und CMYK}{12}
+\contentsline {subsubsection}{\numberline {4.3.2}CIExy}{12}
+\contentsline {subsubsection}{\numberline {4.3.3}Transformation sRGB $\rightarrow $ XYZ}{12}
+\contentsline {subsection}{\numberline {4.4}Weisspunkte}{12}
+\contentsline {section}{\numberline {5}Filter}{14}
+\contentsline {subsection}{\numberline {5.1}Anwendung}{14}
+\contentsline {subsection}{\numberline {5.2}Gauss-Filter}{14}
+\contentsline {subsection}{\numberline {5.3}Laplace-Filter}{14}
+\contentsline {subsection}{\numberline {5.4}Faltung}{15}
+\contentsline {subsubsection}{\numberline {5.4.1}diskrete Faltung}{15}
+\contentsline {subsubsection}{\numberline {5.4.2}Eigenschaften der Faltung}{15}
+\contentsline {subsection}{\numberline {5.5}Separierbarkeit}{15}
+\contentsline {section}{\numberline {6}Morphologie}{16}
+\contentsline {subsection}{\numberline {6.1}Schrumpfen und Wachsen}{16}
+\contentsline {subsection}{\numberline {6.2}Grundoperationen}{16}
+\contentsline {subsection}{\numberline {6.3}Zusammengesetzte Operationen}{16}
+\contentsline {subsection}{\numberline {6.4}Grauwert-Morphologie}{17}
+\contentsline {section}{\numberline {7}Bin\IeC {\"a}rbildanalyse}{18}
+\contentsline {subsection}{\numberline {7.1}Prozesskette}{18}
+\contentsline {subsection}{\numberline {7.2}Flood filling}{18}
+\contentsline {subsection}{\numberline {7.3}Rekursives Flood Filling}{18}
+\contentsline {subsection}{\numberline {7.4}Hough-Transformation}{18}
+\contentsline {section}{\numberline {8}Mustererkennung (Pattern Matching)}{19}
+\contentsline {subsection}{\numberline {8.1}Definitionen}{19}
+\contentsline {subsection}{\numberline {8.2}\IeC {\"A}hnlichkeitsmasse}{19}
+\contentsline {subsection}{\numberline {8.3}Chamfer-Algorithmus}{19}
+\contentsline {section}{\numberline {9}Fourier-Transformation}{20}
+\contentsline {subsection}{\numberline {9.1}Frequenz, Amplitude, Phase}{20}
+\contentsline {subsection}{\numberline {9.2}Fourierreihe}{20}
+\contentsline {subsection}{\numberline {9.3}Fourierintegral und -spektrum}{20}
+\contentsline {subsection}{\numberline {9.4}Fouriertransformation}{20}
+\contentsline {subsection}{\numberline {9.5}Fourier-Transformationspaare}{21}
+\contentsline {subsection}{\numberline {9.6}Beispiel: R\IeC {\"u}cktransformation}{21}
+\contentsline {subsection}{\numberline {9.7}FT von diskreten Signalen}{22}
+\contentsline {subsection}{\numberline {9.8}Aliasing und Abtasttheorem}{22}
+\contentsline {subsection}{\numberline {9.9}Diskrete Fouriertransformation}{22}
+\contentsline {subsection}{\numberline {9.10}FFT und DCT}{23}
+\contentsline {subsection}{\numberline {9.11}DFT in 2D}{24}
+\contentsline {subsection}{\numberline {9.12}Implementierung der 2D-DFT}{24}
+\contentsline {subsection}{\numberline {9.13}SD Algorithmus}{25}
+\contentsline {section}{\numberline {10}Kanten und Ecken}{26}
+\contentsline {subsection}{\numberline {10.1}\IeC {\"U}bersicht}{26}
+\contentsline {subsection}{\numberline {10.2}Gradient}{26}
+\contentsline {subsubsection}{\numberline {10.2.1}Ableitungsfilter}{26}
+\contentsline {subsubsection}{\numberline {10.2.2}Kantendetektierung}{27}
+\contentsline {subsubsection}{\numberline {10.2.3}1. und 2. Ableitung}{27}
+\contentsline {subsection}{\numberline {10.3}Laplacian of Gaussian}{27}
+\contentsline {subsubsection}{\numberline {10.3.1}Kantensch\IeC {\"a}rfung}{28}
+\contentsline {subsubsection}{\numberline {10.3.2}Anwendung des Laplace-Filters}{28}
+\contentsline {subsection}{\numberline {10.4}Eckpunkte}{28}
+\contentsline {subsubsection}{\numberline {10.4.1}Anforderungen}{29}
+\contentsline {subsubsection}{\numberline {10.4.2}Strukturmatrix}{29}
+\contentsline {subsubsection}{\numberline {10.4.3}Eigenwerte und Eigenvektoren}{29}
+\contentsline {subsubsection}{\numberline {10.4.4}\IeC {\"A}hnliche Matrizen}{29}
+\contentsline {subsubsection}{\numberline {10.4.5}Diagonalisierte Strukturmatrix}{29}
+\contentsline {subsubsection}{\numberline {10.4.6}Spezifische Interpretation}{30}
+\contentsline {subsubsection}{\numberline {10.4.7}Corner Response Function (CRF)}{30}
+\contentsline {subsection}{\numberline {10.5}Harris Algorithmus}{31}
+\contentsline {section}{\numberline {11}Wavelet-Transformation}{32}
+\contentsline {subsection}{\numberline {11.1}Einsatz der WT}{32}
+\contentsline {subsection}{\numberline {11.2}Idee der Bildpyramide}{32}
+\contentsline {subsection}{\numberline {11.3}$L_2$-Norm}{32}
+\contentsline {subsection}{\numberline {11.4}Mother Wavelet und Wavelet-Familien}{33}
+\contentsline {subsection}{\numberline {11.5}Continuous Wavelet Transform}{33}
+\contentsline {subsection}{\numberline {11.6}CWT, DWT und FWT}{33}
+\contentsline {subsection}{\numberline {11.7}FWT}{34}
+\contentsline {subsection}{\numberline {11.8}FWT als Filteroperation}{34}
+\contentsline {subsection}{\numberline {11.9}R\IeC {\"u}cktransformation}{35}
+\contentsline {subsection}{\numberline {11.10}FWT Filterbank}{35}
+\contentsline {subsection}{\numberline {11.11}FWT in zwei Dimensionen}{35}
+\contentsline {subsection}{\numberline {11.12}Bilddaten-Dekorrelation}{36}
+\contentsline {subsection}{\numberline {11.13}Quantisierung}{36}
+\contentsline {section}{\numberline {12}PGF}{37}
+\contentsline {subsection}{\numberline {12.1}Features}{37}
+\contentsline {subsection}{\numberline {12.2}Aufbau}{37}
+\contentsline {subsection}{\numberline {12.3}Farbtransformation}{37}
+\contentsline {subsection}{\numberline {12.4}5/3 Wavelet Filterbank}{37}
+\contentsline {subsection}{\numberline {12.5}Skalare Quantisierung}{38}
+\contentsline {subsection}{\numberline {12.6}Progressive Kodierung}{38}
+\contentsline {subsection}{\numberline {12.7}Bitplane-Kodierung}{39}
+\contentsline {subsection}{\numberline {12.8}Laufl\IeC {\"a}ngenkodierung (RLE)}{39}
+\contentsline {subsection}{\numberline {12.9}Adaptives RLE}{39}
+\contentsline {section}{\numberline {13}Uebungen}{39}
+\contentsline {subsection}{\numberline {13.1}Uebung 1}{39}
+\contentsline {subsection}{\numberline {13.2}Uebung 2}{41}
+\contentsline {subsection}{\numberline {13.3}Uebung 3}{47}
+\contentsline {subsection}{\numberline {13.4}Uebung 5}{50}
+\contentsline {subsection}{\numberline {13.5}Uebung 6}{53}
+\contentsline {subsection}{\numberline {13.6}Uebung 7}{57}
+\contentsline {subsection}{\numberline {13.7}Uebung 8}{59}
+\contentsline {subsection}{\numberline {13.8}Uebung 10}{61}
