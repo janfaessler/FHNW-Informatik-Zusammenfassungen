@@ -642,8 +642,6 @@ Android content provider permissions
 
 \newpage
 \section{JavaIdiocies}
-\subsection{Java Security Model}
-\includegraphics[scale=0.4]{java_sec_model.png}
 \subsection{Visibility modifiers}
 (default, private, protected, public)
 \subsubsection{Purpose}
@@ -733,21 +731,127 @@ Solution: Always check the user's permission while executing a privileged operat
 
 \newpage
 \section{Java security overview}
+
 \subsection{Java security in a nutshell}
 \begin{center}
-	\includegraphics[scale=0.3]{nutshell.png}
+	\includegraphics[scale=0.2]{nutshell.png}
 \end{center}
 \subsection{Java security model}
+\includegraphics[scale=0.25]{java_sec_model.png}
+\subsubsection{SecurityManager}
+The SecurityManager can
+\begin{itemize}
+	\item control access to files
+	\item control access to network resources
+	\item protect the JVM
+	\item protect system resources
+	\item protect security
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.25]{SecurityManager.png}
+\end{center}
+
 \subsubsection{Java policy files}
 \begin{center}
-	\includegraphics[scale=0.2]{policy-files.png}
+	\includegraphics[scale=0.3]{policy-files.png}
 \end{center}
 At run time these policies are enforced by the class AccessController that is automatically called when the SecurityManager is activated.
-\subsubsection{protection domains}
+
 All domains which the actual thread crosses must own the desired priviege
+
+\subsubsection{Permissions in Java}
+The permissions are positive, they grant acces rather than deny access. By default, nothing extra is allowed.
 \begin{center}
-	\includegraphics[scale=0.2]{protection-domain.png}
+\includegraphics[scale=0.5]{permission-tree.png}
 \end{center}
+Permission Types:
+\begin{description}
+	\item[Permission] \hfill
+		\begin{description}
+			\item[File] \hfill \\
+				Granting write access to the entiere file system is effectively the same as granting AllPermission
+			\item[Socket] \hfill \\
+				Permissions to access a networkt via sockets
+				\begin{itemize}
+					\item The target host is specified with DNS name or IP address along witha  portnumber
+					\item the actions: accept, connect, listen, resolve
+					\item Resolve is implied by any of other actions.
+				\end{itemize}
+			\item[Properties] \hfill \\
+				Represents the permission to access various Java properties:
+				\begin{itemize}
+					\item Target examples: java.home, os.name, user.name
+					\item Actions: read (getPRoperty), write (setProperty)
+				\end{itemize}
+		\end{description}
+	\item[BasicPermission] \hfill \\
+		Base class for named permissions: i.e. a permission that contains a name instead of a pair (target, action-set)
+		\begin{description}
+			\item[Runtime] \hfill \\
+				Examples: stopThread, modifyThread, setSecurityManager, writeFileDescriptor
+			\item[AWT] \hfill \\
+				Examples: accessClipboard, accessEventQueue, readDiosplayPixels
+			\item[Net] \hfill \\
+				Examples: requestPasswordAuthentication, specifyStreamHandler
+			\item[Security] \hfill \\
+				Examples: getPolicay, setPolicy, insertProvider, addIdentityCertificate, getSignerPrivateKey, setSignerKeyPair
+		\end{description}
+\end{description}
+
+creating new permissions:
+\begin{lstlisting}[language=Java,caption=creating own permissions, style=JavaStyle]
+public class WordCheckPErmission extends Permission {
+	public boolean implies(Permission other) {
+		if (!(other instanceof WordCheckPermission)) return false;
+		WordCheckPermission b = (WordCheckPermission) other;
+		if (action.equals("insert")) {
+			return b.action.equals("insert") && getName().indexOf(b.getName()) >= 0;
+		} else if (action.equals("avoid")) {
+			if (b.action.equals("avoid"))
+				return b.badWordSet().cointainsAll(badWordSet());
+			else if (b.action.equals("insert")) {
+				for (String badWord : badWordSet())
+					if (b.getName().indexOf(badWord) >= 0) return false;
+				return true;
+			else return false;
+		} else return false;
+	}
+	public void insertWords(String words) {
+		try {
+			textArea.append(words + "\n");
+		} catch (SecurityException e) {
+			JOptionPane.showMessageDialog(this, "I am sorry, but I cannot do that.");
+		}
+	}
+	class WordCheckTextArea extends JTextArea {
+		public void append(String text) {
+			WordCheckPermission p = new WordCheckPermission(text, "insert");
+			SecurityManager m = System.getSecurityManager();
+			if (manager != null) m. checkPErmission(p);
+			super.append(text);
+		}
+	}
+\end{lstlisting}
+
+The file CustomPERmission.policy is defined as follows:
+
+\begin{lstlisting}[language=Java,caption=creating own permissions, style=JavaStyle]
+grant {
+	permission java.awt.AWTPermission "showWindowWithoutWarningBanner";
+	permission ch.fhnw.WordCheckPermission "fuck,wixxer,nazi", "avoid";
+\end{lstlisting}
+
+\subsubsection{ProtectionDomain}
+\begin{itemize}
+	\item Created from a CodeSource and a PermissionCollection
+	\item Defines the set of permissions granted to classes; changes the PermissionCollection to change permissions
+	\item Each class belongs to ONE ProtectionDomain instance, set at the class creation time and never ganged again
+	\item Access to these objects is restricted; getting its reference requires a Runtime Permission getPRotectionDomain
+	\item One ClassLoader can hava more than one protection domain
+\end{itemize}
+
+\subsubsection{CodeSource}
+This class extens tha concept of a codeBase to encapsulate not only the location but also the certificate that were used to verify the signed code originating from that location. This classis immutable. 
 
 \subsection{Byte code verifier}
 The Goal is to prevent access to underlying physical machine via forged pointers, crashes and undefined states. \\
@@ -761,6 +865,15 @@ Checks a class file for validity:
 	\item Refers to other classes use legal names
 \end{itemize}
 
+\subsection{Java security at the method level}
+\begin{itemize}
+	\item To protect one method in all instances, use the SecurityManager & AccessController directly as we have shown so far
+	\item To protect a reference to an individual instance, consider using  the class GuardedObject
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.3]{guardedObject.png}
+\end{center}
+
 \subsection{Java class loaders}
 The class loader is the fountain head of Java Security:
 \begin{itemize}
@@ -768,6 +881,7 @@ The class loader is the fountain head of Java Security:
 	\item \textbf{Protection domains} drive all later security decisions
 	\item \textbf{Namespaces} keep separate classes and packages coming from different places
 \end{itemize}
+
 
 \subsubsection{Java class loaders hierarchy}
 \begin{center}
