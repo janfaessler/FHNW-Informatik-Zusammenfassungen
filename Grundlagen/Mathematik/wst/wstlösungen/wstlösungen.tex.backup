@@ -16,7 +16,56 @@
 
 \maketitle
 \pagestyle{fancy}
+\chapter*{Serie 1}
 
+\section*{Aufgabe 1}
+Trivial.
+\section*{Aufgabe 2}
+Binär auflösen mit 0 für unbrauchbar, 1 für Brauchbar.
+
+\section*{Aufgabe 3}
+\begin{enumerate}
+ \item $P(E) = \frac{3}{6}$
+ \item $P(E) = \frac{6}{36}$
+ \item Zweimaligs Werfen einer Munze, Erreignis ``zweimal Kopf'': \\
+ $ \Omega = \{Z,K\}^2 , E = \{K,K\} P(E) = \frac{1}{4}$
+ \item Züfalliges Ausfüllen eines Multiple Choice Tests mit 4 Fragen a 2 Atwortmöglichkeiten, von jeweils genau eine 
+richtig ist. Erreignis mindestens hälfte richtig:
+$\Omega = {r,f}^4 E=$ Tuppel mit Anzahl r höher als 1/2. $P(E) = \frac{11}{16}$
+\end{enumerate}
+
+\section*{Aufgabe 4}
+In folgender Situation a) jeder, b) niemand bekommt sein eigenes Geschenk an Weinachtsparty. 3 Leute sind teilnehmer.
+Es bezeichne $(a_1,a_2,a_3)$ den Fall das Person i Geschenk $a_i$ bekommt : \\
+$\{(1,2,3)(3,2,1)(2,1,3)...\}$
+a) $P(E) = 1/6$
+b) $P(E) = 1/3 = 3/6$
+
+\section*{Aufgabe 5} 
+2*1/6 nicht gleich 11/36
+
+\section*{Aufgabe 6}
+Pin 0..9 Wie lang muss pin sein damit erraten höchstens 1\% ist. \\
+$|E| = 1 P(E) ) 1/10^n \leq 0.01 n \ge 2$
+\section*{Aufgabe 7}
+Länge 4 Ziffern pw, 1)erste Zahl kein 0, 2) kein 0, mindestens 1 0, 1 höchstens so gross wie die anderen zahlen sein 
+darf
+
+\begin{enumerate}
+ \item 1 9.10.10.10
+ \item 9.9.9.9
+ \item $10^4-9^4$ max - die mit kein 0
+ \item $M_i$ erfüllt bedingung $1^3 + 2^3 + + 10^3 = 55^3$
+\end{enumerate}
+
+\section*{Aufgabe 8} Trivial.
+\section*{Aufgabe 9} Nur 3 personen haben Führerschein. 3 für Fahrer. Dann 4 Leute übrig,dann 3 2 1 = 3.4.3.2.1
+\section*{Aufgabe 10} Dualzahlen beginnen mit 11 oder enden mit 00. Funfstellig.\\
+3 dynamische positionen. 2^3+2^3 - eine der 1100 ist.
+\section*{Aufgabe 11} 9.10.10.10 = 9000.
+\section*{Aufgabe 12} Variablennamen die aus mindestens drei and höchtens 5 Kleinbuctaben bestehen
+$26^3+26^4+26^5$ 
+\section*{Aufgabe 13} $\{0,1\}^n \rightarrow \{0,1\}$ Logikfunktionen festes n :
 \chapter*{Serie 5}
 \section*{Aufgabe 1}
 1) $P(0\leq X \leq 1) = \int_0^1 f(x)dx = F(1)-F(0)\\
@@ -286,7 +335,7 @@ $ k = 30$\\
 $ a = 1.9/2$ \\
 norminv(a) =$ z_a$ = 1.6449
 Einsetzen im Interval Formel da oben.
-\end{document}
+
 
 \section*{Aufgabe 3}
 1. Ja, Additionstheorem der Normalverteilung.
@@ -305,12 +354,16 @@ $\pi{n=1596}^{i=1600} \frac{l_i}{2000}$
 
 3. Nicht möglich da Löse Anzahl zu wenig für Verwerfungskriterium ist. P = 0.
 
-\section{Aufgabe 6}
-12 Karten : Anzahl Treffer - Binomial Verteilung \\
+\section*{Aufgabe 6}
+12 Karten : Anzahl Treffer - Binomial Verteilung mit p = 50\% für Treffer \\
 $H_0$ = beliebig Raten
 Gesucht richtige Antworten damit $H_0$ ungültig mit Signifikanznouveau  von 5\% \\
 
 \begin{framed}
- $P(X \ge k) \le 0.0
+ $P(X \ge k) \le 0.05$ ist das gleiche wie $P(X \le k) \ge 0.95$ \\
+ Konfidenzbereichgrenze.
 \end{framed}
-
+Invers gefragt : \\
+\texttt{binoinv(0.95,12,0.5) = 9}\\
+9 ist an der Grenze des ``Nicht glaubens'' daher ist es nür erfüllt bei 9+1 Karte = 10.
+\end{document}
