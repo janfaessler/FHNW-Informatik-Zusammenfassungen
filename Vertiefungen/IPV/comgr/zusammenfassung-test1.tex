@@ -675,17 +675,23 @@ Die Wahl des Hüllvolumens hängt von folgenden Kriterien ab:
 	\item Kosten des Hüllvolumenschnitttests. 
 	\item Erstellungskosten des Hüllvolumens.
 \end{itemize}
+\subsection{AABB (axis-aligned bounding box)}
+Die AABB für eine bestimmte Punktmenge ist die minimale bounding box mit der Einschränkung, dass die Kanten der Box parallel zu den (kartesischen) Koordinatenachsen sind. Es ist lediglich das kartesische Produkt der $N$ Intervalle, von denen jeder durch den minimalen und maximalen Wert der entsprechenden Koordinaten, für die Punkte in $S$, definiert sind.\\
 \begin{center}
 	\includegraphics[scale=0.3]{huellvolumen.png}
 \end{center}
+Aufwand für die Berechnung des Hüllvolumens für ein Objekt, dass sich bewegt muss unter Umständen von Frame zu Frame neu berechnet werden. Wissen wir nichts über die Struktur des zu umhüllenden Objekts, so ist die AABB mit Abstand am einfachsten zu berechnen. Wir suchen einfach das Minimum und das Maximum aller Koordinatenkomponenten.\\
+Die kleinste umgebende Kugel zu finden ist dagegen viel aufwendiger. Der Aufwand lohnt sich meistens nicht, weshalb man eine Methode verwendet, die eine um ca. 5\% grössere Kugel berechnen kann.\\
+Um den kleinsten Kubus um n Punkte zu berechnen, verwendet man eine statistische Methode, genannt Principal Component Analysis. Man findet dabei die primären Achsen, entlang deren die Koordinaten am meisten variieren.
+
 
 \newpage
 \section{Alpha Blending}
 \subsection{Einleitung}
 \begin{itemize}
-	\item Beim Alpha Blending wird eine neue Frabe mit der bestehenden vermischt.
+	\item Beim Alpha Blending wird eine neue Farbe mit der bestehenden vermischt.
 	\item Der Alpha Wert ist der Dekungsgrad.
-	\item Der Alpha Wert der Farbe ist der 4. Parameter bei den Farbangaben RGBA.
+	\item Der Alpha Wert der Farbe ist der 4. Parameter bei den Farbangaben RGB\Bold{A}.
 \end{itemize}
 \subsection{Blendfunktion}
 \begin{itemize}
@@ -703,9 +709,12 @@ Zeichnungsreihenfolge ist entscheidend:
 	\item Alle opaqen (=nicht-transparente) Objekte
 	\item Alle transparenten Objekte
 \end{enumerate}
+In diesem Beispiel wurde zuerst die blaue Box, dann die rote Box und schlussendlich die grüne Box gezeichnet. Auf der rechten Seite wurde die selbe Reihenfolge benutzt aber die Ansicht wurde gedreht.
 \begin{center}
 	\includegraphics[scale=0.2]{alphablending_order.png}
 \end{center}
+Eine korrekte Transparenz können wir nur erreichen, wenn wir zuerst undurchsichtige (Englisch: opaque) Objekte mit eingeschaltetem Z-Buffer und dann die transparenten Objekte, von hinten nach vorne sortiert, mit ausgeschaltetem Z-Buffer-Test zeichnen.
+
 
 \newpage
 \section{Deferred Shading}
