@@ -87,20 +87,51 @@
 \contentsline {subsection}{\numberline {9.3}AABB (axis-aligned bounding box)}{23}
 \contentsline {section}{\numberline {10}Alpha Blending}{24}
 \contentsline {subsection}{\numberline {10.1}Einleitung}{24}
-\contentsline {subsection}{\numberline {10.2}Blendfunktion}{24}
-\contentsline {subsection}{\numberline {10.3}Additive Blending}{24}
-\contentsline {subsection}{\numberline {10.4}Zeichnungsreihenfolge}{24}
+\contentsline {subsection}{\numberline {10.2}Berechnung}{24}
+\contentsline {subsection}{\numberline {10.3}Zeichnungsreihenfolge}{24}
 \contentsline {section}{\numberline {11}Deferred Shading}{25}
 \contentsline {subsection}{\numberline {11.1}Prinzip}{25}
 \contentsline {subsection}{\numberline {11.2}Vorteile}{25}
 \contentsline {subsection}{\numberline {11.3}Nachteile}{25}
 \contentsline {subsection}{\numberline {11.4}OpenGL}{25}
 \contentsline {subsubsection}{\numberline {11.4.1}Framebuffer objects}{25}
-\contentsline {subsubsection}{\numberline {11.4.2}FBO relevant API}{25}
-\contentsline {section}{\numberline {12}Shadow Rendering}{26}
-\contentsline {subsection}{\numberline {12.1}Einleitung}{26}
-\contentsline {subsection}{\numberline {12.2}Shadow Volumes}{26}
-\contentsline {subsection}{\numberline {12.3}Shadow Maps}{26}
-\contentsline {subsection}{\numberline {12.4}Variance Shadow Maps}{26}
-\contentsline {subsection}{\numberline {12.5}Cascade Shadow Maps}{26}
-\contentsline {subsection}{\numberline {12.6}Vergleich}{27}
+\contentsline {subsubsection}{\numberline {11.4.2}FBO relevant API}{26}
+\contentsline {section}{\numberline {12}Shadow Rendering}{27}
+\contentsline {subsection}{\numberline {12.1}Shadow Maps}{27}
+\contentsline {subsection}{\numberline {12.2}Cascade Shadow Maps}{27}
+\contentsline {subsection}{\numberline {12.3}Vergleich}{27}
+\contentsline {section}{\numberline {13}Stereoprojektion}{28}
+\contentsline {subsection}{\numberline {13.1}Raumwahrnehmung}{28}
+\contentsline {subsubsection}{\numberline {13.1.1}Teifenunsch\IeC {\"a}rfe}{28}
+\contentsline {subsubsection}{\numberline {13.1.2}Abnehmende Gr\IeC {\"o}sse}{28}
+\contentsline {subsubsection}{\numberline {13.1.3}Zunehmender Dunst}{28}
+\contentsline {subsubsection}{\numberline {13.1.4}Schettenbildung}{28}
+\contentsline {subsubsection}{\numberline {13.1.5}Bewegungsparallaxe}{28}
+\contentsline {subsection}{\numberline {13.2}Stereobildwiedergabe}{28}
+\contentsline {subsubsection}{\numberline {13.2.1}Projektion nebeneinander}{28}
+\contentsline {subsubsection}{\numberline {13.2.2}Projektionen \IeC {\"u}bereinander}{28}
+\contentsline {subsection}{\numberline {13.3}Projektsionstransformation f\IeC {\"u}r Stereobildpaare}{29}
+\contentsline {subsubsection}{\numberline {13.3.1}Positive, negative oder null Parallaxe}{29}
+\contentsline {subsubsection}{\numberline {13.3.2}Symmetrische oder asymmetrische Projektion}{30}
+\contentsline {subsection}{\numberline {13.4}Stereobild\IeC {\"u}bertragung}{30}
+\contentsline {section}{\numberline {14}Globale Beleuchtungsmodelle}{32}
+\contentsline {subsection}{\numberline {14.1}Beleuchtungsgleichung}{32}
+\contentsline {subsection}{\numberline {14.2}Bidirektional Reflectance Distribution Function (BRDF)}{32}
+\contentsline {subsubsection}{\numberline {14.2.1}Eigenschaften}{32}
+\contentsline {subsection}{\numberline {14.3}Lichtweg-Notation}{33}
+\contentsline {section}{\numberline {15}Ray Tracing}{34}
+\contentsline {subsection}{\numberline {15.1}Photon Tracing}{34}
+\contentsline {subsection}{\numberline {15.2}Raytracing}{34}
+\contentsline {subsection}{\numberline {15.3}Distributed Raytracing}{34}
+\contentsline {subsection}{\numberline {15.4}Radiosity}{35}
+\contentsline {subsection}{\numberline {15.5}Path Tracing}{36}
+\contentsline {subsubsection}{\numberline {15.5.1}Schnittpunkt Behandlung}{36}
+\contentsline {subsubsection}{\numberline {15.5.2}L\IeC {\"o}sen der Rendering-Gleichung durch Monte-Carlo Integration}{36}
+\contentsline {subsection}{\numberline {15.6}Bidirektionales Path Tracing}{37}
+\contentsline {subsection}{\numberline {15.7}Photon Mapping}{37}
+\contentsline {subsubsection}{\numberline {15.7.1}Photon Tracing}{37}
+\contentsline {subsubsection}{\numberline {15.7.2}Rendering}{38}
+\contentsline {section}{\numberline {16}RayTracing Verbesserungen}{39}
+\contentsline {subsection}{\numberline {16.1}Irrandiance Caching}{39}
+\contentsline {subsection}{\numberline {16.2}Light Cuts}{39}
+\contentsline {subsection}{\numberline {16.3}Raumunterteilung}{39}
