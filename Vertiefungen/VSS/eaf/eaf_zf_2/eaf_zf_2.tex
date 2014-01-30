@@ -126,18 +126,18 @@ public interface Calculator {
 @Stateless
 @Remote(value = {Calculator,class})
 public class CalculatorBean implements Calculator {
-  ...//selbsterklärend normale implementation.
+  ...//selbsterklaerend normale implementation.
 }
 
 // Client
 public class Client {
-public static void main(String[] args throws Exception{
- InitialContext ctx = new InitialContext();
-Calculator calculator = (Calculator) ctx.lookup(
-"calculator/CalculatorBean!calculator.bean.Calculator");
-System.out.println("1 + 1 = "+calculator.add(1, 1));
-System.out.println("1 - 1 = "+calculator.subtract(1, 1));
-}
+	public static void main(String[] args throws Exception{
+		InitialContext ctx = new InitialContext();
+		Calculator calculator = (Calculator) ctx.lookup(
+		"calculator/CalculatorBean!calculator.bean.Calculator");
+		System.out.println("1 + 1 = "+calculator.add(1, 1));
+		System.out.println("1 - 1 = "+calculator.subtract(1, 1));
+	}
 }
 \end{lstlisting}
 \begin{description}
@@ -188,18 +188,18 @@ Entfernung der Instanz von einem Stateless Bean ist transparent und von Containe
 \end{framed}
 
 \begin{lstlisting}[caption=JNDI Lookup DI]
-// Service = remote, DAO = local binding
- private MovieDAO movieDAO;
-@PostConstruct
-private void init(){
-try {
-InitialContext ctx = new InitialContext();
-movieDAO = (MovieDAO) ctx.lookup("...MovieDAO");
-}
-catch(NamingException e){
-throw new RuntimeException(e);
-}
-}
+	// Service = remote, DAO = local binding
+	private MovieDAO movieDAO;
+	@PostConstruct
+	private void init(){
+		try {
+			InitialContext ctx = new InitialContext();
+			movieDAO = (MovieDAO) ctx.lookup("...MovieDAO");
+		}
+		catch(NamingException e){
+			throw new RuntimeException(e);
+		}
+	}
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Dependency Injection with Annotation]
@@ -252,17 +252,17 @@ mit Inject annotiert ist.
 Produces erlaubt die benutzung von beliebigen klassen (Factory Methods)
 
 \begin{lstlisting}
- public class Resources {
-@Produces
-public Logger produceLog(InjectionPoint
-produceLog() {
-p) {
-Logger.getLogger("MovieRental");
-return Logger.getLogger(
-}
-p.getMember().getDeclaringClass().getName());
-}
-}
+	public class Resources {
+		@Produces
+		public Logger produceLog(InjectionPoint
+		produceLog() {
+			p) {
+				Logger.getLogger("MovieRental");
+				return Logger.getLogger(
+			}
+			p.getMember().getDeclaringClass().getName());
+		}
+	}
 //Default Scope ist DependantScope, neue Instanz per Injection.
 \end{lstlisting}
 
@@ -296,62 +296,62 @@ public class MovieServiceImp implements Service { ... }
 
 \section{SFSB Examples}
 \begin{lstlisting}
- @Remote
-public interface Cart {
-void
-initialize(String owner);
-void add
-void (double amount);
-double remove(double amount);
-void getTotal();
-    addTax();
-void close();
-}
-@Stateful
-public class CartBean implements Cart {
-private String owner;
-private double total;
-private boolean taxAdded = false;
-public void initialize(String owner) {
-if(owner == null) throw new IllegalArgumentException();
-this.owner = owner;
-}
-public double getTotal() {
-return total;
-}
-@Remove public void close() {}public void add (double amount) {
-if(owner==null || taxAdded)
-throw new IllegalStateException();
-total += amount;
-}
-public void remove(double amount) {
-if(owner==null || taxAdded)
-throw new IllegalStateException();
-total -= amount;
-}
-public void addTax() {
-if(owner==null || taxAdded)
-throw new IllegalStateException();
-total = total + total * 8.0 / 100;
-taxAdded = true;
-}
-}
+	@Remote
+	public interface Cart {
+		void
+		initialize(String owner);
+		void add
+		void (double amount);
+		double remove(double amount);
+		void getTotal();
+		addTax();
+		void close();
+	}
+	@Stateful
+	public class CartBean implements Cart {
+		private String owner;
+		private double total;
+		private boolean taxAdded = false;
+		public void initialize(String owner) {
+			if(owner == null) throw new IllegalArgumentException();
+			this.owner = owner;
+		}
+		public double getTotal() {
+			return total;
+		}
+		@Remove public void close() {}public void add (double amount) {
+			if(owner==null || taxAdded)
+			throw new IllegalStateException();
+			total += amount;
+		}
+		public void remove(double amount) {
+			if(owner==null || taxAdded)
+			throw new IllegalStateException();
+			total -= amount;
+		}
+		public void addTax() {
+			if(owner==null || taxAdded)
+			throw new IllegalStateException();
+			total = total + total * 8.0 / 100;
+			taxAdded = true;
+		}
+	}
 
-public class Client {
-public static void main(String[] args) throws Exception
-String JNDI_NAME = "cart/CartBean!ch.fhnw.....Cart";
-InitialContext ctx = new InitialContext();
-Cart cart1 = (Cart) ctx.lookup(JNDI_NAME);
-Cart cart2 = (Cart) ctx.lookup(JNDI_NAME);
-cart1.initialize("User1");
-cart2.initialize("User2");
-cart1.add(100);
-cart2.add(50);
-System.out.println("Cart1: "+cart1.getTotal());
-System.out.println("Cart2: "+cart2.getTotal());
-cart1.close();
-cart2.close();
-}
+	public class Client {
+		public static void main(String[] args) throws Exception
+		String JNDI_NAME = "cart/CartBean!ch.fhnw.....Cart";
+		InitialContext ctx = new InitialContext();
+		Cart cart1 = (Cart) ctx.lookup(JNDI_NAME);
+		Cart cart2 = (Cart) ctx.lookup(JNDI_NAME);
+		cart1.initialize("User1");
+		cart2.initialize("User2");
+		cart1.add(100);
+		cart2.add(50);
+		System.out.println("Cart1: "+cart1.getTotal());
+		System.out.println("Cart2: "+cart2.getTotal());
+		cart1.close();
+		cart2.close();
+	}
 }
 
 
@@ -518,40 +518,40 @@ EntityManager em;
 
 \section{Extended Entity Manager Beispiel}
 \begin{lstlisting}
- @Stateful
-public class UserManagerImpl implements UserManager {
-@PersistenceContext(unitName="movieDS")
-// Transaction scoped
-EntityManager em;
-User user;
-public void init(int id) { user = em.find(User.class, id); }
-public void rentMovie(int mvoieId) {
-rentMovie(user, em.find(Movie.class, movieId));
-}
-public void setName(String name) {
-user.setName(name); // no effect as detached instance is
-}
-// changed => em.merge is necessary!
-@Remove
-public void finished() {}
-}
+	@Stateful
+	public class UserManagerImpl implements UserManager {
+		@PersistenceContext(unitName="movieDS")
+		// Transaction scoped
+		EntityManager em;
+		User user;
+		public void init(int id) { user = em.find(User.class, id); }
+		public void rentMovie(int mvoieId) {
+			rentMovie(user, em.find(Movie.class, movieId));
+		}
+		public void setName(String name) {
+			user.setName(name); // no effect as detached instance is
+		}
+		// changed => em.merge is necessary!
+		@Remove
+		public void finished() {}
+	}
 
-@Stateful
-public class UserManagerImpl implements UserManager {
-@PersistenceContext(unitName="movieDS",
-type=PersistenceContextType.EXTENDED)
-EntityManager em;
-User user;
-public void init(int id) { user = em.find(User.class, id); }
-public void rentMovie(int mvoieId) {
-rentMovie(user, em.find(Movie.class, movieId));
-}
-public void setName(String name) {
-user.setName(name); // saved after commit
-}
-@Remove
-public void finished() {}
-}
+	@Stateful
+	public class UserManagerImpl implements UserManager {
+		@PersistenceContext(unitName="movieDS",
+		type=PersistenceContextType.EXTENDED)
+		EntityManager em;
+		User user;
+		public void init(int id) { user = em.find(User.class, id); }
+		public void rentMovie(int mvoieId) {
+			rentMovie(user, em.find(Movie.class, movieId));
+		}
+		public void setName(String name) {
+			user.setName(name); // saved after commit
+		}
+		@Remove
+		public void finished() {}
+	}
 \end{lstlisting}
 
 \section{Fazit}
@@ -616,16 +616,16 @@ List<User> users = userService.getAllUsers();
 an den UserService delegiert. Als Antwort wird eine Liste der vorhandenen User-Entitäten erwartet.
 Diese Antwort wird nun für den Client speziell aufgearbeitet.
 \begin{lstlisting}
- List<UserDTO >dtos = new ArrayList<>();
-for (User u : users) {
-Long[] ids = new Long[u.getRentals().size()];
-for (int i = 0; i < ids.length; i++) {
-ids[i] = u.getRentals().get(i).getId();
-}
-UserDTO dto = new UserDTO(u.getId(), u.getLastName(),
-u.getFirstName(), u.getEmail(), ids);
-dtos.add(dto);
-}
+	List<UserDTO >dtos = new ArrayList<>();
+	for (User u : users) {
+		Long[] ids = new Long[u.getRentals().size()];
+		for (int i = 0; i < ids.length; i++) {
+			ids[i] = u.getRentals().get(i).getId();
+		}
+		UserDTO dto = new UserDTO(u.getId(), u.getLastName(),
+		u.getFirstName(), u.getEmail(), ids);
+		dtos.add(dto);
+	}
 \end{lstlisting}
 
 In diesem Beispiel werden in der Zeile \#1 - \#4 die IDs der Rental-Entitäten zusammengefasst, um
@@ -644,12 +644,12 @@ Use Cases hier abgebildet sind. Jede Methode bildet eine logische Einheit und ka
 Logical Unit of Work) genutzt werden. Hier ist auch die Transaktionsgrenze. Hier werden die
 notwendigen Transaktionen gestartet und das Rollback-Verhalten implementiert.
 \begin{lstlisting}
- @Transactional(propagation = Propagation.SUPPORTS)#1
-public List<User> getAllUsers() throws RentalServiceException {#2
-List<User> users = userDAO.getAll();#3
-log.debug("getAllUsers() done");
-return users;
-}
+	@Transactional(propagation = Propagation.SUPPORTS)#1
+	public List<User> getAllUsers() throws RentalServiceException {#2
+		List<User> users = userDAO.getAll();#3
+		log.debug("getAllUsers() done");
+		return users;
+	}
 \end{lstlisting}
 \subsection{Transaktionsstrategie}
 Eine Transaktionsstrategie ist bei jeder Enterprise Applikation notwendig. Bei der "movierental"-
@@ -674,12 +674,12 @@ der vorliegenden Implementation wird dies nun nicht mittels Annotationen wie @Au
 umgesetzt, sondern die Abhängigkeiten werden explizit in einem entsprechenden Spring
 Konfigurationsfile definiert. Im File "business.xml" ist folgender Eintrag zu finden:
 \begin{lstlisting}[language=xml]
- <bean id="userService"> #1
-class="ch.fhnw.edu.rental.services.impl.UserServiceImpl">
-<property name="userDAO" ref="userDAO" /> #2
-<property name="rentalDAO" ref="rentalDAO" />
-<property name="movieDAO" ref="movieDAO"/>
-</bean>
+	<bean id="userService"> #1
+	class="ch.fhnw.edu.rental.services.impl.UserServiceImpl">
+	<property name="userDAO" ref="userDAO" /> #2
+	<property name="rentalDAO" ref="rentalDAO" />
+	<property name="movieDAO" ref="movieDAO"/>
+	</bean>
 \end{lstlisting}
 n Zeile \#1 wird das Spring Bean mit der ID "userService" basierend auf der Klasse
 "UserServiceImpl" deklariert. Die entsprechende Instanz hat eine Abhängigkeit zu einem weiteren
@@ -765,20 +765,20 @@ Aspect-Codes kann festgelegt werden, z.B. Before, After oder Around.
 Die Funktionalität wird im Advice implementiert. Der Advice ist eine normale Java-Klasse und kann
 zum Beispiel wie folgt aussehen:
 \begin{lstlisting}
-@Aspect #1
-@Component #2
-public class MovieProgressAspect {
-@Autowired #3
-private MovieProgress movieProgress;
-@AfterReturning( #4
-pointcut=
-"execution(* ch.fhnw.edu.rental.services.MovieService.getAllMovies())",
-returning="movielist"
-)#5
-public void checkMovieList(Object movielist) {
-// logic
-}
-}
+	@Aspect #1
+	@Component #2
+	public class MovieProgressAspect {
+		@Autowired #3
+		private MovieProgress movieProgress;
+		@AfterReturning( #4
+		pointcut=
+		"execution(* ch.fhnw.edu.rental.services.MovieService.getAllMovies())",
+		returning="movielist"
+		)#5
+		public void checkMovieList(Object movielist) {
+			// logic
+		}
+	}
 \end{lstlisting}
 Mit der Annotation in \#1 wird diese Klasse als Aspekt deklariert. Das Spring Bean hinter dem XML-
 Element <aop:aspectj-autoproxy/> (siehe File "aspects.xml") kann diese Annotation erkennen und
@@ -873,7 +873,7 @@ closing channel Channel ID 2aa24d58 (inbound) of Remoting connection 0c9737c2 to
 closing channel Channel ID 1259c420 (inbound) of Remoting connection 3083baf6 to /127.0.0.1:56851
 
 
-      \end{lstlisting}
+\end{lstlisting}
 
 
 Können Sie sich dieses Verhalten erklären? Was sehen sie für Vorteile dieser Implementierung?
@@ -1068,72 +1068,72 @@ JavaScript Applikation
 REST-Requests an den Server zu senden. Als Antworten werden JSON Objekte erwartet. Folgende
 Requests müssen vom Server unterstützt werden:
 \begin{lstlisting}[language={}]
- Request:
-http://localhost:8080/movierental.ria/movies
-Beispiel Response:
-[
-{
-"id":1,
-"title":"Lord of the Rings",
-"rented":true,
-"releaseDate":1008716400000,
-"priceCategory":"Regular"
-},
-{
-"id":2,
-"title":"Matrix",
-03.11.2012
-1/8"rented":false,
-"releaseDate":922831200000,
-"priceCategory":"New Release"
-},
-...
-]
-User Entitäten
-Request:
-http://localhost:8080/movierental.ria/users
-Beispiel Response:
-[
-{
-"id":1,
-"lastName":"Keller",
-"firstName":"Marc",
-"email":"juerg.luthiger@fhnw.ch",
-"rentalIds":[1]
-},
-{
-"id":2,
-"lastName":"Knecht",
-"firstName":"Werner",
-"email":"werner.knecht@gmail.com",
-"rentalIds":[]
-},
-..
-]
-Rental Entitäten
-Request:
-http://localhost:8080/movierental.ria/rentals
-Beispiel Response:
-[
-{
-"id":1,
-"rentalDate":1284242400000,
-"rentalDays":7,
-"remainingDays":-835,
-"user":"Marc Keller",
-"movie":"Lord of the Rings","rentalFee":9.5
-},
-{
-"id":3,
-"rentalDate":1284242400000,
-"rentalDays":4,
-"remainingDays":-838,
-"user":"Barbara Meyer",
-"movie":"Matrix Reloaded",
-"rentalFee":12.0
-},
-...
-]
+	Request:
+	http://localhost:8080/movierental.ria/movies
+	Beispiel Response:
+	[
+		{
+			"id":1,
+			"title":"Lord of the Rings",
+			"rented":true,
+			"releaseDate":1008716400000,
+			"priceCategory":"Regular"
+		},
+		{
+			"id":2,
+			"title":"Matrix",
+			03.11.2012
+			1/8"rented":false,
+			"releaseDate":922831200000,
+			"priceCategory":"New Release"
+		},
+		...
+	]
+	User Entitaeten
+	Request:
+	http://localhost:8080/movierental.ria/users
+	Beispiel Response:
+	[
+		{
+			"id":1,
+			"lastName":"Keller",
+			"firstName":"Marc",
+			"email":"juerg.luthiger@fhnw.ch",
+			"rentalIds":[1]
+		},
+		{
+			"id":2,
+			"lastName":"Knecht",
+			"firstName":"Werner",
+			"email":"werner.knecht@gmail.com",
+			"rentalIds":[]
+		},
+		..
+	]
+	Rental Entitaeten
+	Request:
+	http://localhost:8080/movierental.ria/rentals
+	Beispiel Response:
+	[
+		{
+			"id":1,
+			"rentalDate":1284242400000,
+			"rentalDays":7,
+			"remainingDays":-835,
+			"user":"Marc Keller",
+			"movie":"Lord of the Rings","rentalFee":9.5
+		},
+		{
+			"id":3,
+			"rentalDate":1284242400000,
+			"rentalDays":4,
+			"remainingDays":-838,
+			"user":"Barbara Meyer",
+			"movie":"Matrix Reloaded",
+			"rentalFee":12.0
+		},
+		...
+	]
 \end{lstlisting}
 
 \section*{Aufgabe 1}
@@ -1157,15 +1157,15 @@ unterschiedlichen Schichten/Layer und den verschiedenen Client-Applikationen:
 \end{figure}
 \section*{Aufgabe 3}
 \begin{lstlisting}
- @Controller #1
-public class RIAClientController {
-@ResponseBody #2
-@RequestMapping(value="/movies", method = RequestMethod.GET,
-produces = "application/json")#3
-public List<MovieDTO> getMovies() {#4
-...
-}
-}
+	@Controller #1
+	public class RIAClientController {
+		@ResponseBody #2
+		@RequestMapping(value="/movies", method = RequestMethod.GET,
+		produces = "application/json")#3
+		public List<MovieDTO> getMovies() {#4
+			...
+		}
+	}
 \end{lstlisting}
 \begin{enumerate}
  \item Der RiaClientController wird über diese Annotation als SpringBean im Speziellen als PageController während das 
@@ -1178,250 +1178,250 @@ Methode ist. Die Methode selber wird JSON als Response erzeugen
 
 \chapter{Extra Code Snippets}
 \begin{lstlisting}[caption=JNDI Lookup Helper]
- package com.ibytecode.client;
- 
-import javax.naming.Context;
-import javax.naming.NamingException;
- 
-import com.ibytecode.business.HelloWorld;
-import com.ibytecode.businesslogic.HelloWorldBean;
-import com.ibytecode.clientutility.ClientUtility;
- 
-public class EJBApplicationClient {
- 
-    public static void main(String[] args) {
-        HelloWorld bean = doLookup();
-        System.out.println(bean.sayHello()); // 4. Call business logic
-    }
- 
-    private static HelloWorld doLookup() {
-        Context context = null;
-        HelloWorld bean = null;
-        try {
-            // 1. Obtaining Context
-            context = ClientUtility.getInitialContext();
-            // 2. Generate JNDI Lookup name
-            String lookupName = getLookupName();
-            // 3. Lookup and cast
-            bean = (HelloWorld) context.lookup(lookupName);
- 
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-        return bean;
-    }
- 
-    private static String getLookupName() {
-/*
-The app name is the EAR name of the deployed EJB without .ear suffix.
-Since we haven't deployed the application as a .ear,
-the app name for us will be an empty string
-*/
-        String appName = "";
- 
-        /* The module name is the JAR name of the deployed EJB
-        without the .jar suffix.
-        */
-        String moduleName = "HelloWorldSessionBean";
- 
-/*AS7 allows each deployment to have an (optional) distinct name.
-This can be an empty string if distinct name is not specified.
-*/
-        String distinctName = "";
- 
-        // The EJB bean implementation class name
-        String beanName = HelloWorldBean.class.getSimpleName();
- 
-        // Fully qualified remote interface name
-        final String interfaceName = HelloWorld.class.getName();
- 
-        // Create a look up string name
-        String name = "ejb:" + appName + "/" + moduleName + "/" +
-            distinctName    + "/" + beanName + "!" + interfaceName;
- 
-        return name;
-    }
-}
+	package com.ibytecode.client;
+
+	import javax.naming.Context;
+	import javax.naming.NamingException;
+
+	import com.ibytecode.business.HelloWorld;
+	import com.ibytecode.businesslogic.HelloWorldBean;
+	import com.ibytecode.clientutility.ClientUtility;
+
+	public class EJBApplicationClient {
+
+		public static void main(String[] args) {
+			HelloWorld bean = doLookup();
+			System.out.println(bean.sayHello()); // 4. Call business logic
+		}
+
+		private static HelloWorld doLookup() {
+			Context context = null;
+			HelloWorld bean = null;
+			try {
+				// 1. Obtaining Context
+				context = ClientUtility.getInitialContext();
+				// 2. Generate JNDI Lookup name
+				String lookupName = getLookupName();
+				// 3. Lookup and cast
+				bean = (HelloWorld) context.lookup(lookupName);
+
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+			return bean;
+		}
+
+		private static String getLookupName() {
+			/*
+			The app name is the EAR name of the deployed EJB without .ear suffix.
+			Since we haven't deployed the application as a .ear,
+			the app name for us will be an empty string
+			*/
+			String appName = "";
+
+			/* The module name is the JAR name of the deployed EJB
+			without the .jar suffix.
+			*/
+			String moduleName = "HelloWorldSessionBean";
+
+			/*AS7 allows each deployment to have an (optional) distinct name.
+			This can be an empty string if distinct name is not specified.
+			*/
+			String distinctName = "";
+
+			// The EJB bean implementation class name
+			String beanName = HelloWorldBean.class.getSimpleName();
+
+			// Fully qualified remote interface name
+			final String interfaceName = HelloWorld.class.getName();
+
+			// Create a look up string name
+			String name = "ejb:" + appName + "/" + moduleName + "/" +
+			distinctName    + "/" + beanName + "!" + interfaceName;
+
+			return name;
+		}
+	}
 \end{lstlisting}
 \begin{lstlisting}[caption=Stateful Bean]
- package ch.fhnw.eaf.cart.bean;
-
-import javax.ejb.Remote;
-
-@Remote
-public interface Cart {
-   public void   initialize(String owner);
-
-   public void   add   (double amount);
-   public void   remove(double amount);
-   public double getTotal();
-   public void   addTax();
-
-   public void   close();
+ package ch.fhnw.eaf.cart.bean;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface Cart {
+   public void   initialize(String owner);
+
+   public void   add   (double amount);
+   public void   remove(double amount);
+   public double getTotal();
+   public void   addTax();
+
+   public void   close();
 }
 
-package ch.fhnw.eaf.cart.bean;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.PostActivate;
-import javax.ejb.PrePassivate;
-import javax.ejb.Remove;
-import javax.ejb.Stateful;
-import javax.inject.Inject;
-
-import org.jboss.ejb3.annotation.Cache;
-
-import ch.fhnw.eaf.calculator.bean.Calculator;
-
-
-@Stateful
-//@Interceptors(ch.fhnw.eaf.tools.LogInterceptor.class)
-@Cache("small") // JBoss specific
-//@StatefulTimeout(value=5, unit=TimeUnit.SECONDS)
-public class CartBean implements Cart {
-	
-	@Inject
-	private Calculator calc;
-	
-	private String owner;
-	public void initialize(String owner){log("initialize");
-		if(owner == null) throw new IllegalArgumentException();
-		this.owner = owner;
-	}
-
-	private double total;
-	private boolean taxAdded = false;
-	
-	public void add(double amount){log("add");
-		if(owner == null || taxAdded ) throw new IllegalStateException();
-		total += amount;
-	}
-	public void remove(double amount){log("remove");
-		if(owner == null || taxAdded ) throw new IllegalStateException();
-		total -= amount;
-	}
-	public double getTotal(){log("getTotal");
-		if(owner == null ) throw new IllegalStateException();
-		return total;
-	}
-	public void addTax(){log("addTax");
-		if(owner == null || taxAdded ) throw new IllegalStateException();
-		total = calc.sum(total, calc.product(total, calc.quotient(8.0, 100)));
-		taxAdded = true;
-	}
-
-	@Remove
-	public void close() { log("close called"); }
-
-	@PreDestroy
-	private void preDestroy(){log("preDestroy called");	}
-
-	@PrePassivate
-	private void prePassivate(){log("prePassivate called"); }
-
-	@PostActivate
-	private void postActivate(){log("postActivate called");	}
-	
-	@Override
-	public void finalize(){log("finalize called");}
-
-	public CartBean(){log("constructor called"); }
-
-	@PostConstruct
-	private void init(){log("postConstruct called");
-		System.out.println(calc);
-		System.out.println(System.identityHashCode(calc));
-		System.out.println(calc.getClass().getName());
-	}
-
-	private void log(String msg){
-		System.out.println(this.getClass().getSimpleName()+"@"
-				+System.identityHashCode(this)
-				+" "+msg);
-	}
-	
-}
-\end{lstlisting}
+package ch.fhnw.eaf.cart.bean;
 
-\begin{lstlisting}[caption=Stateless Bean]
- package ch.fhnw.eaf.calculator.bean;
-
-import javax.ejb.Local;
-
-@Local
-public interface Calculator {
-	double sum(double x, double y);
-	double difference(double x, double y);
-	double product(double x, double y);
-	double quotient(double x, double y);
-
-	void incrementCounter();
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.PostActivate;
+import javax.ejb.PrePassivate;
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
+import javax.inject.Inject;
+
+import org.jboss.ejb3.annotation.Cache;
+
+import ch.fhnw.eaf.calculator.bean.Calculator;
+
+
+@Stateful
+//@Interceptors(ch.fhnw.eaf.tools.LogInterceptor.class)
+@Cache("small") // JBoss specific
+//@StatefulTimeout(value=5, unit=TimeUnit.SECONDS)
+public class CartBean implements Cart {
+	
+	@Inject
+	private Calculator calc;
+	
+	private String owner;
+	public void initialize(String owner){log("initialize");
+		if(owner == null) throw new IllegalArgumentException();
+		this.owner = owner;
+	}
+
+	private double total;
+	private boolean taxAdded = false;
+	
+	public void add(double amount){log("add");
+		if(owner == null || taxAdded ) throw new IllegalStateException();
+		total += amount;
+	}
+	public void remove(double amount){log("remove");
+		if(owner == null || taxAdded ) throw new IllegalStateException();
+		total -= amount;
+	}
+	public double getTotal(){log("getTotal");
+		if(owner == null ) throw new IllegalStateException();
+		return total;
+	}
+	public void addTax(){log("addTax");
+		if(owner == null || taxAdded ) throw new IllegalStateException();
+		total = calc.sum(total, calc.product(total, calc.quotient(8.0, 100)));
+		taxAdded = true;
+	}
+
+	@Remove
+	public void close() { log("close called"); }
+
+	@PreDestroy
+	private void preDestroy(){log("preDestroy called");	}
+
+	@PrePassivate
+	private void prePassivate(){log("prePassivate called"); }
+
+	@PostActivate
+	private void postActivate(){log("postActivate called");	}
+	
+	@Override
+	public void finalize(){log("finalize called");}
+
+	public CartBean(){log("constructor called"); }
+
+	@PostConstruct
+	private void init(){log("postConstruct called");
+		System.out.println(calc);
+		System.out.println(System.identityHashCode(calc));
+		System.out.println(calc.getClass().getName());
+	}
+
+	private void log(String msg){
+		System.out.println(this.getClass().getSimpleName()+"@"
+				+System.identityHashCode(this)
+				+" "+msg);
+	}
+	
 }
-package ch.fhnw.eaf.calculator.bean;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.Stateless;
-
-@Stateless
-public class CalculatorBean implements Calculator {
-	private int counter = 0;
-	
-	public void incrementCounter(){
-		log("incrementCounter: counter "+ counter++);
-	}
-
-	public double sum(double x, double y) {
-		log("sum called");
-		try { Thread.sleep(5000); }
-		catch (Exception e) {}
-		return x + y;
-	}
-
-   	public double difference(double x, double y) { log("difference"); return x - y; }
-	public double product(double x, double y) {	log("product"); return x * y;}
-	public double quotient(double x, double y) { log("quotient"); return x / y;}
-
-
-	public CalculatorBean(){log("constructor called");}
-
-	@PostConstruct
-	private void init(){log("init called");}
-
-	@PreDestroy
-	public void remove(){log("remove called");}
-
-	@Override
-	public void finalize(){log("finalize called");}
-
-	private void log(String msg){
-		System.out.println(this.getClass().getSimpleName()+"@"
-				+System.identityHashCode(this)+" "+msg);
-	}
-}
-\end{lstlisting}
-\begin{lstlisting}[caption=Client]
- public class Client2 {
-	public static void main(String[] args) throws Exception {
-		InitialContext ctx = new InitialContext();
-		final String JNDI_NAME = "cart/CartBean!ch.fhnw.eaf.cart.bean.Cart";
-
-		Cart cart = (Cart) ctx.lookup(JNDI_NAME);
-
-		cart.initialize("User1");
-
-		cart.add(44);
-		cart.add(112);
-
-		Thread.sleep(20 * 1000);
-
-		cart.addTax();
-		System.out.println("total = " + cart.getTotal());
-
-		cart.close();
-	}
-}
+\end{lst}
+
+\begin{lst}[caption=Stateless Bean]
+	package ch.fhnw.eaf.calculator.bean;
+
+	import javax.ejb.Local;
+
+	@Local
+	public interface Calculator {
+		double sum(double x, double y);
+		double difference(double x, double y);
+		double product(double x, double y);
+		double quotient(double x, double y);
+
+		void incrementCounter();
+	}
+	package ch.fhnw.eaf.calculator.bean;
+
+	import javax.annotation.PostConstruct;
+	import javax.annotation.PreDestroy;
+	import javax.ejb.Stateless;
+
+	@Stateless
+	public class CalculatorBean implements Calculator {
+		private int counter = 0;
+
+		public void incrementCounter(){
+			log("incrementCounter: counter "+ counter++);
+		}
+
+		public double sum(double x, double y) {
+			log("sum called");
+			try { Thread.sleep(5000); }
+			catch (Exception e) {}
+			return x + y;
+		}
+
+		public double difference(double x, double y) { log("difference"); return x - y; }
+		public double product(double x, double y) {	log("product"); return x * y;}
+		public double quotient(double x, double y) { log("quotient"); return x / y;}
+
+
+		public CalculatorBean(){log("constructor called");}
+
+		@PostConstruct
+		private void init(){log("init called");}
+
+		@PreDestroy
+		public void remove(){log("remove called");}
+
+		@Override
+		public void finalize(){log("finalize called");}
+
+		private void log(String msg){
+			System.out.println(this.getClass().getSimpleName()+"@"
+			+System.identityHashCode(this)+" "+msg);
+		}
+	}
+\end{lst}
+\begin{lst}[caption=Client]
+	public class Client2 {
+		public static void main(String[] args) throws Exception {
+			InitialContext ctx = new InitialContext();
+			final String JNDI_NAME = "cart/CartBean!ch.fhnw.eaf.cart.bean.Cart";
+
+			Cart cart = (Cart) ctx.lookup(JNDI_NAME);
+
+			cart.initialize("User1");
+
+			cart.add(44);
+			cart.add(112);
+
+			Thread.sleep(20 * 1000);
+
+			cart.addTax();
+			System.out.println("total = " + cart.getTotal());
+
+			cart.close();
+		}
+	}
 \end{lstlisting}
 
 \end{document}
