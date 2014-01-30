@@ -26,4 +26,15 @@
 \contentsline {section}{\numberline {3.3}Extended Persistence Context}{12}
 \contentsline {section}{\numberline {3.4}Extended Entity Manager Beispiel}{13}
 \contentsline {section}{\numberline {3.5}Fazit}{13}
-\contentsline {part}{\numberline {II}Code,\IeC {\"U}bungen,usw.}{15}
+\contentsline {chapter}{\numberline {4}Fazit EAF (Luthiger)}{15}
+\contentsline {section}{\numberline {4.1}Facade}{15}
+\contentsline {section}{\numberline {4.2}Layer Service}{16}
+\contentsline {subsection}{\numberline {4.2.1}Transaktionsstrategie}{16}
+\contentsline {section}{\numberline {4.3}Layer Domain Modell}{16}
+\contentsline {section}{\numberline {4.4}Layer Data Access}{17}
+\contentsline {section}{\numberline {4.5}Nicht funktionale Logik}{17}
+\contentsline {part}{\numberline {II}Code,\IeC {\"U}bungen,usw.}{19}
+\contentsline {chapter}{\numberline {5}Arbeitsblatt 1 Stateless Session Beans}{20}
+\contentsline {chapter}{\numberline {6}Arbeitsblatt 2}{23}
+\contentsline {chapter}{\numberline {7}Arbeitsblatt 3 ArchitekturAnalyse}{26}
+\contentsline {chapter}{\numberline {8}Extra Code Snippets}{29}
