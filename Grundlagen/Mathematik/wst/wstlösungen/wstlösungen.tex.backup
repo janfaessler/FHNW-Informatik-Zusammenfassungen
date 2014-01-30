@@ -65,7 +65,15 @@ darf
 \section*{Aufgabe 11} 9.10.10.10 = 9000.
 \section*{Aufgabe 12} Variablennamen die aus mindestens drei and höchtens 5 Kleinbuctaben bestehen
 $26^3+26^4+26^5$ 
-\section*{Aufgabe 13} $\{0,1\}^n \rightarrow \{0,1\}$ Logikfunktionen festes n :
+\section*{Aufgabe 13} $\{0,1\}^n \rightarrow \{0,1\}$ Logikfunktionen festes n : 0,1 für jede funktion. Alle 
+Binärzahlen ist $2^n$ : $2^{2^n}$ Unvollständig = $3^{2^n}$
+\section*{Aufgabe 16} 1,2,7,8.9 5 möglichkeiten 5! max 1/5! = 1/1202
+\section*{Aufgabe 17} 12.11.10 trivial
+\section*{Aufgabe 18} $n!/(n-k)! = 8!/4! = 1680  {8 \choose 4} = 70$
+\section*{Aufgabe 19} 1)5! 2) 4! selbstverständlich.
+\section*{Aufgabe 20} Trivial . 1. 4! weil 4 leute. 2. 3! weil 4 nicht mehr dynamisch ist. 3. d nicht an letzte stelle, 
+heisst alle - d an erste(letzter) stelle = 4!-3!
+\section*{Aufgabe 21} 5 mal Munz werf. Folgen möglich sind 2.2.2.2.2 = $2^5$ genau 3 K = 
 \chapter*{Serie 5}
 \section*{Aufgabe 1}
 1) $P(0\leq X \leq 1) = \int_0^1 f(x)dx = F(1)-F(0)\\

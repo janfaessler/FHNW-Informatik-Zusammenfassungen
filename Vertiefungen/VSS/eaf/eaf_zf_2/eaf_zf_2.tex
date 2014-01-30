@@ -1,0 +1,554 @@
+\documentclass[a4paper,10pt]{scrreprt}
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[german]{babel}
+\usepackage{pdfpages}
+%opening
+\title{Enterprise Application Frameworks Teil 2 - MSP}
+\author{Roland Hediger}
+\usepackage{fancyhdr}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\pic}[2][figure]{\begin{figure}[h]
+ \centering
+ \includegraphics[scale=0.3]{#2}
+ % rsc.png: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
+ \caption{#1}
+\end{figure}
+}
+\usepackage{framed}
+% Code listenings
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage[T1]{fontenc}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{
+ language=Java,
+ basicstyle=\footnotesize\ttfamily, % Standardschrift
+ numbers=left,               % Ort der Zeilennummern
+ numberstyle=\tiny,          % Stil der Zeilennummern
+ stepnumber=5,              % Abstand zwischen den Zeilennummern
+ numbersep=5pt,              % Abstand der Nummern zum Text
+ tabsize=2,                  % Groesse von Tabs
+ extendedchars=true,         %
+ breaklines=true,            % Zeilen werden Umgebrochen
+ frame=b,         
+ %commentstyle=\itshape\color{LightLime}, Was isch das? O_o
+ %keywordstyle=\bfseries\color{DarkPurple}, und das O_o
+ basicstyle=\footnotesize\ttfamily,
+ stringstyle=\color[RGB]{42,0,255}\ttfamily, % Farbe der String
+ keywordstyle=\color[RGB]{127,0,85}\ttfamily, % Farbe der Keywords
+ commentstyle=\color[RGB]{63,127,95}\ttfamily, % Farbe des Kommentars
+ showspaces=false,           % Leerzeichen anzeigen ?
+ showtabs=false,             % Tabs anzeigen ?
+ xleftmargin=17pt,
+ framexleftmargin=17pt,
+ framexrightmargin=5pt,
+ framexbottommargin=4pt,
+ showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+ \pagestyle{fancy}
+\part{Theorie}
+
+\chapter{Einführung  Enterpise Beans}
+
+\begin{description}
+ \item [Definition] Ein Enterprise Bean ist eine serverseitige Komponente die die Businesslogik einer Applikation Kapselt ( Facade).
+ \begin{itemize}
+  \item Beitet eine externe interface an (Remote)
+  \item Versteckt komplexität der Implementation.
+ \end{itemize}
+\item [Zusätzliche Services] Transaktionsmanagement, Sicherheitsdienste, Concurrency Management.
+\end{description}
+
+\section{EJB Component Architecture}
+\pic{ejbca.png}
+
+\subsection{Synchrone Enterprise Beans}
+\begin{description}
+ \item [Stateless Session Bean] Bietet Dienste an, kann ein Webservice Implementieren.Ahnlich wie Spring Beans mit \texttt{scope=Singleton}
+ \item [Stateful Session Bean] Instanzvariablen representieren eine einzigartige Client-Bean Session. Ähnlich wie Spring Beans mit \texttt{scope=Prototype}.
+\end{description}
+
+\subsection{Asynchrone Enterprise Beans}
+\begin{description}
+ \item [Message Driven Beans] Haltet die Daten oder der Zustand eines spezifischen Clients nicht. Kann auf JMS basiert sein.
+\end{description}
+
+\section{Implementation von Enterprise Beans}
+\begin{description}
+ \item [Enterprise Bean] Primäre Artifakt. Annotiertes POJO. Die Annotation geben die Semantik sowohl als die Vorraussetzungen an dem EJB Container.
+ \item [Enterprise Business Interface] Gewöhnliche Interface. Ein EJB\footnote{Enterprise Java Bean} kann mehrere ``Business Interfaces'' implementieren.\\
+ \begin{description}
+  \item [Remote Interfaces] \texttt{@Remote} : Entfernte Client kann auf einer anderen JVM laufen. Ort der EJB ist für Client Transparent.
+  \item [Local Interfaces] Die müssen \textit{auf der gleichen JVM wie EJB laufen.} Ort ist für den Client nicht Transparent.
+  \item [Unterschiede] Performanz, Isolation von Paramter. 
+ \end{description}
+\item [JNDI Access] \hfill \\
+\begin{lstlisting}[caption=JNDI]
+ Properties props = new Properties();
+props.put(Context.INITIAL_CONTEXT_FACTORY,
+"org.jboss.naming.remote.client.InitialContextFactory");
+props.put(Context.PROVIDER_URL, "remote://localhost:4447");
+props.put(Context.SECURITY_PRINCIPAL, "testuser");
+props.put(Context.SECURITY_CREDENTIALS, "testpassword");
+context = new InitialContext(props);
+context.lookup(...)
+\end{lstlisting}
+
+\end{description}
+
+\section{Stateless Session Beans}
+\begin{description}
+ \item [Eigenschaften.] Bietet ein Dienst an für Clients. Verwaltet keine ``Conversational State'' mit Clients. Ein Stateless Bean kann \textbf{Instanzvariablen beinhalten, aber die sind nur für den Dauer des Aufrufs gültig.} EJB Container kann eine \textbf{beliebige Instanz} der Bean an dem Client geben bei einem Methodenaufruf. Client-to-Bean Assoziation ist daher kurz. Es kann jedoch \textbf{globale Zustandsinformation} beinhalten wie ein JNDI Context oder JDBC Verbindung. Diese Instanz ist nicht geteilt - 1 Client pro Instanz.
+\end{description}
+\begin{lstlisting}[caption=Calculator Example Stateless Bean]
+public interface Calculator {
+  double sum (double x, double y);
+  double difference (double x, double y);
+  double product (double x, double y);
+  double quotient (double x, double y);
+}
+// No interface inheritance - no remote xceptions!
+
+// Implementation
+
+@Stateless
+@Remote(value = {Calculator,class})
+public class CalculatorBean implements Calculator {
+  ...//selbsterklärend normale implementation.
+}
+
+// Client
+public class Client {
+public static void main(String[] args throws Exception{
+ InitialContext ctx = new InitialContext();
+Calculator calculator = (Calculator) ctx.lookup(
+"calculator/CalculatorBean!calculator.bean.Calculator");
+System.out.println("1 + 1 = "+calculator.add(1, 1));
+System.out.println("1 - 1 = "+calculator.subtract(1, 1));
+}
+}
+\end{lstlisting}
+\begin{description}
+ \item [Remarks] Die Stateless Annotation sagt dem EJB Container dass der CalculatorBean Stateless ist. Es hat folgende Eingabeeigenschaften : 
+ \begin{itemize}
+  \item Name : Names des Beans default : Unqualified Class Name
+  \item Description : Muss in tools angezeigt werden - Beschreibung der Bean.
+  \item mappedName : mapping to a JNDI Name. 
+ \end{itemize}
+ \item[@Remote] Ist dann business Interface. Value ist dann spezifiziert falls die Annotation auf eine Klasse angewendet ist. Interface nicht unbedingt durch einer Bean Klasse implementiert. Variante : Interface selbst annotieren.
+ \item[@Local] Ist dan ein Local Interface. Funktioniet nicht falls ein Lokale Client auf eine andere VM ist. Mögliche Anwendung - Web Container. \textbf{Das gleiche Business Interface kann nicht gleichzeitig Lokal und Remote sein.}
+\end{description}
+
+\begin{framed}
+ Bean Implementation muss ein Defaultkonstruktor haben. 
+\end{framed}
+
+\section{Statelss Bean Lifecycle}
+\pic{slsbl.png}
+
+\section{Callback Methods for Stateless Session Beans}
+\begin{description}
+ \item[@PostConstruct] Nur einmal auf jeden Instanz nachdem Dependency Injections fertig sind. Aufgerufen bevor Ausführung der ersten Methode. Nur eine methode kann mit dieser Annotation markiert sein.
+ \item[@PreDestroy] Aufgerufen wenn der Beaninstanz zerstört ist. Sollte alle Resourcen schliessen, ähnlich wie finalize. Nur eine methode kann mit dieser Annotation markiert sein.
+ \item[Bemerkung] Diese Methoden sind in eine \textit{noch nicht spezifizierte} Transaktions und Sicherheitskontext aufgerufen. Annotierte methoden sollen folgende Kritieren erfüllen: 
+ \begin{itemize}
+  \item Keine Parameter, return type void. Sichtbarkeit ist irrelevant.
+  \item Muss keine CheckedExceptions werfen.
+ \end{itemize}
+
+\end{description}
+
+\section{Pooling}
+Ein Stateless Bean behandelt die Aufrufe von Clients. Kein Conversational State - Keine Abhängigkeit von 
+Client.Teilen von ein Bean zwischen Clients bedeutet weniger Resourcen. \textbf{Beans sind Single Threaded}\\
+\textbf{Clustering:} Bean Instanzen können auf mehrere Server sein.
+
+Entfernung der Instanz von einem Stateless Bean ist transparent und von Container behandelt.
+
+
+\section{EJB Reuse - Dependency Injection}
+\begin{lstlisting}[caption=JNDI Lookup DI]
+// Service = remote, DAO = local binding
+ private MovieDAO movieDAO;
+@PostConstruct
+private void init(){
+try {
+InitialContext ctx = new InitialContext();
+movieDAO = (MovieDAO) ctx.lookup("...MovieDAO");
+}
+catch(NamingException e){
+throw new RuntimeException(e);
+}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Dependency Injection with Annotation]
+ @EJB(name="...MovieDAO")
+private MovieDAO movieDAO;
+\end{lstlisting}
+Parameters: 
+\begin{description}
+ \item [Name] JNDI Name von EJB wenn nichts angegeben ist, ist es aus dem Feld oder property genommen 
+(Containerspezifisch)
+\item[beanName] Name die gegeben ist in Stateful oder Stateless Annotation
+\item[mappedName] nichts
+\item [description] nichts
+\item [beanInterface] Object.class??
+\end{description}
+
+\subsection{Persistence Context}
+\begin{lstlisting}
+ @PersistenceContext(unitName="movie-db")
+private EntityManager em;
+\end{lstlisting}
+Parameters:
+\begin{description}
+ \item [Name] Entity Manager Name nicht von DI benutzt.
+ \item [UnitName] Name der Persistence Unit aus persistence.xml
+ \item [type] Transaction/extended.
+ \item [Properties] key value pair.
+\end{description}
+
+\section{Contexts und Dependency Injection (CDI)}
+
+\begin{lstlisting}
+// @Inject
+// Field injection
+@Inject
+private T t;
+//Method injection
+private T t;
+@Inject
+public void setT(T t) { this.t = t; }
+// Constructor injection
+private T t;
+@Inject
+public C(T t) { this.t = t; }
+\end{lstlisting}
+
+\begin{description}
+ \item [@Produces] Ein Bean kann mit CDI benutzt werden falls es ein Defaultkonstruktor hat oder ein Konstruktor der 
+mit Inject annotiert ist.
+Produces erlaubt die benutzung von beliebigen klassen (Factory Methods)
+
+\begin{lstlisting}
+ public class Resources {
+@Produces
+public Logger produceLog(InjectionPoint
+produceLog() {
+p) {
+Logger.getLogger("MovieRental");
+return Logger.getLogger(
+}
+p.getMember().getDeclaringClass().getName());
+}
+}
+//Default Scope ist DependantScope, neue Instanz per Injection.
+\end{lstlisting}
+
+\item[CDI Extras] \hfill \\
+\begin{lstlisting}[caption=CDI mit Qualifier]
+ @Inject @MovieService
+Private Service movieService;
+@MovieService
+public class MovieServiceImp implements Service { ... }
+
+//They are used on the implementation classes and on the injection points
+
+\end{lstlisting}
+
+\chapter{Stateful Session Beans (SFSB)}
+\begin{itemize}
+ \item Behalten Zustandinformation zwischen Methodenaufrufe.
+ \item Bean per Client
+ \item State initializiert durch Client nach Erzeugung.
+ \item Client muss siene Instanz entfernen oder entlassen.
+ \subitem Container entfernt Bean nach Timeout falls kein Client es nutzt.
+ \subitem Timeout kann per Annotation definiert werden: \\
+ \begin{verbatim}
+  @StatefulTimeout(value=5, unit=TimeUnit.SECONDS)
+ \end{verbatim}
+\item \textbf{Conversational State nicht im DB obwohl es sollche Daten zugreifen kann und updaten kann \footnote{wtf}}
+\item \textbf{Stateful Bean kann ``Transaction Aware'' sein}
+\end{itemize}
+
+\end{description}
+
+\section{SFSB Examples}
+\begin{lstlisting}
+ @Remote
+public interface Cart {
+void
+initialize(String owner);
+void add
+void (double amount);
+double remove(double amount);
+void getTotal();
+    addTax();
+void close();
+}
+@Stateful
+public class CartBean implements Cart {
+private String owner;
+private double total;
+private boolean taxAdded = false;
+public void initialize(String owner) {
+if(owner == null) throw new IllegalArgumentException();
+this.owner = owner;
+}
+public double getTotal() {
+return total;
+}
+@Remove public void close() {}public void add (double amount) {
+if(owner==null || taxAdded)
+throw new IllegalStateException();
+total += amount;
+}
+public void remove(double amount) {
+if(owner==null || taxAdded)
+throw new IllegalStateException();
+total -= amount;
+}
+public void addTax() {
+if(owner==null || taxAdded)
+throw new IllegalStateException();
+total = total + total * 8.0 / 100;
+taxAdded = true;
+}
+}
+
+public class Client {
+public static void main(String[] args) throws Exception
+String JNDI_NAME = "cart/CartBean!ch.fhnw.....Cart";
+InitialContext ctx = new InitialContext();
+Cart cart1 = (Cart) ctx.lookup(JNDI_NAME);
+Cart cart2 = (Cart) ctx.lookup(JNDI_NAME);
+cart1.initialize("User1");
+cart2.initialize("User2");
+cart1.add(100);
+cart2.add(50);
+System.out.println("Cart1: "+cart1.getTotal());
+System.out.println("Cart2: "+cart2.getTotal());
+cart1.close();
+cart2.close();
+}
+}
+
+
+
+\end{lstlisting}
+
+
+\section{SFSB Passivation und Activation}
+Schwierig zu übersetzen.
+\begin{description}
+ \item [Conversational State] The conversational state of a stateful session object is defined as the
+session bean instance field values, plus the transitive closure of the
+objects from the instance fields reached by following java object
+references.
+\item [Passivation/Activation] \begin{itemize}
+                                \item To efficiently manage the size of its [memory], a session bean container
+may need to temporarily transfer the state of an idle stateful session bean
+instance to some form of secondary storage.
+\item Passivation: Transfer from the working set to secondary storage
+\item Activation: Transfer back
+ \item Typically, the EJB container uses a LRU algorithm to select a bean for
+passivation
+                               \end{itemize}
+
+\end{description}
+
+\section{SFSB Serializierung}
+Was kann Serializiert werden?
+\begin{itemize}
+ \item Primitives (byte / short / int / long / boolean / float / double)
+\item A reference to a Serializable object
+\item A null reference
+\item A reference to an EJBs business interface
+\item A reference to a naming context
+\item A reference to the UserTransaction interface
+\item A reference to a resource manager
+\item A reference to a javax.ejb.Timer object
+\end{itemize}
+
+\subsection{passivation Ausschalten}
+\begin{verbatim}
+ @Stateful(passivationCapable=false)
+\end{verbatim}
+
+\section{SFSB Lifecycle}
+\pic{sfsbl.png}
+
+\subsection{Callback Methoden}
+\begin{description}
+ \item [@PostConstruct] Nach konstruktion nach DependencyInjections, bevor erste Methode ausgeführt ist.
+ \item [@PreDestroy] Nachdem alle Methoden die mit @Remote annotiert worden sind, fertig sind oder nach Timeout von 30 
+min falls Timeout aktiviert.
+\item [@PrePassivate] Bevor Container Instanz ``passiviert''. Assert : Nicht Transiente Felder Serializierbar sind. 
+Beispiel JDBC Conn geschlossen und auf null gesetzt.
+\item[@PostActivate] Nachdem ein Instanz ``reactivated'' ist. Felder die im Prepassivate null sind mussen neu gesetzt 
+werden.
+
+\end{description}
+
+\section{JBOSS Spezifisch : Limited Cache}
+\begin{lstlisting}[caption=Limited Cache,language=xml]
+ caches>
+<cache name="simple" aliases="NoPassivationCache"/>
+<cache name="small" passivation-store-ref="small"/>
+</caches>
+<passivation-stores>
+<file-passivation-store name="small"
+idle-timeout="10" idle-timeout-unit="SECONDS"
+max-size="2"/>
+</passivation-stores>
+\end{lstlisting}
+\begin{itemize}
+ \item Falls max-size Beans aktiv sind, kann der Container mit  Passivation anfangen.
+ \item Fals ein Bean mehr als idle timeout inaktiv ist, wird er passiviert.
+ \subitem Instanzen von passivierte Beans werden zerstört.
+  \subitem Activationinstanzen erzeugt mit new, PostConstruct nicht benutzt hier.
+  \subitem Zusätzliche init mit @PostActivate.
+\end{itemize}
+
+\chapter{Transaktionen}
+\begin{description}
+ \item [Rollback] Transaktion mit Rollback, dann sind die Veränderungen mit SQL nicht commited. Peristenzkontext wird 
+entfernt, Detached Objekten können ungültige Daten beinhalten aber ist unproblematisch weil sobald die Entitäten neu 
+geladen sind für eine Transaktion, werden die dann die richtigen Daten haben.
+\begin{itemize}
+ \item Stateful Session Beans sind \textbf{keine Transaktionelle Resourcen} Veränderte Instanzvariablen innerhalb von 
+eine Stateful Bean Sessuin werden nicht wiederhergestellt bei Rollback.
+\item Stateful Session beans mit CMT können das SessionSyncronization Interface implementieren.
+\end{itemize}
+
+\section{SessionSyncronization Callback Methoden}
+\begin{description}
+ \item [void afterBegin()] Transaktion gerade gestartet.
+ \item [void beforeCompletion()] \hfill \\
+ \begin{itemize}
+  \item Cached database Updates sollte geschrieben werden.
+  \item Letzte Chance für Rollback.
+  \item Nur aufgerufen falls Transaktion noch nicht für Rollback gesetzt ist.
+  
+ \end{itemize}
+\item [afterCompletion(boolean commited)] Parameter : commited oder rollback? Bean muss möglicherweise seine Zustand 
+manuell zurücksetzen.
+\end{description}
+
+\section{SFSB die SessionSyncronization implementieren}
+\begin{itemize}
+ \item Falls ein EnterpriseBean diese Interface implementiert können nur die folgende Werte für Transaktionen benutzt 
+werden : 
+ \subitem Required
+ \subitem Requires\_new
+ \subitem Mandatory
+ \item Diese Einshränkung versichert dass ein Bean immer aufgerufen ist in eine Transaktion sonnst, werden die 
+Callbackmethoden nutzlos.
+\end{itemize}
+
+\end{description}
+
+\section{Extended Persistence Context}
+\begin{description}
+ \item [Persistence Context] Verwaltet eine Menge von EntityInstanzen. Durch Entitymanager zugreifbar.\\
+ \begin{lstlisting}
+//Applikation verwaltet manager.
+ @PersistenceUnit
+EntityManagerFactory emf;
+emf.createEntityManager();
+
+//Container verwaltet Manager
+@PersistenceContext
+EntityManager em;
+
+ \end{lstlisting}
+\item[Transaction Scoped Entity Manager] \hfill \\
+\begin{lstlisting}
+ @PersistenceContext(unitName="movieDS",
+type=PersistenceContextType.TRANSACTION)
+EntityManager em;
+\end{lstlisting}
+\begin{itemize}
+ \item Entitymanager zustandslos.
+ \item Abhängig von JTA transactions
+ \item PersistenceContext immer mit laufende Transaktion verbunden.
+ \subitem Wenn eine Operation ausgeführt ist, die PersistenceContext mit dem der Transaktion verbunden ist, wird 
+benutzt.ODER eine neue ist erzeugt und mit Transaktion verbunden.
+\item Konsequenzen :: Entitymanger muss innerhalb Transaktion zugreifbar sein. Referenz könnte immer das gleiche sein.
+\end{itemize}
+\item [SFSB Scoped (Extended Entity Manager) ] \hfill \\
+\begin{lstlisting}
+ @PersistenceContext(unitName="movieDS",
+type=PersistenceContextType.EXTENDED)
+EntityManager em;
+
+\end{lstlisting}
+\begin{itemize}
+ \item Persistence Context:
+  \subitem Erzeugt wenn SFSB Instanziert wird.
+  \subitem entfernt wenn SFSB entfernt wird.
+  \item Konsequenzen:
+  \subitem Entities können als ``Conversational State'' gespreichert werden.
+  \subitem Veränderungen in Transaktionen sind in der Datenbank gespeichert.
+  \subitem Keine Probleme mit detached Instanzen (alles ist immer attached)
+\end{itemize}
+
+\end{description}
+
+\section{Extended Entity Manager Beispiel}
+\begin{lstlisting}
+ @Stateful
+public class UserManagerImpl implements UserManager {
+@PersistenceContext(unitName="movieDS")
+// Transaction scoped
+EntityManager em;
+User user;
+public void init(int id) { user = em.find(User.class, id); }
+public void rentMovie(int mvoieId) {
+rentMovie(user, em.find(Movie.class, movieId));
+}
+public void setName(String name) {
+user.setName(name); // no effect as detached instance is
+}
+// changed => em.merge is necessary!
+@Remove
+public void finished() {}
+}
+
+@Stateful
+public class UserManagerImpl implements UserManager {
+@PersistenceContext(unitName="movieDS",
+type=PersistenceContextType.EXTENDED)
+EntityManager em;
+User user;
+public void init(int id) { user = em.find(User.class, id); }
+public void rentMovie(int mvoieId) {
+rentMovie(user, em.find(Movie.class, movieId));
+}
+public void setName(String name) {
+user.setName(name); // saved after commit
+}
+@Remove
+public void finished() {}
+}
+\end{lstlisting}
+
+\section{Fazit}
+\pic{fz.png}
+
+\part{Code,Übungen,usw.}
+
+\end{document}
