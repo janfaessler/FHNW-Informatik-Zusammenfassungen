@@ -1022,5 +1022,15 @@ Es haben sich verschiedene Unterteilungsstrategieen entwicklet, die je nach Obje
 	\includegraphics[scale=0.5]{schnitttest.png}
 \end{center}
 
+\subsection{Ray Marching}
+Schnitttests bei RayTracing sind aufwändig. Alternative: Ray Marching, bei dem nicht ein Schnitttest durchgeführt wird, sonder beim abgeschossenen Strahl in einem definierten Abstand t geprüft wird, ob der Punkt auf dem Strahl innerhalb einer Geometrie liegt oder nicht. Um diesen Test durchzuführen, braucht jedes Objekt eine Distance Field.\\
+Definition Distance Field: Funktion, die für jeden Raumpunkt die Distanz zum nächsten Oberflächenpunkt berechnet. Dabei kann diese Funktion signed oder unsigned sein. Der Unterschied zwischen signed und unsigned liegt darin, dass, falls der Punkt auf dem Strahl innerhalb der Geometrie liegt, die Distanzfunktion negativ wird.\\
+Um ein Objekt darzustellen braucht es nichts weiteres als eine Distance Field Funktion. Geometrie oder Oberfläche eines Objektes müssen somit nicht definiert werden.\\
+Beispiel Distance Field einer Sphere: float sdSphere( vec3 p, float s ) { return length(p)-s; }\\
+Erklärung Beispiel: p ist der Punkt, der beim Ray Marching berechnet wurde und s die Grösse der Sphere. Die Berechnung wird dabei im Ursprungspunkt durchgeführt. Das heisst die Sphere sowie ein Ende des Vektors p liegt im Ursprungspunkt. Falls die Länge des Ortsvektors p kleiner ist als der Radius der Sphere, liegt p innerhalb der Sphere.\\
+Berechnung t: t wird immer um die Distanz erhöht, die mit per Distance Field berechnet wurde.\\
+Schattierung: Ambient Occlusion kann berechnet werden, indem vom Punkt, der bei der Ray Marching berechnet wurde ein Strahl Richtung Lichtquelle geschickt wird.
+
+
 % Inhalt Ende 
 \end{document} 
