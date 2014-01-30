@@ -173,6 +173,11 @@ Ein Vektor mit der Länge 1 wird Einheitsvektor bezeichnet
 \end{equation}
 \subsubsection{Skalarprodukt}
 \begin{equation}
+	A \bullet B = \sum_{i=0}^{n-1} a_i \cdot b_i
+\end{equation}
+Das Skalarprodukt wird häufig zur Beantwortung der Frage benutzt wie ein Vekor $A$ zu einer Fläche bzw. zu deren Normalen $N$ steht. Sit das Skalarprodukt $N \bullet A$ positiv, so zeigt $A$ von der Flächenvorderseite weg.
+
+\begin{equation}
 	A \bullet B = |A| * |B| + cos(\alpha)
 \end{equation}
 \begin{equation}
@@ -675,37 +680,49 @@ Die Wahl des Hüllvolumens hängt von folgenden Kriterien ab:
 	\item Kosten des Hüllvolumenschnitttests. 
 	\item Erstellungskosten des Hüllvolumens.
 \end{itemize}
+\subsection{AABB (axis-aligned bounding box)}
+Die AABB für eine bestimmte Punktmenge ist die minimale bounding box mit der Einschränkung, dass die Kanten der Box parallel zu den (kartesischen) Koordinatenachsen sind. Es ist lediglich das kartesische Produkt der $N$ Intervalle, von denen jeder durch den minimalen und maximalen Wert der entsprechenden Koordinaten, für die Punkte in $S$, definiert sind.\\
 \begin{center}
 	\includegraphics[scale=0.3]{huellvolumen.png}
 \end{center}
+Aufwand für die Berechnung des Hüllvolumens für ein Objekt, dass sich bewegt muss unter Umständen von Frame zu Frame neu berechnet werden. Wissen wir nichts über die Struktur des zu umhüllenden Objekts, so ist die AABB mit Abstand am einfachsten zu berechnen. Wir suchen einfach das Minimum und das Maximum aller Koordinatenkomponenten.\\
+Die kleinste umgebende Kugel zu finden ist dagegen viel aufwendiger. Der Aufwand lohnt sich meistens nicht, weshalb man eine Methode verwendet, die eine um ca. 5\% grössere Kugel berechnen kann.\\
+Um den kleinsten Kubus um n Punkte zu berechnen, verwendet man eine statistische Methode, genannt Principal Component Analysis. Man findet dabei die primären Achsen, entlang deren die Koordinaten am meisten variieren.
+
 
 \newpage
 \section{Alpha Blending}
 \subsection{Einleitung}
 \begin{itemize}
-	\item Beim Alpha Blending wird eine neue Frabe mit der bestehenden vermischt.
+	\item Beim Alpha Blending wird eine neue Farbe mit der bestehenden vermischt.
 	\item Der Alpha Wert ist der Dekungsgrad.
-	\item Der Alpha Wert der Farbe ist der 4. Parameter bei den Farbangaben RGBA.
+	\item Der Alpha Wert der Farbe ist der 4. Parameter bei den Farbangaben RGB\Bold{A}.
 \end{itemize}
-\subsection{Blendfunktion}
-\begin{itemize}
-	\item Die Blendfunktion bestimmt, wie die bestehende Farbe ($R_D$ $G_D$ $B_D$ $A_D$) mit der Neuen ($R_S$ $G_S$  $B_S$ $A_S$) kombiniert wird.
-	\item Der resultierende Farbe entsteht durch komponentenweise Addition, wobei man jede Komponente über die Source- bzw. Destination-Faktoren beeinflussen kann: \\
-	$RGBA = ((R_SS_R + R_DD_R), (G_SS_G + G_DD_G), (B_SS_B + B_DD_B), (A_SS_A + A_DD_A))$
-\end{itemize}
-\subsection{Additive Blending}
+\subsection{Berechnung}
 \begin{center}
 	\includegraphics[scale=0.2]{additive_blending.png}
 \end{center}
+Normal Blending:
+\begin{equation}
+	Color = C \cdot \alpha + C_{bg} \cdot (1 - \alpha)
+\end{equation}
+Additive Blending:
+\begin{equation}
+	Color = C \cdot \alpha + C_{bg}
+\end{equation}
+
 \subsection{Zeichnungsreihenfolge}
 Zeichnungsreihenfolge ist entscheidend:
 \begin{enumerate}
 	\item Alle opaqen (=nicht-transparente) Objekte
 	\item Alle transparenten Objekte
 \end{enumerate}
+In diesem Beispiel wurde zuerst die blaue Box, dann die rote Box und schlussendlich die grüne Box gezeichnet. Auf der rechten Seite wurde die selbe Reihenfolge benutzt aber die Ansicht wurde gedreht.
 \begin{center}
 	\includegraphics[scale=0.2]{alphablending_order.png}
 \end{center}
+Eine korrekte Transparenz können wir nur erreichen, wenn wir zuerst undurchsichtige (Englisch: opaque) Objekte mit eingeschaltetem Z-Buffer und dann die transparenten Objekte, von hinten nach vorne sortiert, mit ausgeschaltetem Z-Buffer-Test zeichnen.
+
 
 \newpage
 \section{Deferred Shading}
@@ -714,6 +731,10 @@ Methode um in dreidimensionalen Szenen die Geometrieverarbeitung von der Lichtbe
 In klassischen Rendermethoden wird anhand von Tiefe (depth), Ausrichtung (normals) und Farbe (albedo) eines Eckpunktes und Farbe, Intensität und Einfallswinkel einer Lichtquelle der finale Farbwert für den jeweiligen Eckpunkt ermittelt. Für jede Lichtquelle muss so jeder Eckpunkt zur Berechnung herangezogen werden. \\
 Beim Deferred Shading werden nun Tiefenwert, Ausrichtung und Farbe eines jeden Pixels in jeweils eine Textur in Bildschirmgröße gespeichert. Dies wird durch sogenannte Multiple Render Targets ermöglicht, wobei in jedem Rendervorgang in verschiedene Framebufferobjekte (die Texturen) gleichzeitig geschrieben werden kann. Statt dass nun jeder Eckpunkt mit den Lichtquellen verrechnet werden muss, muss nur noch jedes Pixel (in dem alle benötigten Werte – depth, normals und albedo – vorhanden sind) bei der Berechnung berücksichtigt werden. \\
 Die Berechnung selbst erfolgt durch klassische Beleuchtungsmodelle, wie zum Beispiel nach Phong. Dabei kann zusätzlich noch Glanzlicht mit einbezogen werden. Technisch geschieht das im Pixel- bzw. Fragment-Shader am Ende der Grafikpipeline.
+\begin{center}
+	\includegraphics[scale=0.4]{deferred-rendering.png}
+\end{center}
+
 \subsection{Vorteile}
 \begin{itemize}
 	\item Independent of scene complexity \& dynamics.
@@ -744,38 +765,272 @@ Die Berechnung selbst erfolgt durch klassische Beleuchtungsmodelle, wie zum Beis
 
 \newpage
 \section{Shadow Rendering}
-\subsection{Einleitung}
-\begin{itemize}
-	\item Schatten für Echtzeitanwendungen werden normalerweise mit Deferred Rendering implementiert
-	\item In einem ersten Schritt werden Informationen gesammelt die dann für die Beleuchtungsberechnung in einem zweiten Schritt verwendet werden
-\end{itemize}
-\subsection{Shadow Volumes}
-\begin{itemize}
-	\item Jedes Polygon erzeugt ein Schattenvolumen (Pyramidenstumpf)
-	\item Für jeden Sichtstrahl wird ein Zähler inkrementiert beim Eintreten in das Schattenvolumen und dekrementiert beim Austreten.
-	\item Zonen mit einem Zähler == 0 sind beleuchtet, != 0 sind im Schatten
-	\item Wie kann man das erreichen ohne Ray-Tracing?
-\end{itemize}
 \subsection{Shadow Maps}
-\begin{itemize}
-	\item Rendern der Szene um Farb- und Tiefenwerte zu erhalten
-	\item Rendern der Shadow Volumes
-	\item Kombinieren der Resultate
-\end{itemize}
-\subsection{Variance Shadow Maps}
-\begin{itemize}
-	\item Multisampling vermeiden, Filter der GPU verwenden
-	\item Wie bei PCF interessiert uns der Zusammenhang der Shadow Map Werte einer Region und des Tiefenwerte des Fragments das wir zeichnen
-	\item Statt Shadow Map Anteile (PCF) betrachtet man die Verteilung der Tiefenwerte
-	\item Die Tschebyscheff-Ungleichung liefert uns die Wahrscheinlichkeit bei bekanntem Mittelwert und Varianz ob ein Wert  auftritt oder nicht
-\end{itemize}
+Beim Shadow Mapping werden Schatten generiert, indem getestet wird, ob ein Pixel von einer Lichtquelle aus sichtbar ist. Dabei wird zunächst die sogenannte Shadow Map erzeugt. Diese ist eine aus Sicht der Lichtquelle erzeugte Tiefenkarte. Diese enthält Informationen über den geringsten Abstand von Objekten einer Szene zur Lichtquelle (Z-Buffer). Durch den Vergleich des Abstandes des zu rendernden Objektes zur Lichtquelle und dem entsprechenden Punkt in der Shadow Map kann der Schattenwurf berechnet werden.
 \subsection{Cascade Shadow Maps}
 \begin{center}
-	\includegraphics[scale=0.2]{cascade_shadow_maps.png}
+	\includegraphics[scale=0.15]{cascade_shadow_maps.png}
 \end{center}
 \subsection{Vergleich}
 \begin{center}
-	\includegraphics[scale=0.4]{shadow_rendering.png}
+	\includegraphics[scale=0.35]{shadow_rendering.png}
 \end{center}
+
+\newpage
+\section{Stereoprojektion}
+\subsection{Raumwahrnehmung}
+\subsubsection{Teifenunschärfe}
+Bis zu einer Entfernung von 10m kann das Gehirn aus der Fokussierung eine Teifeninformation gewinnen. Je näher der fokusierete Gegenstand ist, umso präziser muss die Fokussierung arbeiten und umso grösser ist die Tiefenunschärfe. Beim Tilt-Shift-Effekt wird eine räumliche weite Szenerie durch künstliche Unschärffe so dargestellt, als ob si im Massstab einer Modelleisenbahn wäre.
+\subsubsection{Abnehmende Grösse}
+Durch die Zentralperspektive erscheinen weiter entfernte Gegenstände kleiner.
+\subsubsection{Zunehmender Dunst}
+Mit zunehmender Distanz nimmt der Dunst zu und die Silhouetten von Bergketten werden heller. Dieser Effekt lässt sich mit OpenGL leicht imitieren, indem man jedem Pixel mit zunehmender Distanz eine Dunstfarbe hinzuaddiert.
+\subsubsection{Schettenbildung}
+Wir sind uns gewohnt, dass das Licht von oben kommt. Ist dem nicht so, so haben wir Mühe die Dreidimensionalität  zu verstehen.
+\subsubsection{Bewegungsparallaxe}
+Einfache Games und Trickfilme verwenden oft den Trick der Bewegungsparallaxe, bei der sich nahe Objekte schneller bewegen als Objekte weiter hinten. Damit erreicht man einen Tiefeneffekt, obwohl es eine reine 2D-Animation ist.
+\subsection{Stereobildwiedergabe}
+\subsubsection{Projektion nebeneinander}
+Techniken wie das Spiegelstereoskop, Stereoskope und Stereobrillen führen den beiden Augen durch Spiegel, spezielle Linsen oder Brillen getrennt das jeweilige Bild zu. Sie haben den Vorteil, dass sie eine hundertprozentige Bildtrennung gewährleisten aber auch den Nachteil, dass sie auf einen Betrachter beschränkt sind.
+\subsubsection{Projektionen übereinander}
+\begin{description}
+	\item[Trennung durch Farbfilter] \hfill \\
+		Das älteste Verfahren zu Auftrennung von zwei übereinander gelagerten Bildern durch Farbfilter ist nur ein wenig jünger als die Fotografie selbst. Beil solchen Anaglyphen-Bildern wird das Bild für das linke Auge meist in Rot und das Bild für das rechte Auge in Cyan dargestellt. Mit einer Brille, die vor dem linken Auge einen Rotfilter und vor dem rechten Auge einen Cyan-Filter hat, werden die Teilbilder für die entsprechenden Augen herausgefiltert. \\
+		Es gibt verschiedene Typen:
+		\begin{description}
+			\item[Echte Anaglyphen] \hfill \\
+				Hier findet eine Graukonversion auf dem Rot- und Blau-Kanal statt. Dies entspricht den ursprünglichen Anaglyphen und ergibt ein relativ dunkles Bild und es gibt praktisch kein Ghosting (Überblenden), da die Kanäle nicht aneinandergrenzen.
+			\item[Graue Anaglyphen] \hfill \\
+				Diese echten Rot-Cyan-Anaglyphen ergeben ebenfalls ein Graustuffenbild. Die Helligkeit ist dabei korrekt aber durch die benachbarten Rot- und Grün-Kanäle entsteht mehr Ghosting
+			\item[Farbige Anaglyphen] \hfill \\
+				Bei diesen werden die Farbkanäle nicht skaliert. So kann ein Grossteil der Farben wiedergegeben werden. Allerdings ist das Ghosting sehr stark.
+			\item[Halbfarbige Anaglyphen] \hfill \\
+				Setzt man den Rotkanal als Graustufe zusammen, vermindert sich das sich das Ghosting aber auch die Farbwiedergabe.
+			\item[Optimierte Anaglyphen] \hfill \\
+				Gibt man den Rotkanal ganz auf und gewichtet Grün und Blau stärker, wird das Bild aufgehellt und das Ghosting ist fast ganz eliminiert.
+			\item[ColorCode3D Anaglyphen] \hfill \\
+				Damit kann eine fast vollständige Farbwiedergabe gewährleistet werden. Das Farbspektrum wird für das linke Auge im Rot-Grün-Spektrum wiedergegeben und die Helligkeit auf dem rechten Auge im Blauspektrum. Ein weiterer Vorteil ist, dass auch die Betrachtung ohne die gelb-blaue Color-Code-Brille fast ungestört möglich ist.
+		\end{description}
+	\item[Trennung durch Polarisationsfilter] \hfill
+		\begin{description}
+			\item[Lineare Polarisationsfilter] \hfill \\
+				Diese lassen nur Licht einer bestimmten Polarisationsrichtung passieren. Damit die Polarisationsrichtung erhalten bleibt, muss eine versilberte Leinwand verwendet werden un der Betrachter muss den Kopf waagrecht halten, um eine Vermischung zu vermeiden. \\
+				Sie Werden auch in Sonnenbrillen eingesetzt, um den Himmel abzudunkeln oder um Spiegelungen auf Festerschreiben herauszufiltern.
+			\item[Zirkuläre Polarisationsfilter] \hfill \\
+				Diese filtern das Licht zweistuffig. Zuerst wird es linear gefiltert und dann wird es mit einem Lambda/4-Filter in Drehung versetzt. Links und rechts unterscheiden sich durch umgekehrte Drehrichtungen.
+		\end{description}
+	\item[Trennung durch Interferenzfilter] \hfill \\
+		Diese fitlern enge Frequenzbänder aus dem Gesamtpspektrum heraus. Jedes Auge erhält dabei ein unterschiedliches Rot-,Grün- und Blau-Frequenzband. Die Farbtrennung dabei ist praktisch 100\% und es braucht zudem keine Silberleinwand.
+	\item[Zeitliche Trennung durch Shutter-Brillen] \hfill \\
+		Das linke und rechte Bild wird nacheinander projiziert. Abwechlungsweise blockieren die Brillengläser die Sicht eines Bildes. Durch eine schnelle Abwechslung entsteht  ein konstanter Bildeindruck. 
+\end{description}
+\subsection{Projektsionstransformation für Stereobildpaare}
+\subsubsection{Positive, negative oder null Parallaxe}
+Bei der Stereobildprojektion werden alle Punkte von zwei Blickpunkten projiziert. Je nach Distanz zur Ebene Entstehen eine oder zwei Abbildungen.  Die Projektionsebene können wir uns auch als Fenster vorstellen. Nicht alle Punkte sind von beiden Augen aus sichtbar.
+\begin{center}
+	\includegraphics[scale=0.3]{projektiosnparallaxe.png}
+\end{center}
+\subsubsection{Symmetrische oder asymmetrische Projektion}
+Mit zwei symmetrischen PRojektionen auf zwei nicht parallele Projektionsebenen entstehen vertikale Parallaxen, die vom Gehirn nur schwer fusioniert werden können. Diese können verhindert werden, in dem man zwei asymetrische Projektionen auf eine Projektionsebene mit parallelen Blickrichtungen generiert.
+\begin{center}
+	\includegraphics[scale=0.3]{asym-projektion.png}
+\end{center}
+
+\subsection{Stereobildübertragung}
+Für eine Stereo-Projektion müssen wir nun zwei Bilder generieren und übertragen. Grundsätzlich bedeutet dies nun den doppelten Rechenaufwand für die Generierung. Wie und in welchem Format wir zwei Bilder zum Monitor oder Projektor übertragen hängt von der verwendeten Wiedergabetechnik ab.
+\begin{description}
+	\item[monoPerspective] \hfill \\
+		Perspektivische Projektion von einer Kameraposition aus
+	\item[monoOrthographic] \hfill \\
+		Orthografische PRojektionen von einer Kameraposition aus.
+	\item[stereoColor] \hfill \\
+		Mit dieser Technik werden die verschiedenen Anaglyphen mit Farbmaskierung realisiert.
+	\item[stereoSideBySide] \hfill \\
+		Bei ddieser Technik werden das linke und recht eBild mit jeweils der halben Breite nebeneinander in ein Bild gerendert.
+	\item[stereoSideBySideP] \hfill \\
+		Hier werden beide Bilder in voller Auflösung gerendert und übertragen.
+	\item[stereoLineByLine] \hfill \\
+		Bei dieser Technik wird das linke Bild nur in den geraden Zeilen und das Rechte in den ungraden Zeilen gerendert. Der Monitor zeigt abwechslungsweise nur das eine oder andere Bild
+	\item[stereoColByCol] \hfill \\
+		Gleich wie bei stereoLineByLine aber spaltengetrennt.
+	\item[stereoCheckerBoard] \hfill \\
+		Bei dieser Technik wechseln sich die Bilder in jedem Pixel ab. Dies führt zu einer Schachbrettartigen Aufteilung.
+\end{description}
+
+\newpage
+\section{Globale Beleuchtungsmodelle}
+\subsection{Beleuchtungsgleichung}
+\begin{center}
+	\includegraphics[scale=0.5]{beleuchtungsgleichung.png}
+\end{center}
+
+\subsection{Bidirektional Reflectance Distribution Function (BRDF)}
+Die BRDF $f_r$ beschreibt bei einem nichttransparenten Material das Verhältnis der von einem Punkt x in Richtung $\overrightarrow{\omega}_r$, ausgehenden differenziellen Strahldichte $L_R$ zur differenziellen Bestrahlungsstärke $E$ die an diesem Punkt aus der Richtung $\overrightarrow{\omega}_i$ ankommt.
+\begin{equation}
+	f_r(x, \overrightarrow{\omega}_i \rightarrow \overrightarrow{\omega}_r) = \frac{dL_r(\overrightarrow{\omega}_r)}{dL_i(\overrightarrow{\omega}_i)cos(\Theta_i)d\omega_i}
+\end{equation}
+\begin{center}
+	\includegraphics[scale=0.5]{brdf.png}
+\end{center}
+\subsubsection{Eigenschaften}
+\begin{description}
+	\item[Reziprozität] \hfill \\
+		Eine wichtige Eigenschaft der BRDF ist die Reziprozität die besagt, dass die einfallende Strahlendichte mit der ausfahllenden Strahlendichte vertauscht werden kann. Diese Eigenschaft ist für alle Strahlenverfolgungsalgorithmen von Bedeutung, da es uns erlaubt die Lichtstrahlen vom Auge aus und in ihrer Gegenrichtung zu verfolgen.
+	\item[Energieerhaltung] \hfill \\
+		Ein Oberflächenpunkt eines passiven Strahlers kann nicht mehr Licht reflektieren, als dort eintrifft. Mit anderen Worten muss das Verhältnis von ausgehender zu ankommender Strahlung kleiner gleich 1 sein.
+	\item[Isotropische und anisotropische Reflexion] \hfill \\
+		Beim idealen Spiegel liegen die einfallende und ide ausgehende Strahlendichte in einer Ebene und wir sprechen von einer isotropen Reflexion.  Bei vielen manuell bearbeiteten Materialien haben wir eine stark anisotropische und damit gerichtete Reflexion.
+\end{description}
+
+\subsection{Lichtweg-Notation}
+Die Lichtweg-Notation bezeichnet die Punkte eines Lichtstrahls von der LIchtquelle bis zum Auge mit einer Reihenfolge von Buchstaben. Der Startpunkt bei der Lichtquelle wird $L$ bezeichnet, das Ende beim Auge $E$, eine diffuse Reflexion $D$ und eine spekuläre Reflexion $S$. Für Paare von aufeinanderfolgenden Flächen kann demnach ein Strahl folgende Reflexionsmöglichkeiten haben: diffus-diffus (DD), diffus-spekulär (DS), spekulär-diffus (SD) und spekulär-spekulär (SS).
+
+Ein vollständiger Algorithmus für die globale Beleuchtung müsste jeden Lcihtweg einschliessen, der als $L(D|S)*E$ geschrieben werden kann, wobei ein $|$ oder und ein $*$ kein, ein- oder mehrmals bedeutet.
+\begin{center}
+	\includegraphics[scale=0.5]{lichtweg-notation.png}
+\end{center}
+
+\newpage
+\section{Ray Tracing}
+\subsection{Photon Tracing}
+Dabei werden Photonen per Zufall in einer Szene verfolgt. Trefen die Photonen eine oberfläche, so wird mit einem zweiten Strahl getestet, ob der Schnittpunkt vom Auge aus sichtbar ist.
+\begin{center}
+	\includegraphics[scale=0.4]{photon-tracing.png}
+\end{center}
+
+\subsection{Raytracing}
+Die Strahlen werden com Auge ausgehend durch ein Pixel des Bildes in die Szene verfolgt. Trifft ein Strahl auf ein reflektierendes Objekt, so wird ein gespiegelter Strahl weiterverfolgt. Ist das Objekt transparent, so wird ein gebrochener Strahl weiterverfolgt. Diese neuen Strahlen werden rekursiv, mit derselben Funktion behandelt, wie der vom Auge ausgehende Strahl. Die Strahlenverfolgung wird abgebrochen, wenn:
+\begin{itemize}
+	\item Der Strahl auf den Hintergrund trifft
+	\item Der Strahl auf eine rein diffuse Oberfläche trifft
+	\item Die Rekursionstiefe einen Maximalwert erreicht
+	\item Die Strahlenbeitragskraft einen Minimalwert unterschreitet
+\end{itemize}
+
+\begin{center}
+	\includegraphics[scale=0.4]{raytracing.png}
+\end{center}
+
+Zur Berechnung der Farbintensität muss von jedem Sichtpunkt aus zusätzlich ein sogenannter Schattenstrahl zu jeder Lichtquelle geschickt werden. Schneidet dieser auf seinem Weg ein Objekt, dann liegt der betrachtete unkt im Schatten und der Betrag der Lichtquelle wird bei der Beleuchtungsberechnung nicht berücksichtigt.
+
+
+
+\subsection{Distributed Raytracing}
+Weil RT immer nur einen Primärstrahl, einen reflektierten Strahl, einen gebrochenen Strahl und ein Schattenfühler verschiesst, erhalten wir die perfekt scharfen Bilder. Dies mag reizvoll sein, entspricht aber relativ schlecht der Ralität, wo oft auch diffuse Spiegelungen und Transparenzen sowie Halbschatten vorkommen. Beim Distributet Raytracing werden deshalb immer mehrere Strahlen vom gleichen Typ verschickt und deren Ertrag gemittelt.
+\begin{center}
+	\includegraphics[scale=0.4]{distributed-raytracing.png}
+\end{center}
+\subsubsection*{Mehrfache Primärstrahlen}
+\begin{description}
+	\item[Antialiasing] \hfill \\
+		Verschickt man mehrere Primärstrahlen vom Blickpunkt durch verschiedene Orte des Pixels, so kann man die erhaltenen Farbwerte mitteln und erreicht dadurch ein Antialiasing
+	\item[Motion Blur (Bewegungsunschärfe)] \hfill \\
+		Verschickt man mehrere PRimärstrahlen durch ein Pixel, während man ein Objekt verschiebt, so kann man eine Bewegungsunschärfe erzeugen.
+	\item[Depth of Field (Tiefenunschärfe)] \hfill \\
+		Verschiesst man mehrere PRimärstrahlen von einer Linsenscheibe durch einen Punkt auf der Schärfenebene, so kann man Tiefenunschärfe realisieren.
+\end{description}
+\subsubsection*{Mehrfache Sekundärstrahlen}
+Um unscharfe Spiegelungen und Transparenzen zu erhalten, verschiesst man mehrere reflektierte bzw. gebrochene Strahlen. Die Unschärfe wird ruch das Mass der Abweichung von der perfekten Reflexions- bzw. Transmissionsrichtung bestimmt.
+\subsubsection*{Mehrfache Schattenfühler}
+Sobald sich in der Szene sichtbare Lichtquellen mit einem Volumen befinden, wirken scharfe Schattenränder schnell unrealistisch. Dort wo nur ein Bereich der Lichtquelle sichtbar ist, entsteht ein Teilschatten. Vom kompletten Schatten bis zur kompletten Beleuchtung entsteht so ein weicher Übergang.
+
+\subsection{Radiosity}
+Im ersten Schritt wird vom Blickpunkt unabhängig der Austausch der Strahlungsstärke, beginnend bei selbstrahlenden Patches der Lichtquellen und allen anderen Patches berechnet. Dabei wird nur die rein diffuse Reflexion berücksichtigt.  Nachdem der Strahlungsaustausch von allen Lichtpatches berechnet wurde, geht der Algorithmus der Stärke nach durch alle bestrahlten Patches. Am Schluss des ersten Schrittes weiss jeder Patch seine direkte und indirekte Bestrahlungsstärke. Im zweiten Schritt kann das Bild gerendert werden, indem für jedes Pixel die Radiosity der sichtbaren Patches interpoliert zurückgegeben wird.
+
+Der Vorteil de sRadiosity Algorithmus ist seine relativ effiziente Berechnung der indirekten Beleuchtung, die aus der diffus-diffusen Reflexion kommt. Man hat viel Forschungsaufwand in diesen Algorithmus investiert, weil in der Innenraumbeleuchtungssimulation der gröstte Teil aus dieser Reflexion stammt.
+\begin{center}
+	\includegraphics[scale=0.4]{radiosity.png}
+\end{center}
+
+\subsection{Path Tracing}
+Dies ist der erste Algorithmus der einen vollständigen globalen Beleuchtungsalgorithmus besitzt. Beim Path Tracing wird bei jedem Schnittpunkt nur ein Strahl so lange weiterverfolgt, bis er entweder absobiert wird oder in einer Lichtquelle endet. Im Unterschied zum RT werden im PathTracing auch diffus reflektierte Strahlen weiterverfolgt. Um für ein Pixel die korrekte Farbe zu erhalten, müssen viele Pfade verfolgt werden, deren ertrag am Schluss gemittelt wird.
+\begin{center}
+	\includegraphics[scale=0.4]{pathtracing.png}
+\end{center}
+\subsubsection{Schnittpunkt Behandlung}
+Was bei einem Schnittpunkt passiert, wird mit einer Zufallsvarialen zwischen 0 und 1 entschieden. Je nach Zufallszahl und den Reflexionskoefizienten wird der Strahl diffus reflektiert, spekulär reflektiert, gebrochen oder absobiert. Bei den Reflexionskoeffizienten handelt es sich um Wahrscheinlichkeiten zwischen 0 und 1, die man bei RGB-Koeffizienten durch Drittelung der summierten Komponenten bekommt.
+\subsubsection{Lösen der Rendering-Gleichung durch Monte-Carlo Integration}
+Wo durch das Pixen ein Primärstrahl geschossen wird oder in welche Richtung ein Strahl reflektiert oder gebrochen wird, wird ebenfalls anhand von Zufallszahlen bestimmt. Mathematisch gesehen entspricht das Abtasten durch zufällige Lichtpfade dem Lösen der Rendering-Gleichung durch Monte Carlo Integration. Diese Technik kann zum Lösen von komplexen Integralen verwedet werden.
+
+\subsection{Bidirektionales Path Tracing}
+Die Idee dahinter ist, dass gewisse Lichtpfade besser von der Lichtquelle aus verfolgt werden, anstatt vom Auge aus. Die sgilt insbesondere für PFade die für Lichtbündelungen verantwortlich sind. Das PRoblem ist, dass die Wahrscheinlichkeit mit der ein Strahl bei der diffusen Reflexion in Richtung der ersten spekulären Reflexion geleitet wird, sehr klein ist. Bei der diffusen Reflexion kann der Strahl per Zufall in alle Himmelsrichtungen reflektiert werden. Um diesen energiereichen Pfad zu finden, bräuchte es daher sehr viele Samples und auch dan wären die Lichtbündelungen noch starkt verrauscht. In umgekehrter Richtung ist die Wahrscheinlichkeit des Pfades aber sehr hoch, da er bei den spekulären Reflexionen kaum abweichen kann.
+
+Obwohl bidirektionales PAth Tracing Lichtbündelungen besser erzuegen kann als reines Path Tracing, so leidet die bidirektionale Variante in vielen Fällen immer noch unter Rauschen.
+
+\subsection{Photon Mapping}
+Der Algorithmus erhält seinen Namen durch eine Datenstruktur in der Photonen unabhängig von der Geometrie der Objekte gespeichert und gesucht werden können. Er ist in zwei durchgänge aufgeteilt:
+\begin{description}
+	\item[Photon Tracing] \hfill \\
+		Im ersten Durchgang werden Pthotonen von den Lichtquellen in die Szene geschossen. In der Szene interagieren die Photonen mit den vorhandenen Objekten und werden von diesen reflektiert, transmittiert oder absobiert. Beim Auftreffen auf eine diffuse Oberfläche werden die Photonen in der Photonenmap gespeichert.
+	\item[Rendering] \hfill \\
+		Der zweite Durchgang entspricht dem vom Path Tracer bekannten Rendering. hier wird nun für jeden Schnittpunkt, der auf einer diffusen Oberfläche liegt zusätzlich anhand der im Photon Tracing angelegten Photonmap abgeschätzt wie viel indirektes diffuses LIcht an diesem Punkt angekommen ist.
+\end{description}
+\subsubsection{Photon Tracing}
+Im ersten Durchgang werden die Photonen von den Lichtquellen zufällig in die Szene geschossen nach den physikalischen Eigenschaften der Lichtquellen. Dis geschieht solange bis die gewünschte Anzahl Photonen in der Photonmap gespeichert wurde.
+
+Beim Auftreffen eines Photons auf eine Oberfläche wird anhand der Materialparameter entschieden, ob das Photon diffus reflektiert, spekulär reflektiert, transmittiert oder absorbiert wird. Man spricht hier von Scattering (Streuung), da die Richtung der Reflexion bzw. Transmission, zufällig ermittelt wird. Dieses Vorgehen wird rekursiv solange wiederholt, bis das Photon absorbiert wird. Trifft ein Photon nach mindestens einer Interaktion auf eine diffuse Oberfläche, wird es in der Photonmap gespeichert. Trifft es auf den Hintergrund oder auf eine Lichtquelle, wird es absorbiert. Man beachte, dass Photonen nicht schon bei der ersten diffusen Oberfläche gespeichert werden, da diese die direkte Beleuchtung repräsentieren würden, die im Rendering Durchgang ermittelt wird.
+\begin{center}
+	\includegraphics[scale=0.4]{photon-scattering.png}
+\end{center}
+
+In der Photonmap werden die Photonen gespeichert. Ein Photon ist ein Strahlungsfluss-Träger, dessen Leistung in Watt in den drei Wellenlängenkanlälen RGB untergebracht ist. Die Leistung einer Lichtquelle wird gleichmässig auf die Photonen verteilt. Neben der Leistung müssen zudem Ort und Einfallsrichtung abgespeichert werden.
+
+Während dem Photon-Scattering werden die zu speichernden Photonen einfach in ein Array eingefügt. Danach werden sie in einen sogenannten kd-Baum umgewandelrt. Der Aufwand des Umsortierens ist gerechtfertigt, da die Datenstruktur nur einmal aufgebaut werden muss, die Suche nach den Photonen aber millionenfach stattfindet.
+\subsubsection{Rendering}
+Im Renderingdurchgang wird mit einem Path Tracer gearbeitet, wobei die Rendering-Gleichung noch Stärker in Teilintegrale aufgeteilt wird.
+
+Zur Berechnung der indirekten Beleuchtung in einem Punkt X der Szene führen wir eine sogenannte Radiance Estimate durch. Diese besteht aus einer Irradiance Estimate und deren Multiplikation mit der BRDF:
+\begin{equation}
+	L_0(x, \overrightarrow{\omega}_0) = \int_{\Omega_i} f_r(x, \overrightarrow{\omega}_P \rightarrow \overrightarrow{\omega}_0) L_{i,i}(x,\overrightarrow{\omega}_P)(N \bullet\overrightarrow{\omega}_P)d\overrightarrow{\omega}_0
+\end{equation}
+worin $\overrightarrow{\omega}_0$ die Richtung ist aus der das Photon bei X eintrifft und $L_{i,i}(x,\overrightarrow{\omega}_P)$ die Strahlendichte des einzelnen Photons.
+
+Der Fluss  $\Phi$, der auf die Fläche A trifft, repräsenteirt eine Bestrahlungsstärke (Irradiance). Betrachten wir dazu die Kreisfläche mit $A=\pi r^2$, auf die der Fluss eintrifft. Das Aufsummieren der Flussbeträge der einzelnen Photonen innerhalb des Radius $r$ ergibt den gesammten Fluss auf der Fläche A. Dividiert man durch die Flcähe A, erhält man die ausgehende Strahlenstärke:
+\begin{equation}
+	L(x,\overrightarrow{\omega}_0) \approx \frac{1}{\pi r^2} \sum_{p=1}^n f_r(x, \overrightarrow{\omega}_P \rightarrow \overrightarrow{\omega}_0) \Phi_P(x, \overrightarrow{\omega}_0)
+\end{equation}
+mit $n$ im Suchradius $r$ gefundenen, nächstliegenden Photonen.
+\begin{center}
+	\includegraphics[scale=0.4]{gefundene-photonen.png}
+\end{center}
+
+\newpage
+\section{RayTracing Verbesserungen}
+\subsection{Irrandiance Caching}
+\begin{itemize}
+	\item Benachbarte Raumpunkte mit ähnlicher Normale werden ähnlich Beleuchtet
+	\item Nicht für jedes Pixel die globale Beleuchtung neu berechnen
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.3]{IrrandianceCaching.png}
+\end{center}
+
+\subsection{Light Cuts}
+Dies ist Final Gethering Verfahren, um Szenen mit enorm vielen Punktlichtern effizient zu rendern. Alle Punkte zu verwenden ist zu zeitaufwändig, daher wird eine Herachie der Punkte generiert. Beim Final Gethering wird die Punkthierarchie traversiert und pro Knoten entschieden, ob dieser als Sender verwendet werden kann oder weiter unterteilt werden muss, da der resultierende Fehler zu gross wird. Pro Pixel im Bild wird also ein individueller Cut durch die Hierarchie gebildet.
+
+Als Sender werden nur Knoten aus dem Cut verwendet, dadurch werden es deutlich weniger Punkte. Die Knoten im Cut werden in einer Priority Queue gespeichert. Der Knoten mit der grössten zu erwartenden Änderung wird aus der Queue entnommen und durch seine beiden Kinder ersetzt.
+\begin{center}
+	\includegraphics[scale=0.3]{lightcut.png}
+\end{center}
+
+\subsection{Raumunterteilung}
+Die Grundidee der Raumunterteilung liegt wiederum in der Reduktion der potenziellen Schnittpunkttests. Der Raum und damit  die Anzahl Objekte werden dabei so verkleinert, dass nur noch wenige Objekte in einer Raumzelle als Schnittpunktkandidaten infrage kommen. Bei der Verfolgung entlang eines Strahls werden nur noch jende Raumzellen betrachtet, durch die ein Strahl geht. 
+
+Es haben sich verschiedene Unterteilungsstrategieen entwicklet, die je nach Objektdichte und Verteilung besser oder weniger gut geeinget sind.
+\begin{center}
+	\includegraphics[scale=0.5]{raumunterteilung.png}
+	\includegraphics[scale=0.5]{schnitttest.png}
+\end{center}
+
+\subsection{Ray Marching}
+Schnitttests bei RayTracing sind aufwändig. Alternative: Ray Marching, bei dem nicht ein Schnitttest durchgeführt wird, sonder beim abgeschossenen Strahl in einem definierten Abstand t geprüft wird, ob der Punkt auf dem Strahl innerhalb einer Geometrie liegt oder nicht. Um diesen Test durchzuführen, braucht jedes Objekt eine Distance Field.\\
+Definition Distance Field: Funktion, die für jeden Raumpunkt die Distanz zum nächsten Oberflächenpunkt berechnet. Dabei kann diese Funktion signed oder unsigned sein. Der Unterschied zwischen signed und unsigned liegt darin, dass, falls der Punkt auf dem Strahl innerhalb der Geometrie liegt, die Distanzfunktion negativ wird.\\
+Um ein Objekt darzustellen braucht es nichts weiteres als eine Distance Field Funktion. Geometrie oder Oberfläche eines Objektes müssen somit nicht definiert werden.\\
+Beispiel Distance Field einer Sphere: float sdSphere( vec3 p, float s ) { return length(p)-s; }\\
+Erklärung Beispiel: p ist der Punkt, der beim Ray Marching berechnet wurde und s die Grösse der Sphere. Die Berechnung wird dabei im Ursprungspunkt durchgeführt. Das heisst die Sphere sowie ein Ende des Vektors p liegt im Ursprungspunkt. Falls die Länge des Ortsvektors p kleiner ist als der Radius der Sphere, liegt p innerhalb der Sphere.\\
+Berechnung t: t wird immer um die Distanz erhöht, die mit per Distance Field berechnet wurde.\\
+Schattierung: Ambient Occlusion kann berechnet werden, indem vom Punkt, der bei der Ray Marching berechnet wurde ein Strahl Richtung Lichtquelle geschickt wird.
+
+
 % Inhalt Ende 
 \end{document} 
